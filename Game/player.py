@@ -3,15 +3,16 @@ import pygame
 import os
 class Player(pygame.sprite.Sprite):
     size=(32,32)
-    y_speed=100
-    resting=False
+
     playerspeed=300
     def __init__(self,location,*groups):
         super(Player,self).__init__(*groups)
         self.image=pygame.image.load(os.path.join("resources","sprites","player.png"))
-        self.rect=self.image.get_rect()
+        self.rect=pygame.rect.Rect(location,self.image.get_size())
         self.rect.x=location[0]
         self.rect.y=location[1]
+        self.resting=False
+        self.y_speed=0
     def update(self,dt,game):
         last=self.rect.copy()
         key=pygame.key.get_pressed()
@@ -40,4 +41,4 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top=cell.bottom
                 self.y_speed=0
         game.tilemap.set_focus(self.rect.x,self.rect.y)
-        print("Position:"+str(self.rect.x)+","+str(self.rect.y))
+        game.backpos[0]=-game.tilemap.view_x
