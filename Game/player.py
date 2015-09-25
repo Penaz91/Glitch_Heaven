@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import pygame
+import os
 class Player(pygame.sprite.Sprite):
     size=(32,32)
     y_speed=100
@@ -7,12 +8,10 @@ class Player(pygame.sprite.Sprite):
     playerspeed=300
     def __init__(self,location,*groups):
         super(Player,self).__init__(*groups)
-        self.image=pygame.Surface(self.size)
-        self.image.fill((255,255,255))
+        self.image=pygame.image.load(os.path.join("resources","sprites","player.png"))
         self.rect=self.image.get_rect()
         self.rect.x=location[0]
         self.rect.y=location[1]
-        #self.screen=game.screen
     def update(self,dt,game):
         last=self.rect.copy()
         key=pygame.key.get_pressed()
@@ -27,7 +26,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.y+=self.y_speed*dt
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,'blocker'):
             blockers = cell['blocker']
-            #TODO: Implement Collisions
             if 't' in blockers:
                 pass
             if 'l' in blockers and last.right<=cell.left and self.rect.right>cell.left:
@@ -41,5 +39,5 @@ class Player(pygame.sprite.Sprite):
             if 'b' in blockers and last.top >= cell.bottom and self.rect.top < cell.bottom:
                 self.rect.top=cell.bottom
                 self.y_speed=0
-        # TODO: Implement a scrolling map to verify this
         game.tilemap.set_focus(self.rect.x,self.rect.y)
+        print("Position:"+str(self.rect.x)+","+str(self.rect.y))
