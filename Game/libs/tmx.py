@@ -1,15 +1,20 @@
 # "Tiled" TMX loader/renderer and more
 # Copyright 2012 Richard Jones <richard@mechanicalcat.net>
 # This code is placed in the Public Domain.
-
-# TODO: support properties on more things
+# 
+# Changes (July 2013 by Renfred Harper):
+# Ported to Python 3
+# Added selective area support SpriteLayer.draw
 
 import sys
 import struct
 import pygame
+import os
 from pygame.locals import *
 from pygame import Rect
 from xml.etree import ElementTree
+from base64 import b64decode
+from zlib import decompress
 
 
 class Tile(object):
@@ -23,7 +28,6 @@ class Tile(object):
     @classmethod
     def fromSurface(cls, surface):
         '''Create a new Tile object straight from a pygame Surface.
-
         Its tile_width and tile_height will be set using the Surface dimensions.
         Its gid will be 0.
         '''
@@ -88,8 +92,8 @@ class Tileset(object):
         if not image:
             sys.exit("Error creating new Tileset: file %s not found" % file)
         id = self.firstgid
-        for line in xrange(image.get_height() / self.tile_height):
-            for column in xrange(image.get_width() / self.tile_width):
+        for line in range(image.get_height() // self.tile_height):
+            for column in range(image.get_width() // self.tile_width):
                 pos = Rect(column * self.tile_width, line * self.tile_height,
                     self.tile_width, self.tile_height)
                 self.tiles.append(Tile(id, image.subsurface(pos), self))
@@ -108,18 +112,13 @@ class Tilesets(dict):
 
 class Cell(object):
     '''Layers are made of Cells (or empty space).
-
     Cells have some basic properties:
-
     x, y - the cell's index in the layer
     px, py - the cell's pixel position
     left, right, top, bottom - the cell's pixel boundaries
-
     Additionally the cell may have other properties which are accessed using
     standard dictionary methods:
-
        cell['property name']
-
     You may assign a new value for a property to or even delete an existing
     property from the cell - this will not affect the Tile or any other Cells
     using the Cell's Tile.
@@ -166,11 +165,11 @@ class Cell(object):
         '''
         if self.px + self.tile.tile_width < other.x:
             return False
-        if other.x + other.width < self.px:
+        if other.x + other.width - 1 < self.px:
             return False
         if self.py + self.tile.tile_height < other.y:
             return False
-        if other.y + other.height < self.py:
+        if other.y + other.height - 1 < self.py:
             return False
         return True
 
@@ -182,7 +181,7 @@ class LayerIterator(object):
         self.layer = layer
         self.i, self.j = 0, 0
 
-    def next(self):
+    def __next__(self):
         if self.i == self.layer.width - 1:
             self.j += 1
             self.i = 0
@@ -195,9 +194,7 @@ class LayerIterator(object):
 
 class Layer(object):
     '''A 2d grid of Cells.
-
     Layers have some basic properties:
-
         width, height - the dimensions of the Layer in cells
         tile_width, tile_height - the dimensions of each cell
         px_width, px_height - the dimensions of the Layer in pixels
@@ -205,11 +202,8 @@ class Layer(object):
         properties - any properties set for this Layer
         cells - a dict of all the Cell instances for this Layer, keyed off
                 (x, y) index.
-
     Additionally you may look up a cell using direct item access:
-
        layer[x, y] is layer.cells[x, y]
-
     Note that empty cells will be set to None instead of a Cell instance.
     '''
     def __init__(self, name, visible, map):
@@ -252,7 +246,9 @@ class Layer(object):
             raise ValueError('layer %s does not contain <data>' % layer.name)
 
         data = data.text.strip()
-        data = data.decode('base64').decode('zlib')
+        data = data.encode() # Convert to bytes
+        # Decode from base 64 and decompress via zlib 
+        data = decompress(b64decode(data)) 
         data = struct.unpack('<%di' % (len(data)/4,), data)
         assert len(data) == layer.width * layer.height
         for i, gid in enumerate(data):
@@ -293,7 +289,7 @@ class Layer(object):
         '''
         r = []
         for propname in properties:
-            for cell in self.cells.values():
+            for cell in list(self.cells.values()):
                 if cell and propname in cell:
                     r.append(cell)
         return r
@@ -303,7 +299,7 @@ class Layer(object):
         '''
         r = []
         for propname in properties:
-            for cell in self.cells.values():
+            for cell in list(self.cells.values()):
                 if propname not in cell:
                     continue
                 if properties[propname] == cell[propname]:
@@ -327,7 +323,6 @@ class Layer(object):
         '''Return cells (in [column][row]) that are within the map-space
         pixel bounds specified by the bottom-left (x1, y1) and top-right
         (x2, y2) corners.
-
         Return a list of Cell instances.
         '''
         i1 = max(0, x1 // self.tile_width)
@@ -341,7 +336,6 @@ class Layer(object):
 
     def get_at(self, x, y):
         '''Return the cell at the nominated (x, y) coordinate.
-
         Return a Cell instance or None.
         '''
         i = x // self.tile_width
@@ -351,7 +345,6 @@ class Layer(object):
     def neighbors(self, index):
         '''Return the indexes of the valid (ie. within the map) cardinal (ie.
         North, South, East, West) neighbors of the nominated cell index.
-
         Returns a list of 2-tuple indexes.
         '''
         i, j = index
@@ -490,12 +483,9 @@ visible: Whether the object is shown (1) or hidden (0). Defaults to 1.
 
 class ObjectLayer(object):
     '''A layer composed of basic primitive shapes.
-
     Actually encompasses a TMX <objectgroup> but even the TMX documentation
     refers to them as object layers, so I will.
-
     ObjectLayers have some basic properties:
-
         position - ignored (cannot be edited in the current Tiled editor)
         name - the name of the object group.
         color - the color used to display the objects in this group.
@@ -595,14 +585,12 @@ class ObjectLayer(object):
         '''Return objects that are within the map-space
         pixel bounds specified by the bottom-left (x1, y1) and top-right
         (x2, y2) corners.
-
         Return a list of Object instances.
         '''
         return [obj for obj in self.objects if obj.intersects(x1, y1, x2, y2)]
 
     def get_at(self, x, y):
         '''Return the first object found at the nominated (x, y) coordinate.
-
         Return an Object instance or None.
         '''
         for object in self.objects:
@@ -620,14 +608,21 @@ class SpriteLayer(pygame.sprite.AbstractGroup):
         self.view_w, self.view_h = w, h
         x -= viewport_ox
         y -= viewport_oy
+        self.dx = viewport_ox
+        self.dy = viewport_oy
         self.position = (x, y)
 
     def draw(self, screen):
         ox, oy = self.position
         w, h = self.view_w, self.view_h
+        
         for sprite in self.sprites():
             sx, sy = sprite.rect.topleft
-            screen.blit(sprite.image, (sx-ox, sy-oy))
+            # Only the sprite's defined width and height will be drawn
+            area = pygame.Rect((0, 0),
+                               (sprite.rect.width,
+                                sprite.rect.height))
+            screen.blit(sprite.image, (sx-ox, sy-oy), area)
 
 class Layers(list):
     def __init__(self):
@@ -645,18 +640,13 @@ class Layers(list):
 class TileMap(object):
     '''A TileMap is a collection of Layers which contain gridded maps or sprites
     which are drawn constrained by a viewport.
-
     And breathe.
-
     TileMaps are loaded from TMX files which sets the .layers and .tilesets
     properties. After loading additional SpriteLayers may be added.
-
     A TileMap's rendering is restricted by a viewport which is defined by the
     size passed in at construction time and the focus set by set_focus() or
     force_focus().
-
     TileMaps have a number of properties:
-
         width, height - the dimensions of the tilemap in cells
         tile_width, tile_height - the dimensions of the cells in the map
         px_width, px_height - the dimensions of the tilemap in pixels
@@ -667,7 +657,6 @@ class TileMap(object):
         view_w, view_h - viewport size
         view_x, view_y - viewport offset (origin)
         viewport - a Rect instance giving the current viewport specification
-
     '''
     def __init__(self, size, origin=(0,0)):
         self.px_width = 0
@@ -725,7 +714,6 @@ class TileMap(object):
         '''Determine the viewport based on a desired focus pixel in the
         Layer space (fx, fy) and honoring any bounding restrictions of
         child layers.
-
         The focus will always be shifted to ensure no child layers display
         out-of-bounds data, as defined by their dimensions px_width and px_height.
         '''
@@ -787,13 +775,12 @@ class TileMap(object):
     def force_focus(self, fx, fy):
         '''Force the manager to focus on a point, regardless of any managed layer
         visible boundaries.
-
         '''
         # This calculation takes into account the scaling of this Layer (and
         # therefore also its children).
         # The result is that all chilren will have their viewport set, defining
         # which of their pixels should be visible.
-        self.fx, self.fy = map(int, (fx, fy))
+        self.fx, self.fy = list(map(int, (fx, fy)))
         self.fx, self.fy = fx, fy
 
         # get our view size
@@ -833,9 +820,10 @@ class TileMap(object):
 
 def load(filename, viewport):
     return TileMap.load(filename, viewport)
-
+"""
 if __name__ == '__main__':
     # allow image load to work
     pygame.init()
     pygame.display.set_mode((640, 480))
     t = load(sys.argv[1], (0, 0))
+    """

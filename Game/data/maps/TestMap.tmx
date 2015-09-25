@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="18" tilewidth="32" tileheight="32" nextobjectid="26">
  <tileset firstgid="1" name="WallsTemp" tilewidth="32" tileheight="32" tilecount="9">
-  <image source="../../resources/tiles/WallsTemp.png" width="96" height="96"/>
+  <image source="resources/tiles/WallsTemp.png" width="96" height="96"/>
  </tileset>
  <tileset firstgid="10" name="Triggers" tilewidth="32" tileheight="32" tilecount="10">
-  <image source="../../resources/tiles/Objects.png" width="160" height="64"/>
+  <image source="resources/tiles/Objects.png" width="160" height="64"/>
  </tileset>
  <layer name="Livello tile 1" width="25" height="18">
   <data encoding="base64" compression="zlib">
@@ -69,12 +69,12 @@
   </object>
   <object id="17" x="128" y="449" width="95" height="62">
    <properties>
-    <property name="Blocker" value="tbrl"/>
+    <property name="blocker" value="tbrl"/>
    </properties>
   </object>
   <object id="18" x="223" y="481" width="95" height="30">
    <properties>
-    <property name="Blocker" value="tblr"/>
+    <property name="blocker" value="tblr"/>
    </properties>
   </object>
   <object id="19" x="159" y="415" width="31" height="33">
