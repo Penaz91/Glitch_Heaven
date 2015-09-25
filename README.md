@@ -2,7 +2,7 @@
 Complete rewrite of my Glitch-Based Videogame that you can find in the
 "The_Glitch" repository.
 
-#### Status: Planning
+#### Status: Prototyping
 
 ### Objective of the game
 Get to the exit door of the level, using some hidden glitches that
@@ -26,3 +26,6 @@ and more challenging.
 - **Clipping glitch**: You can glitch through certain walls
 - **Clip-on-command glitch**: Pressing down arrow makes you go through the platform you're standing on
 - **Solid Help Glitch**: The help text will behave like a temporary platform
+
+### Other info:
+This Game uses Richard Jones's TMX Library to load maps.
