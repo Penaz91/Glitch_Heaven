@@ -23,18 +23,27 @@ class Player(pygame.sprite.Sprite):
             self.rect.x+=self.playerspeed*dt
         if game.glitches["multiJump"]:
             if key[pygame.K_UP]:
-                if game.glitches["highJump"]:
-                    self.y_speed=self.jump_speed*2
+                if game.glitches["gravity"]:
+                    game.gravity*=-1
                 else:
-                    self.y_speed=self.jump_speed
+                    if game.glitches["highJump"]:
+                        self.y_speed=self.jump_speed*2
+                    else:
+                        self.y_speed=self.jump_speed
         else:
             if key[pygame.K_UP] and self.resting:
-                if game.glitches["highJump"]:
-                    self.y_speed=self.jump_speed*2
+                if game.glitches["gravity"]:
+                    game.gravity*=-1
                 else:
-                    self.y_speed=self.jump_speed
+                    if game.glitches["highJump"]:
+                        self.y_speed=self.jump_speed*2
+                    else:
+                        self.y_speed=self.jump_speed
                 self.resting=False
-        self.y_speed=(min(400,self.y_speed+40))
+        if game.glitches["featherFalling"]:
+            self.y_speed=(min(200,abs(self.y_speed)+20))*game.gravity
+        else:
+            self.y_speed=(min(400,abs(self.y_speed)+40))*game.gravity
         self.rect.y+=self.y_speed*dt
         self.resting=False
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,'blocker'):
@@ -50,11 +59,14 @@ class Player(pygame.sprite.Sprite):
                 if game.glitches["wallClimb"]:
                     self.y_speed=-200
             if 't' in blockers and last.bottom <= cell.top and self.rect.bottom > cell.top:
-                self.resting=True
+                if game.gravity==1:
+                    self.resting=True
                 self.rect.bottom=cell.top
                 self.y_speed=0
             if 'b' in blockers and last.top >= cell.bottom and self.rect.top < cell.bottom:
                 self.rect.top=cell.bottom
                 self.y_speed=0
+                if game.gravity==-1:
+                    self.resting=True
         game.tilemap.set_focus(self.rect.x,self.rect.y)
         game.backpos[0]=-game.tilemap.view_x

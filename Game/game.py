@@ -11,7 +11,8 @@ class Game(object):
         self.running=True
         self.clock=pygame.time.Clock()
         self.fps=30
-        self.glitches={"wallClimb":False,"multiJump":False,"highJump":True}
+        self.glitches={"wallClimb":False,"multiJump":False,"highJump":False, "featherFalling":False,"gravity":True}
+        self.gravity=1
         """Program"""
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
