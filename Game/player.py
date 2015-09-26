@@ -23,10 +23,16 @@ class Player(pygame.sprite.Sprite):
             self.rect.x+=self.playerspeed*dt
         if game.glitches["multiJump"]:
             if key[pygame.K_UP]:
-                self.y_speed=self.jump_speed
+                if game.glitches["highJump"]:
+                    self.y_speed=self.jump_speed*2
+                else:
+                    self.y_speed=self.jump_speed
         else:
             if key[pygame.K_UP] and self.resting:
-                self.y_speed=-500
+                if game.glitches["highJump"]:
+                    self.y_speed=self.jump_speed*2
+                else:
+                    self.y_speed=self.jump_speed
                 self.resting=False
         self.y_speed=(min(400,self.y_speed+40))
         self.rect.y+=self.y_speed*dt

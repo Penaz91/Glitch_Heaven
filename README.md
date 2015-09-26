@@ -13,11 +13,11 @@ and more challenging.
 ### Glitches Implemented:
 - **Wall Climb Glitch:** if you collide with a wall and keep colliding, you'll find yourself climbing the wall
 - **Multiple jump Glitch:** you can jump countless times in the air.
+- **High Jump Glitch:** Each jump is twice as high
 
 
 ### Glitches Planned:
 - **Sticky Ceiling glitch:** if you jump and hit the ceiling, you'll stick there till you press "down arrow"
-- **High Jump Glitch:** Each jump is twice as high
 - **Invincibility Glitch:** you don't die to obstacles.
 - **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.
 - **Bouncy Spikes glitch:** Spikes don't kill you, they make you bounce
