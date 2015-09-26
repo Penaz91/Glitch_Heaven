@@ -18,12 +18,13 @@ and more challenging.
 - **Multiple jump Glitch:** you can jump countless times in the air.
 - **Hovering glitch:** If you keep the jump button pressed you'll keep going up, like you were flying.
 - **Inverted gravity:** EVERYTHING'S UPSIDE DOWN!!
+- **Sticky Ceiling glitch:** if you jump and hit the ceiling, you'll stick there till you press "down arrow"
+
 
 ### Glitches Partially Implemented or that need BuxFixes:
 - None
 
 ### Glitches Planned:
-- **Sticky Ceiling glitch:** if you jump and hit the ceiling, you'll stick there till you press "down arrow"
 - **Invincibility Glitch:** you don't die to obstacles.
 - **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.
 - **Bouncy Spikes glitch:** Spikes don't kill you, they make you bounce

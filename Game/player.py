@@ -3,7 +3,6 @@ import pygame
 import os
 class Player(pygame.sprite.Sprite):
     size=(32,32)
-
     playerspeed=300
     def __init__(self,location,*groups):
         super(Player,self).__init__(*groups)
@@ -50,11 +49,15 @@ class Player(pygame.sprite.Sprite):
                 self.y_speed=(min(200,self.y_speed+20))
             elif game.gravity==-1:
                 self.y_speed=-(min(200,abs(self.y_speed)+20))
+            elif game.gravity==0:
+                self.y_speed=0
         else:
             if game.gravity==1:
                 self.y_speed=(min(400,self.y_speed+40))
             elif game.gravity==-1:
                 self.y_speed=(max(-400,self.y_speed-40))
+            elif game.gravity==0:
+                self.y_speed=0
         self.rect.y+=self.y_speed*dt
         self.resting=False
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,'blocker'):
@@ -76,9 +79,11 @@ class Player(pygame.sprite.Sprite):
                     self.resting=True
             if 'b' in blockers and last.top >= cell.bottom and self.rect.top < cell.bottom:
                 self.rect.top=cell.bottom
-                self.y_speed=0
+                if game.glitches["stickyCeil"]:
+                    self.y_speed=-2/dt
+                else:
+                    self.y_speed=0
                 if game.gravity==-1:
                     self.resting=True
-        print(self.y_speed)
         game.tilemap.set_focus(self.rect.x,self.rect.y)
         game.backpos[0]=-game.tilemap.view_x
