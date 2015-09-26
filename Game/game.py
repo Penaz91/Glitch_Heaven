@@ -10,7 +10,7 @@ class Game(object):
         """Variables"""
         self.running=True
         self.clock=pygame.time.Clock()
-        self.glitches={"wallClimb":False,"multiJump":True,"highJump":False,"featherFalling":False,"gravity":False}
+        self.glitches={"wallClimb":False,"multiJump":False,"highJump":False,"featherFalling":False,"gravity":False,"hover":False}
         self.fps=30
         self.gravity=1
         """Program"""

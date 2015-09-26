@@ -28,19 +28,22 @@ class Player(pygame.sprite.Sprite):
                 else:
                     if game.glitches["highJump"]:
                         if self.y_speed>-(self.jump_speed/2) or self.resting:
-                            self.y_speed=self.jump_speed*2
+                            self.y_speed=self.jump_speed*2*game.gravity
                     else:
                         if self.y_speed>-(self.jump_speed/2) or self.resting:
-                            self.y_speed=self.jump_speed
+                            self.y_speed=self.jump_speed*game.gravity
+        elif game.glitches["hover"]:
+            if key[pygame.K_UP]:
+                self.y_speed=self.jump_speed*game.gravity*0.8
         else:
             if key[pygame.K_UP] and self.resting:
                 if game.glitches["gravity"]:
                     game.gravity*=-1
                 else:
                     if game.glitches["highJump"]:
-                        self.y_speed=self.jump_speed*2
+                        self.y_speed=self.jump_speed*2*grame.gravity
                     else:
-                        self.y_speed=self.jump_speed
+                        self.y_speed=self.jump_speed*game.gravity
                 self.resting=False
         if game.glitches["featherFalling"]:
             if game.gravity==1:
@@ -51,7 +54,7 @@ class Player(pygame.sprite.Sprite):
             if game.gravity==1:
                 self.y_speed=(min(400,self.y_speed+40))
             elif game.gravity==-1:
-                self.y_speed=-(min(400,abs(self.y_speed)+40))
+                self.y_speed=(max(-400,self.y_speed-40))
         self.rect.y+=self.y_speed*dt
         self.resting=False
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,'blocker'):

@@ -14,17 +14,19 @@ and more challenging.
 - **Wall Climb Glitch:** if you collide with a wall and keep colliding, you'll find yourself climbing the wall
 - **High Jump Glitch:** Each jump is twice as high
 - **Feather Falling glitch:** You fall at half the normal speed
-- **Gravity glitch:** instead of jumping you reverse gravity.
+- **Gravity glitch:** instead of jumping you reverse gravity. (Incompatible with all jumping glitches)
+- **Multiple jump Glitch:** you can jump countless times in the air.
+- **Hovering glitch:** If you keep the jump button pressed you'll keep going up, like you were flying.
+- **Inverted gravity:** EVERYTHING'S UPSIDE DOWN!!
 
 ### Glitches Partially Implemented or that need BuxFixes:
-- **Multiple jump Glitch:** you can jump countless times in the air. -Stop autojumping-
+- None
 
 ### Glitches Planned:
 - **Sticky Ceiling glitch:** if you jump and hit the ceiling, you'll stick there till you press "down arrow"
 - **Invincibility Glitch:** you don't die to obstacles.
 - **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.
 - **Bouncy Spikes glitch:** Spikes don't kill you, they make you bounce
-- **Hovering glitch:** If you keep the jump button pressed you'll keep going up, like you were flying.
 - **Ledge Glitch:** if you go over a ledge, you don't fall. In order to fall you need to jump.
 - **Invert-o-glitch**: Ground kills you, obstacles don't.
 - **Clipping glitch**: You can glitch through certain walls
@@ -32,4 +34,4 @@ and more challenging.
 - **Solid Help Glitch**: The help text will behave like a temporary platform
 
 ### Other info:
-This Game uses Richard Jones's TMX Library to load maps.
+This Game uses Renfred Harper's Python3 port of Richard Jones's TMX Library to load maps.
