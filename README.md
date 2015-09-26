@@ -10,10 +10,13 @@ have been volountarily inserted.
 Further in the game, some glitches will make the user experience harder
 and more challenging.
 
-### Glitches Planned:
-- **Sticky Ceiling glitch:** if you jump and hit the ceiling, you'll stick there till you press "down arrow"
+### Glitches Implemented:
 - **Wall Climb Glitch:** if you collide with a wall and keep colliding, you'll find yourself climbing the wall
 - **Multiple jump Glitch:** you can jump countless times in the air.
+
+
+### Glitches Planned:
+- **Sticky Ceiling glitch:** if you jump and hit the ceiling, you'll stick there till you press "down arrow"
 - **High Jump Glitch:** Each jump is twice as high
 - **Invincibility Glitch:** you don't die to obstacles.
 - **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.

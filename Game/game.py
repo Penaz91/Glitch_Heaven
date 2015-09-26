@@ -11,13 +11,10 @@ class Game(object):
         self.running=True
         self.clock=pygame.time.Clock()
         self.fps=30
+        self.glitches={"wallClimb":False,"multiJump":True}
         """Program"""
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
-        others=pygame.sprite.Group()
-        """"p=Player(screen)
-        sprites=pygame.sprite.Group()
-        sprites.add(p)"""
         bg=pygame.image.load(os.path.join("resources","backgrounds","Back1.png"))
         middle=pygame.image.load("resources/backgrounds/Back2.png")
         self.tilemap = tmx.load('data/maps/TestMapScroll.tmx',screen.get_size())

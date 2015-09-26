@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y=location[1]
         self.resting=False
         self.y_speed=0
+        self.jump_speed=-500
     def update(self,dt,game):
         last=self.rect.copy()
         key=pygame.key.get_pressed()
@@ -20,19 +21,28 @@ class Player(pygame.sprite.Sprite):
             self.rect.x-=self.playerspeed*dt
         elif key[pygame.K_RIGHT]:
             self.rect.x+=self.playerspeed*dt
-        if key[pygame.K_UP] and self.resting:
-            self.y_speed=-500
-            self.resting=False
+        if game.glitches["multiJump"]:
+            if key[pygame.K_UP]:
+                self.y_speed=self.jump_speed
+        else:
+            if key[pygame.K_UP] and self.resting:
+                self.y_speed=-500
+                self.resting=False
         self.y_speed=(min(400,self.y_speed+40))
         self.rect.y+=self.y_speed*dt
+        self.resting=False
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,'blocker'):
             blockers = cell['blocker']
             if 't' in blockers:
                 pass
             if 'l' in blockers and last.right<=cell.left and self.rect.right>cell.left:
                 self.rect.right=cell.left
+                if game.glitches["wallClimb"]:
+                    self.y_speed=-200
             if 'r' in blockers and last.left>=cell.right and self.rect.left<cell.right:
                 self.rect.left=cell.right
+                if game.glitches["wallClimb"]:
+                    self.y_speed=-200
             if 't' in blockers and last.bottom <= cell.top and self.rect.bottom > cell.top:
                 self.resting=True
                 self.rect.bottom=cell.top
