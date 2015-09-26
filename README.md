@@ -12,11 +12,12 @@ and more challenging.
 
 ### Glitches Implemented:
 - **Wall Climb Glitch:** if you collide with a wall and keep colliding, you'll find yourself climbing the wall
-- **Multiple jump Glitch:** you can jump countless times in the air.
 - **High Jump Glitch:** Each jump is twice as high
 - **Feather Falling glitch:** You fall at half the normal speed
 - **Gravity glitch:** instead of jumping you reverse gravity.
 
+### Glitches Partially Implemented or that need BuxFixes:
+- **Multiple jump Glitch:** you can jump countless times in the air. -Stop autojumping-
 
 ### Glitches Planned:
 - **Sticky Ceiling glitch:** if you jump and hit the ceiling, you'll stick there till you press "down arrow"

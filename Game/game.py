@@ -10,8 +10,8 @@ class Game(object):
         """Variables"""
         self.running=True
         self.clock=pygame.time.Clock()
+        self.glitches={"wallClimb":False,"multiJump":True,"highJump":False,"featherFalling":False,"gravity":False}
         self.fps=30
-        self.glitches={"wallClimb":False,"multiJump":False,"highJump":False, "featherFalling":False,"gravity":True}
         self.gravity=1
         """Program"""
         pygame.init()
@@ -25,12 +25,13 @@ class Game(object):
         self.tilemap.layers.append(self.sprites)
         self.backpos=[0,0]
         self.middlepos=[0,0]
+        print(self.glitches)
         """Game Loop"""
         while self.running:
             dt=self.clock.tick(self.fps)
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
-                    self.running=False
+                    self.running=False 
             screen.blit(bg,(-self.tilemap.viewport.x/4,-self.tilemap.viewport.y/4))
             self.tilemap.update(dt/1000., self)
             screen.blit(middle,(-self.tilemap.viewport.x/2,-self.tilemap.viewport.y/2))
