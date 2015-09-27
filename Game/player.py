@@ -40,7 +40,7 @@ class Player(pygame.sprite.Sprite):
                     game.gravity*=-1
                 else:
                     if game.glitches["highJump"]:
-                        self.y_speed=self.jump_speed*2*grame.gravity
+                        self.y_speed=self.jump_speed*2*game.gravity
                     else:
                         self.y_speed=self.jump_speed*game.gravity
                 self.resting=False
@@ -62,8 +62,6 @@ class Player(pygame.sprite.Sprite):
         self.resting=False
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,'blocker'):
             blockers = cell['blocker']
-            if 't' in blockers:
-                pass
             if 'l' in blockers and last.right<=cell.left and self.rect.right>cell.left:
                 self.rect.right=cell.left
                 if game.glitches["wallClimb"]:
@@ -74,7 +72,10 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed=-200
             if 't' in blockers and last.bottom <= cell.top and self.rect.bottom > cell.top:
                 self.rect.bottom=cell.top
-                self.y_speed=0
+                if game.glitches["stickyCeil"]:
+                    self.y_speed=3/dt
+                else:
+                    self.y_speed=0
                 if game.gravity==1:
                     self.resting=True
             if 'b' in blockers and last.top >= cell.bottom and self.rect.top < cell.bottom:
@@ -85,5 +86,23 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed=0
                 if game.gravity==-1:
                     self.resting=True
+        for cell in game.tilemap.layers["Triggers"].collide(self.rect,'deadly'):
+            deadly = cell["deadly"]
+            if 't' in deadly and last.bottom <=cell.top and self.rect.bottom > cell.top:
+                if game.glitches["bouncySpikes"]:
+                    self.rect.bottom=cell.top
+                    self.y_speed=self.jump_speed*game.gravity*2
+                else:
+                    self.kill()
+                    start_cell = game.tilemap.layers['Triggers'].find('player')[0]
+                    game.player = Player((start_cell.px,start_cell.py), game.sprites)
+            if 'b' in deadly and last.top >= cell.bottom and self.rect.top < cell.bottom:
+                if game.glitches["bouncySpikes"]:
+                    self.rect.top=cell.bottom
+                    self.y_speed=self.jump_speed*game.gravity*2
+                else:
+                    self.kill()
+                    start_cell = game.tilemap.layers['Triggers'].find('player')[0]
+                    game.player = Player((start_cell.px,start_cell.py), game.sprites)
         game.tilemap.set_focus(self.rect.x,self.rect.y)
         game.backpos[0]=-game.tilemap.view_x

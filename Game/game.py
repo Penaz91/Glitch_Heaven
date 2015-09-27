@@ -10,15 +10,17 @@ class Game(object):
         """Variables"""
         self.running=True
         self.clock=pygame.time.Clock()
-        self.glitches={"wallClimb":False,"multiJump":False,"highJump":False,"featherFalling":False,"gravity":False,"hover":False,"stickyCeil":False,"ledge":True}
+        self.glitches={"wallClimb":False,"multiJump":False,"highJump":False,"featherFalling":False,"gravity":False,"hover":False,"stickyCeil":False,"invertedGravity":True,"bouncySpikes":True}
         self.fps=30
         self.gravity=1
+        if self.glitches["invertedGravity"]:
+            self.gravity=-1
         """Program"""
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
         bg=pygame.image.load(os.path.join("resources","backgrounds","Back1.png"))
-        middle=pygame.image.load("resources/backgrounds/Back2.png")
-        self.tilemap = tmx.load('data/maps/TestMapScroll.tmx',screen.get_size())
+        middle=pygame.image.load(os.path.join("resources","backgrounds","Back2.png"))
+        self.tilemap = tmx.load('data/maps/TestWithDeath.tmx',screen.get_size())
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('player')[0]
         self.player = Player((start_cell.px,start_cell.py), self.sprites)
