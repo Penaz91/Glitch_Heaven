@@ -24,11 +24,11 @@ and more challenging.
 - **Invert-o-glitch**: Ground kills you, deadly ground doesn't. (Can be applied from map editor by exchanging the "deadly" trigger with the "blocker" trigger)
 
 
-### Glitches Partially Implemented or that need BuxFixes:
-- None
+### Glitches Partially Implemented or that need BuxFixes/Testing:
+- **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.
+
 
 ### Glitches Planned:
-- **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.
 - **Ledge Glitch:** if you go over a ledge, you don't fall. In order to fall you need to jump.
 - **Clipping glitch**: You can glitch through certain walls
 - **Clip-on-command glitch**: Pressing down arrow makes you go through the platform you're standing on

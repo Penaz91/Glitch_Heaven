@@ -63,7 +63,6 @@ class Game(object):
                                  -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
             #  self.deadbodies.draw(screen)
-            print(self.tilemap.pixel_from_screen(self.player.rect.x,self.player.rect.y))
             pygame.display.flip()
         pygame.quit()
         quit()

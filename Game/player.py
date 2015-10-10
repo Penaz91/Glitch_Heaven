@@ -111,7 +111,7 @@ class Player(pygame.sprite.Sprite):
                     if game.glitches["permBodies"]:
                         x, y = game.tilemap.pixel_from_screen(self.rect.x,
                                                               self.rect.y)
-                        body = DeadBody(x, y, game.sprites)
+                        body = DeadBody(x, y, game.sprites, game=game)
                         game.deadbodies.add(body)
                     self.kill()
                     start_cell = game.tilemap.layers['Triggers']\
@@ -129,7 +129,7 @@ class Player(pygame.sprite.Sprite):
                         x, y = game.tilemap.pixel_from_screen(self.rect.x,
                                                               self.rect.y)
                         body = DeadBody(x, y, game.sprites)
-                        game.deadbodies.add(body)                        
+                        game.deadbodies.add(body)
                     self.kill()
                     start_cell = game.tilemap.layers['Triggers']\
                         .find('player')[0]
