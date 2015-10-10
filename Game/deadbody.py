@@ -13,8 +13,7 @@ class DeadBody(pygame.sprite.Sprite):
                                                     "sprites",
                                                     "player.png"))
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.screenx, self.screeny = x,y
 
     def update(self, dt, game):
-        pass
+        self.rect.x, self.rect.y = game.tilemap.pixel_to_screen(self.screenx,self.screeny)

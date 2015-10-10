@@ -8,7 +8,7 @@
    eJztz0EKgDAMBdFQLBHvf2DtAUqQbEaZgb9NeBkRV3Nnse79avNZxvfTwUoHKx2sdLDSwUoHKx2sdLDSwUoHKx2sdLDSwUoHKx2sdLDSwUoHq785RmPHy3V+7bYcN7TrBCk=
   </data>
  </layer>
- <objectgroup name="Triggers" visible="0">
+ <objectgroup name="Triggers">
   <object id="1" x="0" y="0" width="544" height="32">
    <properties>
     <property name="blocker" value="b"/>
@@ -36,7 +36,7 @@
   </object>
   <object id="6" x="1568" y="32" width="32" height="1216">
    <properties>
-    <property name="blocker" value="t"/>
+    <property name="blocker" value="tblr"/>
    </properties>
   </object>
   <object id="7" x="512" y="1248" width="384" height="32">

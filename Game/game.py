@@ -22,7 +22,7 @@ class Game(object):
                          "invertedGravity": False,
                          "bouncySpikes": False,
                          "permBodies": True}
-        self.fps = 30
+        self.fps = 60
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
         if self.glitches["invertedGravity"]:
@@ -36,6 +36,9 @@ class Game(object):
         middle = pygame.image.load(os.path.join("resources",
                                                 "backgrounds",
                                                 "Back2.png"))
+        middleback = pygame.image.load(os.path.join("resources",
+                                                    "backgrounds",
+                                                    "Back3.png"))
         self.tilemap = tmx.load('data/maps/TestWithDeath.tmx',
                                 screen.get_size())
         self.sprites = tmx.SpriteLayer()
@@ -51,13 +54,16 @@ class Game(object):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-            screen.blit(bg, (-self.tilemap.viewport.x/4,
-                             -self.tilemap.viewport.y/4))
+            screen.blit(bg, (-self.tilemap.viewport.x/6,
+                             -self.tilemap.viewport.y/6))
+            screen.blit(middleback, (-self.tilemap.viewport.x/4,
+                                     -self.tilemap.viewport.y/4))
             self.tilemap.update(dt/1000., self)
             screen.blit(middle, (-self.tilemap.viewport.x/2,
                                  -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
             #  self.deadbodies.draw(screen)
+            print(self.tilemap.pixel_from_screen(self.player.rect.x,self.player.rect.y))
             pygame.display.flip()
         pygame.quit()
         quit()
