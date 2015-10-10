@@ -14,15 +14,15 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.glitches = {"wallClimb": False,
                          "multiJump": False,
-                         "highJump": False,
+                         "highJump": True,
                          "featherFalling": False,
                          "gravity": False,
                          "hover": False,
                          "stickyCeil": False,
-                         "invertedGravity": False,
+                         "invertedGravity": True,
                          "bouncySpikes": False,
                          "permBodies": True}
-        self.fps = 60
+        self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
         if self.glitches["invertedGravity"]:
@@ -39,7 +39,7 @@ class Game(object):
         middleback = pygame.image.load(os.path.join("resources",
                                                     "backgrounds",
                                                     "Back3.png"))
-        self.tilemap = tmx.load('data/maps/TestWithDeath.tmx',
+        self.tilemap = tmx.load('data/maps/TestComplete.tmx',
                                 screen.get_size())
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('player')[0]

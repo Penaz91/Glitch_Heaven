@@ -93,7 +93,7 @@ class Player(pygame.sprite.Sprite):
                     self.rect.top < cell.bottom:
                 self.rect.top = cell.bottom
                 if game.glitches["stickyCeil"]:
-                    self.y_speed = -2/dt
+                    self.y_speed = -5/dt
                 else:
                     self.y_speed = 0
                 if game.gravity == -1:
@@ -128,7 +128,7 @@ class Player(pygame.sprite.Sprite):
                     if game.glitches["permBodies"]:
                         x, y = game.tilemap.pixel_from_screen(self.rect.x,
                                                               self.rect.y)
-                        body = DeadBody(x, y, game.sprites)
+                        body = DeadBody(x, y, game.sprites, game=game)
                         game.deadbodies.add(body)
                     self.kill()
                     start_cell = game.tilemap.layers['Triggers']\
@@ -139,11 +139,12 @@ class Player(pygame.sprite.Sprite):
         for block in collision:
             if self.y_speed == 0:
                 self.resting = True
-            elif self.y_speed*game.gravity > 0:
+            elif self.y_speed > 0:
                 self.rect.bottom = block.rect.top
                 self.resting = True
                 self.y_speed = 0
-            elif self.y_speed*game.gravity < 0:
+            elif self.y_speed < 0:
+                self.rect.top = block.rect.bottom
                 self.resting = False
                 self.y_speed = 0
         game.tilemap.set_focus(self.rect.x, self.rect.y)
