@@ -99,14 +99,23 @@ class Player(pygame.sprite.Sprite):
                 if game.gravity == -1:
                     self.resting = True
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
+                                                            'bouncy'):
+            bouncy = cell["bouncy"]
+            if 't' in bouncy and last.bottom <= cell.top and\
+                    self.rect.bottom > cell.top:
+                self.rect.bottom = cell.top
+                self.y_speed = self.jump_speed*game.gravity*2
+            if 'b' in bouncy and last.top >= cell.bottom and\
+                    self.rect.top < cell.bottom:
+                self.rect.bottom = cell.top
+                self.y_speed = self.jump_speed*game.gravity*2
+        for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'deadly'):
             deadly = cell["deadly"]
             if 't' in deadly and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
-                if game.glitches["bouncySpikes"]:
-                    self.rect.bottom = cell.top
-                    self.y_speed = self.jump_speed*game.gravity*2
-                else:
+                # FIXME: Eliminate if true
+                if True:
                     self.rect.bottom = cell.top
                     if game.glitches["permBodies"]:
                         x, y = game.tilemap.pixel_from_screen(self.rect.x,
@@ -120,10 +129,8 @@ class Player(pygame.sprite.Sprite):
                                          game.sprites)
             if 'b' in deadly and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
-                if game.glitches["bouncySpikes"]:
-                    self.rect.top = cell.bottom
-                    self.y_speed = self.jump_speed*game.gravity*2
-                else:
+                # FIXME: Delete if true
+                if True:
                     self.rect.top = cell.bottom
                     if game.glitches["permBodies"]:
                         x, y = game.tilemap.pixel_from_screen(self.rect.x,

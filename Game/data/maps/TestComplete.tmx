@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="43">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="48">
  <tileset firstgid="1" name="Set" tilewidth="32" tileheight="32">
   <image source="resources/tiles/WallsTemp.png" width="96" height="96"/>
  </tileset>
  <tileset firstgid="10" name="TestTile" tilewidth="32" tileheight="32">
-  <image source="resources/tiles/TestTile.png" width="128" height="96"/>
+  <image source="resources/tiles/TestTile.png" width="160" height="96"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmd0OgyAMhXs93fzZ3v9ZZ68kBLCCHaezX9IrY+zhlBbDTERv4zFtMZN9XuQ6kLiLjscWY+HZIIjc+y3EeUn8WDP5fRTyCymtU/xtlLpK5XxmnVB0tOI6sIh1xHWq0Ws0OPKDe5UFLZK6slB3tfMDzaPafZ6bjb20/mu/0iQ1s6/yzP3AwnVg0aIj3LfPRPyy97of5zn6D27xrocffBZYgrji/9hCXUnmpwUdElwHFq5Dj1J/zvVmRB019JiDGmcX92NHc52lpHTU7LPeeF1hwTr4zlZyr4QcrOELH7AQMQ==
+   eJztmcsSgzAIRVm39qF9/P+nVlbNMElEEgy0nJm76mhzcwnoOAPA6yA9iHrd975qBv/cIHxY4l98nFZNld/ODJWub4Gui5PHs7C+t8L6Umr7RP/bSl3l1rxnn6z4aCV82IL6oHWq0Ws02MoDe5UHL5y68lB30vlhLSPpOS/NxlFef7VfaZKb2b0yizxsET5s0eIjPbeXjI7svZHHfrbeg1uyG5EHPgssiXq8H3uoK8789OCDQ/iwRfjQo9afS73Zog8JI+agxrNL5PFFc5+55HxIztlooq5sgT7wmy3nu5Kmrokk16OHD1BPEPg=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
-  <object id="1" x="0" y="0" width="1600" height="32">
+  <object id="1" x="0" y="0" width="864" height="32">
    <properties>
     <property name="blocker" value="lrbt"/>
    </properties>
   </object>
-  <object id="2" x="0" y="1248" width="1600" height="32">
+  <object id="2" x="0" y="1248" width="1056" height="32">
    <properties>
     <property name="blocker" value="lrbt"/>
    </properties>
@@ -175,6 +175,26 @@
   <object id="42" x="1024" y="800" width="32" height="32">
    <properties>
     <property name="blocker" value="tbrl"/>
+   </properties>
+  </object>
+  <object id="43" x="992" y="0" width="608" height="32">
+   <properties>
+    <property name="blocker" value="lrbt"/>
+   </properties>
+  </object>
+  <object id="44" x="1152" y="1248" width="448" height="32">
+   <properties>
+    <property name="blocker" value="lrbt"/>
+   </properties>
+  </object>
+  <object id="46" x="864" y="0" width="128" height="32">
+   <properties>
+    <property name="bouncy" value="b"/>
+   </properties>
+  </object>
+  <object id="47" x="1056" y="1248" width="96" height="32">
+   <properties>
+    <property name="bouncy" value="t"/>
    </properties>
   </object>
  </objectgroup>
