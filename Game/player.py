@@ -107,41 +107,37 @@ class Player(pygame.sprite.Sprite):
                 self.y_speed = self.jump_speed*game.gravity*2
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
-                self.rect.bottom = cell.top
+                self.rect.top = cell.bottom
                 self.y_speed = self.jump_speed*game.gravity*2
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'deadly'):
             deadly = cell["deadly"]
             if 't' in deadly and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
-                # FIXME: Eliminate if true
-                if True:
-                    self.rect.bottom = cell.top
-                    if game.glitches["permBodies"]:
-                        x, y = game.tilemap.pixel_from_screen(self.rect.x,
-                                                              self.rect.y)
-                        body = DeadBody(x, y, game.sprites, game=game)
-                        game.deadbodies.add(body)
-                    self.kill()
-                    start_cell = game.tilemap.layers['Triggers']\
-                        .find('player')[0]
-                    game.player = Player((start_cell.px, start_cell.py),
-                                         game.sprites)
+                self.rect.bottom = cell.top
+                if game.glitches["permBodies"]:
+                    x, y = game.tilemap.pixel_from_screen(self.rect.x,
+                                                          self.rect.y)
+                    body = DeadBody(x, y, game.sprites, game=game)
+                    game.deadbodies.add(body)
+                self.kill()
+                start_cell = game.tilemap.layers['Triggers']\
+                    .find('player')[0]
+                game.player = Player((start_cell.px, start_cell.py),
+                                     game.sprites)
             if 'b' in deadly and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
-                # FIXME: Delete if true
-                if True:
-                    self.rect.top = cell.bottom
-                    if game.glitches["permBodies"]:
-                        x, y = game.tilemap.pixel_from_screen(self.rect.x,
-                                                              self.rect.y)
-                        body = DeadBody(x, y, game.sprites, game=game)
-                        game.deadbodies.add(body)
-                    self.kill()
-                    start_cell = game.tilemap.layers['Triggers']\
-                        .find('player')[0]
-                    game.player = Player((start_cell.px, start_cell.py),
-                                         game.sprites)
+                self.rect.top = cell.bottom
+                if game.glitches["permBodies"]:
+                    x, y = game.tilemap.pixel_from_screen(self.rect.x,
+                                                          self.rect.y)
+                    body = DeadBody(x, y, game.sprites, game=game)
+                    game.deadbodies.add(body)
+                self.kill()
+                start_cell = game.tilemap.layers['Triggers']\
+                    .find('player')[0]
+                game.player = Player((start_cell.px, start_cell.py),
+                                     game.sprites)
         collision = pygame.sprite.spritecollide(self, game.deadbodies, False)
         for block in collision:
             if self.y_speed == 0:

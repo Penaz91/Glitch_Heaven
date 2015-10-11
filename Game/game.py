@@ -14,13 +14,12 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.glitches = {"wallClimb": False,
                          "multiJump": False,
-                         "highJump": True,
+                         "highJump": False,
                          "featherFalling": False,
                          "gravity": False,
                          "hover": False,
                          "stickyCeil": False,
-                         "invertedGravity": True,
-                         "bouncySpikes": False,
+                         "invertedGravity": False,
                          "permBodies": True}
         self.fps = 30
         self.gravity = 1

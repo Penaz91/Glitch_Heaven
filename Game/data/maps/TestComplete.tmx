@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmcsSgzAIRVm39qF9/P+nVlbNMElEEgy0nJm76mhzcwnoOAPA6yA9iHrd975qBv/cIHxY4l98nFZNld/ODJWub4Gui5PHs7C+t8L6Umr7RP/bSl3l1rxnn6z4aCV82IL6oHWq0Ws02MoDe5UHL5y68lB30vlhLSPpOS/NxlFef7VfaZKb2b0yizxsET5s0eIjPbeXjI7svZHHfrbeg1uyG5EHPgssiXq8H3uoK8789OCDQ/iwRfjQo9afS73Zog8JI+agxrNL5PFFc5+55HxIztlooq5sgT7wmy3nu5Kmrokk16OHD1BPEPg=
+   eJztmcsOhDAIRVnP23ll/v9Lx66madqKUAQcTsLKqNxeCjZOAPDaKB5FjHrubY4J/HOF0GGJf9FxmOPUuXZEROt+DmVeGD+ejfzeAvnl9NapfLeVuqrlvGadrOjgEjpsUeoo61Si10iw5EfqVR60YOrKQ91R54c1j6j7vDUbtbTutV9JUpvZozwLP2wROmzB0ZHv23Mltuy94cd6ls7BHO80/EjfAvcsRpyPPdQVZn560IEhdNgidMjR68+t3mxRBwWNOSjx7RJ+/JBcZyw1HZR9ps0e6+qjmQiTpCP9s8X8V5KMSxaU+5OGL3UPERA=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -112,7 +112,7 @@
     <property name="blocker" value="ltbr"/>
    </properties>
   </object>
-  <object id="25" x="64" y="1184" width="32" height="32">
+  <object id="25" x="64" y="1216" width="32" height="32">
    <properties>
     <property name="player" value="entrance"/>
    </properties>

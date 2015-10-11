@@ -20,17 +20,19 @@ and more challenging.
 - **Inverted gravity:** EVERYTHING'S UPSIDE DOWN!!
 - **Sticky Ceiling glitch:** if you jump and hit the ceiling, you'll stick there till you press "down arrow"
 - **Invincibility Glitch:** you don't die to obstacles. (Can be applied from map editor by exchanging the "deadly" trigger with the "blocker" trigger)
-- **Bouncy Spikes glitch:** Deadly ground doesn't kill you, it makes you bounce twice as high
+- **Bouncy Spikes glitch:** Deadly ground doesn't kill you, it makes you bounce twice as high (Can be applied from map editor by exchanging the "deadly" trigger with the "bouncy" trigger)
+- **Deadly Bouncers Glitch:** Bouncers kill you (Can be applied from map editor by exchanging the "bouncy" trigger with the "deadly" trigger)
 - **Invert-o-glitch**: Ground kills you, deadly ground doesn't. (Can be applied from map editor by exchanging the "deadly" trigger with the "blocker" trigger)
+- **Non Working Bouncers:** Bouncers don't work (Can be applied from map editor by exchanging the "deadly" trigger with the "bouncy" trigger)
+- **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.
+- **Clipping glitch**: You can glitch through certain walls (can be applied via map editor by omitting certain blocker parameters)
 
 
 ### Glitches Partially Implemented or that need BuxFixes/Testing:
-- **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.
-
+None At The moment
 
 ### Glitches Planned:
 - **Ledge Glitch:** if you go over a ledge, you don't fall. In order to fall you need to jump.
-- **Clipping glitch**: You can glitch through certain walls
 - **Clip-on-command glitch**: Pressing down arrow makes you go through the platform you're standing on
 - **Solid Help Glitch**: The help text will behave like a temporary platform
 
