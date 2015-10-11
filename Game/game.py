@@ -38,6 +38,9 @@ class Game(object):
         middleback = pygame.image.load(os.path.join("resources",
                                                     "backgrounds",
                                                     "Back3.png"))
+        overlay = pygame.image.load(os.path.join("resources",
+                                                 "overlays",
+                                                 "overlay1.png"))
         self.tilemap = tmx.load('data/maps/TestComplete.tmx',
                                 screen.get_size())
         self.sprites = tmx.SpriteLayer()
@@ -61,6 +64,8 @@ class Game(object):
             screen.blit(middle, (-self.tilemap.viewport.x/2,
                                  -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
+            screen.blit(overlay, (-self.tilemap.viewport.x*1.5,
+                                  -self.tilemap.viewport.y*1.5))
             #  self.deadbodies.draw(screen)
             pygame.display.flip()
         pygame.quit()
