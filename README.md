@@ -35,6 +35,7 @@ None At The moment
 - **Ledge Glitch:** if you go over a ledge, you don't fall. In order to fall you need to jump.
 - **Clip-on-command glitch**: Pressing down arrow makes you go through the platform you're standing on
 - **Solid Help Glitch**: The help text will behave like a temporary platform
+- **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end
 
 ### Other info:
 This Game uses Renfred Harper's Python3 port of Richard Jones's TMX Library to load maps.
