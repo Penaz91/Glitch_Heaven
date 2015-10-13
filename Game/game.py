@@ -7,6 +7,14 @@ import os
 
 
 class Game(object):
+    def toggleGlitch(game, glitch):
+        truth = game.glitches.get(glitch)
+        if truth:
+            truth = False
+        else:
+            truth = True
+        mydict = {glitch: truth}
+        game.glitches.update(mydict)
     """ Main method """
     def main(self, screen):
         """Variables"""
@@ -20,7 +28,7 @@ class Game(object):
                          "hover": False,
                          "stickyCeil": False,
                          "invertedGravity": False,
-                         "permBodies": True}
+                         "permBodies": False}
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
@@ -56,6 +64,25 @@ class Game(object):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                # Glitch Toggles, for testing
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+                    self.toggleGlitch("wallClimb")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
+                    self.toggleGlitch("multiJump")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
+                    self.toggleGlitch("highJump")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_4:
+                    self.toggleGlitch("featherFalling")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_5:
+                    self.toggleGlitch("gravity")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_6:
+                    self.toggleGlitch("hover")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_7:
+                    self.toggleGlitch("stickyCeil")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
+                    self.toggleGlitch("invertedGravity")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
+                    self.toggleGlitch("permBodies")
             screen.blit(bg, (-self.tilemap.viewport.x/6,
                              -self.tilemap.viewport.y/6))
             screen.blit(middleback, (-self.tilemap.viewport.x/4,

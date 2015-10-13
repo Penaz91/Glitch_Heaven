@@ -101,6 +101,8 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'bouncy'):
             bouncy = cell["bouncy"]
+            # FIXME: Touching a bouncer that should push you further down/up,
+            # makes you go out of bounds
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 self.rect.bottom = cell.top
