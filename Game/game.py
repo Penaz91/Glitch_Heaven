@@ -11,8 +11,10 @@ class Game(object):
         truth = game.glitches.get(glitch)
         if truth:
             truth = False
+            print("The {0} glitch has been disabled".format(glitch))
         else:
             truth = True
+            print("The {0} glitch has been enabled".format(glitch))
         mydict = {glitch: truth}
         game.glitches.update(mydict)
     """ Main method """

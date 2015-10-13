@@ -106,11 +106,17 @@ class Player(pygame.sprite.Sprite):
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 self.rect.bottom = cell.top
-                self.y_speed = self.jump_speed*game.gravity*2
+                if game.gravity == 1:
+                    self.y_speed = self.jump_speed*game.gravity*2
+                elif game.gravity == -1:
+                    self.y_speed = self.jump_speed*game.gravity*-2
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 self.rect.top = cell.bottom
-                self.y_speed = self.jump_speed*game.gravity*2
+                if game.gravity == -1:
+                    self.y_speed = self.jump_speed*game.gravity*2
+                elif game.gravity == 1:
+                    self.y_speed = self.jump_speed*game.gravity*-2
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'deadly'):
             deadly = cell["deadly"]
