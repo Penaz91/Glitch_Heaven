@@ -23,7 +23,7 @@ and more challenging.
 - **Bouncy Spikes glitch:** Deadly ground doesn't kill you, it makes you bounce twice as high (Can be applied from map editor by exchanging the "deadly" trigger with the "bouncy" trigger)
 - **Deadly Bouncers Glitch:** Bouncers kill you (Can be applied from map editor by exchanging the "bouncy" trigger with the "deadly" trigger)
 - **Invert-o-glitch**: Ground kills you, deadly ground doesn't. (Can be applied from map editor by exchanging the "deadly" trigger with the "blocker" trigger)
-- **Non Working Bouncers:** Bouncers don't work (Can be applied from map editor by exchanging the "deadly" trigger with the "bouncy" trigger)
+- **Non Working Bouncers:** Bouncers don't work (Can be applied from map editor by omitting the "bouncy" trigger)
 - **Dead bodies Glitch:** when you die your dead body won't despawn and you can use it as a platform.
 - **Clipping glitch**: You can glitch through certain walls (can be applied via map editor by omitting certain blocker parameters)
 
@@ -36,6 +36,16 @@ None At The moment
 - **Clip-on-command glitch**: Pressing down arrow makes you go through the platform you're standing on
 - **Solid Help Glitch**: The help text will behave like a temporary platform
 - **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end
+
+### Planned Features
+- Campaign Support
+- Menus maybe?
+- Particle Engine
+- Sound Effects
+- Music
+- Animations
+- **real** graphics
+- In-game help
 
 ### Other info:
 This Game uses Renfred Harper's Python3 port of Richard Jones's TMX Library to load maps.

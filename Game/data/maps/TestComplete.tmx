@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="48">
- <tileset firstgid="1" name="Set" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="49">
+ <tileset firstgid="1" name="Set" tilewidth="32" tileheight="32" tilecount="9">
   <image source="resources/tiles/WallsTemp.png" width="96" height="96"/>
  </tileset>
- <tileset firstgid="10" name="TestTile" tilewidth="32" tileheight="32">
+ <tileset firstgid="10" name="TestTile" tilewidth="32" tileheight="32" tilecount="15">
   <image source="resources/tiles/TestTile.png" width="160" height="96"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmcsOhDAIRVnP23ll/v9Lx66madqKUAQcTsLKqNxeCjZOAPDaKB5FjHrubY4J/HOF0GGJf9FxmOPUuXZEROt+DmVeGD+ejfzeAvnl9NapfLeVuqrlvGadrOjgEjpsUeoo61Si10iw5EfqVR60YOrKQ91R54c1j6j7vDUbtbTutV9JUpvZozwLP2wROmzB0ZHv23Mltuy94cd6ls7BHO80/EjfAvcsRpyPPdQVZn560IEhdNgidMjR68+t3mxRBwWNOSjx7RJ+/JBcZyw1HZR9ps0e6+qjmQiTpCP9s8X8V5KMSxaU+5OGL3UPERA=
+   eJztmdkOhDAIRfs8u876/1869klCumBbBAwnuYmJUbmFgsYphPDeSU+kUfd9LJqCfe7BfWjCso8vOK75OC26FM6dCcpd3wOOi5KPVya+D0N8kNI64WdrqatUzFvWSYuPXtyHLrAPXKccvYaDWj5ir7LghVJXFuqudX5oy1HrPs/NRimvR+1XnKRm9qiceT504T500eMD7ttrQnv2Xs/HdmrfwT25k8hHfBeYgUZ8H1uoK8r8tOCDgvvQhfvgo9Sfc71Zo48WJOYgx7uL52OFc52ppHy07DNpjlhXP8lAOok+4j9byn8lTt2AWq6PHv7rhREn
   </data>
  </layer>
- <objectgroup name="Triggers" visible="0">
+ <objectgroup name="Triggers">
   <object id="1" x="0" y="0" width="864" height="32">
    <properties>
     <property name="blocker" value="lrbt"/>
@@ -114,7 +114,7 @@
   </object>
   <object id="25" x="64" y="1216" width="32" height="32">
    <properties>
-    <property name="player" value="entrance"/>
+    <property name="playerEntrance" value=""/>
    </properties>
   </object>
   <object id="31" x="512" y="1120" width="64" height="32">
@@ -195,6 +195,11 @@
   <object id="47" x="1056" y="1248" width="96" height="32">
    <properties>
     <property name="bouncy" value="t"/>
+   </properties>
+  </object>
+  <object id="48" x="1472" y="128" width="32" height="32">
+   <properties>
+    <property name="playerExit" value=""/>
    </properties>
   </object>
  </objectgroup>

@@ -19,6 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = location[1]
         self.resting = False
         self.y_speed = 0
+        self.x_speed = 0
         self.jump_speed = -500
 
         
@@ -33,14 +34,17 @@ class Player(pygame.sprite.Sprite):
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
             if key[pygame.K_z]:
-                self.rect.x -= self.playerspeed*dt*1.5
+                self.x_speed = -self.playerspeed*dt*1.5
             else:
-                self.rect.x -= self.playerspeed*dt
+                self.x_speed = -self.playerspeed*dt
         elif key[pygame.K_RIGHT]:
             if key[pygame.K_z]:
-                self.rect.x += self.playerspeed*dt*1.5
+                self.x_speed = self.playerspeed*dt*1.5
             else:
-                self.rect.x += self.playerspeed*dt
+                self.x_speed = self.playerspeed*dt
+        else:
+            self.x_speed=0
+        self.rect.x += self.x_speed
         if game.glitches["multiJump"]:
             if key[pygame.K_UP]:
                 if game.glitches["gravity"]:
@@ -115,8 +119,6 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'bouncy'):
             bouncy = cell["bouncy"]
-            # FIXME: Touching a bouncer that should push you further down/up,
-            # makes you go out of bounds
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 self.rect.bottom = cell.top
@@ -161,6 +163,7 @@ class Player(pygame.sprite.Sprite):
                 game.player = Player((start_cell.px, start_cell.py),
                                      game.sprites)
                 # FIXME: Can cross dead bodies horizontally
+                # FIX: Bodies will be pretty thin, so i think i can ignore this
         collision = pygame.sprite.spritecollide(self, game.deadbodies, False)
         for block in collision:
             if self.y_speed == 0:
@@ -173,5 +176,10 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = block.rect.bottom
                 self.resting = False
                 self.y_speed = 0
+        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+                                                            'playerExit'):
+            # FIXME: Make Game load the next level
+            quit()
+            # --------------------------------------
         game.tilemap.set_focus(self.rect.x, self.rect.y)
         game.backpos[0] = -game.tilemap.view_x

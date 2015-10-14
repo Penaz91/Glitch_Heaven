@@ -54,7 +54,7 @@ class Game(object):
         self.tilemap = tmx.load('data/maps/TestComplete.tmx',
                                 screen.get_size())
         self.sprites = tmx.SpriteLayer()
-        start_cell = self.tilemap.layers['Triggers'].find('player')[0]
+        start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
         self.player = Player((start_cell.px, start_cell.py), self.sprites)
         self.tilemap.layers.append(self.sprites)
         self.backpos = [0, 0]
@@ -95,7 +95,6 @@ class Game(object):
             self.tilemap.draw(screen)
             screen.blit(overlay, (-self.tilemap.viewport.x*1.5,
                                   -self.tilemap.viewport.y*1.5))
-            #  self.deadbodies.draw(screen)
             pygame.display.flip()
         pygame.quit()
         quit()
