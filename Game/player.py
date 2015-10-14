@@ -24,9 +24,15 @@ class Player(pygame.sprite.Sprite):
         last = self.rect.copy()
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
-            self.rect.x -= self.playerspeed*dt
+            if key[pygame.K_z]:
+                self.rect.x -= self.playerspeed*dt*1.5
+            else:
+                self.rect.x -= self.playerspeed*dt
         elif key[pygame.K_RIGHT]:
-            self.rect.x += self.playerspeed*dt
+            if key[pygame.K_z]:
+                self.rect.x += self.playerspeed*dt*1.5
+            else:
+                self.rect.x += self.playerspeed*dt
         if game.glitches["multiJump"]:
             if key[pygame.K_UP]:
                 if game.glitches["gravity"]:
@@ -146,6 +152,7 @@ class Player(pygame.sprite.Sprite):
                     .find('player')[0]
                 game.player = Player((start_cell.px, start_cell.py),
                                      game.sprites)
+                # FIXME: Can cross dead bodies horizontally
         collision = pygame.sprite.spritecollide(self, game.deadbodies, False)
         for block in collision:
             if self.y_speed == 0:
