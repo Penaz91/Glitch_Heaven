@@ -21,15 +21,13 @@ class Player(pygame.sprite.Sprite):
         self.y_speed = 0
         self.x_speed = 0
         self.jump_speed = -500
-
-        
-        self.animation=animation.Animation()
-        self.animation.loadFromDir("resources\sprites\Player")
+        self.animation = animation.Animation()
+        self.animation.loadFromDir(os.path.join("resources",
+                                                "sprites",
+                                                "Player"))
 
     def update(self, dt, game):
-        
-        self.image=self.animation.next()
-
+        self.image = self.animation.next()
         last = self.rect.copy()
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
@@ -43,7 +41,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.x_speed = self.playerspeed*dt
         else:
-            self.x_speed=0
+            self.x_speed = 0
         self.rect.x += self.x_speed
         if game.glitches["multiJump"]:
             if key[pygame.K_UP]:

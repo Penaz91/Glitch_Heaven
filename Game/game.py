@@ -82,7 +82,7 @@ class Game(object):
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_7:
                     self.toggleGlitch("stickyCeil")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
-                    self.toggleGlitch("invertedGravity")
+                    self.gravity *= -1
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
                     self.toggleGlitch("permBodies")
             screen.blit(bg, (-self.tilemap.viewport.x/6,
