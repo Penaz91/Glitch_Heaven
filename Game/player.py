@@ -21,21 +21,22 @@ class Player(pygame.sprite.Sprite):
         self.y_speed = 0
         self.x_speed = 0
         self.jump_speed = -500
-        self.animation = animation.Animation()
-        self.animation.loadFromDir(os.path.join("resources",
+        self.walkanimation = animation.Animation()
+        self.walkanimation.loadFromDir(os.path.join("resources",
                                                 "sprites",
                                                 "Player"))
 
     def update(self, dt, game):
-        self.image = self.animation.next()
         last = self.rect.copy()
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
+            self.image = pygame.transform.flip(self.walkanimation.next(),True,False)
             if key[pygame.K_z]:
                 self.x_speed = -self.playerspeed*dt*1.5
             else:
                 self.x_speed = -self.playerspeed*dt
         elif key[pygame.K_RIGHT]:
+            self.image = self.walkanimation.next()
             if key[pygame.K_z]:
                 self.x_speed = self.playerspeed*dt*1.5
             else:
@@ -149,7 +150,7 @@ class Player(pygame.sprite.Sprite):
                     game.deadbodies.add(body)
                 self.kill()
                 start_cell = game.tilemap.layers['Triggers']\
-                    .find('player')[0]
+                    .find('playerEntrance')[0]
                 game.player = Player((start_cell.px, start_cell.py),
                                      game.sprites)
             if 'b' in deadly and last.top >= cell.bottom and\
@@ -163,7 +164,7 @@ class Player(pygame.sprite.Sprite):
                     game.deadbodies.add(body)
                 self.kill()
                 start_cell = game.tilemap.layers['Triggers']\
-                    .find('player')[0]
+                    .find('playerEntrance')[0]
                 game.player = Player((start_cell.px, start_cell.py),
                                      game.sprites)
                 # FIXME: Can cross dead bodies horizontally

@@ -3,15 +3,15 @@
  <tileset firstgid="1" name="Set" tilewidth="32" tileheight="32" tilecount="9">
   <image source="resources/tiles/WallsTemp.png" width="96" height="96"/>
  </tileset>
- <tileset firstgid="10" name="TestTile" tilewidth="32" tileheight="32" tilecount="15">
-  <image source="resources/tiles/TestTile.png" width="160" height="96"/>
+ <tileset firstgid="10" name="TestTile" tilewidth="32" tileheight="32" tilecount="36">
+  <image source="resources/tiles/TestTile.png" width="192" height="192"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmdkOhDAIRfs8u876/1869klCumBbBAwnuYmJUbmFgsYphPDeSU+kUfd9LJqCfe7BfWjCso8vOK75OC26FM6dCcpd3wOOi5KPVya+D0N8kNI64WdrqatUzFvWSYuPXtyHLrAPXKccvYaDWj5ir7LghVJXFuqudX5oy1HrPs/NRimvR+1XnKRm9qiceT504T500eMD7ttrQnv2Xs/HdmrfwT25k8hHfBeYgUZ8H1uoK8r8tOCDgvvQhfvgo9Sfc71Zo48WJOYgx7uL52OFc52ppHy07DNpjlhXP8lAOok+4j9byn8lTt2AWq6PHv7rhREn
+   eJztmd0KgzAMhXO9ebE52MZgsNvB3v/5Zq4spT+xaWwi+eCAIGpOkyaKMwA8dtIvUq/7XhfNYJ8LuA9NWPZxC45rPk6LpsK5M0G56znEcVHycc/E9xSIL6S0TvGztdRVKuYt66TFBxf3oYvYR1ynEr1Gglo+sFdZ8EKpKwt11zo/tOWodZ/nZuMor0ftV5KkZnavnHk+dOE+dMHxEe7bd0J79l7Px3Zq38Gc3I3IB74LfAP1+D62UFeU+WnBBwX3oQv3IUepP+d6s0YfLYyYgxLvLp6PFcl1ppLy0bLPRnPEunqNDIQJ+sB/tpT/SpL6BGq5Hj38AZhHE28=
   </data>
  </layer>
- <objectgroup name="Triggers">
+ <objectgroup name="Triggers" visible="0">
   <object id="1" x="0" y="0" width="864" height="32">
    <properties>
     <property name="blocker" value="lrbt"/>
