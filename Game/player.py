@@ -119,6 +119,8 @@ class Player(pygame.sprite.Sprite):
             bouncy = cell["bouncy"]
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
+                # TODO: Delegate Collision Correction to the "blocker" trigger
+                # TODO: Add Side Bouncing
                 self.rect.bottom = cell.top
                 if game.gravity == 1:
                     self.y_speed = self.jump_speed*game.gravity*2
@@ -126,6 +128,7 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = self.jump_speed*game.gravity*-2
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
+                # TODO: Delegate Collision Correction to the "blocker" trigger
                 self.rect.top = cell.bottom
                 if game.gravity == -1:
                     self.y_speed = self.jump_speed*game.gravity*2
@@ -136,6 +139,8 @@ class Player(pygame.sprite.Sprite):
             deadly = cell["deadly"]
             if 't' in deadly and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
+                # TODO: Delegate Collision Correction to the "blocker" trigger
+                # TODO: Add Side Deadly Blocks
                 self.rect.bottom = cell.top
                 if game.glitches["permBodies"]:
                     x, y = game.tilemap.pixel_from_screen(self.rect.x,
@@ -149,6 +154,7 @@ class Player(pygame.sprite.Sprite):
                                      game.sprites)
             if 'b' in deadly and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
+                # TODO: Delegate Collision Correction to the "blocker" trigger
                 self.rect.top = cell.bottom
                 if game.glitches["permBodies"]:
                     x, y = game.tilemap.pixel_from_screen(self.rect.x,
