@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import pygame
 import os
-from deadbody import DeadBody
+from components.deadbody import DeadBody
 from libs import animation
 
 
@@ -23,28 +23,32 @@ class Player(pygame.sprite.Sprite):
         self.jump_speed = -500
         self.walkanimation = animation.Animation()
         self.walkanimation.loadFromDir(os.path.join("resources",
-                                                "sprites",
-                                                "Player",
-                                                "Walking"))
-        self.runanimation=animation.Animation()
+                                                    "sprites",
+                                                    "Player",
+                                                    "Walking"))
+        self.runanimation = animation.Animation()
         self.runanimation.loadFromDir(os.path.join("resources",
-                                                "sprites",
-                                                "Player",
-                                                "Running"))
+                                                   "sprites",
+                                                   "Player",
+                                                   "Running"))
 
     def update(self, dt, game):
         last = self.rect.copy()
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
             if key[pygame.K_z]:
-                self.image=pygame.transform.flip(self.runanimation.next(),True,False)
+                self.image = pygame.transform.flip(self.runanimation.next(),
+                                                   True,
+                                                   False)
                 self.x_speed = -self.playerspeed*dt*1.5
             else:
-                self.image = pygame.transform.flip(self.walkanimation.next(),True,False)
+                self.image = pygame.transform.flip(self.walkanimation.next(),
+                                                   True,
+                                                   False)
                 self.x_speed = -self.playerspeed*dt
         elif key[pygame.K_RIGHT]:
             if key[pygame.K_z]:
-                self.image=self.runanimation.next()
+                self.image = self.runanimation.next()
                 self.x_speed = self.playerspeed*dt*1.5
             else:
                 self.image = self.walkanimation.next()
@@ -190,8 +194,14 @@ class Player(pygame.sprite.Sprite):
                 self.resting = False
                 self.y_speed = 0
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+                                                            'Help'):
+            if not game.getHelpFlag():
+                game.setHelpFlag(True)
+                helptext = cell['Help']
+                print(helptext)
+        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):
-            # FIXME: Make Game load the next level
+            # TODO: Make Game load the next level
             quit()
             # --------------------------------------
         game.tilemap.set_focus(self.rect.x, self.rect.y)

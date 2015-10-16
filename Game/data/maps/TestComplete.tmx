@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="49">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="51">
  <tileset firstgid="1" name="Set" tilewidth="32" tileheight="32" tilecount="9">
   <image source="resources/tiles/WallsTemp.png" width="96" height="96"/>
  </tileset>
@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmd0KgzAMhXO9ebE52MZgsNvB3v/5Zq4spT+xaWwi+eCAIGpOkyaKMwA8dtIvUq/7XhfNYJ8LuA9NWPZxC45rPk6LpsK5M0G56znEcVHycc/E9xSIL6S0TvGztdRVKuYt66TFBxf3oYvYR1ynEr1Gglo+sFdZ8EKpKwt11zo/tOWodZ/nZuMor0ftV5KkZnavnHk+dOE+dMHxEe7bd0J79l7Px3Zq38Gc3I3IB74LfAP1+D62UFeU+WnBBwX3oQv3IUepP+d6s0YfLYyYgxLvLp6PFcl1ppLy0bLPRnPEunqNDIQJ+sB/tpT/SpL6BGq5Hj38AZhHE28=
+   eJztmdsKgzAMhnu97WJzsBMMdivs/Z9v9i6EHmLT2MTlgx8EUfM3aaI4hRDuG+mL1Ou+l0VTsM85uA9NWPZxBcc1H4dFp8K5I0G56znguCj5uGXiewjEBymtE362lrpKxbxmnbT44OI+dIF94DqV6DUS1PIRe5UFL5S6slB3rfNDW45a93luNo7yutd+JUlqZvfKmedDF+5DFxwfcN++E9qy93o+1lP7DubkbkQ+4rvADNTj+9hCXVHmpwUfFNyHLtyHHKX+nOvNGn20MGIOSry7/Es+noR7SK4zlZSPln02mj3W1WtkIEyij/jPlvJfSVIfoJbro4cf9zMTiA==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -200,6 +200,11 @@
   <object id="48" x="1472" y="128" width="32" height="32">
    <properties>
     <property name="playerExit" value=""/>
+   </properties>
+  </object>
+  <object id="50" x="224" y="1120" width="32" height="32">
+   <properties>
+    <property name="Help" value="&quot;This is a test help string&quot;"/>
    </properties>
   </object>
  </objectgroup>

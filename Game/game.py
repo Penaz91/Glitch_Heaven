@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # TODO: Add Copyright Info here
 import pygame
-from player import Player
+from components.player import Player
 from libs import tmx
 import os
 
@@ -17,10 +17,17 @@ class Game(object):
             print("The {0} glitch has been enabled".format(glitch))
         mydict = {glitch: truth}
         game.glitches.update(mydict)
+
+    def getHelpFlag(self):
+        return self.helpflagActive
+
+    def setHelpFlag(self, flag):
+        self.helpflagActive = flag
     """ Main method """
     def main(self, screen):
         """Variables"""
         self.running = True
+        self.helpflagActive = False
         self.clock = pygame.time.Clock()
         self.glitches = {"wallClimb": False,
                          "multiJump": False,
