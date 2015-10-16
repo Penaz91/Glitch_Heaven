@@ -24,22 +24,30 @@ class Player(pygame.sprite.Sprite):
         self.walkanimation = animation.Animation()
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                 "sprites",
-                                                "Player"))
+                                                "Player",
+                                                "Walking"))
+        self.runanimation=animation.Animation()
+        self.runanimation.loadFromDir(os.path.join("resources",
+                                                "sprites",
+                                                "Player",
+                                                "Running"))
 
     def update(self, dt, game):
         last = self.rect.copy()
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
-            self.image = pygame.transform.flip(self.walkanimation.next(),True,False)
             if key[pygame.K_z]:
+                self.image=pygame.transform.flip(self.runanimation.next(),True,False)
                 self.x_speed = -self.playerspeed*dt*1.5
             else:
+                self.image = pygame.transform.flip(self.walkanimation.next(),True,False)
                 self.x_speed = -self.playerspeed*dt
         elif key[pygame.K_RIGHT]:
-            self.image = self.walkanimation.next()
             if key[pygame.K_z]:
+                self.image=self.runanimation.next()
                 self.x_speed = self.playerspeed*dt*1.5
             else:
+                self.image = self.walkanimation.next()
                 self.x_speed = self.playerspeed*dt
         else:
             self.x_speed = 0
