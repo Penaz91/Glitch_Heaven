@@ -23,12 +23,20 @@ class Game(object):
 
     def setHelpFlag(self, flag):
         self.helpflagActive = flag
+
+    def setHelpText(self, txt):
+        self.currenthelp = txt
+
+    def getHelpText(self):
+        return self.currenthelp
     """ Main method """
     def main(self, screen):
         """Variables"""
         self.running = True
         self.helpflagActive = False
         self.clock = pygame.time.Clock()
+        self.helptxts = pygame.sprite.Group()
+        self.currenthelp = ""
         self.glitches = {"wallClimb": False,
                          "multiJump": False,
                          "highJump": False,
@@ -37,7 +45,8 @@ class Game(object):
                          "hover": False,
                          "stickyCeil": False,
                          "invertedGravity": False,
-                         "permBodies": False}
+                         "permBodies": False,
+                         "SolidHelp": False}
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
@@ -92,11 +101,14 @@ class Game(object):
                     self.gravity *= -1
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
                     self.toggleGlitch("permBodies")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                    self.toggleGlitch("SolidHelp")
             screen.blit(bg, (-self.tilemap.viewport.x/6,
                              -self.tilemap.viewport.y/6))
             screen.blit(middleback, (-self.tilemap.viewport.x/4,
                                      -self.tilemap.viewport.y/4))
             self.tilemap.update(dt/1000., self)
+            self.helptxts.update(dt, self)
             screen.blit(middle, (-self.tilemap.viewport.x/2,
                                  -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)

@@ -2,6 +2,7 @@
 import pygame
 import os
 from components.deadbody import DeadBody
+from components.help import Help
 from libs import animation
 
 
@@ -193,12 +194,30 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = block.rect.bottom
                 self.resting = False
                 self.y_speed = 0
+        if game.glitches['SolidHelp']:
+            collision = pygame.sprite.spritecollide(self, game.helptxts, False)
+            for block in collision:
+                if self.y_speed == 0:
+                    self.resting = True
+                elif self.y_speed > 0 and game.gravity == 1:
+                    self.rect.bottom = block.rect.top
+                    self.resting = True
+                    self.y_speed = 0
+                elif self.y_speed < 0 and game.gravity == -1:
+                    self.rect.top = block.rect.bottom
+                    self.resting = False
+                    self.y_speed = 0
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'Help'):
+            helptext = cell['Help']
+            if helptext != game.getHelpText():
+                game.setHelpFlag(False)
             if not game.getHelpFlag():
                 game.setHelpFlag(True)
-                helptext = cell['Help']
-                print(helptext)
+                game.setHelpText(helptext)
+                x, y = game.tilemap.pixel_from_screen(self.rect.x,
+                                                      self.rect.y-20)
+                Help(x, y, game.sprites, game=game, Text=helptext)
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):
             # TODO: Make Game load the next level

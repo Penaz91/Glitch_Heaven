@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="51">
- <tileset firstgid="1" name="Set" tilewidth="32" tileheight="32" tilecount="9">
-  <image source="resources/tiles/WallsTemp.png" width="96" height="96"/>
- </tileset>
- <tileset firstgid="10" name="TestTile" tilewidth="32" tileheight="32" tilecount="36">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="52">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="36">
   <image source="resources/tiles/TestTile.png" width="192" height="192"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmdsKgzAMhnu97WJzsBMMdivs/Z9v9i6EHmLT2MTlgx8EUfM3aaI4hRDuG+mL1Ou+l0VTsM85uA9NWPZxBcc1H4dFp8K5I0G56znguCj5uGXiewjEBymtE362lrpKxbxmnbT44OI+dIF94DqV6DUS1PIRe5UFL5S6slB3rfNDW45a93luNo7yutd+JUlqZvfKmedDF+5DFxwfcN++E9qy93o+1lP7DubkbkQ+4rvADNTj+9hCXVHmpwUfFNyHLtyHHKX+nOvNGn20MGIOSry7/Es+noR7SK4zlZSPln02mj3W1WtkIEyij/jPlvJfSVIfoJbro4cf9zMTiA==
+   eJztmdsKwjAMQKt70AnzAoKvgv//jy5vofSSNc2ajBwICDLNadJ0Y3MI4b5T/KLo9bvXNeZgn0twD01Y9rihzzWP0xpT4bszIXLXc4jzotRjyeT3EMgPU1qn+L+19FUq5y3rpMWDi3voIvaI+1Ri1khQqwfMKgsulL6y0Het54e2GrXu89zZOMr1qPNKktSZ3atmXg9duIcuOB54374Tsefs9Xpsp/YczKndiHrAvcAXRY/nYwt9RTk/LXhQcA9duIccpfmcm80aPVoYcQ5K3Lv08Hh2yINLzYOSo+Q6U0l5tOyz0Rxxn79GJsIEPOCdLeW9kmR8ULRcDw5/dMgI3w==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -205,6 +202,11 @@
   <object id="50" x="224" y="1120" width="32" height="32">
    <properties>
     <property name="Help" value="&quot;This is a test help string&quot;"/>
+   </properties>
+  </object>
+  <object id="51" x="512" y="1088" width="32" height="32">
+   <properties>
+    <property name="Help" value="&quot;This is another help string&quot;"/>
    </properties>
   </object>
  </objectgroup>

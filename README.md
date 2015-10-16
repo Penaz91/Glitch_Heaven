@@ -29,12 +29,12 @@ and more challenging.
 
 
 ### Glitches Partially Implemented or that need BuxFixes/Testing:
-None At The moment
+- **Solid Help Glitch**: The help text will behave like a temporary platform
+
 
 ### Glitches Planned:
 - **Ledge Glitch:** if you go over a ledge, you don't fall. In order to fall you need to jump.
 - **Clip-on-command glitch**: Pressing down arrow makes you go through the platform you're standing on
-- **Solid Help Glitch**: The help text will behave like a temporary platform
 - **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end
 
 ### Planned Features

@@ -5,8 +5,6 @@ import os
 
 
 class DeadBody(MobilePlatform):
-    size = (32, 32)
-    playerspeed = 300
 
     def __init__(self, x, y, *groups, game):
         self.img = pygame.image.load(os.path.join("resources",
