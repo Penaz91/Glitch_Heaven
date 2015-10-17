@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="52">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="56">
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="36">
   <image source="resources/tiles/TestTile.png" width="192" height="192"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmdsKwjAMQKt70AnzAoKvgv//jy5vofSSNc2ajBwICDLNadJ0Y3MI4b5T/KLo9bvXNeZgn0twD01Y9rihzzWP0xpT4bszIXLXc4jzotRjyeT3EMgPU1qn+L+19FUq5y3rpMWDi3voIvaI+1Ri1khQqwfMKgsulL6y0Het54e2GrXu89zZOMr1qPNKktSZ3atmXg9duIcuOB54374Tsefs9Xpsp/YczKndiHrAvcAXRY/nYwt9RTk/LXhQcA9duIccpfmcm80aPVoYcQ5K3Lv08Hh2yINLzYOSo+Q6U0l5tOyz0Rxxn79GJsIEPOCdLeW9kmR8ULRcDw5/dMgI3w==
+   eJztme0KwjAMRaP+0A38AkFkIoLv/44apFhKu8U2adrSAwFBt+UmadLOAQAOmezlGNd9dx8boH620HWUhNGx0XYkgtH6bHQ8Ar9dQVgjfrcmmESMXL+WdCD7gH9HAf9s5uLkPpuiIwc+n/+JUyk6UjE6pGtEmtb6rsGt01r68VI+sFfVoIVSVzXUHUWHb36UlqPYdR6ajVpaW+1XkvhmNkfO8L615+MO37Ng11EGXccPe91ePJaj97aSDwRnmXbf5erBGvnA+D0t4zj71PC+hDI/jY4pr2vsdB1l0XXIMdefQ/2ohfc+ufftJs7ce5cb8Og4JV6fCkUHxUepOFMJ6YhZZ5pw1ZU27n73rOhLKqgDzyGU/5Uk7WpZzPWo4Q0l1As2
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -126,6 +126,7 @@
   </object>
   <object id="33" x="576" y="1120" width="96" height="32">
    <properties>
+    <property name="blocker" value="b"/>
     <property name="deadly" value="t"/>
    </properties>
   </object>
@@ -146,6 +147,7 @@
   </object>
   <object id="37" x="544" y="704" width="160" height="32">
    <properties>
+    <property name="blocker" value="b"/>
     <property name="deadly" value="t"/>
    </properties>
   </object>
@@ -156,6 +158,7 @@
   </object>
   <object id="39" x="896" y="1056" width="96" height="32">
    <properties>
+    <property name="blocker" value="b"/>
     <property name="deadly" value="t"/>
    </properties>
   </object>
@@ -207,6 +210,26 @@
   <object id="51" x="512" y="1088" width="32" height="32">
    <properties>
     <property name="Help" value="&quot;This is another help string&quot;"/>
+   </properties>
+  </object>
+  <object id="52" x="1536" y="1056" width="32" height="128">
+   <properties>
+    <property name="deadly" value="l"/>
+   </properties>
+  </object>
+  <object id="53" x="1504" y="576" width="32" height="160">
+   <properties>
+    <property name="bouncy" value="l"/>
+   </properties>
+  </object>
+  <object id="54" x="32" y="864" width="32" height="160">
+   <properties>
+    <property name="deadly" value="r"/>
+   </properties>
+  </object>
+  <object id="55" x="32" y="160" width="32" height="128">
+   <properties>
+    <property name="bouncy" value="r"/>
    </properties>
   </object>
  </objectgroup>

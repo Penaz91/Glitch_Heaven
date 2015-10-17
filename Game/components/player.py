@@ -8,7 +8,8 @@ from libs import animation
 
 class Player(pygame.sprite.Sprite):
     size = (32, 32)
-    playerspeed = 300
+    playermaxspeed = 300
+    playeraccel=10
 
     def __init__(self, location, *groups):
         super(Player, self).__init__(*groups)
@@ -33,6 +34,17 @@ class Player(pygame.sprite.Sprite):
                                                    "Player",
                                                    "Running"))
 
+    def respawn(self,game):
+        if game.glitches["permBodies"]:
+            x, y = game.tilemap.pixel_from_screen(self.rect.x,
+                                                  self.rect.y)
+            body = DeadBody(x, y, game.sprites, game=game)
+            game.deadbodies.add(body)
+        self.kill()
+        start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
+        game.player = Player((start_cell.px, start_cell.py),
+                             game.sprites)
+                                                   
     def update(self, dt, game):
         last = self.rect.copy()
         key = pygame.key.get_pressed()
@@ -41,19 +53,20 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.transform.flip(self.runanimation.next(),
                                                    True,
                                                    False)
-                self.x_speed = -self.playerspeed*dt*1.5
+                self.x_speed = max(-self.playermaxspeed,self.x_speed-self.playeraccel*dt*1.5)
             else:
                 self.image = pygame.transform.flip(self.walkanimation.next(),
                                                    True,
                                                    False)
-                self.x_speed = -self.playerspeed*dt
+                self.x_speed =  max(-self.playermaxspeed,self.x_speed-self.playeraccel*dt)
         elif key[pygame.K_RIGHT]:
             if key[pygame.K_z]:
                 self.image = self.runanimation.next()
-                self.x_speed = self.playerspeed*dt*1.5
+                self.x_speed = min(self.playermaxspeed,self.x_speed+self.playeraccel*dt*1.5)
             else:
                 self.image = self.walkanimation.next()
-                self.x_speed = self.playerspeed*dt
+                self.x_speed = min(self.playermaxspeed,self.x_speed+self.playeraccel*dt)
+# ----------------FIXME: ICY!!!! (Slippery, add acceleration)-------------------------
         else:
             self.x_speed = 0
         self.rect.x += self.x_speed
@@ -112,29 +125,49 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = -200
             if 't' in blockers and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
-                self.rect.bottom = cell.top
-                if game.glitches["stickyCeil"]:
-                    self.y_speed = 3/dt
+                # Framework for clip-on-command glitch
+                if game.glitches["clipOnCommand"]:
+                    if not key[pygame.K_DOWN]:
+                        self.rect.bottom = cell.top
+                        if game.glitches["stickyCeil"]:
+                            self.y_speed = 3/dt
+                        else:
+                            self.y_speed = 0
+                        if game.gravity == 1:
+                            self.resting = True
                 else:
-                    self.y_speed = 0
-                if game.gravity == 1:
-                    self.resting = True
+                    self.rect.bottom = cell.top
+                    if game.glitches["stickyCeil"]:
+                        self.y_speed = 3/dt
+                    else:
+                        self.y_speed = 0
+                    if game.gravity == 1:
+                        self.resting = True
             if 'b' in blockers and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
-                self.rect.top = cell.bottom
-                if game.glitches["stickyCeil"]:
-                    self.y_speed = -5/dt
+                # Part of the clip-on-command glitch Framework
+                if game.glitches["clipOnCommand"]:
+                    if not key[pygame.K_DOWN]:
+                        self.rect.top = cell.bottom
+                        if game.glitches["stickyCeil"]:
+                            self.y_speed = -5/dt
+                        else:
+                            self.y_speed = 0
+                        if game.gravity == -1:
+                            self.resting = True
                 else:
-                    self.y_speed = 0
-                if game.gravity == -1:
-                    self.resting = True
+                    self.rect.top = cell.bottom
+                    if game.glitches["stickyCeil"]:
+                        self.y_speed = -5/dt
+                    else:
+                        self.y_speed = 0
+                    if game.gravity == -1:
+                        self.resting = True
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'bouncy'):
             bouncy = cell["bouncy"]
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
-                # TODO: Delegate Collision Correction to the "blocker" trigger
-                # TODO: Add Side Bouncing
                 self.rect.bottom = cell.top
                 if game.gravity == 1:
                     self.y_speed = self.jump_speed*game.gravity*2
@@ -142,8 +175,21 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = self.jump_speed*game.gravity*-2
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
-                # TODO: Delegate Collision Correction to the "blocker" trigger
                 self.rect.top = cell.bottom
+                if game.gravity == -1:
+                    self.y_speed = self.jump_speed*game.gravity*2
+                elif game.gravity == 1:
+                    self.y_speed = self.jump_speed*game.gravity*-2
+            if 'l' in bouncy and last.right <= cell.left and self.rect.right > cell.left:
+                self.rect.right=cell.left
+                if game.gravity == -1:
+                    self.y_speed = self.jump_speed*game.gravity*2
+                elif game.gravity == 1:
+                    self.y_speed = self.jump_speed*game.gravity*-2
+                self.x_speed*=-2
+            if 'r' in bouncy and last.left >= cell.right and self.rect.left < cell.right:
+                self.rect.left=cell.right
+                self.x_speed*=-2
                 if game.gravity == -1:
                     self.y_speed = self.jump_speed*game.gravity*2
                 elif game.gravity == 1:
@@ -151,37 +197,22 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'deadly'):
             deadly = cell["deadly"]
+            # FIXME: Can cross dead bodies horizontally
+            # FIX: Bodies will be pretty thin, so i think i can ignore this
             if 't' in deadly and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
-                # TODO: Delegate Collision Correction to the "blocker" trigger
-                # TODO: Add Side Deadly Blocks
                 self.rect.bottom = cell.top
-                if game.glitches["permBodies"]:
-                    x, y = game.tilemap.pixel_from_screen(self.rect.x,
-                                                          self.rect.y)
-                    body = DeadBody(x, y, game.sprites, game=game)
-                    game.deadbodies.add(body)
-                self.kill()
-                start_cell = game.tilemap.layers['Triggers']\
-                    .find('playerEntrance')[0]
-                game.player = Player((start_cell.px, start_cell.py),
-                                     game.sprites)
+                self.respawn(game)
             if 'b' in deadly and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
-                # TODO: Delegate Collision Correction to the "blocker" trigger
                 self.rect.top = cell.bottom
-                if game.glitches["permBodies"]:
-                    x, y = game.tilemap.pixel_from_screen(self.rect.x,
-                                                          self.rect.y)
-                    body = DeadBody(x, y, game.sprites, game=game)
-                    game.deadbodies.add(body)
-                self.kill()
-                start_cell = game.tilemap.layers['Triggers']\
-                    .find('playerEntrance')[0]
-                game.player = Player((start_cell.px, start_cell.py),
-                                     game.sprites)
-                # FIXME: Can cross dead bodies horizontally
-                # FIX: Bodies will be pretty thin, so i think i can ignore this
+                self.respawn(game)
+            if 'l' in deadly and last.right <= cell.left and self.rect.right > cell.left:
+                self.rect.right=cell.left
+                self.respawn(game)
+            if 'r' in deadly and last.left >= cell.right and self.rect.left < cell.right:
+                self.rect.left=cell.right
+                self.respawn(game)
         collision = pygame.sprite.spritecollide(self, game.deadbodies, False)
         for block in collision:
             if self.y_speed == 0:
@@ -215,8 +246,7 @@ class Player(pygame.sprite.Sprite):
             if not game.getHelpFlag():
                 game.setHelpFlag(True)
                 game.setHelpText(helptext)
-                x, y = game.tilemap.pixel_from_screen(self.rect.x,
-                                                      self.rect.y-20)
+                x, y = game.tilemap.pixel_from_screen(cell.px+cell.width/2,cell.py-20)
                 Help(x, y, game.sprites, game=game, Text=helptext)
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):

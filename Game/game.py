@@ -46,7 +46,8 @@ class Game(object):
                          "stickyCeil": False,
                          "invertedGravity": False,
                          "permBodies": False,
-                         "SolidHelp": False}
+                         "SolidHelp": False,
+                         "clipOnCommand": False}
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
@@ -99,10 +100,13 @@ class Game(object):
                     self.toggleGlitch("stickyCeil")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
                     self.gravity *= -1
+                    print("The Gravity has been inverted")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
                     self.toggleGlitch("permBodies")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                     self.toggleGlitch("SolidHelp")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+                    self.toggleGlitch("clipOnCommand")
             screen.blit(bg, (-self.tilemap.viewport.x/6,
                              -self.tilemap.viewport.y/6))
             screen.blit(middleback, (-self.tilemap.viewport.x/4,
