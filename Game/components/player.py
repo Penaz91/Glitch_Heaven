@@ -8,8 +8,9 @@ from libs import animation
 
 class Player(pygame.sprite.Sprite):
     size = (32, 32)
-    playermaxspeed = 300
-    playeraccel=10
+    playermaxspeed = 200
+    runmultiplier = 2
+    playeraccel=50
 
     def __init__(self, location, *groups):
         super(Player, self).__init__(*groups)
@@ -23,6 +24,8 @@ class Player(pygame.sprite.Sprite):
         self.y_speed = 0
         self.x_speed = 0
         self.jump_speed = -500
+        self.direction=1
+        self.bounced=0
         self.walkanimation = animation.Animation()
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
@@ -49,26 +52,38 @@ class Player(pygame.sprite.Sprite):
         last = self.rect.copy()
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:
-            if key[pygame.K_z]:
-                self.image = pygame.transform.flip(self.runanimation.next(),
-                                                   True,
-                                                   False)
-                self.x_speed = max(-self.playermaxspeed,self.x_speed-self.playeraccel*dt*1.5)
-            else:
-                self.image = pygame.transform.flip(self.walkanimation.next(),
-                                                   True,
-                                                   False)
-                self.x_speed =  max(-self.playermaxspeed,self.x_speed-self.playeraccel*dt)
+            self.direction=-1
+            if not self.bounced:
+                if key[pygame.K_z]:
+                    self.image = pygame.transform.flip(self.runanimation.next(),
+                                                       True,
+                                                       False)
+                    self.x_speed = max(-self.playermaxspeed*dt*self.runmultiplier,self.x_speed-self.playeraccel*dt*self.runmultiplier)
+                else:
+                    self.image = pygame.transform.flip(self.walkanimation.next(),
+                                                       True,
+                                                       False)
+                    self.x_speed =  max(-self.playermaxspeed*dt,self.x_speed-self.playeraccel*dt)
         elif key[pygame.K_RIGHT]:
-            if key[pygame.K_z]:
-                self.image = self.runanimation.next()
-                self.x_speed = min(self.playermaxspeed,self.x_speed+self.playeraccel*dt*1.5)
-            else:
-                self.image = self.walkanimation.next()
-                self.x_speed = min(self.playermaxspeed,self.x_speed+self.playeraccel*dt)
-# ----------------FIXME: ICY!!!! (Slippery, add acceleration)-------------------------
+            if not self.bounced:
+                self.direction=1
+                if key[pygame.K_z]:
+                    self.image = self.runanimation.next()
+                    self.x_speed = min(self.playermaxspeed*dt*self.runmultiplier,self.x_speed+self.playeraccel*dt*self.runmultiplier)
+                else:
+                    self.image = self.walkanimation.next()
+                    self.x_speed = min(self.playermaxspeed*dt,self.x_speed+self.playeraccel*dt)
         else:
-            self.x_speed = 0
+            if self.resting:
+                if self.direction==1:
+                    self.x_speed=max(0,self.x_speed-(self.playeraccel*dt))
+                elif self.direction==-1:
+                    self.x_speed=min(0,self.x_speed+(self.playeraccel*dt))
+            elif not self.bounced:
+                if self.direction==1:
+                    self.x_speed=max(0,self.x_speed-(self.playeraccel*dt*0.25))
+                elif self.direction==-1:
+                    self.x_speed=min(0,self.x_speed+(self.playeraccel*dt*0.25))
         self.rect.x += self.x_speed
         if game.glitches["multiJump"]:
             if key[pygame.K_UP]:
@@ -115,17 +130,20 @@ class Player(pygame.sprite.Sprite):
             blockers = cell['blocker']
             if 'l' in blockers and last.right <= cell.left and\
                     self.rect.right > cell.left:
+                self.bounced=False
                 self.rect.right = cell.left
                 if game.glitches["wallClimb"]:
                     self.y_speed = -200
             if 'r' in blockers and last.left >= cell.right and\
                     self.rect.left < cell.right:
+                self.bounced=False
                 self.rect.left = cell.right
                 if game.glitches["wallClimb"]:
                     self.y_speed = -200
             if 't' in blockers and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 # Framework for clip-on-command glitch
+                self.bounced=False
                 if game.glitches["clipOnCommand"]:
                     if not key[pygame.K_DOWN]:
                         self.rect.bottom = cell.top
@@ -146,6 +164,7 @@ class Player(pygame.sprite.Sprite):
             if 'b' in blockers and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
+                self.bounced=False
                 if game.glitches["clipOnCommand"]:
                     if not key[pygame.K_DOWN]:
                         self.rect.top = cell.bottom
@@ -166,34 +185,31 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'bouncy'):
             bouncy = cell["bouncy"]
+            power = int(cell["power"])
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 self.rect.bottom = cell.top
-                if game.gravity == 1:
-                    self.y_speed = self.jump_speed*game.gravity*2
+                if game.gravity==1:
+                    self.y_speed = - power*game.gravity
                 elif game.gravity == -1:
-                    self.y_speed = self.jump_speed*game.gravity*-2
+                    self.y_speed = power*game.gravity
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 self.rect.top = cell.bottom
-                if game.gravity == -1:
-                    self.y_speed = self.jump_speed*game.gravity*2
-                elif game.gravity == 1:
-                    self.y_speed = self.jump_speed*game.gravity*-2
+                if game.gravity == 1:
+                    self.y_speed = power*game.gravity
+                elif game.gravity == -1:
+                    self.y_speed = - power*game.gravity
             if 'l' in bouncy and last.right <= cell.left and self.rect.right > cell.left:
+                self.bounced=True
                 self.rect.right=cell.left
-                if game.gravity == -1:
-                    self.y_speed = self.jump_speed*game.gravity*2
-                elif game.gravity == 1:
-                    self.y_speed = self.jump_speed*game.gravity*-2
-                self.x_speed*=-2
+                self.x_speed=-power*dt
+                self.y_speed = - game.gravity*power
             if 'r' in bouncy and last.left >= cell.right and self.rect.left < cell.right:
+                self.bounced=True
                 self.rect.left=cell.right
-                self.x_speed*=-2
-                if game.gravity == -1:
-                    self.y_speed = self.jump_speed*game.gravity*2
-                elif game.gravity == 1:
-                    self.y_speed = self.jump_speed*game.gravity*-2
+                self.x_speed=power*dt
+                self.y_speed = - game.gravity*power
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'deadly'):
             deadly = cell["deadly"]

@@ -8,7 +8,7 @@
    eJztme0KwjAMRaP+0A38AkFkIoLv/44apFhKu8U2adrSAwFBt+UmadLOAQAOmezlGNd9dx8boH620HWUhNGx0XYkgtH6bHQ8Ar9dQVgjfrcmmESMXL+WdCD7gH9HAf9s5uLkPpuiIwc+n/+JUyk6UjE6pGtEmtb6rsGt01r68VI+sFfVoIVSVzXUHUWHb36UlqPYdR6ajVpaW+1XkvhmNkfO8L615+MO37Ng11EGXccPe91ePJaj97aSDwRnmXbf5erBGvnA+D0t4zj71PC+hDI/jY4pr2vsdB1l0XXIMdefQ/2ohfc+ufftJs7ce5cb8Og4JV6fCkUHxUepOFMJ6YhZZ5pw1ZU27n73rOhLKqgDzyGU/5Uk7WpZzPWo4Q0l1As2
   </data>
  </layer>
- <objectgroup name="Triggers" visible="0">
+ <objectgroup name="Triggers">
   <object id="1" x="0" y="0" width="864" height="32">
    <properties>
     <property name="blocker" value="lrbt"/>
@@ -190,11 +190,13 @@
   <object id="46" x="864" y="0" width="128" height="32">
    <properties>
     <property name="bouncy" value="b"/>
+    <property name="power" value="800"/>
    </properties>
   </object>
   <object id="47" x="1056" y="1248" width="96" height="32">
    <properties>
     <property name="bouncy" value="t"/>
+    <property name="power" value="800"/>
    </properties>
   </object>
   <object id="48" x="1472" y="128" width="32" height="32">
@@ -220,6 +222,7 @@
   <object id="53" x="1504" y="576" width="32" height="160">
    <properties>
     <property name="bouncy" value="l"/>
+    <property name="power" value="800"/>
    </properties>
   </object>
   <object id="54" x="32" y="864" width="32" height="160">
@@ -230,6 +233,7 @@
   <object id="55" x="32" y="160" width="32" height="128">
    <properties>
     <property name="bouncy" value="r"/>
+    <property name="power" value="800"/>
    </properties>
   </object>
  </objectgroup>
