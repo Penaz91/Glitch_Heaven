@@ -30,35 +30,54 @@ class Game(object):
 
     def getHelpText(self):
         return self.currenthelp
-        
-    def LoadLevel(self,level,screen):
+
+    def LoadLevel(self, level, screen):
         levelconfig = configparser.ConfigParser()
-        levelconfig.read(os.path.join("data","maps",level+".conf"))
+        levelconfig.read(os.path.join("data", "maps", level+".conf"))
         self.helpflagActive = False
         self.currenthelp = ""
-        self.glitches = dict(levelconfig['Glitches'])
-        self.tilemap = tmx.load(os.path.join("data","maps",level+".tmx"),
+        self.tempglitches = dict(levelconfig['Glitches'])
+        self.tempkeys = self.tempglitches.keys()
+        self.tempvalues = self.tempglitches.values()
+        self.newvalues = []
+        for value in self.tempvalues:
+            if value.lower() in ["true", "1", "on", "yes"]:
+                self.newvalues.append(True)
+            else:
+                self.newvalues.append(False)
+        self.glitches = dict(zip(self.tempkeys,
+                             self.newvalues))
+        del self.tempglitches, self.tempkeys, self.tempvalues, self.newvalues
+        self.tilemap = tmx.load(os.path.join("data", "maps", level+".tmx"),
                                 screen.get_size())
+        self.bg = pygame.image.load(
+                  os.path.join("resources",
+                               "backgrounds",
+                               levelconfig["Level_Components"]
+                               ["background"]))
+        self.middleback = pygame.image.load(
+                          os.path.join("resources",
+                                       "backgrounds",
+                                       levelconfig["Level_Components"]
+                                       ["middle_back1"]))
+        self.middle = pygame.image.load(
+                      os.path.join("resources",
+                                   "backgrounds",
+                                   levelconfig["Level_Components"]
+                                   ["middle_back2"]))
+        self.overlay = pygame.image.load(
+                       os.path.join("resources",
+                                    "overlays",
+                                    levelconfig["Level_Components"]
+                                    ["overlay"]))
+
     """ Main method """
     def main(self, screen):
         """Variables"""
         self.running = True
         self.clock = pygame.time.Clock()
         self.helptxts = pygame.sprite.Group()
-        self.LoadLevel("TestComplete",screen)
-        # self.helpflagActive = False
-        #self.currenthelp = ""
-        """self.glitches = {"wallClimb": False,
-                         "multiJump": False,
-                         "highJump": False,
-                         "featherFalling": False,
-                         "gravity": False,
-                         "hover": False,
-                         "stickyCeil": False,
-                         "invertedGravity": False,
-                         "permBodies": False,
-                         "SolidHelp": False,
-                         "clipOnCommand": False}"""
+        self.LoadLevel("TestComplete", screen)
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
@@ -67,18 +86,6 @@ class Game(object):
         """Program"""
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
-        bg = pygame.image.load(os.path.join("resources",
-                                            "backgrounds",
-                                            "Back1.png"))
-        middle = pygame.image.load(os.path.join("resources",
-                                                "backgrounds",
-                                                "Back2.png"))
-        middleback = pygame.image.load(os.path.join("resources",
-                                                    "backgrounds",
-                                                    "Back3.png"))
-        overlay = pygame.image.load(os.path.join("resources",
-                                                 "overlays",
-                                                 "overlay1.png"))
         """self.tilemap = tmx.load('data/maps/TestComplete.tmx',
                                 screen.get_size())"""
         self.sprites = tmx.SpriteLayer()
@@ -118,17 +125,17 @@ class Game(object):
                     self.toggleGlitch("solidhelp")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
                     self.toggleGlitch("cliponcommand")
-            screen.blit(bg, (-self.tilemap.viewport.x/6,
-                             -self.tilemap.viewport.y/6))
-            screen.blit(middleback, (-self.tilemap.viewport.x/4,
-                                     -self.tilemap.viewport.y/4))
+            screen.blit(self.bg, (-self.tilemap.viewport.x/6,
+                                  -self.tilemap.viewport.y/6))
+            screen.blit(self.middleback, (-self.tilemap.viewport.x/4,
+                                          -self.tilemap.viewport.y/4))
             self.tilemap.update(dt/1000., self)
             self.helptxts.update(dt, self)
-            screen.blit(middle, (-self.tilemap.viewport.x/2,
-                                 -self.tilemap.viewport.y/2))
+            screen.blit(self.middle, (-self.tilemap.viewport.x/2,
+                                      -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
-            screen.blit(overlay, (-self.tilemap.viewport.x*1.5,
-                                  -self.tilemap.viewport.y*1.5))
+            screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
+                                       -self.tilemap.viewport.y*1.5))
             pygame.display.flip()
         pygame.quit()
         quit()
