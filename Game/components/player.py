@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
                                                    "Running"))
 
     def respawn(self,game):
-        if game.glitches["permBodies"]:
+        if game.glitches["permbodies"]:
             x, y = game.tilemap.pixel_from_screen(self.rect.x,
                                                   self.rect.y)
             body = DeadBody(x, y, game.sprites, game=game)
@@ -85,12 +85,12 @@ class Player(pygame.sprite.Sprite):
                 elif self.direction==-1:
                     self.x_speed=min(0,self.x_speed+(self.playeraccel*dt*0.25))
         self.rect.x += self.x_speed
-        if game.glitches["multiJump"]:
+        if game.glitches["multijump"]:
             if key[pygame.K_UP]:
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
-                    if game.glitches["highJump"]:
+                    if game.glitches["highjump"]:
                         if self.y_speed > -(self.jump_speed/2) or self.resting:
                             self.y_speed = self.jump_speed*2*game.gravity
                     else:
@@ -104,12 +104,12 @@ class Player(pygame.sprite.Sprite):
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
-                    if game.glitches["highJump"]:
+                    if game.glitches["highjump"]:
                         self.y_speed = self.jump_speed*2*game.gravity
                     else:
                         self.y_speed = self.jump_speed*game.gravity
                 self.resting = False
-        if game.glitches["featherFalling"]:
+        if game.glitches["featherfalling"]:
             if game.gravity == 1:
                 self.y_speed = (min(200, self.y_speed+20))
             elif game.gravity == -1:
@@ -132,22 +132,22 @@ class Player(pygame.sprite.Sprite):
                     self.rect.right > cell.left:
                 self.bounced=False
                 self.rect.right = cell.left
-                if game.glitches["wallClimb"]:
+                if game.glitches["wallclimb"]:
                     self.y_speed = -200
             if 'r' in blockers and last.left >= cell.right and\
                     self.rect.left < cell.right:
                 self.bounced=False
                 self.rect.left = cell.right
-                if game.glitches["wallClimb"]:
+                if game.glitches["wallclimb"]:
                     self.y_speed = -200
             if 't' in blockers and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 # Framework for clip-on-command glitch
                 self.bounced=False
-                if game.glitches["clipOnCommand"]:
+                if game.glitches["cliponcommand"]:
                     if not key[pygame.K_DOWN]:
                         self.rect.bottom = cell.top
-                        if game.glitches["stickyCeil"]:
+                        if game.glitches["stickyceil"]:
                             self.y_speed = 3/dt
                         else:
                             self.y_speed = 0
@@ -155,7 +155,7 @@ class Player(pygame.sprite.Sprite):
                             self.resting = True
                 else:
                     self.rect.bottom = cell.top
-                    if game.glitches["stickyCeil"]:
+                    if game.glitches["stickyceil"]:
                         self.y_speed = 3/dt
                     else:
                         self.y_speed = 0
@@ -165,10 +165,10 @@ class Player(pygame.sprite.Sprite):
                     self.rect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
                 self.bounced=False
-                if game.glitches["clipOnCommand"]:
+                if game.glitches["cliponcommand"]:
                     if not key[pygame.K_DOWN]:
                         self.rect.top = cell.bottom
-                        if game.glitches["stickyCeil"]:
+                        if game.glitches["stickyceil"]:
                             self.y_speed = -5/dt
                         else:
                             self.y_speed = 0
@@ -176,7 +176,7 @@ class Player(pygame.sprite.Sprite):
                             self.resting = True
                 else:
                     self.rect.top = cell.bottom
-                    if game.glitches["stickyCeil"]:
+                    if game.glitches["stickyceil"]:
                         self.y_speed = -5/dt
                     else:
                         self.y_speed = 0
@@ -204,12 +204,18 @@ class Player(pygame.sprite.Sprite):
                 self.bounced=True
                 self.rect.right=cell.left
                 self.x_speed=-power*dt
-                self.y_speed = - game.gravity*power
+                if self.y_speed<0:
+                    self.y_speed = - game.gravity*power
+                else:
+                    self.y_speed = game.gravity*power
             if 'r' in bouncy and last.left >= cell.right and self.rect.left < cell.right:
                 self.bounced=True
                 self.rect.left=cell.right
                 self.x_speed=power*dt
-                self.y_speed = - game.gravity*power
+                if self.y_speed<0:
+                    self.y_speed = - game.gravity*power
+                else:
+                    self.y_speed = game.gravity*power
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'deadly'):
             deadly = cell["deadly"]
@@ -241,7 +247,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = block.rect.bottom
                 self.resting = False
                 self.y_speed = 0
-        if game.glitches['SolidHelp']:
+        if game.glitches['solidhelp']:
             collision = pygame.sprite.spritecollide(self, game.helptxts, False)
             for block in collision:
                 if self.y_speed == 0:

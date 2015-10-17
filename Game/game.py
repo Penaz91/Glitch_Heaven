@@ -4,11 +4,12 @@ import pygame
 from components.player import Player
 from libs import tmx
 import os
+import configparser
 
 
 class Game(object):
-    def toggleGlitch(game, glitch):
-        truth = game.glitches.get(glitch)
+    def toggleGlitch(self, glitch):
+        truth = self.glitches.get(glitch)
         if truth:
             truth = False
             print("The {0} glitch has been disabled".format(glitch))
@@ -16,7 +17,7 @@ class Game(object):
             truth = True
             print("The {0} glitch has been enabled".format(glitch))
         mydict = {glitch: truth}
-        game.glitches.update(mydict)
+        self.glitches.update(mydict)
 
     def getHelpFlag(self):
         return self.helpflagActive
@@ -29,15 +30,25 @@ class Game(object):
 
     def getHelpText(self):
         return self.currenthelp
+        
+    def LoadLevel(self,level,screen):
+        levelconfig = configparser.ConfigParser()
+        levelconfig.read(os.path.join("data","maps",level+".conf"))
+        self.helpflagActive = False
+        self.currenthelp = ""
+        self.glitches = dict(levelconfig['Glitches'])
+        self.tilemap = tmx.load(os.path.join("data","maps",level+".tmx"),
+                                screen.get_size())
     """ Main method """
     def main(self, screen):
         """Variables"""
         self.running = True
-        self.helpflagActive = False
         self.clock = pygame.time.Clock()
         self.helptxts = pygame.sprite.Group()
-        self.currenthelp = ""
-        self.glitches = {"wallClimb": False,
+        self.LoadLevel("TestComplete",screen)
+        # self.helpflagActive = False
+        #self.currenthelp = ""
+        """self.glitches = {"wallClimb": False,
                          "multiJump": False,
                          "highJump": False,
                          "featherFalling": False,
@@ -47,11 +58,11 @@ class Game(object):
                          "invertedGravity": False,
                          "permBodies": False,
                          "SolidHelp": False,
-                         "clipOnCommand": False}
+                         "clipOnCommand": False}"""
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
-        if self.glitches["invertedGravity"]:
+        if self.glitches["invertedgravity"]:
             self.gravity = -1
         """Program"""
         pygame.init()
@@ -68,8 +79,8 @@ class Game(object):
         overlay = pygame.image.load(os.path.join("resources",
                                                  "overlays",
                                                  "overlay1.png"))
-        self.tilemap = tmx.load('data/maps/TestComplete.tmx',
-                                screen.get_size())
+        """self.tilemap = tmx.load('data/maps/TestComplete.tmx',
+                                screen.get_size())"""
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
         self.player = Player((start_cell.px, start_cell.py), self.sprites)
@@ -85,28 +96,28 @@ class Game(object):
                     self.running = False
                 # Glitch Toggles, for testing
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
-                    self.toggleGlitch("wallClimb")
+                    self.toggleGlitch("wallclimb")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
-                    self.toggleGlitch("multiJump")
+                    self.toggleGlitch("multijump")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
-                    self.toggleGlitch("highJump")
+                    self.toggleGlitch("highjump")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_4:
-                    self.toggleGlitch("featherFalling")
+                    self.toggleGlitch("featherfalling")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_5:
                     self.toggleGlitch("gravity")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_6:
                     self.toggleGlitch("hover")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_7:
-                    self.toggleGlitch("stickyCeil")
+                    self.toggleGlitch("stickyceil")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
                     self.gravity *= -1
                     print("The Gravity has been inverted")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
-                    self.toggleGlitch("permBodies")
+                    self.toggleGlitch("permbodies")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    self.toggleGlitch("SolidHelp")
+                    self.toggleGlitch("solidhelp")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-                    self.toggleGlitch("clipOnCommand")
+                    self.toggleGlitch("cliponcommand")
             screen.blit(bg, (-self.tilemap.viewport.x/6,
                              -self.tilemap.viewport.y/6))
             screen.blit(middleback, (-self.tilemap.viewport.x/4,
