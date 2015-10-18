@@ -143,13 +143,19 @@ class Player(pygame.sprite.Sprite):
                 self.bounced = False
                 self.rect.right = cell.left
                 if game.glitches["wallclimb"]:
-                    self.y_speed = -200
+                    if game.gravity == 1:
+                        self.y_speed = -200
+                    else:
+                        self.y_speed = 200
             if 'r' in blockers and last.left >= cell.right and\
                     self.rect.left < cell.right:
                 self.bounced = False
                 self.rect.left = cell.right
                 if game.glitches["wallclimb"]:
-                    self.y_speed = -200
+                    if game.gravity == 1:
+                        self.y_speed = -200
+                    else:
+                        self.y_speed = 200
             if 't' in blockers and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 # Framework for clip-on-command glitch
