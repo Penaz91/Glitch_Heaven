@@ -36,7 +36,7 @@ class Game(object):
         levelconfig.read(os.path.join("data", "maps", level+".conf"))
         self.helpflagActive = False
         self.currenthelp = ""
-        self.screen=screen
+        self.screen = screen
         self.tempglitches = dict(levelconfig['Glitches'])
         self.tempkeys = self.tempglitches.keys()
         self.tempvalues = self.tempglitches.values()
@@ -126,6 +126,10 @@ class Game(object):
                     self.toggleGlitch("solidhelp")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
                     self.toggleGlitch("cliponcommand")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                    self.toggleGlitch("hwrapping")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                    self.toggleGlitch("vwrapping")
             screen.blit(self.bg, (-self.tilemap.viewport.x/6,
                                   -self.tilemap.viewport.y/6))
             screen.blit(self.middleback, (-self.tilemap.viewport.x/4,

@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.resting = False
         self.y_speed = 0
         self.x_speed = 0
-        self.jump_speed = -500
+        self.jump_speed = -350
         self.direction = 1
         self.bounced = False
         self.walkanimation = animation.Animation()
