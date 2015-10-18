@@ -84,16 +84,11 @@ class Player(pygame.sprite.Sprite):
                     self.x_speed = min(self.playermaxspeed*dt,
                                        self.x_speed+self.playeraccel*dt)
         else:
-            if self.resting:
+            if not self.bounced:
                 if self.direction == 1:
                     self.x_speed = max(0, self.x_speed-(self.playeraccel*dt))
                 elif self.direction == -1:
                     self.x_speed = min(0, self.x_speed+(self.playeraccel*dt))
-            elif not self.bounced:
-                if self.direction == 1:
-                    self.x_speed = max(0, self.x_speed-(self.playeraccel*dt/4))
-                elif self.direction == -1:
-                    self.x_speed = min(0, self.x_speed+(self.playeraccel*dt/4))
         self.rect.x += self.x_speed
         if game.glitches["multijump"]:
             if key[pygame.K_UP]:
@@ -298,3 +293,10 @@ class Player(pygame.sprite.Sprite):
             # --------------------------------------
         game.tilemap.set_focus(self.rect.x, self.rect.y)
         game.backpos[0] = -game.tilemap.view_x
+        if game.glitches["vwrapping"]:
+            self.rect.y = self.rect.y % game.tilemap.px_height
+        if game.glitches["hwrapping"]:
+            self.rect.x = self.rect.x % game.tilemap.px_width
+        else:
+            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
+                self.respawn(game)

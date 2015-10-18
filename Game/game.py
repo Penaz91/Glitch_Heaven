@@ -36,6 +36,7 @@ class Game(object):
         levelconfig.read(os.path.join("data", "maps", level+".conf"))
         self.helpflagActive = False
         self.currenthelp = ""
+        self.screen=screen
         self.tempglitches = dict(levelconfig['Glitches'])
         self.tempkeys = self.tempglitches.keys()
         self.tempvalues = self.tempglitches.values()
@@ -77,7 +78,7 @@ class Game(object):
         self.running = True
         self.clock = pygame.time.Clock()
         self.helptxts = pygame.sprite.Group()
-        self.LoadLevel("TestComplete", screen)
+        self.LoadLevel("TestFall", screen)
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
@@ -90,10 +91,10 @@ class Game(object):
                                 screen.get_size())"""
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
-        self.player = Player((start_cell.px, start_cell.py), self.sprites)
         self.tilemap.layers.append(self.sprites)
         self.backpos = [0, 0]
         self.middlepos = [0, 0]
+        self.player = Player((start_cell.px, start_cell.py), self.sprites)
         print(self.glitches)
         """Game Loop"""
         while self.running:
