@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
         self.x_speed = 0
         self.jump_speed = -500
         self.direction = 1
-        self.bounced = 0
+        self.bounced = False
         self.walkanimation = animation.Animation()
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
