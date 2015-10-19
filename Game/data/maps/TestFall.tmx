@@ -5,10 +5,10 @@
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmW0LAjEIx+0B6oKeoDdRRN//U5bEaIyts03nHPuDENRd/tTpdjcBwKGSrQPjuu/2bRPY1wYGR0tyHCttRzK08z47jkfitwtIM+J3S4JJxCj0a44DtU/4dxTwz9evOIX/TeGooZjP/8SpFY5SOQ7pGpFWb33XKaxTK/14Lh/YqyywUOrKQt1ROGLzo7Uc5a7z1GzUYu21X0kqNrM5cob3tZ6PO3zOgoOjDQ2Or/x1e4lYjd7bSz5QOMu0+y5XD9bIB8bv6RnH2cfC8xLK/HQct7qusWtwtKXBIadf/TnVj3p47lN73+7izL13uQIPx6nw+lJROCg+SsWZqhRHzjrTFFddaSvc754VfSkVcuA5hPJeSdL8d9E51yPDCyrrCoE=
+   eJztmdsKwjAMhqMOdIIn8EYU8f2fUoMEQ2m3uDZtU/pDYLBTvqRL2m4EgGMmGxxL9dzdx0awry10jppEHJvSjizQnh0TxzNw7QrCjHhuLTCNGLl+zXGgDgH/Tgr+cU3FyX23hCOHfD7/E6daOGJFHNpjRFut1V2SO06t1OO5fGCtssAiGVcWxp2Ew9c/asvR0u881BtLsbZarzTl69kpcobPtZ6PB3zXgp2jDnWOn/h3e/VYjtrbSj5Q2MtK191UNbhEPjB+L2Yp1j4W9ksk/ZM47nldS64WOPi8xDLHDTqHpqbqs68ecQ7L+z7EMWR6H8U59dwlFcc58v5Y0bxkikPio1acpeL/6Xx+ld47kCrEYU0ux6WgL7FCBlyHSP4raRqP6ZL7keENlnIKfA==
   </data>
  </layer>
- <objectgroup name="Triggers">
+ <objectgroup name="Triggers" visible="0">
   <object id="1" x="0" y="0" width="864" height="32">
    <properties>
     <property name="blocker" value="lrbt"/>
@@ -19,12 +19,12 @@
     <property name="blocker" value="lrbt"/>
    </properties>
   </object>
-  <object id="3" x="0" y="32" width="32" height="1216">
+  <object id="3" x="0" y="32" width="32" height="1024">
    <properties>
     <property name="blocker" value="lrbt"/>
    </properties>
   </object>
-  <object id="4" x="1568" y="32" width="32" height="1216">
+  <object id="4" x="1568" y="32" width="32" height="1088">
    <properties>
     <property name="blocker" value="lrbt"/>
    </properties>
@@ -202,7 +202,7 @@
     <property name="Help" value="&quot;This is another help string&quot;"/>
    </properties>
   </object>
-  <object id="52" x="1536" y="1056" width="32" height="128">
+  <object id="52" x="1536" y="928" width="32" height="160">
    <properties>
     <property name="deadly" value="l"/>
    </properties>
