@@ -6,27 +6,43 @@ import random
 
 
 class Particle (pygame.sprite.Sprite):
-    def __init__(self, position, *groups):
+    def __init__(self, position,speedx,speedy, *groups):
         super(Particle, self).__init__(*groups)
-        self.age = 10
+        self.age = 20
         self.color = (255, 0, 0)
-        self.colorsteps = self.colorfade(self.color, (0, 255, 0), 10)
-        self.image = pygame.surface.Surface((3, 3))
+        self.colorsteps = self.colorfade(self.color, (0, 255, 0), 20)
+        self.image = pygame.surface.Surface((1, 1))
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
         self.rect.x = position[0] + random.randint(-5, 5)
         self.rect.y = position[1] + random.randint(-5, 5)
+        self.sx=speedx
+        self.sy=speedy
 
     def update(self):
         self.age -= 1
         if self.age < 100:
-            self.color = (
-                (self.color[0])+(self.colorsteps[0]),
-                (self.color[1])+(self.colorsteps[1]),
-                (self.color[2])+(self.colorsteps[2]))
+            self.red = (self.color[0])+(self.colorsteps[0])
+            self.green = (self.color[1])+(self.colorsteps[1])
+            self.blue = (self.color[2])+(self.colorsteps[2])
+            if self.red < 0:
+                self.red = 0
+            elif self.red > 255:
+                self.red = 255
+            if self.green < 0:
+                self.green = 0
+            elif self.green > 255:
+                self.green = 255
+            if self.blue < 0:
+                self.blue = 0
+            elif self.blue > 255:
+                self.blue = 255
+            self.color = (self.red, self.green, self.blue)
             self.image.fill(self.color)
         if self.age == 0:
             self.kill()
+        self.rect.x+=self.sx
+        self.rect.y+=self.sy
 
     def colorfade(self, startcolor, finalcolor, steps):
         stepR = (finalcolor[0]-startcolor[0])/steps
@@ -37,48 +53,26 @@ pygame.init()
 screen = pygame.display.set_mode((640, 480))
 group = pygame.sprite.Group()
 clock = pygame.time.Clock()
+player = pygame.Surface((32,32))
+player.fill((255,255,255))
+x=320
+y=240
 while 1:
     clock.tick(60)
     for event in pygame.event.get():
-        if event.type == pygame.MOUSEMOTION:
-            particle = Particle(pygame.mouse.get_pos(), group)
-            particle = Particle(pygame.mouse.get_pos(), group)
-            particle = Particle(pygame.mouse.get_pos(), group)
-            particle = Particle(pygame.mouse.get_pos(), group)
+        if event.type == pygame.KEYDOWN:
+            if event.key==pygame.K_LEFT:
+                x-=5
+                Particle((x+32,y+32),1,-1,group)
+                Particle((x+32,y+32),1,-2,group)
+                Particle((x+32,y+32),2,-1,group)
+            if event.key==pygame.K_RIGHT:
+                x+=5
+                Particle((x,y+32),-1,-1,group)
+                Particle((x,y+32),-1,-2,group)
+                Particle((x,y+32),-2,-1,group)
     screen.fill((0, 0, 0))
+    screen.blit(player,(x,y))
     group.draw(screen)
     group.update()
     pygame.display.flip()
-
-"""
-Particle class example i found online:
-
-
-class Particle(pygame.sprite.Sprite):
-    def __init__(self, pos, vx, vy, ax, ay, size, colorstructure, *groups):
-        pygame.sprite.Sprite.__init__(self, groups)
-        self.vx, self.vy, self.ax, self.ay = vx, vy, ax, ay
-        self.images = []
-        for x in colorstructure:
-            start, end, duration = x
-            startr, startg, startb = start
-            endr, endg, endb = end
-            def f(s, e, t):
-                return s   int((e - s)*(t/float(duration)))
-            for t in range(duration):
-                image = pygame.Surface((size, size)).convert()
-                image.fill((f(startr, endr, t),
-                            f(startg, endg, t),
-                            f(startb, endb, t)))
-                self.images.append(image)
-        self.image = self.images[0]
-        self.rect = self.image.get_rect(center = pos)
-    def update(self):
-        self.rect.move_ip(self.vx, self.vy)
-        self.vx = self.vx   self.ax
-        self.vy = self.vy   self.ay
-        if not self.images:
-            self.kill()
-        else:
-            self.image = self.images.pop(0)
-"""
