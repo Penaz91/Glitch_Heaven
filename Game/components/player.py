@@ -14,9 +14,10 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, location, *groups, keys):
         super(Player, self).__init__(*groups)
-        self.image = pygame.image.load(os.path.join("resources",
-                                                    "sprites",
-                                                    "player.png"))
+        self.image = pygame.image.load(
+                    os.path.join("resources",
+                                 "sprites",
+                                 "player.png")).convert_alpha()
         self.rect = pygame.rect.Rect(location, self.image.get_size())
         self.rect.x = location[0]
         self.rect.y = location[1]
@@ -114,7 +115,7 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = self.jump_speed*2*game.gravity
                     else:
                         self.y_speed = self.jump_speed*game.gravity
-                self.resting = False
+                    self.resting = False
         if game.glitches["featherfalling"]:
             if game.gravity == 1:
                 self.y_speed = (min(200, self.y_speed+20))
@@ -129,7 +130,7 @@ class Player(pygame.sprite.Sprite):
                 self.y_speed = (max(-400, self.y_speed-40))
             elif game.gravity == 0:
                 self.y_speed = 0
-        self.rect.y += self.y_speed*dt
+        self.rect.y += self.y_speed * dt
         self.resting = False
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'blocker'):

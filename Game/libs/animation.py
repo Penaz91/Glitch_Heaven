@@ -23,6 +23,7 @@ class Animation(object):
         return toret
 
     def loadFromDir(self, directory):
-        self.frames = [pygame.image.load(os.path.join(directory, f))
+        self.frames = [pygame.image.load(
+            os.path.join(directory, f)).convert_alpha()
                        for f in os.listdir(directory)
                        if os.path.isfile(os.path.join(directory, f))]

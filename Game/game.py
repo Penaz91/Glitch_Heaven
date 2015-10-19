@@ -55,22 +55,22 @@ class Game(object):
                   os.path.join("resources",
                                "backgrounds",
                                levelconfig["Level_Components"]
-                               ["background"]))
+                               ["background"])).convert_alpha()
         self.middleback = pygame.image.load(
                           os.path.join("resources",
                                        "backgrounds",
                                        levelconfig["Level_Components"]
-                                       ["middle_back1"]))
+                                       ["middle_back1"])).convert_alpha()
         self.middle = pygame.image.load(
                       os.path.join("resources",
                                    "backgrounds",
                                    levelconfig["Level_Components"]
-                                   ["middle_back2"]))
+                                   ["middle_back2"])).convert_alpha()
         self.overlay = pygame.image.load(
                        os.path.join("resources",
                                     "overlays",
                                     levelconfig["Level_Components"]
-                                    ["overlay"]))
+                                    ["overlay"])).convert_alpha()
 
     """ Main method """
     def main(self, screen, keys):
@@ -94,11 +94,12 @@ class Game(object):
         self.tilemap.layers.append(self.sprites)
         self.backpos = [0, 0]
         self.middlepos = [0, 0]
-        self.player = Player((start_cell.px, start_cell.py), self.sprites, keys=keys)
+        self.player = Player((start_cell.px, start_cell.py),
+                             self.sprites, keys=keys)
         print(self.glitches)
         """Game Loop"""
         while self.running:
-            dt = self.clock.tick(self.fps)
+            dt = self.clock.tick(self.fps)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
@@ -119,7 +120,6 @@ class Game(object):
                     self.toggleGlitch("stickyceil")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
                     self.gravity *= -1
-                    print("The Gravity has been inverted")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
                     self.toggleGlitch("permbodies")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
@@ -134,13 +134,13 @@ class Game(object):
                                   -self.tilemap.viewport.y/6))
             screen.blit(self.middleback, (-self.tilemap.viewport.x/4,
                                           -self.tilemap.viewport.y/4))
-            self.tilemap.update(dt/1000., self)
+            self.tilemap.update(dt, self)
             self.helptxts.update(dt, self)
             screen.blit(self.middle, (-self.tilemap.viewport.x/2,
                                       -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
             screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
                                        -self.tilemap.viewport.y*1.5))
-            pygame.display.flip()
+            pygame.display.update()
         pygame.quit()
         quit()

@@ -10,17 +10,16 @@ if __name__ == "__main__":
     fullscreen = config.getboolean("Screen", "fullscreen")
     doublebuffer = config.getboolean("Screen", "doublebuffer")
     flags = None
-    keys=dict(config["Controls"])
+    keys = dict(config["Controls"])
     for key in keys:
-        keys[key]=int(keys[key])
-    
+        keys[key] = int(keys[key])
     if fullscreen:
         if doublebuffer:
-            flags = pygame.FULLSCREEN | pygame.HWACCEL | pygame.DOUBLEBUF
+            flags = pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF
         else:
-            flags = pygame.FULLSCREEN | pygame.HWACCEL
+            flags = pygame.FULLSCREEN | pygame.HWSURFACE
     else:
         flags = 0
     pygame.init()
     screen = pygame.display.set_mode(screensize, flags)
-    Game().main(screen,keys)
+    Game().main(screen, keys)

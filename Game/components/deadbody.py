@@ -7,9 +7,10 @@ import os
 class DeadBody(MobilePlatform):
 
     def __init__(self, x, y, *groups, game):
-        self.img = pygame.image.load(os.path.join("resources",
-                                                  "sprites",
-                                                  "player.png"))
+        self.img = pygame.image.load(
+                    os.path.join("resources",
+                                 "sprites",
+                                 "player.png")).convert_alpha()
         MobilePlatform.__init__(self, x, y, *groups, game=game,
                                 surface=self.img)
 
