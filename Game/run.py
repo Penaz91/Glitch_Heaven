@@ -8,9 +8,13 @@ if __name__ == "__main__":
     screensize = (int(config["Screen"]["screenwidth"]),
                   int(config["Screen"]["screenheight"]))
     fullscreen = config.getboolean("Screen", "fullscreen")
+    doublebuffer = config.getboolean("Screen", "doublebuffer")
     flags = None
     if fullscreen:
-        flags = pygame.FULLSCREEN | pygame.HWACCEL
+        if doublebuffer:
+            flags = pygame.FULLSCREEN | pygame.HWACCEL | pygame.DOUBLEBUF
+        else:
+            flags = pygame.FULLSCREEN | pygame.HWACCEL
     else:
         flags = 0
     pygame.init()
