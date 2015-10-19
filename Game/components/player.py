@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
     runmultiplier = 2
     playeraccel = 50
 
-    def __init__(self, location, *groups):
+    def __init__(self, location, *groups, keys):
         super(Player, self).__init__(*groups)
         self.image = pygame.image.load(os.path.join("resources",
                                                     "sprites",
@@ -26,6 +26,7 @@ class Player(pygame.sprite.Sprite):
         self.jump_speed = -500
         self.direction = 1
         self.bounced = False
+        self.keys = keys
         self.walkanimation = animation.Animation()
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
@@ -46,15 +47,15 @@ class Player(pygame.sprite.Sprite):
         self.kill()
         start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
         game.player = Player((start_cell.px, start_cell.py),
-                             game.sprites)
+                             game.sprites, keys=self.keys)
 
     def update(self, dt, game):
         last = self.rect.copy()
         key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT]:
+        if key[self.keys["left"]]:
             self.direction = -1
             if not self.bounced:
-                if key[pygame.K_z]:
+                if key[self.keys["run"]]:
                     self.image = pygame.transform.flip(
                                  self.runanimation.next(),
                                  True,
@@ -70,10 +71,10 @@ class Player(pygame.sprite.Sprite):
                                  False)
                     self.x_speed = max(-self.playermaxspeed * dt,
                                        self.x_speed-self.playeraccel*dt)
-        elif key[pygame.K_RIGHT]:
+        elif key[self.keys["right"]]:
             if not self.bounced:
                 self.direction = 1
-                if key[pygame.K_z]:
+                if key[self.keys["run"]]:
                     self.image = self.runanimation.next()
                     self.x_speed = min(self.playermaxspeed * dt *
                                        self.runmultiplier,
@@ -91,7 +92,7 @@ class Player(pygame.sprite.Sprite):
                     self.x_speed = min(0, self.x_speed+(self.playeraccel*dt))
         self.rect.x += self.x_speed
         if game.glitches["multijump"]:
-            if key[pygame.K_UP]:
+            if key[self.keys["run"]]:
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
@@ -102,10 +103,10 @@ class Player(pygame.sprite.Sprite):
                         if self.y_speed > -(self.jump_speed/2) or self.resting:
                             self.y_speed = self.jump_speed*game.gravity
         elif game.glitches["hover"]:
-            if key[pygame.K_UP]:
+            if key[self.keys["jump"]]:
                 self.y_speed = self.jump_speed*game.gravity*0.8
         else:
-            if key[pygame.K_UP] and self.resting:
+            if key[self.keys["jump"]] and self.resting:
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
@@ -156,7 +157,7 @@ class Player(pygame.sprite.Sprite):
                 # Framework for clip-on-command glitch
                 self.bounced = False
                 if game.glitches["cliponcommand"]:
-                    if not key[pygame.K_DOWN]:
+                    if not key[self.keys["down"]]:
                         self.rect.bottom = cell.top
                         if game.glitches["stickyceil"]:
                             self.y_speed = 3/dt
@@ -177,7 +178,7 @@ class Player(pygame.sprite.Sprite):
                 # Part of the clip-on-command glitch Framework
                 self.bounced = False
                 if game.glitches["cliponcommand"]:
-                    if not key[pygame.K_DOWN]:
+                    if not key[self.keys["down"]]:
                         self.rect.top = cell.bottom
                         if game.glitches["stickyceil"]:
                             self.y_speed = -5/dt

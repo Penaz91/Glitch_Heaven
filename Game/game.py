@@ -73,7 +73,7 @@ class Game(object):
                                     ["overlay"]))
 
     """ Main method """
-    def main(self, screen):
+    def main(self, screen, keys):
         """Variables"""
         self.running = True
         self.clock = pygame.time.Clock()
@@ -94,7 +94,7 @@ class Game(object):
         self.tilemap.layers.append(self.sprites)
         self.backpos = [0, 0]
         self.middlepos = [0, 0]
-        self.player = Player((start_cell.px, start_cell.py), self.sprites)
+        self.player = Player((start_cell.px, start_cell.py), self.sprites, keys=keys)
         print(self.glitches)
         """Game Loop"""
         while self.running:
