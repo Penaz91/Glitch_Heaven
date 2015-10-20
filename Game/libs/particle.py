@@ -6,18 +6,18 @@ import random
 
 
 class Particle (pygame.sprite.Sprite):
-    def __init__(self, position,speedx,speedy, *groups):
+    def __init__(self, position, speedx, speedy, *groups):
         super(Particle, self).__init__(*groups)
         self.age = 20
         self.color = (255, 0, 0)
         self.colorsteps = self.colorfade(self.color, (0, 255, 0), 20)
-        self.image = pygame.surface.Surface((1, 1))
+        self.image = pygame.surface.Surface((2, 2))
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
         self.rect.x = position[0] + random.randint(-5, 5)
         self.rect.y = position[1] + random.randint(-5, 5)
-        self.sx=speedx
-        self.sy=speedy
+        self.sx = speedx
+        self.sy = speedy
 
     def update(self):
         self.age -= 1
@@ -40,9 +40,11 @@ class Particle (pygame.sprite.Sprite):
             self.color = (self.red, self.green, self.blue)
             self.image.fill(self.color)
         if self.age == 0:
+            # Alternative: reset the particle color/position to avoid
+            # useless read/write in memory of new object
             self.kill()
-        self.rect.x+=self.sx
-        self.rect.y+=self.sy
+        self.rect.x += self.sx
+        self.rect.y += self.sy
 
     def colorfade(self, startcolor, finalcolor, steps):
         stepR = (finalcolor[0]-startcolor[0])/steps
@@ -53,26 +55,26 @@ pygame.init()
 screen = pygame.display.set_mode((640, 480))
 group = pygame.sprite.Group()
 clock = pygame.time.Clock()
-player = pygame.Surface((32,32))
-player.fill((255,255,255))
-x=320
-y=240
+player = pygame.Surface((32, 32))
+player.fill((255, 255, 255))
+x = 320
+y = 240
 while 1:
     clock.tick(60)
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key==pygame.K_LEFT:
-                x-=5
-                Particle((x+32,y+32),1,-1,group)
-                Particle((x+32,y+32),1,-2,group)
-                Particle((x+32,y+32),2,-1,group)
-            if event.key==pygame.K_RIGHT:
-                x+=5
-                Particle((x,y+32),-1,-1,group)
-                Particle((x,y+32),-1,-2,group)
-                Particle((x,y+32),-2,-1,group)
+            if event.key == pygame.K_LEFT:
+                x -= 5
+                Particle((x+32, y+32), 1, -1, group)
+                Particle((x+32, y+32), 1, -2, group)
+                Particle((x+32, y+32), 2, -1, group)
+            if event.key == pygame.K_RIGHT:
+                x += 5
+                Particle((x, y+32), -1, -1, group)
+                Particle((x, y+32), -1, -2, group)
+                Particle((x, y+32), -2, -1, group)
     screen.fill((0, 0, 0))
-    screen.blit(player,(x,y))
+    screen.blit(player, (x, y))
     group.draw(screen)
     group.update()
     pygame.display.flip()
