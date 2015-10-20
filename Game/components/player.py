@@ -4,6 +4,7 @@ import os
 from components.deadbody import DeadBody
 from components.help import Help
 from libs import animation
+from libs import particle
 
 
 class Player(pygame.sprite.Sprite):
@@ -38,6 +39,7 @@ class Player(pygame.sprite.Sprite):
                                                    "sprites",
                                                    "Player",
                                                    "Running"))
+        self.particles = pygame.sprite.Group()
 
     def respawn(self, game):
         if game.glitches["permbodies"]:
@@ -65,6 +67,10 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier,
                                        self.x_speed-self.playeraccel*dt *
                                        self.runmultiplier)
+                    if self.resting:
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 2, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 2, -2, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 4, -1, self.particles)
                 else:
                     self.image = pygame.transform.flip(
                                  self.walkanimation.next(),
@@ -72,6 +78,11 @@ class Player(pygame.sprite.Sprite):
                                  False)
                     self.x_speed = max(-self.playermaxspeed * dt,
                                        self.x_speed-self.playeraccel*dt)
+                    if self.resting:
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 1, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 1, -2, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 2, -1, self.particles)
+
         elif key[self.keys["right"]]:
             if not self.bounced:
                 self.direction = 1
@@ -81,10 +92,18 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
                                        self.runmultiplier)
+                    if self.resting:
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -2, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -2, -2, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -4, -1, self.particles)
                 else:
                     self.image = self.walkanimation.next()
                     self.x_speed = min(self.playermaxspeed*dt,
                                        self.x_speed+self.playeraccel*dt)
+                    if self.resting:
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -1, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -1, -2, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -2, -1, self.particles)
         else:
             if not self.bounced:
                 if self.direction == 1:

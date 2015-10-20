@@ -6,11 +6,11 @@ import random
 
 
 class Particle (pygame.sprite.Sprite):
-    def __init__(self, position, speedx, speedy, *groups):
+    def __init__(self, position, colorstart, colorend , speedx, speedy, *groups):
         super(Particle, self).__init__(*groups)
         self.age = 20
-        self.color = (255, 0, 0)
-        self.colorsteps = self.colorfade(self.color, (0, 255, 0), 20)
+        self.color = colorstart
+        self.colorsteps = self.colorfade(self.color, colorend, 20)
         self.image = pygame.surface.Surface((2, 2))
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
@@ -51,6 +51,8 @@ class Particle (pygame.sprite.Sprite):
         stepG = (finalcolor[1]-startcolor[1])/steps
         stepB = (finalcolor[2]-startcolor[2])/steps
         return (stepR, stepG, stepB)
+
+"""Test Area
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
 group = pygame.sprite.Group()
@@ -65,16 +67,17 @@ while 1:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 x -= 5
-                Particle((x+32, y+32), 1, -1, group)
-                Particle((x+32, y+32), 1, -2, group)
-                Particle((x+32, y+32), 2, -1, group)
+                Particle((x+32, y+32), (255, 0, 0), (0, 255, 0), 1, -1, group)
+                Particle((x+32, y+32), (255, 0, 0), (0, 255, 0), 1, -2, group)
+                Particle((x+32, y+32), (255, 0, 0), (0, 255, 0), 2, -1, group)
             if event.key == pygame.K_RIGHT:
                 x += 5
-                Particle((x, y+32), -1, -1, group)
-                Particle((x, y+32), -1, -2, group)
-                Particle((x, y+32), -2, -1, group)
+                Particle((x, y+32), (255, 0, 0), (0, 255, 0), -1, -1, group)
+                Particle((x, y+32), (255, 0, 0), (0, 255, 0), -1, -2, group)
+                Particle((x, y+32), (255, 0, 0), (0, 255, 0), -2, -1, group)
     screen.fill((0, 0, 0))
     screen.blit(player, (x, y))
     group.draw(screen)
     group.update()
     pygame.display.flip()
+"""

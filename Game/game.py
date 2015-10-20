@@ -139,6 +139,8 @@ class Game(object):
             screen.blit(self.middle, (-self.tilemap.viewport.x/2,
                                       -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
+            self.player.particles.update()
+            self.player.particles.draw(screen)
             screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
                                        -self.tilemap.viewport.y*1.5))
             pygame.display.update()
