@@ -1,12 +1,13 @@
 # Particle Library
 # Part of the Glitch_Heaven Project
-# Copyright 2015 Penaz <penaz@altervista.org>
+# Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import random
 
 
 class Particle (pygame.sprite.Sprite):
-    def __init__(self, position, colorstart, colorend , speedx, speedy, *groups):
+    def __init__(self, position, colorstart, colorend,
+                 speedx, speedy, *groups):
         super(Particle, self).__init__(*groups)
         self.age = 20
         self.color = colorstart

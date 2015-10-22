@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import pygame
-from game import Game
+# from game import Game
+from mainmenu import menu
 import configparser
 if __name__ == "__main__":
     config = configparser.ConfigParser()
@@ -22,4 +23,5 @@ if __name__ == "__main__":
         flags = 0
     pygame.init()
     screen = pygame.display.set_mode(screensize, flags)
-    Game().main(screen, keys)
+    menu().main(screen, keys)
+    # Game().main(screen, keys)

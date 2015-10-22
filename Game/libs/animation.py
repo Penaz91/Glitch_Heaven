@@ -1,6 +1,6 @@
 # Animation/Frame generator Library
 # Part of the Glitch_Heaven Project
-# Copyright 2015 Penaz <penaz@altervista.org>
+# Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
 

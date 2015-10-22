@@ -68,9 +68,18 @@ class Player(pygame.sprite.Sprite):
                                        self.x_speed-self.playeraccel*dt *
                                        self.runmultiplier)
                     if self.resting:
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 2, -1, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 2, -2, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 4, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x+32, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), 2, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x+32, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), 2, -2, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x+32, self.rect.y+32),
+                                (0, 81, 138),
+                                (141, 200, 241), 4, -1, self.particles)
                 else:
                     self.image = pygame.transform.flip(
                                  self.walkanimation.next(),
@@ -79,9 +88,17 @@ class Player(pygame.sprite.Sprite):
                     self.x_speed = max(-self.playermaxspeed * dt,
                                        self.x_speed-self.playeraccel*dt)
                     if self.resting:
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 1, -1, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 1, -2, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x+32,self.rect.y+32), (0,81,138), (141,200,241), 2, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x+32, self.rect.y+32), (0, 81, 138),
+                            (141, 200, 241), 1, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x+32, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), 1, -2, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x+32, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), 2, -1, self.particles)
 
         elif key[self.keys["right"]]:
             if not self.bounced:
@@ -93,17 +110,34 @@ class Player(pygame.sprite.Sprite):
                                        self.x_speed+self.playeraccel * dt *
                                        self.runmultiplier)
                     if self.resting:
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -2, -1, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -2, -2, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -4, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x, self.rect.y+32), (0, 81, 138),
+                            (141, 200, 241), -2, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), -2, -2, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), -4, -1, self.particles)
                 else:
                     self.image = self.walkanimation.next()
                     self.x_speed = min(self.playermaxspeed*dt,
                                        self.x_speed+self.playeraccel*dt)
                     if self.resting:
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -1, -1, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -1, -2, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(self.rect.x,self.rect.y+32), (0,81,138), (141,200,241), -2, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), -1, -1, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), -1, -2, self.particles)
+                        particle.Particle(game.tilemap.pixel_to_screen(
+                            self.rect.x, self.rect.y+32),
+                            (0, 81, 138),
+                            (141, 200, 241), -2, -1, self.particles)
         else:
             if not self.bounced:
                 if self.direction == 1:
@@ -112,7 +146,7 @@ class Player(pygame.sprite.Sprite):
                     self.x_speed = min(0, self.x_speed+(self.playeraccel*dt))
         self.rect.x += self.x_speed
         if game.glitches["multijump"]:
-            if key[self.keys["run"]]:
+            if key[self.keys["jump"]]:
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
