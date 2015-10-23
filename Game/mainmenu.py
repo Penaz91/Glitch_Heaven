@@ -3,6 +3,7 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
+from components.UI import menuItem
 
 
 class menu:
@@ -20,7 +21,14 @@ class menu:
         self.titlerect = self.title.get_rect()
         self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
         self.titlerect.y = 32
+        self.newgameimg = self.font.render("NewGame", False, (255, 255, 255))
+        self.selectedimg = self.font.render("NewGame", False, (255, 0, 0))
+        self.newgame = menuItem.menuitem(self.newgameimg,
+                                         self.selectedimg,
+                                         (320, 240))
+        self.clock = pygame.time.Clock()
         while self.running:
+            self.clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if self.currentItem is None:
@@ -36,7 +44,10 @@ class menu:
                 if event.type == pygame.MOUSEMOTION:
                     if self.currentItem == 0:
                         self.currentItem = None
-                    if self.titlerect.collidepoint(*pygame.mouse.get_pos()):
-                        print("Yay!")
+                    if self.newgame.rect.collidepoint(*pygame.mouse.get_pos()):
+                        self.newgame.makeSelected()
+                    else:
+                        self.newgame.makeUnselected()
             screen.blit(self.title, (self.titlerect.x, self.titlerect.y))
+            screen.blit(self.newgame.image, self.newgame.location)
             pygame.display.update()

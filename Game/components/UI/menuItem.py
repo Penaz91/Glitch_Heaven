@@ -1,31 +1,28 @@
 # Menu Item Component
 # Part of the Glitch_Heaven Project
 # Copyright 2015 - Penaz <penazarea@altervista.org>
-from libs import animation
+
+# from libs import animation
 
 
 class menuitem(object):
 
-    def __init__(self, unselected, selected, rect):
+    def __init__(self, unselected, selected, location):
         self.unselected = unselected
         self.selected = selected
-        self.rect = rect
-        self.makeUnselected()
-        self.selected = False
+        self.rect = self.unselected.get_rect()
+        self.location = location
+        self.rect.x, self.rect.y = location
+        self.image = self.unselected
+        self.selectedStatus = False
 
     def makeSelected(self):
-        if isinstance(self.selected, animation):
-            self.image = self.selected.next()
-        else:
-            self.image = self.selected
-        self.selected = True
+        self.image = self.selected
+        self.selectedStatus = True
 
     def makeUnselected(self):
-        if isinstance(self.unselected, animation):
-            self.image = self.unselected.next()
-        else:
-            self.image = self.unselected
-        self.selected = False
+        self.image = self.unselected
+        self.selectedStatus = False
 
     def isSelected(self):
         if self.selected:
