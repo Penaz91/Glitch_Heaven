@@ -7,7 +7,7 @@
 
 class menuitem(object):
 
-    def __init__(self, unselected, selected, location):
+    def __init__(self, unselected, selected, location, function):
         self.unselected = unselected
         self.selected = selected
         self.rect = self.unselected.get_rect()
@@ -15,6 +15,7 @@ class menuitem(object):
         self.rect.x, self.rect.y = location
         self.image = self.unselected
         self.selectedStatus = False
+        self.function = function
 
     def makeSelected(self):
         self.image = self.selected
