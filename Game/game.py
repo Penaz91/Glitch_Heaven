@@ -1,10 +1,12 @@
-#!/usr/bin/env python3
-# TODO: Add Copyright Info here
+# Game Component
+# Part of the Glitch_Heaven Project
+# Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 from components.player import Player
 from libs import tmx
 import os
 import configparser
+from components.mobileobstacle import Obstacle
 
 
 class Game(object):
@@ -51,6 +53,7 @@ class Game(object):
         del self.tempglitches, self.tempkeys, self.tempvalues, self.newvalues
         self.tilemap = tmx.load(os.path.join("data", "maps", level+".tmx"),
                                 screen.get_size())
+        self.obstacles = tmx.SpriteLayer()
         self.bg = pygame.image.load(
                   os.path.join("resources",
                                "backgrounds",
@@ -71,7 +74,13 @@ class Game(object):
                                     "overlays",
                                     levelconfig["Level_Components"]
                                     ["overlay"])).convert_alpha()
-
+        for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
+            obs=obstacle['Obstacle']
+            if "v" in obs:
+                Obstacle((obstacle.px, obstacle.py), True, None, self.obstacles)
+            else:
+                Obstacle((obstacle.px, obstacle.py), False, None, self.obstacles)
+        self.tilemap.layers.append(self.obstacles)
     """ Main method """
     def main(self, screen, keys):
         """Variables"""

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Bootstrapper
+# Part of the Glitch_Heaven Project
+# Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 # from game import Game
 from mainmenu import menu

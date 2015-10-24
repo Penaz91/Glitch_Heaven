@@ -5,13 +5,20 @@ import pygame
 import os
 from components.UI import menuItem
 from game import Game
+from libs import animation
 
 
 class menu:
 
     def main(self, screen, keys):
-        self.title = pygame.image.load(
-                os.path.join("resources", "UI", "title.png")).convert_alpha()
+        #self.title = pygame.image.load(
+        #        os.path.join("resources", "UI", "title.png")).convert_alpha()
+        self.titleani = animation.Animation()
+        self.titleani.loadFromDir(
+                os.path.join("resources", "UI", "AnimatedTitle"))
+        self.title = self.titleani.next()
+        self.titletimings= [2.,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,0.12,2.,0.12,0.12,0.12,0.12]
+        self.titletime = 0.
         self.titlesize = self.title.get_size()
         self.font = pygame.font.Font(os.path.join(
                             "resources", "fonts",
@@ -40,7 +47,7 @@ class menu:
         self.items = [self.newgame, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
-            self.clock.tick(30)
+            self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     break
@@ -74,6 +81,10 @@ class menu:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.function()
+            self.titletime += self.dt
+            if self.titletime >= self.titletimings[self.titleani.currentframe]:
+                self.title = self.titleani.next()
+                self.titletime = 0
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             for item in self.items:

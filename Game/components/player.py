@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+# Player component
+# Part of the Glitch_Heaven Project
+# Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
 from components.deadbody import DeadBody
