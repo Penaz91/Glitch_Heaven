@@ -75,11 +75,14 @@ class Game(object):
                                     levelconfig["Level_Components"]
                                     ["overlay"])).convert_alpha()
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
-            obs=obstacle['Obstacle']
+            obs = obstacle['Obstacle']
+            speed = obstacle['ObsSpeed']
             if "v" in obs:
-                Obstacle((obstacle.px, obstacle.py), True, None, self.obstacles)
+                Obstacle((obstacle.px, obstacle.py), True, speed, None,
+                         self.obstacles)
             else:
-                Obstacle((obstacle.px, obstacle.py), False, None, self.obstacles)
+                Obstacle((obstacle.px, obstacle.py), False, speed, None,
+                         self.obstacles)
         self.tilemap.layers.append(self.obstacles)
     """ Main method """
     def main(self, screen, keys):

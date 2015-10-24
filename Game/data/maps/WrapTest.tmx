@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="44">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="62">
  <tileset firstgid="1" name="Tiles" tilewidth="32" tileheight="32" tilecount="36">
   <image source="resources/tiles/TestTile.png" width="192" height="192"/>
  </tileset>
@@ -183,6 +183,7 @@
   </object>
   <object id="38" x="192" y="672" width="32" height="32">
    <properties>
+    <property name="ObsSpeed" value="100"/>
     <property name="Obstacle" value="h"/>
    </properties>
   </object>
@@ -208,7 +209,88 @@
   </object>
   <object id="43" x="832" y="416" width="32" height="32">
    <properties>
+    <property name="ObsSpeed" value="100"/>
     <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="44" x="1088" y="512" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="45" x="1088" y="320" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="46" x="1088" y="416" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="100"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="47" x="1312" y="512" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="48" x="1312" y="320" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="49" x="1312" y="416" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="100"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="50" x="1504" y="512" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="51" x="1504" y="320" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="52" x="1504" y="416" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="100"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="56" x="1600" y="384" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="57" x="896" y="384" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="58" x="672" y="384" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="59" x="1184" y="448" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="60" x="672" y="448" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+   </properties>
+  </object>
+  <object id="61" x="1600" y="448" width="32" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
    </properties>
   </object>
  </objectgroup>
