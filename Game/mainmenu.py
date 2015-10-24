@@ -22,6 +22,10 @@ class menu:
         self.titlerect = self.title.get_rect()
         self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
         self.titlerect.y = 32
+        self.background = pygame.image.load(
+                          os.path.join("resources",
+                                       "UI",
+                                       "back.png")).convert_alpha()
         self.newgameimg = self.font.render("NewGame", False, (255, 255, 255))
         self.selectedimg = self.font.render("NewGame", False, (255, 0, 0))
         self.exitimg = self.font.render("Quit", False, (255, 255, 255))
@@ -70,6 +74,7 @@ class menu:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.function()
+            screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)

@@ -78,7 +78,7 @@ class Game(object):
         self.running = True
         self.clock = pygame.time.Clock()
         self.helptxts = pygame.sprite.Group()
-        self.LoadLevel("TestFall", screen)
+        self.LoadLevel("WrapTest", screen)
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
