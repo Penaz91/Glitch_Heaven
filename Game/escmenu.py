@@ -4,11 +4,13 @@
 import pygame
 import os
 from components.UI import menuItem
-from game import Game
 from libs import animation
 
 
-class menu:
+class pauseMenu:
+
+    def unpause(self):
+        self.running = False
 
     def main(self, screen, keys):
         # self.title = pygame.image.load(
@@ -36,14 +38,15 @@ class menu:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        self.newgameimg = self.font.render("NewGame", False, (255, 255, 255))
-        self.selectedimg = self.font.render("NewGame", False, (255, 0, 0))
+        self.newgameimg = self.font.render("Resume Game", False,
+                                           (255, 255, 255))
+        self.selectedimg = self.font.render("Resume Game", False, (255, 0, 0))
         self.exitimg = self.font.render("Quit", False, (255, 255, 255))
         self.exitselected = self.font.render("Quit", False, (255, 0, 0))
         self.newgame = menuItem.menuitem(self.newgameimg,
                                          self.selectedimg,
                                          (320, 240),
-                                         lambda: Game().main(screen, keys))
+                                         lambda: self.unpause())
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (320, 320), lambda: quit())
@@ -94,5 +97,3 @@ class menu:
                 screen.blit(item.image, item.rect.topleft)
             screen.blit(self.newgame.image, self.newgame.location)
             pygame.display.update()
-        pygame.quit()
-        quit()

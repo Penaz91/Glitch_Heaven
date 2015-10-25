@@ -7,6 +7,7 @@ from libs import tmx
 import os
 import configparser
 from components.mobileobstacle import Obstacle
+from escmenu import pauseMenu
 
 
 class Game(object):
@@ -142,6 +143,8 @@ class Game(object):
                     self.toggleGlitch("hwrapping")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                     self.toggleGlitch("vwrapping")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                    pauseMenu().main(screen,keys)
             screen.blit(self.bg, (-self.tilemap.viewport.x/6,
                                   -self.tilemap.viewport.y/6))
             screen.blit(self.middleback, (-self.tilemap.viewport.x/4,
