@@ -8,6 +8,7 @@ import os
 import configparser
 from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
+import shelve
 
 
 class Game(object):
@@ -85,13 +86,60 @@ class Game(object):
                 Obstacle((obstacle.px, obstacle.py), False, speed, None,
                          self.obstacles)
         self.tilemap.layers.append(self.obstacles)
+
+    def loadNextLevel(self, campaign, screen):
+        self.campaignIndex += 1
+        self.LoadLevel(campaign[self.campaignIndex], screen)
+
+    def loadCampaign(self, campaignfile):
+        with open(os.path.join("data", "campaigns", campaignfile+".cmp"),
+                  "r") as campfile:
+            x = campfile.readlines()
+            y = []
+            for element in x:
+                y.append(element.strip())
+            return y
+
+    def eraseCurrentLevel(self):
+        self.tilemap = None
+        self.player = None
+
+    def loadLevelPart2(self, keys):
+        self.sprites = tmx.SpriteLayer()
+        start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
+        self.tilemap.layers.append(self.sprites)
+        self.backpos = [0, 0]
+        self.middlepos = [0, 0]
+        self.player = Player((start_cell.px, start_cell.py),
+                             self.sprites, keys=keys)
+
+    def saveGame(self):
+        shelf = shelve.open("SaveGame.dat")
+        shelf["currentcampaign"] = self.currentcampaign
+        shelf["campaignfile"] = self.campaignFile
+        shelf["campaignIndex"] = self.campaignIndex - 1
+        shelf.close()
+
+    def loadGame(self):
+        shelf = shelve.open("SaveGame.dat")
+        self.currentcampaign = shelf["currentcampaign"]
+        self.campaignFile = shelf["campaignfile"]
+        self.campaignIndex = shelf["campaignIndex"]
+        shelf.close()
+
     """ Main method """
     def main(self, screen, keys):
         """Variables"""
         self.running = True
         self.clock = pygame.time.Clock()
+        self.screen = screen
+        self.keys = keys
         self.helptxts = pygame.sprite.Group()
-        self.LoadLevel("WrapTest", screen)
+        self.campaignFile = "TestCampaign"
+        self.currentcampaign = self.loadCampaign(self.campaignFile)
+        print(self.currentcampaign)
+        self.campaignIndex = -1
+        self.loadNextLevel(self.currentcampaign, screen)
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
@@ -102,13 +150,7 @@ class Game(object):
         pygame.display.set_caption("Glitch_Heaven")
         """self.tilemap = tmx.load('data/maps/TestComplete.tmx',
                                 screen.get_size())"""
-        self.sprites = tmx.SpriteLayer()
-        start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
-        self.tilemap.layers.append(self.sprites)
-        self.backpos = [0, 0]
-        self.middlepos = [0, 0]
-        self.player = Player((start_cell.px, start_cell.py),
-                             self.sprites, keys=keys)
+        self.loadLevelPart2(self.keys)
         print(self.glitches)
         """Game Loop"""
         while self.running:
@@ -144,7 +186,14 @@ class Game(object):
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                     self.toggleGlitch("vwrapping")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-                    pauseMenu().main(screen,keys)
+                    pauseMenu().main(screen, keys)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                    self.saveGame()
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_l:
+                    self.loadGame()
+                    self.loadNextLevel(self.currentcampaign, screen)
+                    self.loadLevelPart2(self.keys)
+
             screen.blit(self.bg, (-self.tilemap.viewport.x/6,
                                   -self.tilemap.viewport.y/6))
             screen.blit(self.middleback, (-self.tilemap.viewport.x/4,

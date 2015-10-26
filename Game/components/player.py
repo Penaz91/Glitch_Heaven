@@ -345,9 +345,9 @@ class Player(pygame.sprite.Sprite):
                 Help(x, y, game.sprites, game=game, Text=helptext)
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):
-            # TODO: Make Game load the next level
-            quit()
-            # --------------------------------------
+            game.eraseCurrentLevel()
+            game.loadNextLevel(game.currentcampaign, game.screen)
+            game.loadLevelPart2(game.keys)
         game.tilemap.set_focus(self.rect.x, self.rect.y)
         game.backpos[0] = -game.tilemap.view_x
         if game.glitches["vwrapping"]:
