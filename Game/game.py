@@ -89,6 +89,8 @@ class Game(object):
 
     def loadNextLevel(self, campaign, screen):
         self.campaignIndex += 1
+        print("LoadNextLevel: "+str(campaign))
+        print(self.campaignIndex)
         self.LoadLevel(campaign[self.campaignIndex], screen)
 
     def loadCampaign(self, campaignfile):
@@ -102,6 +104,8 @@ class Game(object):
 
     def eraseCurrentLevel(self):
         self.tilemap = None
+        self.player.kill()
+        self.sprites.empty()
         self.player = None
 
     def loadLevelPart2(self, keys):
@@ -126,20 +130,25 @@ class Game(object):
         self.campaignFile = shelf["campaignfile"]
         self.campaignIndex = shelf["campaignIndex"]
         shelf.close()
+        print("Loadgame: "+str(self.currentcampaign))
+        print(self.campaignIndex)
 
     """ Main method """
-    def main(self, screen, keys):
+    def main(self, screen, keys, mode):
         """Variables"""
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = screen
         self.keys = keys
         self.helptxts = pygame.sprite.Group()
-        self.campaignFile = "TestCampaign"
-        self.currentcampaign = self.loadCampaign(self.campaignFile)
-        print(self.currentcampaign)
-        self.campaignIndex = -1
-        self.loadNextLevel(self.currentcampaign, screen)
+        if mode.lower() == "load":
+            self.loadGame()
+            self.loadNextLevel(self.currentcampaign, screen)
+        else:
+            self.campaignFile = "TestCampaign"
+            self.currentcampaign = self.loadCampaign(self.campaignFile)
+            self.campaignIndex = -1
+            self.loadNextLevel(self.currentcampaign, screen)
         self.fps = 30
         self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
@@ -186,14 +195,9 @@ class Game(object):
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                     self.toggleGlitch("vwrapping")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-                    pauseMenu().main(screen, keys)
+                    pauseMenu().main(screen, keys, self)
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                     self.saveGame()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_l:
-                    self.loadGame()
-                    self.loadNextLevel(self.currentcampaign, screen)
-                    self.loadLevelPart2(self.keys)
-
             screen.blit(self.bg, (-self.tilemap.viewport.x/6,
                                   -self.tilemap.viewport.y/6))
             screen.blit(self.middleback, (-self.tilemap.viewport.x/4,

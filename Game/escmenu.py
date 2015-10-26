@@ -12,7 +12,7 @@ class pauseMenu:
     def unpause(self):
         self.running = False
 
-    def main(self, screen, keys):
+    def main(self, screen, keys, game):
         # self.title = pygame.image.load(
         #        os.path.join("resources", "UI", "title.png")).convert_alpha()
         self.titleani = animation.Animation()
@@ -41,16 +41,21 @@ class pauseMenu:
         self.newgameimg = self.font.render("Resume Game", False,
                                            (255, 255, 255))
         self.selectedimg = self.font.render("Resume Game", False, (255, 0, 0))
+        self.saveimg = self.font.render("Save Game", False, (255, 255, 255))
+        self.saveselected = self.font.render("Salve Game", False, (255, 0, 0))
         self.exitimg = self.font.render("Quit", False, (255, 255, 255))
         self.exitselected = self.font.render("Quit", False, (255, 0, 0))
         self.newgame = menuItem.menuitem(self.newgameimg,
                                          self.selectedimg,
                                          (320, 240),
                                          lambda: self.unpause())
+        self.savegame = menuItem.menuitem(self.saveimg,
+                                          self.saveselected,
+                                          (320, 320), lambda: game.saveGame())
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
-                                      (320, 320), lambda: quit())
-        self.items = [self.newgame, self.exit]
+                                      (320, 560), lambda: quit())
+        self.items = [self.newgame, self.savegame, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.

@@ -40,14 +40,22 @@ class menu:
         self.selectedimg = self.font.render("NewGame", False, (255, 0, 0))
         self.exitimg = self.font.render("Quit", False, (255, 255, 255))
         self.exitselected = self.font.render("Quit", False, (255, 0, 0))
+        self.cont = self.font.render("Continue Game", False, (255, 255, 255))
+        self.contsel = self.font.render("Continue Game", False, (255, 0, 0))
         self.newgame = menuItem.menuitem(self.newgameimg,
                                          self.selectedimg,
                                          (320, 240),
-                                         lambda: Game().main(screen, keys))
+                                         lambda: Game().main(screen, keys,
+                                                             "newgame"))
+        self.contgame = menuItem.menuitem(self.cont,
+                                          self.contsel,
+                                          (320, 320),
+                                          lambda: Game().main(screen, keys,
+                                                              "load"))
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
-                                      (320, 320), lambda: quit())
-        self.items = [self.newgame, self.exit]
+                                      (320, 560), lambda: quit())
+        self.items = [self.newgame, self.contgame, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.
