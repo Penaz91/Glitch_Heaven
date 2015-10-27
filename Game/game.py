@@ -12,6 +12,7 @@ import shelve
 
 
 class Game(object):
+
     def toggleGlitch(self, glitch):
         truth = self.glitches.get(glitch)
         if truth:
@@ -118,14 +119,14 @@ class Game(object):
                              self.sprites, keys=keys)
 
     def saveGame(self):
-        shelf = shelve.open("SaveGame.dat")
+        shelf = shelve.open("SaveGame")
         shelf["currentcampaign"] = self.currentcampaign
         shelf["campaignfile"] = self.campaignFile
         shelf["campaignIndex"] = self.campaignIndex - 1
         shelf.close()
 
     def loadGame(self):
-        shelf = shelve.open("SaveGame.dat")
+        shelf = shelve.open("SaveGame")
         self.currentcampaign = shelf["currentcampaign"]
         self.campaignFile = shelf["campaignfile"]
         self.campaignIndex = shelf["campaignIndex"]
@@ -166,7 +167,8 @@ class Game(object):
             dt = self.clock.tick(self.fps)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.running = False
+                    pygame.quit()
+                    quit()
                 # Glitch Toggles, for testing
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                     self.toggleGlitch("wallclimb")
@@ -184,6 +186,7 @@ class Game(object):
                     self.toggleGlitch("stickyceil")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
                     self.gravity *= -1
+                    print("Gravity has been inverted")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
                     self.toggleGlitch("permbodies")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
@@ -212,5 +215,3 @@ class Game(object):
             screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
                                        -self.tilemap.viewport.y*1.5))
             pygame.display.update()
-        pygame.quit()
-        quit()

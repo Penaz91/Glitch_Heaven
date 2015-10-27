@@ -40,18 +40,25 @@ class menu:
         self.selectedimg = self.font.render("NewGame", False, (255, 0, 0))
         self.exitimg = self.font.render("Quit", False, (255, 255, 255))
         self.exitselected = self.font.render("Quit", False, (255, 0, 0))
-        self.cont = self.font.render("Continue Game", False, (255, 255, 255))
-        self.contsel = self.font.render("Continue Game", False, (255, 0, 0))
+        if not os.path.exists(os.path.join("SaveGame.dat")):
+            self.cont = self.font.render("Continue Game", False, (100, 100, 100))
+            self.contgame = menuItem.menuitem(self.cont,
+                                              self.cont,
+                                              (320, 320),
+                                              lambda: None)
+        else:
+            self.cont = self.font.render("Continue Game", False, (255, 255, 255))
+            self.contsel = self.font.render("Continue Game", False, (255, 0, 0))
+            self.contgame = menuItem.menuitem(self.cont,
+                                          self.contsel,
+                                          (320, 320),
+                                          lambda: Game().main(screen, keys,
+                                                              "load"))
         self.newgame = menuItem.menuitem(self.newgameimg,
                                          self.selectedimg,
                                          (320, 240),
                                          lambda: Game().main(screen, keys,
                                                              "newgame"))
-        self.contgame = menuItem.menuitem(self.cont,
-                                          self.contsel,
-                                          (320, 320),
-                                          lambda: Game().main(screen, keys,
-                                                              "load"))
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (320, 560), lambda: quit())
