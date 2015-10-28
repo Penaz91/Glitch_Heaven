@@ -24,6 +24,7 @@ if __name__ == "__main__":
             flags = pygame.FULLSCREEN | pygame.HWSURFACE
     else:
         flags = 0
+    pygame.mixer.pre_init(44100, 16, 2, 4096)
     pygame.init()
     screen = pygame.display.set_mode(screensize, flags)
     menu().main(screen, keys)

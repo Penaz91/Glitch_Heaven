@@ -3,10 +3,11 @@
 # Copyright 2015 - Penaz <penazarea@altervista.org>
 
 # from libs import animation
-
+import pygame
+import os
 
 class menuitem(object):
-
+    sound = pygame.mixer.Sound("resources/sounds/menuSelection.wav")
     def __init__(self, unselected, selected, location, function):
         self.unselected = unselected
         self.selected = selected
@@ -20,6 +21,7 @@ class menuitem(object):
     def makeSelected(self):
         self.image = self.selected
         self.selectedStatus = True
+        self.sound.play()
 
     def makeUnselected(self):
         self.image = self.unselected
