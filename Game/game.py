@@ -72,11 +72,15 @@ class Game(object):
                                    "backgrounds",
                                    levelconfig["Level_Components"]
                                    ["middle_back2"])).convert_alpha()
-        self.overlay = pygame.image.load(
-                       os.path.join("resources",
-                                    "overlays",
-                                    levelconfig["Level_Components"]
-                                    ["overlay"])).convert_alpha()
+        if levelconfig["Level_Components"]["overlay"].lower() != "none":
+            self.hasOverlay = True
+            self.overlay = pygame.image.load(
+                           os.path.join("resources",
+                                        "overlays",
+                                        levelconfig["Level_Components"]
+                                        ["overlay"])).convert_alpha()
+        else:
+            self.hasOverlay = False
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
             obs = obstacle['Obstacle']
             speed = obstacle['ObsSpeed']
@@ -212,6 +216,7 @@ class Game(object):
             self.tilemap.draw(screen)
             self.player.particles.update()
             self.player.particles.draw(screen)
-            screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
-                                       -self.tilemap.viewport.y*1.5))
+            if self.hasOverlay:
+                screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
+                                           -self.tilemap.viewport.y*1.5))
             pygame.display.update()
