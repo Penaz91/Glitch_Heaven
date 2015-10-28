@@ -17,6 +17,9 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, location, *groups, keys):
         super(Player, self).__init__(*groups)
+        self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
+                                                         "sounds",
+                                                         "jump.wav"))
         self.image = pygame.image.load(
                     os.path.join("resources",
                                  "sprites",
@@ -149,6 +152,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.x_speed
         if game.glitches["multijump"]:
             if key[self.keys["jump"]]:
+                self.jumpsound.play()
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
@@ -160,9 +164,11 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = self.jump_speed*game.gravity
         elif game.glitches["hover"]:
             if key[self.keys["jump"]]:
+                self.jumpsound.play()
                 self.y_speed = self.jump_speed*game.gravity*0.8
         else:
             if key[self.keys["jump"]] and self.resting:
+                self.jumpsound.play()
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:

@@ -6,8 +6,9 @@
 import pygame
 import os
 
+
 class menuitem(object):
-    sound = pygame.mixer.Sound("resources/sounds/menuSelection.wav")
+    
     def __init__(self, unselected, selected, location, function):
         self.unselected = unselected
         self.selected = selected
@@ -17,6 +18,13 @@ class menuitem(object):
         self.image = self.unselected
         self.selectedStatus = False
         self.function = function
+        self.sound = pygame.mixer.Sound(os.path.join("resources",
+                                            "sounds",
+                                            "menuSelection.wav"))
+        self.confirmSound = pygame.mixer.Sound(os.path.join("resources",
+                                                            "sounds",
+                                                            "select.wav"))
+
 
     def makeSelected(self):
         self.image = self.selected
@@ -26,12 +34,6 @@ class menuitem(object):
     def makeUnselected(self):
         self.image = self.unselected
         self.selectedStatus = False
-
-    def isSelected(self):
-        if self.selected:
-            return True
-        else:
-            return False
 
     def update(self):
         if self.selected:

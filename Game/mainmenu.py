@@ -81,6 +81,7 @@ class menu:
                         self.currentItem = ((self.currentItem-1) %
                                             len(self.items))
                     if event.key == keys["confirm"]:
+                        self.items[self.currentItem].confirmSound.play()
                         self.items[self.currentItem].function()
                     if event.key == keys["escape"]:
                         print("esc")
@@ -91,13 +92,14 @@ class menu:
                     if self.currentItem == 0:
                         self.currentItem = None
                     for item in self.items:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos()):
+                        if item.rect.collidepoint(*pygame.mouse.get_pos()) and not item.selectedStatus:
                             item.makeSelected()
                         else:
                             item.makeUnselected()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
+                            item.confirmSound.play()
                             item.function()
             self.titletime += self.dt
             if self.titletime >= self.titletimings[self.titleani.currentframe]:
