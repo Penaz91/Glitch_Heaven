@@ -93,6 +93,7 @@ class Game(object):
         self.tilemap.layers.append(self.obstacles)
 
     def loadNextLevel(self, campaign, screen):
+        # Usare un generatore per passare i livelli?
         self.campaignIndex += 1
         print("LoadNextLevel: "+str(campaign))
         print(self.campaignIndex)

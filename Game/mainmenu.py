@@ -41,19 +41,22 @@ class menu:
         self.exitimg = self.font.render("Quit", False, (255, 255, 255))
         self.exitselected = self.font.render("Quit", False, (255, 0, 0))
         if not os.path.exists(os.path.join("SaveGame.dat")):
-            self.cont = self.font.render("Continue Game", False, (100, 100, 100))
+            self.cont = self.font.render("Continue Game", False,
+                                         (100, 100, 100))
             self.contgame = menuItem.menuitem(self.cont,
                                               self.cont,
                                               (320, 320),
                                               lambda: None)
         else:
-            self.cont = self.font.render("Continue Game", False, (255, 255, 255))
-            self.contsel = self.font.render("Continue Game", False, (255, 0, 0))
+            self.cont = self.font.render("Continue Game", False,
+                                         (255, 255, 255))
+            self.contsel = self.font.render("Continue Game", False,
+                                            (255, 0, 0))
             self.contgame = menuItem.menuitem(self.cont,
-                                          self.contsel,
-                                          (320, 320),
-                                          lambda: Game().main(screen, keys,
-                                                              "load"))
+                                              self.contsel,
+                                              (320, 320),
+                                              lambda: Game().main(screen, keys,
+                                                                  "load"))
         self.newgame = menuItem.menuitem(self.newgameimg,
                                          self.selectedimg,
                                          (320, 240),
@@ -73,11 +76,9 @@ class menu:
                     if self.currentItem is None:
                         self.currentItem = 0
                     if event.key == keys["down"]:
-                        print("down")
                         self.currentItem = ((self.currentItem+1) %
                                             len(self.items))
                     if event.key == keys["up"]:
-                        print("up")
                         self.currentItem = ((self.currentItem-1) %
                                             len(self.items))
                     if event.key == keys["confirm"]:
@@ -92,7 +93,8 @@ class menu:
                     if self.currentItem == 0:
                         self.currentItem = None
                     for item in self.items:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos()) and not item.selectedStatus:
+                        if item.rect.collidepoint(*pygame.mouse.get_pos())\
+                                and not item.selectedStatus:
                             item.makeSelected()
                         else:
                             item.makeUnselected()
