@@ -4,23 +4,23 @@
 import pygame
 import random
 
-""" A Particle """
-class Particle (pygame.sprite.Sprite):
 
-    """
-    Default constructor
-    
-    :param position: The initial position of the particle
-    :param colorstart: A 3-Tuple (RRR,GGG,BBB) representing the initial color of the particle
-    :param colorend: A 3-Tuple (RRR,GGG,BBB) representing the final color just before the particle dies
-    :param speedx: The horizontal speed of the particle
-    :param speedy: The Vertical speed of the particle
-    :param *groups: A self-unpacking collection of the spritegroups where the particle should be added
-    
-    :return: Nothing
-    """
-    def __init__(self, position, colorstart, colorend,
-                 speedx, speedy, *groups):
+class Particle (pygame.sprite.Sprite):
+    """ A Particle """
+
+    def __init__(self, position, colorstart, colorend, speedx, speedy, *groups):
+        """
+        Default constructor
+
+        :param position: The initial position of the particle
+        :param colorstart: A 3-Tuple (RRR,GGG,BBB) representing the initial color of the particle
+        :param colorend: A 3-Tuple (RRR,GGG,BBB) representing the final color just before the particle dies
+        :param speedx: The horizontal speed of the particle
+        :param speedy: The Vertical speed of the particle
+        :param *groups: A self-unpacking collection of the spritegroups where the particle should be added
+
+        :return: Nothing
+        """
         super(Particle, self).__init__(*groups)
         self.age = 20
         self.color = colorstart
@@ -33,8 +33,8 @@ class Particle (pygame.sprite.Sprite):
         self.sx = speedx
         self.sy = speedy
 
-    """ Update method, called when the sprites get updated """
     def update(self):
+        """ Update method, called when the sprites get updated """
         self.age -= 1   # Decreases the age of the particle (where 0 is a dead particle)
         if self.age < 100:                                              # |
             self.red = (self.color[0])+(self.colorsteps[0])             # |

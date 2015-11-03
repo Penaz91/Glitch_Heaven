@@ -3,9 +3,22 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
+""" Repreosents a mobile enemy that kills the player on touch """
 
 
 class Obstacle(pygame.sprite.Sprite):
+
+    """
+    Default constructor
+
+    :param location: A 2-tuple (x,y) representing the item location
+    :param vertical: Boolean representing if the item moves vertically
+    :param spd: The movement speed
+    :param image: A surface representing the image of the item
+    :param *groups: A collection of sprite groups to add the item to
+
+    :return: Nothing
+    """
     def __init__(self, location, vertical, spd, image, *groups):
         super(Obstacle, self).__init__(*groups)
         self.image = pygame.image.load(os.path.join("resources",
