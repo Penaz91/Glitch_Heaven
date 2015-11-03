@@ -12,13 +12,15 @@ class Obstacle(pygame.sprite.Sprite):
         """
         Default constructor
 
-        :param location: A 2-tuple (x,y) representing the item location
-        :param vertical: Boolean representing if the item moves vertically
-        :param spd: The movement speed
-        :param image: A surface representing the image of the item
-        :param *groups: A collection of sprite groups to add the item to
+        Keyword Arguments:
+        - location: A 2-tuple (x,y) representing the item location
+        - vertical: Boolean representing if the item moves vertically
+        - spd: The movement speed
+        - image: A surface representing the image of the item
+        - *groups: A collection of sprite groups to add the item to
 
-        :return: Nothing
+        Returns:
+        - Nothing
         """
         super(Obstacle, self).__init__(*groups)
         self.image = pygame.image.load(os.path.join("resources",
@@ -38,12 +40,13 @@ class Obstacle(pygame.sprite.Sprite):
     def update(self, dt, game):
         """
         Update method, moves and updates the obstacle status
-        
-        :param dt: The time slice (clock.tick())
-        :param game: The game instance.
+
+        Keyword Arguments:
+        - dt: The time slice (clock.tick())
+        - game: The game instance.
         """
         self.rect.x += self.direction * self.xspeed * dt    # |
-        self.rect.y += self.direction * self.yspeed * dt    # | Moves the obstacle
+        self.rect.y += self.direction * self.yspeed * dt    # | Moves obstacle
         # Reverses the obstacle when a "ObsReverse" trigger is touched
         # v-----------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,

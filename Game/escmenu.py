@@ -11,14 +11,12 @@ class pauseMenu:
 
     def unpause(self):
         self.running = False
-        
-    def goToMenu(self,game):
+
+    def goToMenu(self, game):
         game.running = False
         self.running = False
 
     def main(self, screen, keys, game):
-        # self.title = pygame.image.load(
-        #        os.path.join("resources", "UI", "title.png")).convert_alpha()
         self.titleani = animation.Animation()
         self.titleani.loadFromDir(
                 os.path.join("resources", "UI", "AnimatedTitle"))
@@ -47,10 +45,14 @@ class pauseMenu:
         self.selectedimg = self.font.render("Resume Game", False, (255, 0, 0))
         self.saveimg = self.font.render("Save Game", False, (255, 255, 255))
         self.saveselected = self.font.render("Salve Game", False, (255, 0, 0))
-        self.exitimg = self.font.render("Quit to Desktop", False, (255, 255, 255))
-        self.exitselected = self.font.render("Quit to Desktop", False, (255, 0, 0))
-        self.menu = self.font.render("Main Menu", False, (255,255,255))
-        self.menusel = self.font.render("Main Menu", False, (255,0,0))
+        self.exitimg = self.font.render("Quit to Desktop",
+                                        False, (255, 255, 255))
+        self.exitselected = self.font.render("Quit to Desktop",
+                                             False, (255, 0, 0))
+        self.menu = self.font.render("Main Menu",
+                                     False, (255, 255, 255))
+        self.menusel = self.font.render("Main Menu",
+                                        False, (255, 0, 0))
         self.newgame = menuItem.menuitem(self.newgameimg,
                                          self.selectedimg,
                                          (320, 240),
@@ -60,7 +62,8 @@ class pauseMenu:
                                           (320, 320), lambda: game.saveGame())
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
-                                          (320,400), lambda: self.goToMenu(game))
+                                          (320, 400),
+                                          lambda: self.goToMenu(game))
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (320, 560), lambda: quit())

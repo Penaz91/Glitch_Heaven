@@ -9,20 +9,21 @@ class MobilePlatform(pygame.sprite.Sprite):
         """
         Default constructor
 
-        :param x: The horizontal position of the item
-        :param y: The vertical position of the item
-        :param *groups: A collection of sprite groups to add the item to
-        :param game: The game instance
-        :param surface: The image that the item should represent
+        Keyword Arguments:
+        - x: The horizontal position of the item
+        - y: The vertical position of the item
+        - *groups: A collection of sprite groups to add the item to
+        - game: The game instance
+        - surface: The image that the item should represent
 
-        :return: Nothing
+        Returns:
+        - Nothing
         """
         super(MobilePlatform, self).__init__(*groups)
         self.image = surface
         self.rect = self.image.get_rect()
         self.screenx, self.screeny = x, y
         self.rect.x, self.rect.y = game.tilemap.pixel_to_screen(x, y)
-
 
     def update(self, dt, game):
         """ Dummy Update Method """

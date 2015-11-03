@@ -1,6 +1,15 @@
 # Player component
 # Part of the Glitch_Heaven Project
 # Copyright 2015 Penaz <penazarea@altervista.org>
+#
+# ------------------------------------------------
+# TODO AREA
+# - Reduce boilerplate concerning Common operations with left
+#   and right movement.
+# - Reduce boilerplate concerning the emission of particles
+# - Tie player size to the size of the sprite
+# - Find a reason for the code at row 262
+# ------------------------------------------------
 import pygame
 import os
 from components.deadbody import DeadBody
@@ -10,12 +19,24 @@ from libs import particle
 
 
 class Player(pygame.sprite.Sprite):
-    size = (32, 32)
+    """ Class representing the player """
+    size = (32, 32)     # Might be removed in future+taken from img
     playermaxspeed = 200
     runmultiplier = 2
     playeraccel = 50
 
     def __init__(self, location, *groups, keys):
+        """
+        Default Constructor
+
+        Keyword Arguments:
+        - location: 2-tuple (x,y) representing the location of the player
+        - *groups: Collection of sprite groups to add the item to
+        - keys: reference to the control keys for movement/actions
+
+        Returns:
+        - Nothing
+        """
         super(Player, self).__init__(*groups)
         self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
                                                          "sounds",
@@ -31,8 +52,8 @@ class Player(pygame.sprite.Sprite):
         self.y_speed = 0
         self.x_speed = 0
         self.jump_speed = -500
-        self.direction = 1
-        self.bounced = False
+        self.direction = 1      # 1=Right, -1=Left
+        self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
         self.walkanimation = animation.Animation()
         self.walkanimation.loadFromDir(os.path.join("resources",
@@ -47,18 +68,43 @@ class Player(pygame.sprite.Sprite):
         self.particles = pygame.sprite.Group()
 
     def respawn(self, game):
+        """
+        Method used to respawn the player after death
+
+        Keyword Arguments:
+        - game: The game instance
+
+        Returns:
+        - Nothing
+        """
+        # If the permbody glitch is active, will add a body at death position
+        # v-----------------------------------------------------v
         if game.glitches["permbodies"]:
             x, y = game.tilemap.pixel_from_screen(self.rect.x,
                                                   self.rect.y)
             body = DeadBody(x, y, game.sprites, game=game)
             game.deadbodies.add(body)
-        self.kill()
+        # ^-----------------------------------------------------^
+        self.kill()     # Kills the player sprite
+        # Does a complete respawn of the player
+        # v-----------------------------------------------------v
         start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
         game.player = Player((start_cell.px, start_cell.py),
                              game.sprites, keys=self.keys)
+        # ^-----------------------------------------------------^
 
     def update(self, dt, game):
-        last = self.rect.copy()
+        """
+        Updates the status of the player
+
+        Keyword Arguments:
+        - dt: The time slice (clock.tick())
+        - game: The Game instance.
+
+        Returns:
+        - Nothing
+        """
+        last = self.rect.copy()     # Copy last position for collision compare
         key = pygame.key.get_pressed()
         if key[self.keys["left"]]:
             self.direction = -1
@@ -72,6 +118,10 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier,
                                        self.x_speed-self.playeraccel*dt *
                                        self.runmultiplier)
+                    # Emits particles if the player is on a surface
+                    # Strength is increased because of running
+                    # TODO: Decrease boilerplate for particle emission
+                    # v----------------------------------------------------v
                     if self.resting:
                         particle.Particle(game.tilemap.pixel_to_screen(
                             self.rect.x+32, self.rect.y+32),
@@ -85,6 +135,7 @@ class Player(pygame.sprite.Sprite):
                             self.rect.x+32, self.rect.y+32),
                                 (0, 81, 138),
                                 (141, 200, 241), 4, -1, self.particles)
+                    # ^----------------------------------------------------^
                 else:
                     self.image = pygame.transform.flip(
                                  self.walkanimation.next(),
@@ -92,6 +143,9 @@ class Player(pygame.sprite.Sprite):
                                  False)
                     self.x_speed = max(-self.playermaxspeed * dt,
                                        self.x_speed-self.playeraccel*dt)
+                    # Emits particles if the player is on a surface
+                    # TODO: Reduce Boilerplate for particle Emission
+                    # v----------------------------------------------------v
                     if self.resting:
                         particle.Particle(game.tilemap.pixel_to_screen(
                             self.rect.x+32, self.rect.y+32), (0, 81, 138),
@@ -104,6 +158,7 @@ class Player(pygame.sprite.Sprite):
                             self.rect.x+32, self.rect.y+32),
                             (0, 81, 138),
                             (141, 200, 241), 2, -1, self.particles)
+                    # ^----------------------------------------------------^
 
         elif key[self.keys["right"]]:
             if not self.bounced:
@@ -114,6 +169,10 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
                                        self.runmultiplier)
+                    # Emits particles if the player is on a surface
+                    # Strength is increased because of running
+                    # TODO: Decrease boilerplate for particle emission
+                    # v----------------------------------------------------v
                     if self.resting:
                         particle.Particle(game.tilemap.pixel_to_screen(
                             self.rect.x, self.rect.y+32), (0, 81, 138),
@@ -126,10 +185,15 @@ class Player(pygame.sprite.Sprite):
                             self.rect.x, self.rect.y+32),
                             (0, 81, 138),
                             (141, 200, 241), -4, -1, self.particles)
+                    # ^----------------------------------------------------^
                 else:
                     self.image = self.walkanimation.next()
                     self.x_speed = min(self.playermaxspeed*dt,
                                        self.x_speed+self.playeraccel*dt)
+                    # Emits particles if the player is on a surface
+                    # Strength is increased because of running
+                    # TODO: Decrease boilerplate for particle emission
+                    # v----------------------------------------------------v
                     if self.resting:
                         particle.Particle(game.tilemap.pixel_to_screen(
                             self.rect.x, self.rect.y+32),
@@ -143,12 +207,18 @@ class Player(pygame.sprite.Sprite):
                             self.rect.x, self.rect.y+32),
                             (0, 81, 138),
                             (141, 200, 241), -2, -1, self.particles)
+                    # ^----------------------------------------------------^
         else:
+            # Gives the player some control over the fall if they're not
+            # bounced away from a spring
+            # TODO: Find some better way to let player keep control
+            # v--------------------------------------------------------------v
             if not self.bounced:
                 if self.direction == 1:
                     self.x_speed = max(0, self.x_speed-(self.playeraccel*dt))
                 elif self.direction == -1:
                     self.x_speed = min(0, self.x_speed+(self.playeraccel*dt))
+            # ^--------------------------------------------------------------^
         self.rect.x += self.x_speed
         if game.glitches["multijump"]:
             if key[self.keys["jump"]]:
@@ -156,12 +226,19 @@ class Player(pygame.sprite.Sprite):
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
+                    # If the high jump glitch is active, jumps twice as high
+                    # This happens while the multijump glitch is active
+                    # v------------------------------------------------------v
+                    # TODO: Invert Comparations to save on CPU power
+                    # if self.y_speed.....
+                    #     if game.glitches ......
                     if game.glitches["highjump"]:
                         if self.y_speed > -(self.jump_speed/2) or self.resting:
                             self.y_speed = self.jump_speed*2*game.gravity
                     else:
                         if self.y_speed > -(self.jump_speed/2) or self.resting:
                             self.y_speed = self.jump_speed*game.gravity
+                    # ^------------------------------------------------------^
         elif game.glitches["hover"]:
             if key[self.keys["jump"]]:
                 self.jumpsound.play()
@@ -182,6 +259,9 @@ class Player(pygame.sprite.Sprite):
                 self.y_speed = (min(200, self.y_speed+20))
             elif game.gravity == -1:
                 self.y_speed = -(min(200, abs(self.y_speed)+20))
+            # Why? Gravity will never be 0.
+            # TODO: Find a reason for this useless piece of code or go
+            # Order 66 on it
             elif game.gravity == 0:
                 self.y_speed = 0
         else:
@@ -189,6 +269,9 @@ class Player(pygame.sprite.Sprite):
                 self.y_speed = (min(400, self.y_speed+40))
             elif game.gravity == -1:
                 self.y_speed = (max(-400, self.y_speed-40))
+            # Why? Gravity will never be 0.
+            # TODO: Find a reason for this useless piece of code or go
+            # Order 66 on it
             elif game.gravity == 0:
                 self.y_speed = 0
         self.rect.y += self.y_speed * dt

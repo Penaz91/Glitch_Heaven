@@ -9,17 +9,19 @@ class Help(MobilePlatform):
     Represents a helping Sign/Terminal,
     inherits properties from MobilePlatform
     """
-    def __init__(self, centerx, lowy, *groups, game, Text): 
+    def __init__(self, centerx, lowy, *groups, game, Text):
         """
         Default Constructor
 
-        :param centerx: The horizontal center of the text
-        :param lowy: The low side of the text, relative to position of the player.
-        :param *groups: A collection of sprite groups to add the item to.
-        :param game: The game istance.
-        :param Text: The text that has to be written on the help tip.
+        Keyword Arguments:
+        - centerx: The horizontal center of the text
+        - lowy: The low side of the text, relative to position of the player.
+        - *groups: A collection of sprite groups to add the item to.
+        - game: The game istance.
+        - Text: The text that has to be written on the help tip.
 
-        :return: Nothing
+        Returns:
+        - Nothing
         """
         self.font = pygame.font.Font(os.path.join("resources",
                                                   "fonts",
@@ -39,12 +41,14 @@ class Help(MobilePlatform):
         """
         Update method
 
-        :param dt: The unit of time (clock.tick/1000.)
-        :param game: The game istance
+        Keyword Arguments:
+        - dt: The unit of time (clock.tick/1000.)
+        - game: The game istance
 
-        :return: Nothing
+        Returns:
+        - Nothing
         """
         self.age -= 1
         if self.age == 0:
             self.kill()
-            game.setHelpFlag(False)     # This will allow the sign to be enabled again
+            game.setHelpFlag(False)     # Allows the sign to be enabled again

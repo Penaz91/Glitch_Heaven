@@ -14,11 +14,14 @@ class DeadBody(MobilePlatform):
         """
         Default Constructor
 
-        :param x: The horizontal position of the top-left corner of the sprite
-        :param y: The vertical position of the top-left corner of the sprite
-        :param *groups: A collection of sprite groups to add the item to
-        :param game: The game istance
-        :return: Nothing
+        Keyword Arguments:
+        - x: The horizontal position of the top-left corner of the sprite
+        - y: The vertical position of the top-left corner of the sprite
+        - *groups: A collection of sprite groups to add the item to
+        - game: The game istance
+
+        Returns:
+        - Nothing
         """
         self.img = pygame.image.load(
                     os.path.join("resources",
