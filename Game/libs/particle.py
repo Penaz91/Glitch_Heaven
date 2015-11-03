@@ -55,20 +55,21 @@ class Particle (pygame.sprite.Sprite):
             self.color = (self.red, self.green, self.blue)      # I set the new particle color
             self.image.fill(self.color)                         # I Color the particle surface
         if self.age == 0:
-            """Alternative: reset the particle color/position to avoid
+            """Alternative? reset the particle color/position to avoid
                useless read/write in memory of new object """
             self.kill()     # When the particle ends its cycle, i kill it
         self.rect.x += self.sx      # |
         self.rect.y += self.sy      # | Setting the new position of the particle
 
-    """
-    Function to calculate the color fading steps
-    
-    :param startcolor: A 3-Tuple (RRR,GGG,BBB) representing the starting color
-    :param finalcolor: A 3-Tuple (RRR,GGG,BBB) representing the final color
-    :param steps: An integer, representing the number of steps the fading should take
-    """
+
     def colorfade(self, startcolor, finalcolor, steps):
+            """
+        Function to calculate the color fading steps
+    
+        :param startcolor: A 3-Tuple (RRR,GGG,BBB) representing the starting color
+        :param finalcolor: A 3-Tuple (RRR,GGG,BBB) representing the final color
+        :param steps: An integer, representing the number of steps the fading should take
+        """
         stepR = (finalcolor[0]-startcolor[0])/steps
         stepG = (finalcolor[1]-startcolor[1])/steps
         stepB = (finalcolor[2]-startcolor[2])/steps

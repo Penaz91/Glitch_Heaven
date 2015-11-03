@@ -6,19 +6,20 @@
 import pygame
 import os
 
-""" Represents a menu item """
+
 class menuitem(object):
+    """ Represents a menu item """
     
-    """
-    Default constructor
-    :param unselected: The surface representing the unselected button
-    :param selected: The surface representing the selected button (hovered)
-    :param location: Location of the top-left corner of the menu element
-    :param function: Usually a lambda, recalled by the button when clicked/used
-    
-    :return: Nothing
-    """
     def __init__(self, unselected, selected, location, function):
+        """
+        Default constructor
+        :param unselected: The surface representing the unselected button
+        :param selected: The surface representing the selected button (hovered)
+        :param location: Location of the top-left corner of the menu element
+        :param function: Usually a lambda, recalled by the button when clicked/used
+
+        :return: Nothing
+        """
         self.unselected = unselected
         self.selected = selected
         self.rect = self.unselected.get_rect()
@@ -34,23 +35,23 @@ class menuitem(object):
                                                             "sounds",
                                                             "select.wav"))
 
-    """ Turns the element status to "Selected" """
     def makeSelected(self):
+        """ Turns the element status to "Selected" """
         self.image = self.selected
         self.selectedStatus = True
         self.sound.play()
 
-    """ Turns the element status to "Unselected" """
     def makeUnselected(self):
+        """ Turns the element status to "Unselected" """
         self.image = self.unselected
         self.selectedStatus = False
 
-    """ 
-    Changes the status if the update function is called
-    
-    #MIGHT NEED DEPRECATION#
-    """
     def update(self):
+        """ 
+        Changes the status if the update function is called
+    
+        #MIGHT NEED DEPRECATION#
+        """
         if self.selected:
             self.makeSelected()
         else:

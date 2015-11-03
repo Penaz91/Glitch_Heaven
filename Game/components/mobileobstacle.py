@@ -3,23 +3,23 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
-""" Repreosents a mobile enemy that kills the player on touch """
 
 
 class Obstacle(pygame.sprite.Sprite):
+    """ Represents a mobile enemy that kills the player on touch """
 
-    """
-    Default constructor
-
-    :param location: A 2-tuple (x,y) representing the item location
-    :param vertical: Boolean representing if the item moves vertically
-    :param spd: The movement speed
-    :param image: A surface representing the image of the item
-    :param *groups: A collection of sprite groups to add the item to
-
-    :return: Nothing
-    """
     def __init__(self, location, vertical, spd, image, *groups):
+        """
+        Default constructor
+
+        :param location: A 2-tuple (x,y) representing the item location
+        :param vertical: Boolean representing if the item moves vertically
+        :param spd: The movement speed
+        :param image: A surface representing the image of the item
+        :param *groups: A collection of sprite groups to add the item to
+
+        :return: Nothing
+        """
         super(Obstacle, self).__init__(*groups)
         self.image = pygame.image.load(os.path.join("resources",
                                                     "sprites",
@@ -36,8 +36,16 @@ class Obstacle(pygame.sprite.Sprite):
         self.vertical = vertical
 
     def update(self, dt, game):
-        self.rect.x += self.direction * self.xspeed * dt
-        self.rect.y += self.direction * self.yspeed * dt
+        """
+        Update method, moves and updates the obstacle status
+        
+        :param dt: The time slice (clock.tick())
+        :param game: The game instance.
+        """
+        self.rect.x += self.direction * self.xspeed * dt    # |
+        self.rect.y += self.direction * self.yspeed * dt    # | Moves the obstacle
+        # Reverses the obstacle when a "ObsReverse" trigger is touched
+        # v-----------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'ObsReverse'):
             if self.vertical:
@@ -51,5 +59,6 @@ class Obstacle(pygame.sprite.Sprite):
                 else:
                     self.rect.left = cell.right
             self.direction *= -1
+        # ^------------------------------------------------------------------^
         if self.rect.colliderect(game.player.rect):
             game.player.respawn(game)
