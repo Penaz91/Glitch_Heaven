@@ -10,11 +10,11 @@ from libs import animation
 
 class menu:
     """ Represents the main Game menu """
-    
+
     def main(self, screen, keys):
         """
         Main menu method
-        
+
         Keyword Arguments:
         - screen: The surface to draw the menu to.
         - keys: The control keys collection used

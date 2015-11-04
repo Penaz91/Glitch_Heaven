@@ -8,18 +8,23 @@ import random
 class Particle (pygame.sprite.Sprite):
     """ A Particle """
 
-    def __init__(self, position, colorstart, colorend, speedx, speedy, *groups):
+    def __init__(self, position, colorstart, colorend,
+                 speedx, speedy, *groups):
         """
         Default constructor
 
-        :param position: The initial position of the particle
-        :param colorstart: A 3-Tuple (RRR,GGG,BBB) representing the initial color of the particle
-        :param colorend: A 3-Tuple (RRR,GGG,BBB) representing the final color just before the particle dies
-        :param speedx: The horizontal speed of the particle
-        :param speedy: The Vertical speed of the particle
-        :param *groups: A self-unpacking collection of the spritegroups where the particle should be added
+        Keyword Arguments:
+        - position: The initial position of the particle
+        - colorstart: A 3-Tuple (RRR,GGG,BBB) representing the initial color
+                      of the particle
+        - colorend: A 3-Tuple (RRR,GGG,BBB) representing the final color just
+                    before the particle dies
+        - speedx: The horizontal speed of the particle
+        - speedy: The Vertical speed of the particle
+        - *groups: A collection of the spritegroups to add the particle to
 
-        :return: Nothing
+        Returns:
+        - Nothing
         """
         super(Particle, self).__init__(*groups)
         self.age = 20
@@ -61,14 +66,18 @@ class Particle (pygame.sprite.Sprite):
         self.rect.x += self.sx      # |
         self.rect.y += self.sy      # | Setting the new position of the particle
 
-
     def colorfade(self, startcolor, finalcolor, steps):
         """
         Function to calculate the color fading steps
-    
-        :param startcolor: A 3-Tuple (RRR,GGG,BBB) representing the starting color
-        :param finalcolor: A 3-Tuple (RRR,GGG,BBB) representing the final color
-        :param steps: An integer, representing the number of steps the fading should take
+
+        Keyword Arguments:
+        - startcolor: A 3-Tuple (RRR,GGG,BBB) representing the starting color
+        - finalcolor: A 3-Tuple (RRR,GGG,BBB) representing the final color
+        - steps: An integer, representing the number of steps the
+                 fading should take
+
+        Returns:
+        - The color steps to add to the color to complete the fade
         """
         stepR = (finalcolor[0]-startcolor[0])/steps
         stepG = (finalcolor[1]-startcolor[1])/steps

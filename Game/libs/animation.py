@@ -23,20 +23,26 @@ class Animation(object):
 
     def next(self):
         """
-        This method returns the next frame in the animation, in a ring array fashion
+        This method returns the next frame in the animation,
+        in a ring array fashion
 
-        :return: Next frame from the frame list
+        Returns:
+        - Next frame from the frame list
         """
         self.currentframe = (self.currentframe+1) % len(self.frames)     # Returns the frame number in a circular fashion, 0 -> ... -> n-1 -> n -> 0
         toret = self.frames[self.currentframe]
         return toret
 
     def loadFromDir(self, directory):
-        """Loads the frames from a given directory using List generators, frames are sorted by name
+        """
+        Loads the frames from a given directory using List generators,
+        frames are sorted by name
 
-        :param directory: The Directory to load the frames from
+        Keyword Arguments:
+        - directory: The Directory to load the frames from
 
-        :return: Nothing
+        Returns:
+        - Nothing
         """
         x = [(os.path.join(directory, f))
              for f in os.listdir(directory)

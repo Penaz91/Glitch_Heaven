@@ -22,16 +22,16 @@ import shelve
 
 class Game(object):
     """ The Main Game """
-    
+
     def toggleGlitch(self, glitch):
         """
         Debug method for toggling glitches
-        
+
         Works only with glitches in the "Glitches" dictionary
-        
+
         Keyword Arguments:
         - Glitch: String key which identifies the glitch to toggle
-        
+
         Retuns:
         - Nothing
         """
@@ -49,7 +49,7 @@ class Game(object):
         """
         Getter method for helpflagactive
         MIGHT NEED DEPRECATION
-        
+
         Returns:
         - self.helpflagActive
         """
@@ -59,7 +59,7 @@ class Game(object):
         """
         Setter method for helpflagactive
         MIGHT NEED DEPRECATION
-        
+
         Keyword Arguments:
         - flag: The flag to set
         """
@@ -69,7 +69,7 @@ class Game(object):
         """
         Setter Method for currenthelp
         MIGHT NEED DEPRECATION
-        
+
         Keyword Arguments:
         - txt: The text to set
         """
@@ -79,7 +79,7 @@ class Game(object):
         """
         Getter Method for currenthelp
         MIGHT NEED DEPRECATION
-        
+
         Returns:
         - self.currenthelp
         """
@@ -88,11 +88,11 @@ class Game(object):
     def LoadLevel(self, level, screen):
         """
         Method to load the defined level
-        
+
         Keyword Arguments:
         - level: The level name, without the file extension.
         - screen: The surface to draw the level to
-        
+
         Returns:
         - Nothing
         """
@@ -163,15 +163,16 @@ class Game(object):
     def loadNextLevel(self, campaign, screen):
         """
         Loads the next level in the current campaign
-        
+
         Keyword Arguments:
         - campaign: The loaded list of levels composing the campaign
         - screen: the surface to draw the level on.
-        
+
         Returns:
         - Nothing
         """
-        # TODO: Make the program not crash when the end of the campaign is reached.
+        # TODO: Make the program not crash when the end of the campaign
+        #       is reached.
         self.campaignIndex += 1
         # Debug Area
         # v--------------------------------------------------------------v
@@ -183,7 +184,7 @@ class Game(object):
     def loadCampaign(self, campaignfile):
         """
         Loads the levels of the campaign defined in the argument
-        
+
         Keyword Arguments:
         - campaignFile: The file (Without extension) defining the campaign
         """
@@ -197,7 +198,8 @@ class Game(object):
 
     def eraseCurrentLevel(self):
         """
-        Erases the whole level, tilemap, kills the player and prepares for a new load
+        Erases the whole level, tilemap, kills the player and
+        prepares for a new load
         """
         self.tilemap = None
         self.player.kill()
@@ -252,13 +254,13 @@ class Game(object):
     def main(self, screen, keys, mode):
         """
         Main Game method
-        
+
         Keyword Arguments:
         - Screen: The surface to draw the game to.
         - keys: The control keys to use.
         - Mode: This can be "load" or "newgame", to trigger load mode
                 or new game mode
-        
+
         Returns:
         - Nothing
         """
