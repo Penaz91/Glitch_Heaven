@@ -63,7 +63,7 @@ class Particle (pygame.sprite.Sprite):
 
 
     def colorfade(self, startcolor, finalcolor, steps):
-            """
+        """
         Function to calculate the color fading steps
     
         :param startcolor: A 3-Tuple (RRR,GGG,BBB) representing the starting color

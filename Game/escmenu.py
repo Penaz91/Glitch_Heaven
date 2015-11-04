@@ -40,6 +40,8 @@ class pauseMenu:
         Returns:
         - Nothing
         """
+        # Title animation and properties
+        # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
         self.titleani.loadFromDir(
                 os.path.join("resources", "UI", "AnimatedTitle"))
@@ -50,53 +52,68 @@ class pauseMenu:
                              0.12, 0.12]
         self.titletime = 0.
         self.titlesize = self.title.get_size()
+        self.titlerect = self.title.get_rect()
+        self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
+        self.titlerect.y = 32
+        # ^------------------------------------------------------------------^
         self.font = pygame.font.Font(os.path.join(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 24)
         self.running = True
         self.screensize = screen.get_size()
         self.currentItem = None
-        self.titlerect = self.title.get_rect()
-        self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
-        self.titlerect.y = 32
         self.background = pygame.image.load(
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        self.newgameimg = self.font.render("Resume Game", False,
+        # Resume game menu element
+        # v------------------------------------------------------------------v
+        self.resgameimg = self.font.render("Resume Game", False,
                                            (255, 255, 255))
         self.selectedimg = self.font.render("Resume Game", False, (255, 0, 0))
+        self.resgame = menuItem.menuitem(self.resgameimg,
+                                         self.selectedimg,
+                                         (320, 240),
+                                         lambda: self.unpause())
+        # ^------------------------------------------------------------------^
+        # Save game menu element
+        # v------------------------------------------------------------------v
         self.saveimg = self.font.render("Save Game", False, (255, 255, 255))
         self.saveselected = self.font.render("Salve Game", False, (255, 0, 0))
+        self.savegame = menuItem.menuitem(self.saveimg,
+                                          self.saveselected,
+                                          (320, 320), lambda: game.saveGame())
+        # ^------------------------------------------------------------------^
+        # Quit to desktop menu element
+        # v------------------------------------------------------------------v
         self.exitimg = self.font.render("Quit to Desktop",
                                         False, (255, 255, 255))
         self.exitselected = self.font.render("Quit to Desktop",
                                              False, (255, 0, 0))
+        self.exit = menuItem.menuitem(self.exitimg,
+                                      self.exitselected,
+                                      (320, 560), lambda: quit())
+        # ^------------------------------------------------------------------^
+        # "Main Menu" menu element
+        # v------------------------------------------------------------------v
         self.menu = self.font.render("Main Menu",
                                      False, (255, 255, 255))
         self.menusel = self.font.render("Main Menu",
                                         False, (255, 0, 0))
-        self.newgame = menuItem.menuitem(self.newgameimg,
-                                         self.selectedimg,
-                                         (320, 240),
-                                         lambda: self.unpause())
-        self.savegame = menuItem.menuitem(self.saveimg,
-                                          self.saveselected,
-                                          (320, 320), lambda: game.saveGame())
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 400),
                                           lambda: self.goToMenu(game))
-        self.exit = menuItem.menuitem(self.exitimg,
-                                      self.exitselected,
-                                      (320, 560), lambda: quit())
-        self.items = [self.newgame, self.savegame, self.mainmenu, self.exit]
+        # ^------------------------------------------------------------------^
+        self.items = [self.resgame, self.savegame, self.mainmenu, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     break
+                # Keyboard Handling
+                # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN:
                     if self.currentItem is None:
                         self.currentItem = 0
@@ -115,6 +132,9 @@ class pauseMenu:
                     for item in self.items:
                         item.makeUnselected()
                     self.items[self.currentItem].makeSelected()
+                # ^----------------------------------------------------------^
+                # Mouse Handling
+                # v----------------------------------------------------------v
                 if event.type == pygame.MOUSEMOTION:
                     if self.currentItem == 0:
                         self.currentItem = None
@@ -127,10 +147,15 @@ class pauseMenu:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.function()
+                # ^----------------------------------------------------------^
+            # Handles the timed animation
+            # MIGHT NEED DEPRECATION IN FAVOUR OF A TIMEDANIMATION OBJECT
+            # v----------------------------------------------------------v
             self.titletime += self.dt
             if self.titletime >= self.titletimings[self.titleani.currentframe]:
                 self.title = self.titleani.next()
                 self.titletime = 0
+            # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             for item in self.items:

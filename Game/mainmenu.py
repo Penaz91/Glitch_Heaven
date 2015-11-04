@@ -9,10 +9,19 @@ from libs import animation
 
 
 class menu:
-
+    """ Represents the main Game menu """
+    
     def main(self, screen, keys):
-        # self.title = pygame.image.load(
-        #        os.path.join("resources", "UI", "title.png")).convert_alpha()
+        """
+        Main menu method
+        
+        Keyword Arguments:
+        - screen: The surface to draw the menu to.
+        - keys: The control keys collection used
+        """
+        self.screensize = screen.get_size()
+        # Title animation and properties
+        # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
         self.titleani.loadFromDir(
                 os.path.join("resources", "UI", "AnimatedTitle"))
@@ -23,23 +32,39 @@ class menu:
                              0.12, 0.12]
         self.titletime = 0.
         self.titlesize = self.title.get_size()
+        self.titlerect = self.title.get_rect()
+        self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
+        self.titlerect.y = 32
+        # ^------------------------------------------------------------------^
         self.font = pygame.font.Font(os.path.join(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 24)
         self.running = True
-        self.screensize = screen.get_size()
         self.currentItem = None
-        self.titlerect = self.title.get_rect()
-        self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
-        self.titlerect.y = 32
         self.background = pygame.image.load(
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
+        # New game menu element
+        # v------------------------------------------------------------------v
         self.newgameimg = self.font.render("NewGame", False, (255, 255, 255))
         self.selectedimg = self.font.render("NewGame", False, (255, 0, 0))
+        self.newgame = menuItem.menuitem(self.newgameimg,
+                                         self.selectedimg,
+                                         (320, 240),
+                                         lambda: Game().main(screen, keys,
+                                                             "newgame"))
+        # ^------------------------------------------------------------------^
+        # Quit game menu element
+        # v------------------------------------------------------------------v
         self.exitimg = self.font.render("Quit", False, (255, 255, 255))
         self.exitselected = self.font.render("Quit", False, (255, 0, 0))
+        self.exit = menuItem.menuitem(self.exitimg,
+                                      self.exitselected,
+                                      (320, 560), lambda: quit())
+        # ^------------------------------------------------------------------^
+        # If there is a savefile, enable the continue game button
+        # v------------------------------------------------------------------v
         if not os.path.exists(os.path.join("SaveGame.dat")):
             self.cont = self.font.render("Continue Game", False,
                                          (100, 100, 100))
@@ -57,14 +82,7 @@ class menu:
                                               (320, 320),
                                               lambda: Game().main(screen, keys,
                                                                   "load"))
-        self.newgame = menuItem.menuitem(self.newgameimg,
-                                         self.selectedimg,
-                                         (320, 240),
-                                         lambda: Game().main(screen, keys,
-                                                             "newgame"))
-        self.exit = menuItem.menuitem(self.exitimg,
-                                      self.exitselected,
-                                      (320, 560), lambda: quit())
+        # ^------------------------------------------------------------------^
         self.items = [self.newgame, self.contgame, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
@@ -72,6 +90,8 @@ class menu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     break
+                # Keyboard handling
+                # v------------------------------------------------------------------v
                 if event.type == pygame.KEYDOWN:
                     if self.currentItem is None:
                         self.currentItem = 0
@@ -89,6 +109,9 @@ class menu:
                     for item in self.items:
                         item.makeUnselected()
                     self.items[self.currentItem].makeSelected()
+                # ^------------------------------------------------------------------^
+                # Mouse handling
+                # v------------------------------------------------------------------v
                 if event.type == pygame.MOUSEMOTION:
                     if self.currentItem == 0:
                         self.currentItem = None
@@ -103,10 +126,15 @@ class menu:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.confirmSound.play()
                             item.function()
+                # ^------------------------------------------------------------------^
+            # Handles the timed animation
+            # MIGHT NEED DEPRECATION IN FAVOUR OF A TIMEDANIMATION OBJECT
+            # v----------------------------------------------------------v
             self.titletime += self.dt
             if self.titletime >= self.titletimings[self.titleani.currentframe]:
                 self.title = self.titleani.next()
                 self.titletime = 0
+            # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             for item in self.items:
