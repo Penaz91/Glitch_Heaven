@@ -8,15 +8,38 @@ from libs import animation
 
 
 class pauseMenu:
+    """ Represents a pause menu window"""
 
     def unpause(self):
+        """ Stops the menu from running and resumes the game"""
         self.running = False
 
     def goToMenu(self, game):
+        """
+        Kills the current game and menu instance, and returns
+        To the main menu, which is already running in BG.
+
+        Keyword Arguments:
+        - game: The game instance
+
+        Returns:
+        - Nothing
+        """
         game.running = False
         self.running = False
 
     def main(self, screen, keys, game):
+        """
+        The main method to show and make the menu work
+
+        Keyword Arguments:
+        - Screen: the Screen surface to make the menu on
+        - Keys: The list of control keys to use
+        - game: The game instance.
+
+        Returns:
+        - Nothing
+        """
         self.titleani = animation.Animation()
         self.titleani.loadFromDir(
                 os.path.join("resources", "UI", "AnimatedTitle"))

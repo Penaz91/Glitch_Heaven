@@ -9,6 +9,11 @@
 # - Reduce boilerplate concerning the emission of particles
 # - Tie player size to the size of the sprite
 # - Find a reason for the code at row 262
+# - Find a reason for the code at row 306
+# - Tie falling speed to gravity via formula, instead of using
+#   conditionals, to save CPU power.
+# - Tie bouncing mechanics directly to direction via formula,
+#   instead of using conditionals, to save CPU power.
 # ------------------------------------------------
 import pygame
 import os
@@ -107,17 +112,22 @@ class Player(pygame.sprite.Sprite):
         last = self.rect.copy()     # Copy last position for collision compare
         key = pygame.key.get_pressed()
         if key[self.keys["left"]]:
-            self.direction = -1
-            if not self.bounced:
+            self.direction = -1     # Mainly for different bounce mechanics
+            if not self.bounced:        # Not bounced away -> control in air
+                # Why do i have different control in air if i'm running?
+                # This might lead to a change of speed in air
+                # Do i want this?
+                # v--------------------------------------------------------v
                 if key[self.keys["run"]]:
                     self.image = pygame.transform.flip(
                                  self.runanimation.next(),
                                  True,
-                                 False)
+                                 False)     # Use running animation
                     self.x_speed = max(-self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed-self.playeraccel*dt *
-                                       self.runmultiplier)
+                                       self.runmultiplier)  # Use running speed
+                # ^--------------------------------------------------------^
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
                     # TODO: Decrease boilerplate for particle emission
@@ -140,9 +150,10 @@ class Player(pygame.sprite.Sprite):
                     self.image = pygame.transform.flip(
                                  self.walkanimation.next(),
                                  True,
-                                 False)
+                                 False)     # Use walking animation
                     self.x_speed = max(-self.playermaxspeed * dt,
-                                       self.x_speed-self.playeraccel*dt)
+                                       self.x_speed -
+                                       self.playeraccel*dt)  # Use walk speed
                     # Emits particles if the player is on a surface
                     # TODO: Reduce Boilerplate for particle Emission
                     # v----------------------------------------------------v
@@ -162,13 +173,13 @@ class Player(pygame.sprite.Sprite):
 
         elif key[self.keys["right"]]:
             if not self.bounced:
-                self.direction = 1
+                self.direction = 1  # Used mainly for bouncy mechanics
                 if key[self.keys["run"]]:
-                    self.image = self.runanimation.next()
+                    self.image = self.runanimation.next()   # Use run animation
                     self.x_speed = min(self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
-                                       self.runmultiplier)
+                                       self.runmultiplier)  # Use run speed
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
                     # TODO: Decrease boilerplate for particle emission
@@ -187,9 +198,10 @@ class Player(pygame.sprite.Sprite):
                             (141, 200, 241), -4, -1, self.particles)
                     # ^----------------------------------------------------^
                 else:
-                    self.image = self.walkanimation.next()
+                    self.image = self.walkanimation.next()  # Walk animation
                     self.x_speed = min(self.playermaxspeed*dt,
-                                       self.x_speed+self.playeraccel*dt)
+                                       self.x_speed +
+                                       self.playeraccel*dt)  # Walk Speed
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
                     # TODO: Decrease boilerplate for particle emission
@@ -212,6 +224,7 @@ class Player(pygame.sprite.Sprite):
             # Gives the player some control over the fall if they're not
             # bounced away from a spring
             # TODO: Find some better way to let player keep control
+            # TODO: Tie direction and movement in a formula instead of conds
             # v--------------------------------------------------------------v
             if not self.bounced:
                 if self.direction == 1:
@@ -219,7 +232,7 @@ class Player(pygame.sprite.Sprite):
                 elif self.direction == -1:
                     self.x_speed = min(0, self.x_speed+(self.playeraccel*dt))
             # ^--------------------------------------------------------------^
-        self.rect.x += self.x_speed
+        self.rect.x += self.x_speed         # Move the player
         if game.glitches["multijump"]:
             if key[self.keys["jump"]]:
                 self.jumpsound.play()
@@ -249,33 +262,51 @@ class Player(pygame.sprite.Sprite):
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
+                    # If the high jump glitch is active, jumps twice as high
+                    # v------------------------------------------------------v
+                    # TODO: Invert Comparations to save on CPU power
+                    # if self.y_speed.....
+                    #     if game.glitches ......
                     if game.glitches["highjump"]:
                         self.y_speed = self.jump_speed*2*game.gravity
                     else:
                         self.y_speed = self.jump_speed*game.gravity
-                    self.resting = False
+                    # ^------------------------------------------------------^
+                    self.resting = False    # I jumped, so i'm not on a surface
         if game.glitches["featherfalling"]:
+            # TODO: Tie falling to gravity in formula
+            # v------------------------------------------------------v
             if game.gravity == 1:
                 self.y_speed = (min(200, self.y_speed+20))
             elif game.gravity == -1:
                 self.y_speed = -(min(200, abs(self.y_speed)+20))
+            # ^------------------------------------------------------^
             # Why? Gravity will never be 0.
             # TODO: Find a reason for this useless piece of code or go
             # Order 66 on it
+            # v--------------------------v
             elif game.gravity == 0:
                 self.y_speed = 0
+            # ^--------------------------^
         else:
+            # TODO: Tie falling to gravity in formula
+            # v------------------------------------------------------v
             if game.gravity == 1:
                 self.y_speed = (min(400, self.y_speed+40))
             elif game.gravity == -1:
                 self.y_speed = (max(-400, self.y_speed-40))
+            # ^------------------------------------------------------^
             # Why? Gravity will never be 0.
             # TODO: Find a reason for this useless piece of code or go
             # Order 66 on it
+            # v--------------------------v
             elif game.gravity == 0:
                 self.y_speed = 0
-        self.rect.y += self.y_speed * dt
-        self.resting = False
+            # ^--------------------------^
+        self.rect.y += self.y_speed * dt    # Move the player vertically
+        self.resting = False        # WHY??
+        # Test for collision with solid surfaces and act accordingly
+        # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'blocker'):
             blockers = cell['blocker']
@@ -339,6 +370,9 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = 0
                     if game.gravity == -1:
                         self.resting = True
+        # ^--------------------------------------------------------------^
+        # Test for collision with bouncy platforms and act accordingly
+        # v--------------------------------------------------------------v
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'bouncy'):
             bouncy = cell["bouncy"]
@@ -375,6 +409,9 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = - game.gravity*power
                 else:
                     self.y_speed = game.gravity*power
+        # ^--------------------------------------------------------------^
+        # Test for collisions with deadly ground and act accordingly
+        # v--------------------------------------------------------------v
         for cell in game.tilemap.layers["Triggers"].collide(self.rect,
                                                             'deadly'):
             deadly = cell["deadly"]
@@ -396,6 +433,9 @@ class Player(pygame.sprite.Sprite):
                     self.rect.left < cell.right:
                 self.rect.left = cell.right
                 self.respawn(game)
+        # ^--------------------------------------------------------------^
+        # Test for collision with deadbody platforms and act accordingly
+        # v--------------------------------------------------------------v
         collision = pygame.sprite.spritecollide(self, game.deadbodies, False)
         for block in collision:
             if self.y_speed == 0:
@@ -408,6 +448,9 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = block.rect.bottom
                 self.resting = False
                 self.y_speed = 0
+        # ^--------------------------------------------------------------^
+        # If help writings are solid, test for collision and act as platforms
+        # v--------------------------------------------------------------v
         if game.glitches['solidhelp']:
             collision = pygame.sprite.spritecollide(self, game.helptxts, False)
             for block in collision:
@@ -421,6 +464,9 @@ class Player(pygame.sprite.Sprite):
                     self.rect.top = block.rect.bottom
                     self.resting = False
                     self.y_speed = 0
+        # ^--------------------------------------------------------------^
+        # Test collision with help triggers and act accordingly
+        # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'Help'):
             helptext = cell['Help']
@@ -432,13 +478,21 @@ class Player(pygame.sprite.Sprite):
                 x, y = game.tilemap.pixel_from_screen(cell.px+cell.width/2,
                                                       cell.py-20)
                 Help(x, y, game.sprites, game=game, Text=helptext)
+        # ^--------------------------------------------------------------^
+        # Test collision with exit trigger and act accordingly
+        # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):
             game.eraseCurrentLevel()
             game.loadNextLevel(game.currentcampaign, game.screen)
             game.loadLevelPart2(game.keys)
-        game.tilemap.set_focus(self.rect.x, self.rect.y)
-        game.backpos[0] = -game.tilemap.view_x
+        # ^--------------------------------------------------------------^
+        game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
+        game.backpos[0] = -game.tilemap.view_x      # Moves background?
+        # Wraps player movement if the glitch is active
+        # FIXME: Death from out-of-bounds is tied to hwrapping absence
+        #        While it should be on its own (or tied to vwrap?)
+        # v--------------------------------------------------------------v
         if game.glitches["vwrapping"]:
             self.rect.y = self.rect.y % game.tilemap.px_height
         if game.glitches["hwrapping"]:
@@ -446,3 +500,4 @@ class Player(pygame.sprite.Sprite):
         else:
             if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
                 self.respawn(game)
+        # ^--------------------------------------------------------------^
