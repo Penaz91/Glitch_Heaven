@@ -9,9 +9,6 @@
 # - Reduce boilerplate concerning the emission of particles
 # - Tie player size to the size of the sprite
 # - Find a reason for the code at row 262
-# - Find a reason for the code at row 306
-# - Tie falling speed to gravity via formula, instead of using
-#   conditionals, to save CPU power.
 # - Tie bouncing mechanics directly to direction via formula,
 #   instead of using conditionals, to save CPU power.
 # ------------------------------------------------
@@ -131,6 +128,7 @@ class Player(pygame.sprite.Sprite):
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
                     # TODO: Decrease boilerplate for particle emission
+                    # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
                         particle.Particle(game.tilemap.pixel_to_screen(
@@ -156,6 +154,7 @@ class Player(pygame.sprite.Sprite):
                                        self.playeraccel*dt)  # Use walk speed
                     # Emits particles if the player is on a surface
                     # TODO: Reduce Boilerplate for particle Emission
+                    # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
                         particle.Particle(game.tilemap.pixel_to_screen(
@@ -183,6 +182,7 @@ class Player(pygame.sprite.Sprite):
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
                     # TODO: Decrease boilerplate for particle emission
+                    # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
                         particle.Particle(game.tilemap.pixel_to_screen(
@@ -205,6 +205,7 @@ class Player(pygame.sprite.Sprite):
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
                     # TODO: Decrease boilerplate for particle emission
+                    # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
                         particle.Particle(game.tilemap.pixel_to_screen(
@@ -242,14 +243,20 @@ class Player(pygame.sprite.Sprite):
                     # If the high jump glitch is active, jumps twice as high
                     # This happens while the multijump glitch is active
                     # v------------------------------------------------------v
-                    # TODO: Invert Comparations to save on CPU power
-                    # if self.y_speed.....
-                    #     if game.glitches ......
+                    # TODO ?: tie highjump glitch to jump_speed so i can make
+                    #         1 comparison per level loaded
+                    """ ######### Old code ###########
                     if game.glitches["highjump"]:
                         if self.y_speed > -(self.jump_speed/2) or self.resting:
                             self.y_speed = self.jump_speed*2*game.gravity
                     else:
                         if self.y_speed > -(self.jump_speed/2) or self.resting:
+                            self.y_speed = self.jump_speed*game.gravity
+                    """
+                    if self.y_speed > -(self.jump_speed/2) or self.resting:
+                        if game.glitches["highjump"]:
+                            self.y_speed = self.jump_speed*2*game.gravity
+                        else:
                             self.y_speed = self.jump_speed*game.gravity
                     # ^------------------------------------------------------^
         elif game.glitches["hover"]:
@@ -264,9 +271,6 @@ class Player(pygame.sprite.Sprite):
                 else:
                     # If the high jump glitch is active, jumps twice as high
                     # v------------------------------------------------------v
-                    # TODO: Invert Comparations to save on CPU power
-                    # if self.y_speed.....
-                    #     if game.glitches ......
                     if game.glitches["highjump"]:
                         self.y_speed = self.jump_speed*2*game.gravity
                     else:
@@ -274,13 +278,10 @@ class Player(pygame.sprite.Sprite):
                     # ^------------------------------------------------------^
                     self.resting = False    # I jumped, so i'm not on a surface
         if game.glitches["featherfalling"]:
-            # TODO: Tie falling to gravity in formula
-            # v------------------------------------------------------v
             if game.gravity == 1:
                 self.y_speed = (min(200, self.y_speed+20))
             elif game.gravity == -1:
                 self.y_speed = -(min(200, abs(self.y_speed)+20))
-            # ^------------------------------------------------------^
             # Why? Gravity will never be 0.
             # TODO: Find a reason for this useless piece of code or go
             # Order 66 on it
@@ -289,22 +290,23 @@ class Player(pygame.sprite.Sprite):
                 self.y_speed = 0
             # ^--------------------------^
         else:
-            # TODO: Tie falling to gravity in formula
-            # v------------------------------------------------------v
             if game.gravity == 1:
                 self.y_speed = (min(400, self.y_speed+40))
             elif game.gravity == -1:
                 self.y_speed = (max(-400, self.y_speed-40))
-            # ^------------------------------------------------------^
             # Why? Gravity will never be 0.
             # TODO: Find a reason for this useless piece of code or go
             # Order 66 on it
             # v--------------------------v
-            elif game.gravity == 0:
-                self.y_speed = 0
+            # elif game.gravity == 0:
+            # self.y_speed = 0
             # ^--------------------------^
         self.rect.y += self.y_speed * dt    # Move the player vertically
-        self.resting = False        # WHY??
+        # This avoids the ability to jump in air after leaving a platform
+        # TODO: Framework for a "airjump" glitch?
+        # v--------------v
+        self.resting = False
+        # ^--------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
