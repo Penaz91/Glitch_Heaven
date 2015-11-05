@@ -329,6 +329,8 @@ class Game(object):
                     self.toggleGlitch("hwrapping")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                     self.toggleGlitch("vwrapping")
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_t:
+                    self.toggleGlitch("ledgewalk")
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v

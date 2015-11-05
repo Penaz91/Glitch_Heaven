@@ -40,6 +40,7 @@ class pauseMenu:
         Returns:
         - Nothing
         """
+        self.screensize = screen.get_size()
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -60,7 +61,6 @@ class pauseMenu:
                             "resources", "fonts",
                             "TranscendsGames.otf"), 24)
         self.running = True
-        self.screensize = screen.get_size()
         self.currentItem = None
         self.background = pygame.image.load(
                           os.path.join("resources",

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="56">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="36">
-  <image source="resources/tiles/TestTile.png" width="192" height="192"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="68">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="72">
+  <image source="resources/tiles/TestTile.png" width="256" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztme0KwjAMRaP+0A38AkFkIoLv/44apFhKu8U2adrSAwFBt+UmadLOAQAOmezlGNd9dx8boH620HWUhNGx0XYkgtH6bHQ8Ar9dQVgjfrcmmESMXL+WdCD7gH9HAf9s5uLkPpuiIwc+n/+JUyk6UjE6pGtEmtb6rsGt01r68VI+sFfVoIVSVzXUHUWHb36UlqPYdR6ajVpaW+1XkvhmNkfO8L615+MO37Ng11EGXccPe91ePJaj97aSDwRnmXbf5erBGvnA+D0t4zj71PC+hDI/jY4pr2vsdB1l0XXIMdefQ/2ohfc+ufftJs7ce5cb8Og4JV6fCkUHxUepOFMJ6YhZZ5pw1ZU27n73rOhLKqgDzyGU/5Uk7WpZzPWo4Q0l1As2
+   eJztmNEKwjAMRcMYiNM5EGUg+CCKD4Jvuv//NBskWGq7dU3XtaMXLijomtNsSdYKAPYB3Ao/Fdeerl0JbyB9rSFzxCTiWM0diIO20mfiuBt++wIzYyP8tnAnXLKj/l+7k74PcaBqQ3ztiHVdOPr2SV3bhiOEMO+cfYqFgyviGMMeo5ZWd0nqfZpKPR7KB9aqFFhs7qtdiECYsuHQ9Y/YcuT6nJt6o9rHQ2mp9WpK6Xo2N2c4uxSQ/nvUDb4MmSMOZY6f5Of2pHGI2ruUfNC5UUgOyl+hMTd3c/RB3MOHZB/vPsiBOYltXpJl0z+J4xo2NO9aAgfOJlSzUua4QOaYUrrnum8+ljlSPvchDt9nrybRPvueXXxxHJj/54pmkz4Omxin2mdblZJ1cc19dmArE0dqUjmOM8bCFTLo5uiQxhn1LLlxvM4Hxp8gZA==
   </data>
  </layer>
- <objectgroup name="Triggers">
+ <objectgroup name="Triggers" visible="0">
   <object id="1" x="0" y="0" width="864" height="32">
    <properties>
     <property name="blocker" value="lrbt"/>
@@ -19,12 +19,12 @@
     <property name="blocker" value="lrbt"/>
    </properties>
   </object>
-  <object id="3" x="0" y="32" width="32" height="1216">
+  <object id="3" x="0" y="32" width="32" height="1024">
    <properties>
     <property name="blocker" value="lrbt"/>
    </properties>
   </object>
-  <object id="4" x="1568" y="32" width="32" height="1216">
+  <object id="4" x="1568" y="32" width="32" height="1088">
    <properties>
     <property name="blocker" value="lrbt"/>
    </properties>
@@ -187,18 +187,6 @@
     <property name="blocker" value="lrbt"/>
    </properties>
   </object>
-  <object id="46" x="864" y="0" width="128" height="32">
-   <properties>
-    <property name="bouncy" value="b"/>
-    <property name="power" value="800"/>
-   </properties>
-  </object>
-  <object id="47" x="1056" y="1248" width="96" height="32">
-   <properties>
-    <property name="bouncy" value="t"/>
-    <property name="power" value="800"/>
-   </properties>
-  </object>
   <object id="48" x="1472" y="128" width="32" height="32">
    <properties>
     <property name="playerExit" value=""/>
@@ -214,7 +202,7 @@
     <property name="Help" value="&quot;This is another help string&quot;"/>
    </properties>
   </object>
-  <object id="52" x="1536" y="1056" width="32" height="128">
+  <object id="52" x="1536" y="928" width="32" height="160">
    <properties>
     <property name="deadly" value="l"/>
    </properties>
@@ -233,6 +221,63 @@
   <object id="55" x="32" y="160" width="32" height="128">
    <properties>
     <property name="bouncy" value="r"/>
+    <property name="power" value="800"/>
+   </properties>
+  </object>
+  <object id="56" x="32" y="128" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tr"/>
+   </properties>
+  </object>
+  <object id="57" x="32" y="288" width="32" height="32">
+   <properties>
+    <property name="blocker" value="br"/>
+   </properties>
+  </object>
+  <object id="58" x="32" y="832" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tr"/>
+   </properties>
+  </object>
+  <object id="59" x="32" y="1024" width="32" height="32">
+   <properties>
+    <property name="blocker" value="br"/>
+   </properties>
+  </object>
+  <object id="61" x="1536" y="896" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tl"/>
+   </properties>
+  </object>
+  <object id="62" x="1536" y="1088" width="32" height="32">
+   <properties>
+    <property name="blocker" value="bl"/>
+   </properties>
+  </object>
+  <object id="63" x="1536" y="544" width="32" height="224">
+   <properties>
+    <property name="blocker" value="tb"/>
+   </properties>
+  </object>
+  <object id="64" x="1504" y="544" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tl"/>
+   </properties>
+  </object>
+  <object id="65" x="1504" y="736" width="32" height="32">
+   <properties>
+    <property name="blocker" value="bl"/>
+   </properties>
+  </object>
+  <object id="66" x="864" y="0" width="128" height="32">
+   <properties>
+    <property name="bouncy" value="b"/>
+    <property name="power" value="800"/>
+   </properties>
+  </object>
+  <object id="67" x="1056" y="1248" width="96" height="32">
+   <properties>
+    <property name="bouncy" value="t"/>
     <property name="power" value="800"/>
    </properties>
   </object>

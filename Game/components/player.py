@@ -275,7 +275,8 @@ class Player(pygame.sprite.Sprite):
         # This avoids the ability to jump in air after leaving a platform
         # TODO: Framework for a "airjump" glitch?
         # v--------------v
-        self.resting = False
+        if not game.glitches["ledgewalk"]:
+            self.resting = False
         # ^--------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v

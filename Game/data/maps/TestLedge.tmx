@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="20">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="72">
+  <image source="resources/tiles/TestTile.png" width="256" height="288"/>
+ </tileset>
+ <layer name="Livello tile 1" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt1zEOgzAMBVAPZWhg6tiRI1QtAyP3P1TFZiGCwpcTbPQtRcrAB54QTpJE5AWM1ChTet9esJodZZ5CBx32GTr8Odae9cuM6YJ3QjJ3+h6oYwEyHh1I0XFcdGDl0fEBMrV6g1Xf/cq5tQd9Tq5arx+1nkMH5kD+KY8Oj/2KDvvM1Y5tv97r1REcVhk66KiRoYOOGhk66LDKDGoe2dGpeQRHyZk+giNXDzWP5tD7Y703juAoOQtHcJzpu29gjI0yqeCa1fEHU+gnvg==
+  </data>
+ </layer>
+ <objectgroup name="Triggers" visible="0">
+  <object id="1" x="0" y="0" width="1600" height="32">
+   <properties>
+    <property name="blocker" value="b"/>
+   </properties>
+  </object>
+  <object id="3" x="0" y="32" width="32" height="1248">
+   <properties>
+    <property name="blocker" value="r"/>
+   </properties>
+  </object>
+  <object id="4" x="1568" y="32" width="32" height="1248">
+   <properties>
+    <property name="blocker" value="l"/>
+   </properties>
+  </object>
+  <object id="5" x="32" y="224" width="224" height="32">
+   <properties>
+    <property name="blocker" value="tbr"/>
+   </properties>
+  </object>
+  <object id="7" x="544" y="480" width="192" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="8" x="448" y="32" width="32" height="288">
+   <properties>
+    <property name="deadly" value="lrb"/>
+   </properties>
+  </object>
+  <object id="9" x="448" y="448" width="32" height="800">
+   <properties>
+    <property name="deadly" value="tlr"/>
+   </properties>
+  </object>
+  <object id="10" x="32" y="1248" width="1536" height="32">
+   <properties>
+    <property name="deadly" value="t"/>
+   </properties>
+  </object>
+  <object id="11" x="64" y="192" width="32" height="32">
+   <properties>
+    <property name="playerEntrance" value=""/>
+   </properties>
+  </object>
+  <object id="12" x="864" y="32" width="32" height="448">
+   <properties>
+    <property name="deadly" value="blr"/>
+   </properties>
+  </object>
+  <object id="13" x="864" y="576" width="32" height="672">
+   <properties>
+    <property name="deadly" value="tlr"/>
+   </properties>
+  </object>
+  <object id="14" x="1280" y="32" width="32" height="1088">
+   <properties>
+    <property name="deadly" value="blr"/>
+   </properties>
+  </object>
+  <object id="15" x="1280" y="1184" width="32" height="64">
+   <properties>
+    <property name="deadly" value="tlr"/>
+   </properties>
+  </object>
+  <object id="16" x="992" y="704" width="160" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="17" x="1376" y="1152" width="128" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="18" x="1472" y="1056" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="19" x="1472" y="1024" width="32" height="32">
+   <properties>
+    <property name="playerExit" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
