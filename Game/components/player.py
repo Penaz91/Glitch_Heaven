@@ -135,7 +135,6 @@ class Player(pygame.sprite.Sprite):
                 # ^--------------------------------------------------------^
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
-                    # TODO: Decrease boilerplate for particle emission
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
@@ -152,7 +151,6 @@ class Player(pygame.sprite.Sprite):
                                        self.x_speed -
                                        self.playeraccel*dt)  # Use walk speed
                     # Emits particles if the player is on a surface
-                    # TODO: Reduce Boilerplate for particle Emission
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
@@ -172,7 +170,6 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier)  # Use run speed
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
-                    # TODO: Decrease boilerplate for particle emission
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
@@ -187,7 +184,6 @@ class Player(pygame.sprite.Sprite):
                                        self.playeraccel*dt)  # Walk Speed
                     # Emits particles if the player is on a surface
                     # Strength is increased because of running
-                    # TODO: Decrease boilerplate for particle emission
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
