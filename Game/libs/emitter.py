@@ -26,16 +26,16 @@ class Emitter(object):
         self.sc = sc
         self.ec = ec
 
-    def emit(self):
+    def emit(self, st):
         """
         Emits the particles
         """
+        particle.Particle(self.location, self.sc, self.ec, self.xstr*st,
+                          self.ystr*st, self.spritegroup)
+        particle.Particle(self.location, self.sc, self.ec, st*2*self.xstr,
+                          st*self.ystr, self.spritegroup)
         particle.Particle(self.location, self.sc, self.ec, self.xstr,
-                          self.ystr, self.spritegroup)
-        particle.Particle(self.location, self.sc, self.ec, 2*self.xstr,
-                          self.ystr, self.spritegroup)
-        particle.Particle(self.location, self.sc, self.ec, self.xstr,
-                          2*self.ystr, self.spritegroup)
+                          st*2*self.ystr, self.spritegroup)
 
     def move(self, newlocation):
         self.location = newlocation
@@ -59,11 +59,11 @@ while 1:
             if event.key == pygame.K_LEFT:
                 x -= 5
                 rightemitter.move((x+32, y+32))
-                rightemitter.emit()
+                rightemitter.emit(1)
             if event.key == pygame.K_RIGHT:
                 x += 5
                 leftemitter.move((x, y+32))
-                leftemitter.emit()
+                leftemitter.emit(1)
     screen.fill((0, 0, 0))
     screen.blit(player, (x, y))
     group.draw(screen)

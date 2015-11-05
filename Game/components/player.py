@@ -17,7 +17,8 @@ import os
 from components.deadbody import DeadBody
 from components.help import Help
 from libs import animation
-from libs import particle
+# from libs import particle
+from libs import emitter
 
 
 class Player(pygame.sprite.Sprite):
@@ -68,6 +69,13 @@ class Player(pygame.sprite.Sprite):
                                                    "Player",
                                                    "Running"))
         self.particles = pygame.sprite.Group()
+        self.leftemitter = emitter.Emitter(self.rect.bottomleft, (0, 81, 138),
+                                           (141, 200, 241), -1, -1,
+                                           self.particles)
+        self.rightemitter = emitter.Emitter(self.rect.bottomright,
+                                            (0, 81, 138),
+                                            (141, 200, 241), 1, -1,
+                                            self.particles)
 
     def respawn(self, game):
         """
@@ -131,18 +139,9 @@ class Player(pygame.sprite.Sprite):
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x+32, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), 2, -1, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x+32, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), 2, -2, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x+32, self.rect.y+32),
-                                (0, 81, 138),
-                                (141, 200, 241), 4, -1, self.particles)
+                        self.rightemitter.move(game.tilemap.pixel_to_screen(
+                                               *self.rect.bottomright))
+                        self.rightemitter.emit(2)
                     # ^----------------------------------------------------^
                 else:
                     self.image = pygame.transform.flip(
@@ -157,17 +156,9 @@ class Player(pygame.sprite.Sprite):
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x+32, self.rect.y+32), (0, 81, 138),
-                            (141, 200, 241), 1, -1, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x+32, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), 1, -2, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x+32, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), 2, -1, self.particles)
+                        self.rightemitter.move(game.tilemap.pixel_to_screen(
+                                               *self.rect.bottomright))
+                        self.rightemitter.emit(1)
                     # ^----------------------------------------------------^
 
         elif key[self.keys["right"]]:
@@ -185,17 +176,9 @@ class Player(pygame.sprite.Sprite):
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x, self.rect.y+32), (0, 81, 138),
-                            (141, 200, 241), -2, -1, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), -2, -2, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), -4, -1, self.particles)
+                        self.leftemitter.move(game.tilemap.pixel_to_screen(
+                                              *self.rect.bottomleft))
+                        self.leftemitter.emit(2)
                     # ^----------------------------------------------------^
                 else:
                     self.image = self.walkanimation.next()  # Walk animation
@@ -208,18 +191,9 @@ class Player(pygame.sprite.Sprite):
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), -1, -1, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), -1, -2, self.particles)
-                        particle.Particle(game.tilemap.pixel_to_screen(
-                            self.rect.x, self.rect.y+32),
-                            (0, 81, 138),
-                            (141, 200, 241), -2, -1, self.particles)
+                        self.leftemitter.move(game.tilemap.pixel_to_screen(
+                                              *self.rect.bottomleft))
+                        self.leftemitter.emit(1)
                     # ^----------------------------------------------------^
         else:
             # Gives the player some control over the fall if they're not
