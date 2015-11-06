@@ -250,7 +250,7 @@ class Player(pygame.sprite.Sprite):
                     # ^------------------------------------------------------^
                     self.resting = False    # I jumped, so i'm not on a surface
         if game.glitches["featherfalling"]:
-            if game.glitches["ledgewalk"]:
+            if game.glitches["ledgejump"]:
                 if game.gravity == 1:
                     self.y_speed = (min(200, self.y_speed+20))
                 elif game.gravity == -1:
@@ -269,7 +269,7 @@ class Player(pygame.sprite.Sprite):
                 # self.y_speed = 0
             # ^--------------------------^
         else:
-            if game.glitches["ledgewalk"]:
+            if game.glitches["ledgejump"]:
                 if game.gravity == 1:
                     self.y_speed = (min(400, self.y_speed+40))
                 elif game.gravity == -1:
@@ -291,7 +291,7 @@ class Player(pygame.sprite.Sprite):
         # This avoids the ability to jump in air after leaving a platform
         # TODO: Framework for a "airjump" glitch?
         # v--------------v
-        if not game.glitches["ledgewalk"] and not game.glitches["ledge"]:
+        if not game.glitches["ledgejump"] and not game.glitches["ledgewalk"]:
             self.resting = False
         # ^--------------^
         # Test for collision with solid surfaces and act accordingly
