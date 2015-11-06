@@ -160,5 +160,5 @@ class pauseMenu:
             screen.blit(self.title, self.titlerect.topleft)
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
-            screen.blit(self.newgame.image, self.newgame.location)
+            screen.blit(self.resgame.image, self.resgame.location)
             pygame.display.update()

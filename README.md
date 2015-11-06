@@ -34,10 +34,12 @@ and more challenging.
 - **Clip-on-command glitch**: Pressing down arrow makes you go through the platform you're standing on
 - **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end (Separated in horizontal and vertical Wrap)
 - **LedgeWalk Glitch:** If you walk out of a platform without jumping, you can jump in mid-air once while falling.
+- **Ledge Glitch:** if you go over a ledge, you don't fall. In order to fall you need to jump.
 
 
 ### Glitches Planned:
-- **Ledge Glitch:** if you go over a ledge, you don't fall. In order to fall you need to jump.
+- None At The Moment
+
 
 ### Planned Features
 - Custom Campaign Support

@@ -87,6 +87,8 @@ class Player(pygame.sprite.Sprite):
         Returns:
         - Nothing
         """
+        # TODO: Avoid a bug that adds an instance of player to every
+        #       respawn
         # If the permbody glitch is active, will add a body at death position
         # v-----------------------------------------------------v
         if game.glitches["permbodies"]:
@@ -248,10 +250,11 @@ class Player(pygame.sprite.Sprite):
                     # ^------------------------------------------------------^
                     self.resting = False    # I jumped, so i'm not on a surface
         if game.glitches["featherfalling"]:
-            if game.gravity == 1:
-                self.y_speed = (min(200, self.y_speed+20))
-            elif game.gravity == -1:
-                self.y_speed = -(min(200, abs(self.y_speed)+20))
+            if not self.resting:
+                if game.gravity == 1:
+                    self.y_speed = (min(200, self.y_speed+20))
+                elif game.gravity == -1:
+                    self.y_speed = -(min(200, abs(self.y_speed)+20))
             # Why? Gravity will never be 0.
             # TODO: Find a reason for this useless piece of code or go
             # Order 66 on it
@@ -260,10 +263,11 @@ class Player(pygame.sprite.Sprite):
                 self.y_speed = 0
             # ^--------------------------^
         else:
-            if game.gravity == 1:
-                self.y_speed = (min(400, self.y_speed+40))
-            elif game.gravity == -1:
-                self.y_speed = (max(-400, self.y_speed-40))
+            if not self.resting:
+                if game.gravity == 1:
+                    self.y_speed = (min(400, self.y_speed+40))
+                elif game.gravity == -1:
+                    self.y_speed = (max(-400, self.y_speed-40))
             # Why? Gravity will never be 0.
             # TODO: Find a reason for this useless piece of code or go
             # Order 66 on it
@@ -275,7 +279,7 @@ class Player(pygame.sprite.Sprite):
         # This avoids the ability to jump in air after leaving a platform
         # TODO: Framework for a "airjump" glitch?
         # v--------------v
-        if not game.glitches["ledgewalk"]:
+        if not game.glitches["ledgewalk"] or not game.glitches["ledge"]:
             self.resting = False
         # ^--------------^
         # Test for collision with solid surfaces and act accordingly
