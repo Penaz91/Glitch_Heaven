@@ -11,7 +11,7 @@ from libs import animation
 class menu:
     """ Represents the main Game menu """
 
-    def main(self, screen, keys):
+    def main(self, screen, keys, config):
         """
         Main menu method
 
@@ -52,7 +52,7 @@ class menu:
         self.newgame = menuItem.menuitem(self.newgameimg,
                                          self.selectedimg,
                                          (320, 240),
-                                         lambda: Game().main(screen, keys,
+                                         lambda: Game().main(screen, keys, config,
                                                              "newgame"))
         # ^------------------------------------------------------------------^
         # Quit game menu element
@@ -80,7 +80,7 @@ class menu:
             self.contgame = menuItem.menuitem(self.cont,
                                               self.contsel,
                                               (320, 320),
-                                              lambda: Game().main(screen, keys,
+                                              lambda: Game().main(screen, keys, config,
                                                                   "load"))
         # ^------------------------------------------------------------------^
         self.items = [self.newgame, self.contgame, self.exit]
