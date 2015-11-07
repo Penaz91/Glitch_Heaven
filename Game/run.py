@@ -11,10 +11,10 @@ if __name__ == "__main__":
     # v-------------------------------------------------------------------v
     config = configparser.ConfigParser()
     config.read("game.conf")
-    screensize = (int(config["Screen"]["screenwidth"]),
-                  int(config["Screen"]["screenheight"]))
-    fullscreen = config.getboolean("Screen", "fullscreen")
-    doublebuffer = config.getboolean("Screen", "doublebuffer")
+    screensize = (int(config["Video"]["screenwidth"]),
+                  int(config["Video"]["screenheight"]))
+    fullscreen = config.getboolean("Video", "fullscreen")
+    doublebuffer = config.getboolean("Video", "doublebuffer")
     flags = None
     # Reads the control keys
     # v-------------------------------v
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     pygame.init()
     pygame.mixer.init()
     screen = pygame.display.set_mode(screensize, flags)
-    menu().main(screen, keys)
+    menu().main(screen, keys, config)

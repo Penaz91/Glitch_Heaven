@@ -153,10 +153,10 @@ class Game(object):
             speed = obstacle['ObsSpeed']
             if "v" in obs:
                 Obstacle((obstacle.px, obstacle.py), True, speed, None,
-                         self.obstacles)
+                         self, self.obstacles)
             else:
                 Obstacle((obstacle.px, obstacle.py), False, speed, None,
-                         self.obstacles)
+                         self, self.obstacles)
         self.tilemap.layers.append(self.obstacles)
         # ^--------------------------------------------------------------^
 
@@ -217,8 +217,9 @@ class Game(object):
         self.backpos = [0, 0]       # DEPRECATED??
         self.middlepos = [0, 0]     # DEPRECATED??
         self.player = Player((start_cell.px, start_cell.py),
-                             self.sprites, keys=keys)
-        self.tilemap.layers.add_named(self.player.particles,"particles")
+                             self.sprites, keys=keys, game=self)
+        if self.config.getboolean("Video", "playerparticles"):
+            self.tilemap.layers.add_named(self.player.particles,"particles")
 
     def saveGame(self):
         """
@@ -252,7 +253,7 @@ class Game(object):
         print(self.campaignIndex)
         # ^--------------------------------------------------------------^
 
-    def main(self, screen, keys, mode):
+    def main(self, screen, keys, config, mode):
         """
         Main Game method
 
@@ -269,6 +270,7 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.screen = screen
         self.keys = keys
+        self.config = config
         self.helptxts = pygame.sprite.Group()
         # Defines if a level should be loaded or a
         # new campaign should be started.
