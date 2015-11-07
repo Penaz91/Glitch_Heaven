@@ -19,7 +19,7 @@ from components.help import Help
 from libs import animation
 # from libs import particle
 from libs import emitter
-
+from libs import tmx
 
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):
                                                    "sprites",
                                                    "Player",
                                                    "Running"))
-        self.particles = pygame.sprite.Group()
+        self.particles = tmx.SpriteLayer()
         self.leftemitter = emitter.Emitter(self.rect.bottomleft, (0, 81, 138),
                                            (141, 200, 241), -1, -1,
                                            self.particles)
@@ -103,6 +103,8 @@ class Player(pygame.sprite.Sprite):
         start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
         game.player = Player((start_cell.px, start_cell.py),
                              game.sprites, keys=self.keys)
+        # FIXME ?: After a bunch of deaths this could lead to many unreferred
+        game.tilemap.layers.add_named(game.player.particles,"particles")
         # ^-----------------------------------------------------^
 
     def update(self, dt, game):
@@ -140,8 +142,7 @@ class Player(pygame.sprite.Sprite):
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
-                        self.rightemitter.move(game.tilemap.pixel_to_screen(
-                                               *self.rect.bottomright))
+                        self.rightemitter.move(self.rect.bottomright)
                         self.rightemitter.emit(2)
                     # ^----------------------------------------------------^
                 else:
@@ -156,8 +157,7 @@ class Player(pygame.sprite.Sprite):
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
-                        self.rightemitter.move(game.tilemap.pixel_to_screen(
-                                               *self.rect.bottomright))
+                        self.rightemitter.move(self.rect.bottomright)
                         self.rightemitter.emit(1)
                     # ^----------------------------------------------------^
 
@@ -175,8 +175,7 @@ class Player(pygame.sprite.Sprite):
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
-                        self.leftemitter.move(game.tilemap.pixel_to_screen(
-                                              *self.rect.bottomleft))
+                        self.leftemitter.move(self.rect.bottomleft)
                         self.leftemitter.emit(2)
                     # ^----------------------------------------------------^
                 else:
@@ -189,8 +188,7 @@ class Player(pygame.sprite.Sprite):
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
                     if self.resting:
-                        self.leftemitter.move(game.tilemap.pixel_to_screen(
-                                              *self.rect.bottomleft))
+                        self.leftemitter.move(self.rect.bottomleft)
                         self.leftemitter.emit(1)
                     # ^----------------------------------------------------^
         else:

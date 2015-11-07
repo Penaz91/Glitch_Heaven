@@ -218,6 +218,7 @@ class Game(object):
         self.middlepos = [0, 0]     # DEPRECATED??
         self.player = Player((start_cell.px, start_cell.py),
                              self.sprites, keys=keys)
+        self.tilemap.layers.add_named(self.player.particles,"particles")
 
     def saveGame(self):
         """
@@ -350,8 +351,8 @@ class Game(object):
             screen.blit(self.middle, (-self.tilemap.viewport.x/2,
                                       -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
-            self.player.particles.update()
-            self.player.particles.draw(screen)
+            #self.player.particles.update()
+            #self.player.particles.draw(screen)
             if self.hasOverlay:
                 screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
                                            -self.tilemap.viewport.y*1.5))

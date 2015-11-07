@@ -38,7 +38,7 @@ class Particle (pygame.sprite.Sprite):
         self.sx = speedx
         self.sy = speedy
 
-    def update(self):
+    def update(self, dt, game):
         """ Update method, called when the sprites get updated """
         self.age -= 1   # Decreases the age of the particle (where 0 is a dead particle)
         if self.age < 100:                                              # |
