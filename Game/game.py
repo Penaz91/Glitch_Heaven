@@ -153,10 +153,10 @@ class Game(object):
             speed = obstacle['ObsSpeed']
             if "v" in obs:
                 Obstacle((obstacle.px, obstacle.py), True, speed, None,
-                         self, self.obstacles)
+                         self.obstacles)
             else:
                 Obstacle((obstacle.px, obstacle.py), False, speed, None,
-                         self, self.obstacles)
+                         self.obstacles)
         self.tilemap.layers.append(self.obstacles)
         # ^--------------------------------------------------------------^
 
@@ -218,8 +218,10 @@ class Game(object):
         self.middlepos = [0, 0]     # DEPRECATED??
         self.player = Player((start_cell.px, start_cell.py),
                              self.sprites, keys=keys, game=self)
-        if self.config.getboolean("Video", "playerparticles"):
-            self.tilemap.layers.add_named(self.player.particles,"particles")
+        self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
+                                                    self.tilemap.px_height),
+                                                   pygame.SRCALPHA,
+                                                   32).convert_alpha()
 
     def saveGame(self):
         """
@@ -253,7 +255,7 @@ class Game(object):
         print(self.campaignIndex)
         # ^--------------------------------------------------------------^
 
-    def main(self, screen, keys, config, mode):
+    def main(self, screen, keys, mode, config):
         """
         Main Game method
 
@@ -353,8 +355,11 @@ class Game(object):
             screen.blit(self.middle, (-self.tilemap.viewport.x/2,
                                       -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
-            #self.player.particles.update()
-            #self.player.particles.draw(screen)
+            self.particlesurf.fill((0, 0, 0, 0))
+            self.player.particles.update()
+            self.player.particles.draw(self.particlesurf)
+            screen.blit(self.particlesurf,(-self.tilemap.viewport.x,
+                                           -self.tilemap.viewport.y))
             if self.hasOverlay:
                 screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
                                            -self.tilemap.viewport.y*1.5))

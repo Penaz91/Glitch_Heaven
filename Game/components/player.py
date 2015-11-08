@@ -19,7 +19,7 @@ from components.help import Help
 from libs import animation
 # from libs import particle
 from libs import emitter
-from libs import tmx
+
 
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
@@ -58,7 +58,6 @@ class Player(pygame.sprite.Sprite):
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
-        self.game = game
         self.walkanimation = animation.Animation()
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
@@ -69,8 +68,9 @@ class Player(pygame.sprite.Sprite):
                                                    "sprites",
                                                    "Player",
                                                    "Running"))
+        self.particles = pygame.sprite.Group()
+        self.game = game
         if game.config.getboolean("Video", "playerparticles"):
-            self.particles = tmx.SpriteLayer()
             self.leftemitter = emitter.Emitter(self.rect.bottomleft, (0, 81, 138),
                                                (141, 200, 241), -1, -1,
                                                self.particles)
@@ -104,10 +104,7 @@ class Player(pygame.sprite.Sprite):
         # v-----------------------------------------------------v
         start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
         game.player = Player((start_cell.px, start_cell.py),
-                             game.sprites, keys=self.keys, game=self.game)
-        # FIXME ?: After a bunch of deaths this could lead to many unreferred
-        if game.config.getboolean("Video", "playerparticles"):
-            game.tilemap.layers.add_named(game.player.particles,"particles")
+                             game.sprites, keys=self.keys, game = self.game)
         # ^-----------------------------------------------------^
 
     def update(self, dt, game):
@@ -144,7 +141,7 @@ class Player(pygame.sprite.Sprite):
                     # Strength is increased because of running
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
-                    if self.resting and game.config.getboolean("Video","playerparticles"):
+                    if self.resting and game.config.getboolean("Video", "playerparticles"):
                         self.rightemitter.move(self.rect.bottomright)
                         self.rightemitter.emit(2)
                     # ^----------------------------------------------------^
@@ -159,7 +156,7 @@ class Player(pygame.sprite.Sprite):
                     # Emits particles if the player is on a surface
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
-                    if self.resting and game.config.getboolean("Video","playerparticles"):
+                    if self.resting and game.config.getboolean("Video", "playerparticles"):
                         self.rightemitter.move(self.rect.bottomright)
                         self.rightemitter.emit(1)
                     # ^----------------------------------------------------^
@@ -177,7 +174,7 @@ class Player(pygame.sprite.Sprite):
                     # Strength is increased because of running
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
-                    if self.resting and game.config.getboolean("Video","playerparticles"):
+                    if self.resting and game.config.getboolean("Video", "playerparticles"):
                         self.leftemitter.move(self.rect.bottomleft)
                         self.leftemitter.emit(2)
                     # ^----------------------------------------------------^
@@ -190,7 +187,7 @@ class Player(pygame.sprite.Sprite):
                     # Strength is increased because of running
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
-                    if self.resting and game.config.getboolean("Video","playerparticles"):
+                    if self.resting and game.config.getboolean("Video", "playerparticles"):
                         self.leftemitter.move(self.rect.bottomleft)
                         self.leftemitter.emit(1)
                     # ^----------------------------------------------------^
