@@ -11,7 +11,7 @@ from libs import animation
 class menu:
     """ Represents the main Game menu """
 
-    def main(self, screen, keys):
+    def main(self, screen, keys, config):
         """
         Main menu method
 
@@ -22,6 +22,7 @@ class menu:
         self.screensize = screen.get_size()
         # Title animation and properties
         # v------------------------------------------------------------------v
+        self.gameconfig = config
         self.titleani = animation.Animation()
         self.titleani.loadFromDir(
                 os.path.join("resources", "UI", "AnimatedTitle"))
@@ -53,7 +54,7 @@ class menu:
                                          self.selectedimg,
                                          (320, 240),
                                          lambda: Game().main(screen, keys,
-                                                             "newgame"))
+                                                             "newgame", self.gameconfig))
         # ^------------------------------------------------------------------^
         # Quit game menu element
         # v------------------------------------------------------------------v
@@ -81,7 +82,7 @@ class menu:
                                               self.contsel,
                                               (320, 320),
                                               lambda: Game().main(screen, keys,
-                                                                  "load"))
+                                                                  "load",self.gameconfig))
         # ^------------------------------------------------------------------^
         self.items = [self.newgame, self.contgame, self.exit]
         self.clock = pygame.time.Clock()

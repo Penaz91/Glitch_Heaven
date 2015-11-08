@@ -3,7 +3,10 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import random
-
+# TODO AREA:
+# -----------------------------------------------
+# Make particles interact with the environment
+# -----------------------------------------------
 
 class Particle (pygame.sprite.Sprite):
     """ A Particle """
@@ -32,6 +35,7 @@ class Particle (pygame.sprite.Sprite):
         self.colorsteps = self.colorfade(self.color, colorend, 20)
         self.image = pygame.surface.Surface((2, 2))
         self.image.fill(self.color)
+        self.image.convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = position[0] + random.randint(-5, 5)       # |
         self.rect.y = position[1] + random.randint(-5, 5)       # | Randomises the starting point in a 10x10 pixel square

@@ -217,7 +217,11 @@ class Game(object):
         self.backpos = [0, 0]       # DEPRECATED??
         self.middlepos = [0, 0]     # DEPRECATED??
         self.player = Player((start_cell.px, start_cell.py),
-                             self.sprites, keys=keys)
+                             self.sprites, keys=keys, game=self)
+        self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
+                                                    self.tilemap.px_height),
+                                                   pygame.SRCALPHA,
+                                                   32).convert_alpha()
 
     def saveGame(self):
         """
@@ -251,7 +255,7 @@ class Game(object):
         print(self.campaignIndex)
         # ^--------------------------------------------------------------^
 
-    def main(self, screen, keys, mode):
+    def main(self, screen, keys, mode, config):
         """
         Main Game method
 
@@ -268,6 +272,7 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.screen = screen
         self.keys = keys
+        self.config = config
         self.helptxts = pygame.sprite.Group()
         # Defines if a level should be loaded or a
         # new campaign should be started.
@@ -350,8 +355,11 @@ class Game(object):
             screen.blit(self.middle, (-self.tilemap.viewport.x/2,
                                       -self.tilemap.viewport.y/2))
             self.tilemap.draw(screen)
+            self.particlesurf.fill((0, 0, 0, 0))
             self.player.particles.update()
-            self.player.particles.draw(screen)
+            self.player.particles.draw(self.particlesurf)
+            screen.blit(self.particlesurf,(-self.tilemap.viewport.x,
+                                           -self.tilemap.viewport.y))
             if self.hasOverlay:
                 screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
                                            -self.tilemap.viewport.y*1.5))
