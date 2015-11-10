@@ -69,8 +69,9 @@ class pauseMenu:
         # Resume game menu element
         # v------------------------------------------------------------------v
         self.resgameimg = self.font.render("Resume Game", False,
-                                           (255, 255, 255))
-        self.selectedimg = self.font.render("Resume Game", False, (255, 0, 0))
+                                           (255, 255, 255)).convert_alpha()
+        self.selectedimg = self.font.render("Resume Game", False,
+                                            (255, 0, 0)).convert_alpha()
         self.resgame = menuItem.menuitem(self.resgameimg,
                                          self.selectedimg,
                                          (320, 240),
@@ -78,8 +79,10 @@ class pauseMenu:
         # ^------------------------------------------------------------------^
         # Save game menu element
         # v------------------------------------------------------------------v
-        self.saveimg = self.font.render("Save Game", False, (255, 255, 255))
-        self.saveselected = self.font.render("Salve Game", False, (255, 0, 0))
+        self.saveimg = self.font.render("Save Game", False,
+                                        (255, 255, 255)).convert_alpha()
+        self.saveselected = self.font.render("Salve Game", False,
+                                             (255, 0, 0)).convert_alpha
         self.savegame = menuItem.menuitem(self.saveimg,
                                           self.saveselected,
                                           (320, 320), lambda: game.saveGame())
@@ -87,9 +90,9 @@ class pauseMenu:
         # Quit to desktop menu element
         # v------------------------------------------------------------------v
         self.exitimg = self.font.render("Quit to Desktop",
-                                        False, (255, 255, 255))
-        self.exitselected = self.font.render("Quit to Desktop",
-                                             False, (255, 0, 0))
+                                        False, (255, 255, 255)).convert_alpha()
+        self.exitselected = self.font.render("Quit to Desktop", False,
+                                             (255, 0, 0)).convert_alpha()
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (320, 560), lambda: quit())
@@ -97,9 +100,9 @@ class pauseMenu:
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
         self.menu = self.font.render("Main Menu",
-                                     False, (255, 255, 255))
+                                     False, (255, 255, 255)).convert_alpha()
         self.menusel = self.font.render("Main Menu",
-                                        False, (255, 0, 0))
+                                        False, (255, 0, 0)).convert_alpha()
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 400),

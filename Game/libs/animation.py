@@ -47,4 +47,4 @@ class Animation(object):
         x = [(os.path.join(directory, f))
              for f in os.listdir(directory)
              if os.path.isfile(os.path.join(directory, f))]
-        self.frames = [pygame.image.load(y) for y in sorted(x)]
+        self.frames = [pygame.image.load(y).convert_alpha() for y in sorted(x)]

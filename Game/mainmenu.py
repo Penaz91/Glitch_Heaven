@@ -6,7 +6,10 @@ import os
 from components.UI import menuItem
 from game import Game
 from libs import animation
-
+# TODO AREA:
+# ---------------
+# Tie Menu graphic to resolution
+# ---------------
 
 class menu:
     """ Represents the main Game menu """
@@ -48,18 +51,23 @@ class menu:
                                        "back.png")).convert_alpha()
         # New game menu element
         # v------------------------------------------------------------------v
-        self.newgameimg = self.font.render("NewGame", False, (255, 255, 255))
-        self.selectedimg = self.font.render("NewGame", False, (255, 0, 0))
+        self.newgameimg = self.font.render("NewGame", False,
+                                           (255, 255, 255)).convert_alpha()
+        self.selectedimg = self.font.render("NewGame", False,
+                                            (255, 0, 0)).convert_alpha()
         self.newgame = menuItem.menuitem(self.newgameimg,
                                          self.selectedimg,
                                          (320, 240),
                                          lambda: Game().main(screen, keys,
-                                                             "newgame", self.gameconfig))
+                                                             "newgame",
+                                                             self.gameconfig))
         # ^------------------------------------------------------------------^
         # Quit game menu element
         # v------------------------------------------------------------------v
-        self.exitimg = self.font.render("Quit", False, (255, 255, 255))
-        self.exitselected = self.font.render("Quit", False, (255, 0, 0))
+        self.exitimg = self.font.render("Quit", False,
+                                        (255, 255, 255)).convert_alpha()
+        self.exitselected = self.font.render("Quit", False,
+                                             (255, 0, 0)).convert_alpha()
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (320, 560), lambda: quit())
@@ -68,23 +76,24 @@ class menu:
         # v------------------------------------------------------------------v
         if not os.path.exists(os.path.join("SaveGame.dat")):
             self.cont = self.font.render("Continue Game", False,
-                                         (100, 100, 100))
-            self.contgame = menuItem.menuitem(self.cont,
-                                              self.cont,
-                                              (320, 320),
-                                              lambda: None)
+                                         (100, 100, 100)).convert_alpha()
+            self.cgam = menuItem.menuitem(self.cont,
+                                          self.cont,
+                                          (320, 320),
+                                          lambda: None)
         else:
             self.cont = self.font.render("Continue Game", False,
-                                         (255, 255, 255))
+                                         (255, 255, 255)).convert_alpha()
             self.contsel = self.font.render("Continue Game", False,
-                                            (255, 0, 0))
-            self.contgame = menuItem.menuitem(self.cont,
-                                              self.contsel,
-                                              (320, 320),
-                                              lambda: Game().main(screen, keys,
-                                                                  "load",self.gameconfig))
+                                            (255, 0, 0)).convert_alpha()
+            self.cgam = menuItem.menuitem(self.cont,
+                                          self.contsel,
+                                          (320, 320),
+                                          lambda: Game().main(screen, keys,
+                                                              "load",
+                                                              self.gameconfig))
         # ^------------------------------------------------------------------^
-        self.items = [self.newgame, self.contgame, self.exit]
+        self.items = [self.newgame, self.cgam, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.
