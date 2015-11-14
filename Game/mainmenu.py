@@ -5,7 +5,7 @@ import pygame
 import os
 from components.UI import menuItem
 from game import Game
-from libs import animation
+from libs import animation, timedanimation
 # TODO AREA:
 # ---------------
 # Tie Menu graphic to resolution
@@ -26,15 +26,14 @@ class menu:
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.gameconfig = config
-        self.titleani = animation.Animation()
-        self.titleani.loadFromDir(
-                os.path.join("resources", "UI", "AnimatedTitle"))
-        self.title = self.titleani.next()
         self.titletimings = [2., 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
                              0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
                              0.12, 0.12, 0.12, 0.12, 2., 0.12, 0.12,
                              0.12, 0.12]
-        self.titletime = 0.
+        self.titleani = timedanimation.TimedAnimation(self.titletimings)
+        self.titleani.loadFromDir(
+                os.path.join("resources", "UI", "AnimatedTitle"))
+        self.title = self.titleani.first()
         self.titlesize = self.title.get_size()
         self.titlerect = self.title.get_rect()
         self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
@@ -137,13 +136,9 @@ class menu:
                             item.confirmSound.play()
                             item.function()
                 # ^------------------------------------------------------------------^
-            # Handles the timed animation
-            # MIGHT NEED DEPRECATION IN FAVOUR OF A TIMEDANIMATION OBJECT
+            # Animates The title
             # v----------------------------------------------------------v
-            self.titletime += self.dt
-            if self.titletime >= self.titletimings[self.titleani.currentframe]:
-                self.title = self.titleani.next()
-                self.titletime = 0
+            self.title = self.titleani.next(self.dt)
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)

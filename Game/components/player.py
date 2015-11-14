@@ -16,7 +16,7 @@ import pygame
 import os
 from components.deadbody import DeadBody
 from components.help import Help
-from libs import animation
+from libs import animation, timedanimation
 # from libs import particle
 from libs import emitter
 
@@ -44,10 +44,12 @@ class Player(pygame.sprite.Sprite):
         self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
                                                          "sounds",
                                                          "jump.wav"))
-        self.image = pygame.image.load(
-                    os.path.join("resources",
-                                 "sprites",
-                                 "player.png")).convert_alpha()
+        self.idleani = timedanimation.TimedAnimation([0.25,0.25,0.25,0.25,0.25])
+        self.idleani.loadFromDir(os.path.join("resources",
+                                              "sprites",
+                                              "Player",
+                                              "Idle"))
+        self.image = self.idleani.first()
         self.rect = pygame.rect.Rect(location, self.image.get_size())
         self.rect.x = location[0]
         self.rect.y = location[1]
@@ -58,12 +60,12 @@ class Player(pygame.sprite.Sprite):
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
-        self.walkanimation = animation.Animation()
+        self.walkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06])
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
                                                     "Player",
                                                     "Walking"))
-        self.runanimation = animation.Animation()
+        self.runanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04])
         self.runanimation.loadFromDir(os.path.join("resources",
                                                    "sprites",
                                                    "Player",
@@ -120,6 +122,14 @@ class Player(pygame.sprite.Sprite):
         """
         last = self.rect.copy()     # Copy last position for collision compare
         key = pygame.key.get_pressed()
+        if not key[self.keys["left"]] or not key[self.keys["right"]] or not [self.keys["jump"]]:
+            if self.direction == 1:
+                self.image = self.idleani.next(dt) #Use the Idle animation
+            else:
+                self.image = pygame.transform.flip(
+                             self.idleani.next(dt),
+                             True,
+                             False) #Use the Idle animation
         if key[self.keys["left"]]:
             self.direction = -1     # Mainly for different bounce mechanics
             if not self.bounced:        # Not bounced away -> control in air
@@ -129,7 +139,7 @@ class Player(pygame.sprite.Sprite):
                 # v--------------------------------------------------------v
                 if key[self.keys["run"]]:
                     self.image = pygame.transform.flip(
-                                 self.runanimation.next(),
+                                 self.runanimation.next(dt),
                                  True,
                                  False)     # Use running animation
                     self.x_speed = max(-self.playermaxspeed * dt *
@@ -147,7 +157,7 @@ class Player(pygame.sprite.Sprite):
                     # ^----------------------------------------------------^
                 else:
                     self.image = pygame.transform.flip(
-                                 self.walkanimation.next(),
+                                 self.walkanimation.next(dt),
                                  True,
                                  False)     # Use walking animation
                     self.x_speed = max(-self.playermaxspeed * dt,
@@ -165,7 +175,7 @@ class Player(pygame.sprite.Sprite):
             if not self.bounced:
                 self.direction = 1  # Used mainly for bouncy mechanics
                 if key[self.keys["run"]]:
-                    self.image = self.runanimation.next()   # Use run animation
+                    self.image = self.runanimation.next(dt)   # Use run animation
                     self.x_speed = min(self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
@@ -179,7 +189,7 @@ class Player(pygame.sprite.Sprite):
                         self.leftemitter.emit(2)
                     # ^----------------------------------------------------^
                 else:
-                    self.image = self.walkanimation.next()  # Walk animation
+                    self.image = self.walkanimation.next(dt)  # Walk animation
                     self.x_speed = min(self.playermaxspeed*dt,
                                        self.x_speed +
                                        self.playeraccel*dt)  # Walk Speed
