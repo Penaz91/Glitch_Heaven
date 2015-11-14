@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
-        self.walkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06])
+        self.walkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06])
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
                                                     "Player",

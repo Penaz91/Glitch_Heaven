@@ -4,30 +4,43 @@
 import pygame
 import os
 from components.UI import menuItem
-from game import Game
-from libs import timedanimation
-from optionsmenu import OptionsMenu
-# TODO AREA:
-# ---------------
-# Tie Menu graphic to resolution
-# ---------------
+from libs import animation, timedanimation
 
 
-class menu:
-    """ Represents the main Game menu """
+class VideoSettings:
+    """ Represents a pause menu window"""
 
-    def main(self, screen, keys, config):
+    def goToMenu(self):
         """
-        Main menu method
+        Kills the current game and menu instance, and returns
+        To the main menu, which is already running in BG.
 
         Keyword Arguments:
-        - screen: The surface to draw the menu to.
-        - keys: The control keys collection used
+        - game: The game instance
+
+        Returns:
+        - Nothing
+        """
+        self.running = False
+
+    def main(self, screen, keys):
+        """
+        The main method to show and make the menu work
+
+        Keyword Arguments:
+        - Screen: the Screen surface to make the menu on
+        - Keys: The list of control keys to use
+        - game: The game instance.
+
+        Returns:
+        - Nothing
         """
         self.screensize = screen.get_size()
         # Title animation and properties
         # v------------------------------------------------------------------v
-        self.gameconfig = config
+        self.titleani = animation.Animation()
+        self.titleani.loadFromDir(
+                os.path.join("resources", "UI", "AnimatedTitle"))
         self.titletimings = [2., 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
                              0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
                              0.12, 0.12, 0.12, 0.12, 2., 0.12, 0.12,
@@ -50,107 +63,93 @@ class menu:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        # New game menu element
+        """
+        # Video Settings menu element
         # v------------------------------------------------------------------v
-        self.newgameimg = self.font.render("NewGame", False,
-                                           (255, 255, 255)).convert_alpha()
-        self.selectedimg = self.font.render("NewGame", False,
-                                            (255, 0, 0)).convert_alpha()
-        self.newgame = menuItem.menuitem(self.newgameimg,
-                                         self.selectedimg,
-                                         (320, 240),
-                                         lambda: Game().main(screen, keys,
-                                                             "newgame",
-                                                             self.gameconfig))
-        # ^------------------------------------------------------------------^
-        # Quit game menu element
-        # v------------------------------------------------------------------v
-        self.exitimg = self.font.render("Quit", False,
-                                        (255, 255, 255)).convert_alpha()
-        self.exitselected = self.font.render("Quit", False,
-                                             (255, 0, 0)).convert_alpha()
-        self.exit = menuItem.menuitem(self.exitimg,
-                                      self.exitselected,
-                                      (320, 560), lambda: quit())
-        # ^------------------------------------------------------------------^
-        # If there is a savefile, enable the continue game button
-        # v------------------------------------------------------------------v
-        if not os.path.exists(os.path.join("SaveGame.dat")):
-            self.cont = self.font.render("Continue Game", False,
-                                         (100, 100, 100)).convert_alpha()
-            self.cgam = menuItem.menuitem(self.cont,
-                                          self.cont,
-                                          (320, 320),
-                                          lambda: None)
-        else:
-            self.cont = self.font.render("Continue Game", False,
+        self.videoimg = self.font.render("Video Settings", False,
                                          (255, 255, 255)).convert_alpha()
-            self.contsel = self.font.render("Continue Game", False,
-                                            (255, 0, 0)).convert_alpha()
-            self.cgam = menuItem.menuitem(self.cont,
-                                          self.contsel,
-                                          (320, 320),
-                                          lambda: Game().main(screen, keys,
-                                                              "load",
-                                                              self.gameconfig))
+        self.vidselimg = self.font.render("Video Settings", False,
+                                          (255, 0, 0)).convert_alpha()
+        self.video = menuItem.menuitem(self.videoimg,
+                                       self.vidselimg,
+                                       (320, 240),
+                                       lambda: VideoSettings.main())
         # ^------------------------------------------------------------------^
-        # Insert an options button
+        # Sound settings menu element
         # v------------------------------------------------------------------v
-        self.optimg = self.font.render("Options", False,
+        self.sndimg = self.font.render("Audio Settings", False,
                                        (255, 255, 255)).convert_alpha()
-        self.optsel = self.font.render("Options", False,
-                                       (255, 0, 0)).convert_alpha()
-        self.options = menuItem.menuitem(self.optimg,
-                                         self.optsel,
-                                         (320, 440),
-                                         lambda: OptionsMenu().main(
-                                             screen, keys))
+        self.sndselimg = self.font.render("Audio Settings", False,
+                                          (255, 0, 0)).convert_alpha()
+        self.snd = menuItem.menuitem(self.sndimg,
+                                     self.sndselimg,
+                                     (320, 320), lambda: AudioSettings.main())
         # ^------------------------------------------------------------------^
-
-        self.items = [self.newgame, self.cgam, self.options, self.exit]
+        # Controls/Controllers menu element
+        # v------------------------------------------------------------------v
+        self.ctrlimg = self.font.render("Control Settings",
+                                        False, (255, 255, 255)).convert_alpha()
+        self.ctrlselimg = self.font.render("Control Settings", False,
+                                           (255, 0, 0)).convert_alpha()
+        self.ctrl = menuItem.menuitem(self.ctrlimg,
+                                      self.ctrlselimg,
+                                      (320, 400),
+                                      lambda: ControlSettings.main())"""
+        # ^------------------------------------------------------------------^
+        # "Main Menu" menu element
+        # v------------------------------------------------------------------v
+        self.menu = self.font.render("Main Menu",
+                                     False, (255, 255, 255)).convert_alpha()
+        self.menusel = self.font.render("Main Menu",
+                                        False, (255, 0, 0)).convert_alpha()
+        self.mainmenu = menuItem.menuitem(self.menu,
+                                          self.menusel,
+                                          (320, 560),
+                                          lambda: self.goToMenu())
+        # ^------------------------------------------------------------------^
+        self.items = [self.mainmenu]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     break
-                # Keyboard handling
-                # v------------------------------------------------------------------v
+                # Keyboard Handling
+                # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN:
                     if self.currentItem is None:
                         self.currentItem = 0
                     if event.key == keys["down"]:
+                        print("down")
                         self.currentItem = ((self.currentItem+1) %
                                             len(self.items))
                     if event.key == keys["up"]:
+                        print("up")
                         self.currentItem = ((self.currentItem-1) %
                                             len(self.items))
                     if event.key == keys["confirm"]:
-                        self.items[self.currentItem].confirmSound.play()
                         self.items[self.currentItem].function()
                     if event.key == keys["escape"]:
                         print("esc")
                     for item in self.items:
                         item.makeUnselected()
                     self.items[self.currentItem].makeSelected()
-                # ^------------------------------------------------------------------^
-                # Mouse handling
-                # v------------------------------------------------------------------v
+                # ^----------------------------------------------------------^
+                # Mouse Handling
+                # v----------------------------------------------------------v
                 if event.type == pygame.MOUSEMOTION:
                     if self.currentItem == 0:
                         self.currentItem = None
                     for item in self.items:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos())\
-                                and not item.selectedStatus:
+                        if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.makeSelected()
                         else:
                             item.makeUnselected()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
-                            item.confirmSound.play()
                             item.function()
-                # ^------------------------------------------------------------------^
+                # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v
             self.title = self.titleani.next(self.dt)
@@ -160,5 +159,3 @@ class menu:
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()
-        pygame.quit()
-        quit()
