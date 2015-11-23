@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 import pygame
-from components.mobileplatform import MobilePlatform
-import os
 
 
 class TriggerablePlatform(pygame.sprite.Sprite):

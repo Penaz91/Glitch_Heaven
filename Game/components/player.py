@@ -264,11 +264,10 @@ class Player(pygame.sprite.Sprite):
                 elif game.gravity == -1:
                     self.y_speed = -(min(200, abs(self.y_speed)+20))
             else:
-                if not self.resting:
-                    if game.gravity == 1:
-                        self.y_speed = (min(200, self.y_speed+20))
-                    elif game.gravity == -1:
-                        self.y_speed = -(min(200, abs(self.y_speed)+20))
+                if game.gravity == 1:
+                    self.y_speed = (min(200, self.y_speed+20))
+                elif game.gravity == -1:
+                    self.y_speed = -(min(200, abs(self.y_speed)+20))
             # Why? Gravity will never be 0.
             # TODO: Find a reason for this useless piece of code or go
             # Order 66 on it
@@ -283,11 +282,10 @@ class Player(pygame.sprite.Sprite):
                 elif game.gravity == -1:
                     self.y_speed = -(min(400, abs(self.y_speed)+40))
             else:
-                if not self.resting:
-                    if game.gravity == 1:
-                        self.y_speed = (min(400, self.y_speed+40))
-                    elif game.gravity == -1:
-                        self.y_speed = -(min(400, abs(self.y_speed)+40))
+                if game.gravity == 1:
+                    self.y_speed = (min(400, self.y_speed+40))
+                elif game.gravity == -1:
+                    self.y_speed = -(min(400, abs(self.y_speed)+40))
             # Why? Gravity will never be 0.
             # TODO: Find a reason for this useless piece of code or go
             # Order 66 on it
@@ -503,5 +501,5 @@ class Player(pygame.sprite.Sprite):
             if self.y_speed * game.gravity > 0:
                 self.y_speed = 0
                 self.rect.bottom = block.rect.top
-                #self.resting = True     # Gives issues with mobility while idle on plats
+                self.resting = True     # Gives issues with mobility while idle on plats
             self.rect.x += block.xspeed * dt * block.direction
