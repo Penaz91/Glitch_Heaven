@@ -17,6 +17,7 @@ import os
 import configparser
 from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
+from components.triggerableplatform import TriggerablePlatform
 import shelve
 
 
@@ -158,6 +159,13 @@ class Game(object):
                 Obstacle((obstacle.px, obstacle.py), False, speed, None,
                          self.obstacles)
         self.tilemap.layers.append(self.obstacles)
+        for platform in self.tilemap.layers['Triggers'].find('Platform'):
+            plat = platform['Platform']
+            if "v" in plat:
+                TriggerablePlatform(platform.px, platform.py, True, 100, self.plats, game=self)
+            else:
+                TriggerablePlatform(platform.px, platform.py, False, 100, self.plats, game=self)
+        self.tilemap.layers.append(self.plats)
         # ^--------------------------------------------------------------^
 
     def loadNextLevel(self, campaign, screen):
@@ -274,6 +282,7 @@ class Game(object):
         self.keys = keys
         self.config = config
         self.helptxts = pygame.sprite.Group()
+        self.plats = tmx.SpriteLayer()
         # Defines if a level should be loaded or a
         # new campaign should be started.
         # v--------------------------------------------------------------v

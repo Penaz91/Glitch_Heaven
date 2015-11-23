@@ -498,3 +498,10 @@ class Player(pygame.sprite.Sprite):
             if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
                 self.respawn(game)
         # ^--------------------------------------------------------------^
+        collision = pygame.sprite.spritecollide(self, game.plats, False)
+        for block in collision:
+            if self.y_speed * game.gravity > 0:
+                self.y_speed = 0
+                self.rect.bottom = block.rect.top
+                #self.resting = True     # Gives issues with mobility while idle on plats
+            self.rect.x += block.xspeed * dt * block.direction
