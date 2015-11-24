@@ -162,9 +162,11 @@ class Game(object):
         for platform in self.tilemap.layers['Triggers'].find('Platform'):
             plat = platform['Platform']
             if "v" in plat:
-                TriggerablePlatform(platform.px, platform.py, True, 100, self.plats, game=self)
+                TriggerablePlatform(platform.px, platform.py, True, 100,
+                                    self.plats, game=self)
             else:
-                TriggerablePlatform(platform.px, platform.py, False, 100, self.plats, game=self)
+                TriggerablePlatform(platform.px, platform.py, False, 100,
+                                    self.plats, game=self)
         self.tilemap.layers.append(self.plats)
         # ^--------------------------------------------------------------^
 
@@ -367,8 +369,8 @@ class Game(object):
             self.particlesurf.fill((0, 0, 0, 0))
             self.player.particles.update()
             self.player.particles.draw(self.particlesurf)
-            screen.blit(self.particlesurf,(-self.tilemap.viewport.x,
-                                           -self.tilemap.viewport.y))
+            screen.blit(self.particlesurf, (-self.tilemap.viewport.x,
+                                            -self.tilemap.viewport.y))
             if self.hasOverlay:
                 screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
                                            -self.tilemap.viewport.y*1.5))

@@ -16,7 +16,7 @@ import pygame
 import os
 from components.deadbody import DeadBody
 from components.help import Help
-from libs import animation, timedanimation
+from libs import timedanimation
 # from libs import particle
 from libs import emitter
 
@@ -44,7 +44,8 @@ class Player(pygame.sprite.Sprite):
         self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
                                                          "sounds",
                                                          "jump.wav"))
-        self.idleani = timedanimation.TimedAnimation([0.25,0.25,0.25,0.25,0.25])
+        self.idleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
+                                                      0.25, 0.25])
         self.idleani.loadFromDir(os.path.join("resources",
                                               "sprites",
                                               "Player",
@@ -60,12 +61,17 @@ class Player(pygame.sprite.Sprite):
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
-        self.walkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06])
+        self.walkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06,
+                                                            0.06, 0.06, 0.06,
+                                                            0.06, 0.06, 0.06,
+                                                            0.06])
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
                                                     "Player",
                                                     "Walking"))
-        self.runanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04])
+        self.runanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04,
+                                                           0.04, 0.04, 0.04,
+                                                           0.04, 0.04])
         self.runanimation.loadFromDir(os.path.join("resources",
                                                    "sprites",
                                                    "Player",
@@ -73,7 +79,8 @@ class Player(pygame.sprite.Sprite):
         self.particles = pygame.sprite.Group()
         self.game = game
         if game.config.getboolean("Video", "playerparticles"):
-            self.leftemitter = emitter.Emitter(self.rect.bottomleft, (0, 81, 138),
+            self.leftemitter = emitter.Emitter(self.rect.bottomleft,
+                                               (0, 81, 138),
                                                (141, 200, 241), -1, -1,
                                                self.particles)
             self.rightemitter = emitter.Emitter(self.rect.bottomright,
@@ -106,7 +113,7 @@ class Player(pygame.sprite.Sprite):
         # v-----------------------------------------------------v
         start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
         game.player = Player((start_cell.px, start_cell.py),
-                             game.sprites, keys=self.keys, game = self.game)
+                             game.sprites, keys=self.keys, game=self.game)
         # ^-----------------------------------------------------^
 
     def update(self, dt, game):
@@ -122,14 +129,15 @@ class Player(pygame.sprite.Sprite):
         """
         last = self.rect.copy()     # Copy last position for collision compare
         key = pygame.key.get_pressed()
-        if not key[self.keys["left"]] or not key[self.keys["right"]] or not [self.keys["jump"]]:
+        if not key[self.keys["left"]] or not key[self.keys["right"]]\
+                or not [self.keys["jump"]]:
             if self.direction == 1:
-                self.image = self.idleani.next(dt) #Use the Idle animation
+                self.image = self.idleani.next(dt)  # Use the Idle animation
             else:
                 self.image = pygame.transform.flip(
                              self.idleani.next(dt),
                              True,
-                             False) #Use the Idle animation
+                             False)  # Use the Idle animation
         if key[self.keys["left"]]:
             self.direction = -1     # Mainly for different bounce mechanics
             if not self.bounced:        # Not bounced away -> control in air
@@ -151,7 +159,8 @@ class Player(pygame.sprite.Sprite):
                     # Strength is increased because of running
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
-                    if self.resting and game.config.getboolean("Video", "playerparticles"):
+                    if self.resting and \
+                            game.config.getboolean("Video", "playerparticles"):
                         self.rightemitter.move(self.rect.bottomright)
                         self.rightemitter.emit(2)
                     # ^----------------------------------------------------^
@@ -166,7 +175,8 @@ class Player(pygame.sprite.Sprite):
                     # Emits particles if the player is on a surface
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
-                    if self.resting and game.config.getboolean("Video", "playerparticles"):
+                    if self.resting and \
+                            game.config.getboolean("Video", "playerparticles"):
                         self.rightemitter.move(self.rect.bottomright)
                         self.rightemitter.emit(1)
                     # ^----------------------------------------------------^
@@ -175,7 +185,7 @@ class Player(pygame.sprite.Sprite):
             if not self.bounced:
                 self.direction = 1  # Used mainly for bouncy mechanics
                 if key[self.keys["run"]]:
-                    self.image = self.runanimation.next(dt)   # Use run animation
+                    self.image = self.runanimation.next(dt)  # Use run ani
                     self.x_speed = min(self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
@@ -184,7 +194,8 @@ class Player(pygame.sprite.Sprite):
                     # Strength is increased because of running
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
-                    if self.resting and game.config.getboolean("Video", "playerparticles"):
+                    if self.resting and \
+                            game.config.getboolean("Video", "playerparticles"):
                         self.leftemitter.move(self.rect.bottomleft)
                         self.leftemitter.emit(2)
                     # ^----------------------------------------------------^
@@ -197,7 +208,8 @@ class Player(pygame.sprite.Sprite):
                     # Strength is increased because of running
                     # TODO: Tie particles to tilemap, to avoid graphic glitches
                     # v----------------------------------------------------v
-                    if self.resting and game.config.getboolean("Video", "playerparticles"):
+                    if self.resting and \
+                            game.config.getboolean("Video", "playerparticles"):
                         self.leftemitter.move(self.rect.bottomleft)
                         self.leftemitter.emit(1)
                     # ^----------------------------------------------------^
@@ -501,5 +513,5 @@ class Player(pygame.sprite.Sprite):
             if self.y_speed * game.gravity > 0:
                 self.y_speed = 0
                 self.rect.bottom = block.rect.top
-                self.resting = True     # Gives issues with mobility while idle on plats
+                self.resting = True  # Allows jump
             self.rect.x += block.xspeed * dt * block.direction

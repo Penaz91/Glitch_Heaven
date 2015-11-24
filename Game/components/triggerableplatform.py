@@ -21,7 +21,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         - Nothing
         """
         super(TriggerablePlatform, self).__init__(*groups)
-        self.image = pygame.surface.Surface((100,32))
+        self.image = pygame.surface.Surface((100, 32))
         self.image.fill((255, 255, 255))
         self.rect = self.image.get_rect()
         self.rect.x = x
