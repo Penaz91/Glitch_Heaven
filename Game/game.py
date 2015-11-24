@@ -163,10 +163,10 @@ class Game(object):
             plat = platform['Platform']
             if "v" in plat:
                 TriggerablePlatform(platform.px, platform.py, True, 100,
-                                    self.plats, game=self)
+                                    False, platform['id'], self.plats, game=self)
             else:
                 TriggerablePlatform(platform.px, platform.py, False, 100,
-                                    self.plats, game=self)
+                                    False, platform['id'], self.plats, game=self)
         self.tilemap.layers.append(self.plats)
         # ^--------------------------------------------------------------^
 
@@ -213,6 +213,7 @@ class Game(object):
         """
         self.tilemap = None
         self.player.kill()
+        self.plats.empty()
         self.sprites.empty()
         self.player = None
 

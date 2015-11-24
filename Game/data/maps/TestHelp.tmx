@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="17">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="22">
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="72">
   <image source="resources/tiles/TestTile.png" width="256" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt10EKgDAMBdHgzioIgve/qi3oAVIITGEGPq5fV7FFxL34Wt8R67eHDlI6WOlgpYOVDlY6WOlgdH5fquPq2xKj/n+M923J6ahLBysdrHSw0lFX9sb47wyaY+ZtdejQoUOHDh1zjmdxx1j2/qm+lWb2AqCgF/4=
+   eJzt18EGgEAURuErbZoiovd/1WYo2t5hOMM5/Frma3UrEXFNvlK3x/xtoYOUDlY6WOlgpYOVDlY6GB3vk+o465bEqP8f7fuW5HSMSwcrHax0sNIxruyN8d0ZNEfPt9WhQ4cOHTp09Dnu37vXCR1t2ftn9K3UswemkBgC
   </data>
  </layer>
- <objectgroup name="Triggers">
+ <objectgroup name="Triggers" visible="0">
   <object id="1" x="64" y="1216" width="32" height="32">
    <properties>
     <property name="playerEntrance" value=""/>
@@ -64,19 +64,41 @@
     <property name="Help" value="Well...That was something..."/>
    </properties>
   </object>
-  <object id="14" x="320" y="832" width="32" height="32">
+  <object id="14" x="768" y="1152" width="32" height="32">
    <properties>
     <property name="PlatReverse" value=""/>
    </properties>
   </object>
-  <object id="15" x="320" y="1216" width="32" height="32">
+  <object id="15" x="0" y="1152" width="32" height="32">
    <properties>
     <property name="PlatReverse" value=""/>
    </properties>
   </object>
   <object id="16" x="320" y="1152" width="32" height="32">
    <properties>
-    <property name="Platform" value="v"/>
+    <property name="Platform" value="h"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="17" x="160" y="1216" width="32" height="32">
+   <properties>
+    <property name="button" value="1"/>
+   </properties>
+  </object>
+  <object id="19" x="480" y="1056" width="32" height="32">
+   <properties>
+    <property name="Platform" value="h"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="20" x="0" y="1056" width="32" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
+   </properties>
+  </object>
+  <object id="21" x="768" y="1056" width="32" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
    </properties>
   </object>
  </objectgroup>

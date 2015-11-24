@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmNEKwjAMRcMYiNM5EGUg+CCKD4Jvuv//NBskWGq7dU3XtaMXLijomtNsSdYKAPYB3Ao/Fdeerl0JbyB9rSFzxCTiWM0diIO20mfiuBt++wIzYyP8tnAnXLKj/l+7k74PcaBqQ3ztiHVdOPr2SV3bhiOEMO+cfYqFgyviGMMeo5ZWd0nqfZpKPR7KB9aqFFhs7qtdiECYsuHQ9Y/YcuT6nJt6o9rHQ2mp9WpK6Xo2N2c4uxSQ/nvUDb4MmSMOZY6f5Of2pHGI2ruUfNC5UUgOyl+hMTd3c/RB3MOHZB/vPsiBOYltXpJl0z+J4xo2NO9aAgfOJlSzUua4QOaYUrrnum8+ljlSPvchDt9nrybRPvueXXxxHJj/54pmkz4Omxin2mdblZJ1cc19dmArE0dqUjmOM8bCFTLo5uiQxhn1LLlxvM4Hxp8gZA==
+   eJztmN0KwjAMhcNuxOkciDIQvBDFC0HYhe79H80FCZbabl3T9Wf0wAEFXfM1W5K1BIC9Bze9n5IrR9cue28gfa0hc8Qk4liFDsRCW+Ezcdw1v32BnrHu/TZw17tlR/2/did8H+NAVZr4mgnr2nAM7ZO8tgmHD2HeOfsUCwdXxDGFPUYtre6S5Ps0lXo8lg+sVSmwmNxXOx+BMGXCoeofseXI9jnX9Ua5j/vSUuvVnFL1bG7OcHYpIP33qBt8GTJHHMocP4nP7UlhH7V3KfmgcyOfHJS/QmFu7kL0QdzDh2AX7z7IgTmJbV4SZdI/iePqNzTnWgIHziZUs1LmuEDmmFOq53poPhY5Uj73IQ7XZ6860T67nl1ccRyY/+eKZpMhDpMY59pnU7WCVXGFPjswlY4jNckcx4CxcIUMqjnap3FGPQuuLa/zAR0vIvg=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">

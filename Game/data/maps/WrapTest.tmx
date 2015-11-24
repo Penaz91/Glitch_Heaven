@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmE0PwiAMhvHj4vTijJedzQ7+/x+4LY6k0YKMUiijT/Imy8LmnkSgpTfG9DsIhcuc8eveeY1r/JX4mxyoR3me4DrU4wbGc3kcCcE8Dp7xHaMHZY3APF7r97qeeTB5UHB5SJkDobTmgc2ZASTk/r/k8Lib+vbzPf+vpKMesijh4avfYvHt55R6JyZcHlvWzA5Jjevu8h7okHt+qcfve9TjQ+o+KsZjqb/eIDE9CkcfpftgGVr2gD3V1l7qlPDbIT4PWwdhZyaU5O4HrUet57utzA+JqIcs1EMW6iELzKNGJHkMhNiaJ/aMPGUmLn0fHw==
+   eJztmMEOwiAMhlFPTi/OeNnZeNjJ93+6bXEkjRZklEIZ/ZI/WRY29yUCLb0xpt9BKJznvL7uvde4xl+Iv8mBepTnAa5DPa5gPJfHkRDM4+AZ3zF6UNYIzOO5fq/rmTuTBwWXh5Q5EEprHticGUBC7v9LDo+bqW8/3/P/SjrqIYsSHr76LRbffk6pd2LC5bFlzeyQ1LjuLu+BDrnnl3r8vkc9PqTuo2I8lvprBInpUTj6KN0Hy9CyB+yptvZSp4TfDvF52DoIOzOhJHc/aD1qPd9tZX5IRD1koR6yUA9ZYB41IsljIMTWPLFn5CkzAfu5IYc=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">

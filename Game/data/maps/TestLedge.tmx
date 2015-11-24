@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt1zEOgzAMBVAPZWhg6tiRI1QtAyP3P1TFZiGCwpcTbPQtRcrAB54QTpJE5AWM1ChTet9esJodZZ5CBx32GTr8Odae9cuM6YJ3QjJ3+h6oYwEyHh1I0XFcdGDl0fEBMrV6g1Xf/cq5tQd9Tq5arx+1nkMH5kD+KY8Oj/2KDvvM1Y5tv97r1REcVhk66KiRoYOOGhk66LDKDGoe2dGpeQRHyZk+giNXDzWP5tD7Y703juAoOQtHcJzpu29gjI0yqeCa1fEHU+gnvg==
+   eJzt1zEOgzAMBVAvHUiZGDv2BKgCBkbuf6iKzapIFb6cYKNvKVIGPvCEcJIkIgMwUqNM6X2fgtXqKNMJHXTYZ+jw59h71pwZywXvhGTu9D1QxwZkPDqQouN/0YGVR8cHyNTqDVZ9d5Jzaw/6nFy1Xj9qPYcOzIH8Ux4dHvsVHfaZqx2//fqoV0dwWGXooKNGhg46amTooMMq06t5ZMdDzSM4Ss70ERy5GtU8mkPvj/XeOIKj5CwcwXGm776A8W6USQXX7I4v4Cgn6g==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">

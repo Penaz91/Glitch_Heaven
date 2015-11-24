@@ -305,13 +305,28 @@ class Player(pygame.sprite.Sprite):
             # elif game.gravity == 0:
             # self.y_speed = 0
             # ^--------------------------^
-        self.rect.y += self.y_speed * dt    # Move the player vertically
+        if game.glitches['ledgewalk']:
+            if not self.resting:
+                self.rect.y += self.y_speed * dt    # Move the player vertically
+        else:
+            self.rect.y += self.y_speed * dt    # Move the player vertically
         # This avoids the ability to jump in air after leaving a platform
         # TODO: Framework for a "airjump" glitch?
         # v--------------v
         if not game.glitches["ledgejump"] and not game.glitches["ledgewalk"]:
             self.resting = False
         # ^--------------^
+        # Moving plats collision check
+        # FIXME: This type of collision check makes the player tp over the platform even if they shouldn't
+        # NOTE: This has to stay here to avoid being able to go through walls while on a platform
+        # v--------------------------------------------------------------v
+        collision = pygame.sprite.spritecollide(self, game.plats, False)
+        for block in collision:
+            if self.y_speed * game.gravity > 0 and block.active:
+                self.y_speed = 0
+                self.rect.bottom = block.rect.top
+                self.resting = True  # Allows jump
+            self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
@@ -508,10 +523,12 @@ class Player(pygame.sprite.Sprite):
             if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
                 self.respawn(game)
         # ^--------------------------------------------------------------^
-        collision = pygame.sprite.spritecollide(self, game.plats, False)
-        for block in collision:
-            if self.y_speed * game.gravity > 0:
-                self.y_speed = 0
-                self.rect.bottom = block.rect.top
-                self.resting = True  # Allows jump
-            self.rect.x += block.xspeed * dt * block.direction
+        
+        # ^--------------------------------------------------------------^
+        for cell in game.tilemap.layers['Triggers'].collide(self.rect,"button"):
+            if key[self.keys["down"]]:
+                butt = cell['button']
+                print(butt)
+                for plat in game.plats:
+                    if plat.id == butt:
+                        plat.active = True
