@@ -9,8 +9,8 @@ import os
 
 class menuitem(object):
     """ Represents a menu item """
-    
-    def __init__(self, unselected, selected, location, function):
+
+    def __init__(self, unselected, selected, location, function, config):
         """
         Default constructor
         :param unselected: The surface representing the unselected button
@@ -34,6 +34,9 @@ class menuitem(object):
         self.confirmSound = pygame.mixer.Sound(os.path.join("resources",
                                                             "sounds",
                                                             "select.wav"))
+        self.sound.set_volume((config.getfloat("Sound",  "menuvolume"))/100)
+        self.confirmSound.set_volume((config.getfloat("Sound",
+                                                      "menuvolume"))/100)
 
     def makeSelected(self):
         """ Turns the element status to "Selected" """
@@ -49,7 +52,7 @@ class menuitem(object):
     def update(self):
         """ 
         Changes the status if the update function is called
-    
+
         #MIGHT NEED DEPRECATION#
         """
         if self.selected:

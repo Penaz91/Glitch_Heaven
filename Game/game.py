@@ -161,12 +161,25 @@ class Game(object):
         self.tilemap.layers.append(self.obstacles)
         for platform in self.tilemap.layers['Triggers'].find('Platform'):
             plat = platform['Platform']
-            if "v" in plat:
+            """if "v" in plat:
                 TriggerablePlatform(platform.px, platform.py, True, 100,
-                                    False, platform['id'], self.plats, game=self)
+                                    False, platform['id'], self.plats,
+                                    game=self)
             else:
                 TriggerablePlatform(platform.px, platform.py, False, 100,
-                                    False, platform['id'], self.plats, game=self)
+                                    False, platform['id'], self.plats,
+                                    game=self)"""
+            if "v" in plat:
+                vertical = True
+            else:
+                vertical = False
+            if "bouncyplat" in platform:
+                bouncy = True
+            else:
+                bouncy = False
+            TriggerablePlatform(platform.px, platform.py, vertical,
+                                100, False, platform['id'], self.plats,
+                                game=self, bouncy=bouncy)
         self.tilemap.layers.append(self.plats)
         # ^--------------------------------------------------------------^
 
@@ -354,7 +367,7 @@ class Game(object):
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-                    pauseMenu().main(screen, keys, self)
+                    pauseMenu().main(screen, keys, self, self.config)
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                     self.saveGame()
                 # ^----------------------------------------------------------^

@@ -77,6 +77,7 @@
   <object id="16" x="320" y="1152" width="32" height="32">
    <properties>
     <property name="Platform" value="h"/>
+    <property name="bouncyplat" value=""/>
     <property name="id" value="1"/>
    </properties>
   </object>

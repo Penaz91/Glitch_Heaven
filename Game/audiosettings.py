@@ -23,7 +23,7 @@ class AudioSettings:
         """
         self.running = False
 
-    def main(self, screen, keys):
+    def main(self, screen, keys, config):
         """
         The main method to show and make the menu work
 
@@ -36,6 +36,7 @@ class AudioSettings:
         - Nothing
         """
         self.screensize = screen.get_size()
+        self.config = config
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -54,6 +55,12 @@ class AudioSettings:
         self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
         self.titlerect.y = 32
         # ^------------------------------------------------------------------^
+
+        
+        self.meter = pygame.surface.Surface((200, 10))
+        self.meter.fill((255, 255, 255))
+        self.meterrect = pygame.rect.Rect(320, 240, 200, 10)
+
         self.font = pygame.font.Font(os.path.join(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 24)
@@ -105,7 +112,8 @@ class AudioSettings:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),
-                                          lambda: self.goToMenu())
+                                          lambda: self.goToMenu(),
+                                          self.config)
         # ^------------------------------------------------------------------^
         self.items = [self.mainmenu]
         self.clock = pygame.time.Clock()
@@ -149,6 +157,8 @@ class AudioSettings:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.function()
+                    if self.meterrect.collidepoint(*pygame.mouse.get_pos()):
+                        print((pygame.mouse.get_pos()[0] - 320)/2, "%")
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v
@@ -158,4 +168,6 @@ class AudioSettings:
             screen.blit(self.title, self.titlerect.topleft)
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
+
+            screen.blit(self.meter, (320, 240))
             pygame.display.update()

@@ -44,6 +44,8 @@ class Player(pygame.sprite.Sprite):
         self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
                                                          "sounds",
                                                          "jump.wav"))
+        self.jumpsound.set_volume((game.config.getfloat("Sound",
+                                                        "sfxvolume"))/100)
         self.idleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
                                                       0.25, 0.25])
         self.idleani.loadFromDir(os.path.join("resources",
@@ -307,7 +309,7 @@ class Player(pygame.sprite.Sprite):
             # ^--------------------------^
         if game.glitches['ledgewalk']:
             if not self.resting:
-                self.rect.y += self.y_speed * dt    # Move the player vertically
+                self.rect.y += self.y_speed * dt   # Move the player vertically
         else:
             self.rect.y += self.y_speed * dt    # Move the player vertically
         # This avoids the ability to jump in air after leaving a platform
@@ -317,15 +319,21 @@ class Player(pygame.sprite.Sprite):
             self.resting = False
         # ^--------------^
         # Moving plats collision check
-        # FIXME: This type of collision check makes the player tp over the platform even if they shouldn't
-        # NOTE: This has to stay here to avoid being able to go through walls while on a platform
+        # FIXME: This type of collision check makes the player tp over the
+        #        platform even if they shouldn't
+        # NOTE: This has to stay here to avoid being able to go through
+        #       walls while on a platform
         # v--------------------------------------------------------------v
         collision = pygame.sprite.spritecollide(self, game.plats, False)
         for block in collision:
             if self.y_speed * game.gravity > 0 and block.active:
-                self.y_speed = 0
-                self.rect.bottom = block.rect.top
-                self.resting = True  # Allows jump
+                if block.bouncy:
+                    self.rect.bottom = block.rect.top
+                    self.y_speed = -800 * game.gravity
+                else:
+                    self.y_speed = 0
+                    self.rect.bottom = block.rect.top
+                    self.resting = True  # Allows jump
             self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
@@ -512,23 +520,31 @@ class Player(pygame.sprite.Sprite):
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
         game.backpos[0] = -game.tilemap.view_x      # Moves background?
         # Wraps player movement if the glitch is active
-        # FIXME: Death from out-of-bounds is tied to hwrapping absence
-        #        While it should be on its own (or tied to vwrap?)
         # v--------------------------------------------------------------v
+        if game.glitches["hwrapping"]:
+            # This piece of code should avoid phasing through the floor
+            # v-----------------------------v
+            if self.rect.x < 0:
+                self.rect.x = game.tilemap.px_width - self.rect.width
+                self.rect.y -= 3
+            elif self.rect.x > game.tilemap.px_width:
+                self.rect.x = 0
+                self.rect.y -= 3
+            # ^-----------------------------^
         if game.glitches["vwrapping"]:
             self.rect.y = self.rect.y % game.tilemap.px_height
-        if game.glitches["hwrapping"]:
-            self.rect.x = self.rect.x % game.tilemap.px_width
         else:
             if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
                 self.respawn(game)
         # ^--------------------------------------------------------------^
-        
-        # ^--------------------------------------------------------------^
-        for cell in game.tilemap.layers['Triggers'].collide(self.rect,"button"):
+        # Handles the triggering of mobile platforms
+        # v--------------------------------------------------------------v
+        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+                                                            "button"):
             if key[self.keys["down"]]:
                 butt = cell['button']
                 print(butt)
                 for plat in game.plats:
                     if plat.id == butt:
                         plat.active = True
+        # ^--------------------------------------------------------------^

@@ -7,7 +7,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
     Represents a mobile platform that can be triggered
     inherits properties from MobilePlatform
     """
-    def __init__(self, x, y, vertical, spd, active, id, *groups, game):
+    def __init__(self, x, y, vertical, spd, active, id, *groups, game, bouncy=False):
         """
         Default Constructor
 
@@ -27,6 +27,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.active = active
+        self.bouncy = bouncy
         self.id = id
         self.vertical = vertical
         if vertical:

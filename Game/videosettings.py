@@ -23,7 +23,7 @@ class VideoSettings:
         """
         self.running = False
 
-    def main(self, screen, keys):
+    def main(self, screen, keys, config):
         """
         The main method to show and make the menu work
 
@@ -36,6 +36,7 @@ class VideoSettings:
         - Nothing
         """
         self.screensize = screen.get_size()
+        self.config = config
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -105,7 +106,8 @@ class VideoSettings:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),
-                                          lambda: self.goToMenu())
+                                          lambda: self.goToMenu(),
+                                          self.config)
         # ^------------------------------------------------------------------^
         self.items = [self.mainmenu]
         self.clock = pygame.time.Clock()

@@ -61,7 +61,8 @@ class menu:
                                          (320, 240),
                                          lambda: Game().main(screen, keys,
                                                              "newgame",
-                                                             self.gameconfig))
+                                                             self.gameconfig),
+                                         self.gameconfig)
         # ^------------------------------------------------------------------^
         # Quit game menu element
         # v------------------------------------------------------------------v
@@ -71,7 +72,8 @@ class menu:
                                              (255, 0, 0)).convert_alpha()
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
-                                      (320, 560), lambda: quit())
+                                      (320, 560), lambda: quit(),
+                                      self.gameconfig)
         # ^------------------------------------------------------------------^
         # If there is a savefile, enable the continue game button
         # v------------------------------------------------------------------v
@@ -81,7 +83,8 @@ class menu:
             self.cgam = menuItem.menuitem(self.cont,
                                           self.cont,
                                           (320, 320),
-                                          lambda: None)
+                                          lambda: None,
+                                          self.gameconfig)
         else:
             self.cont = self.font.render("Continue Game", False,
                                          (255, 255, 255)).convert_alpha()
@@ -92,7 +95,8 @@ class menu:
                                           (320, 320),
                                           lambda: Game().main(screen, keys,
                                                               "load",
-                                                              self.gameconfig))
+                                                              self.gameconfig),
+                                          self.gameconfig)
         # ^------------------------------------------------------------------^
         # Insert an options button
         # v------------------------------------------------------------------v
@@ -104,16 +108,16 @@ class menu:
                                          self.optsel,
                                          (320, 440),
                                          lambda: OptionsMenu().main(
-                                             screen, keys))
+                                             screen, keys, self.gameconfig),
+                                         self.gameconfig)
         # ^------------------------------------------------------------------^
-
         self.items = [self.newgame, self.cgam, self.options, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    break
+                    self.running = False
                 # Keyboard handling
                 # v------------------------------------------------------------------v
                 if event.type == pygame.KEYDOWN:

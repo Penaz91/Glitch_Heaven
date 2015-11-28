@@ -26,19 +26,20 @@ class OptionsMenu:
         """
         self.running = False
 
-    def main(self, screen, keys):
+    def main(self, screen, keys, config):
         """
         The main method to show and make the menu work
 
         Keyword Arguments:
         - Screen: the Screen surface to make the menu on
         - Keys: The list of control keys to use
-        - game: The game instance.
+        - Config: The game configuration
 
         Returns:
         - Nothing
         """
         self.screensize = screen.get_size()
+        self.config = config
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -76,7 +77,8 @@ class OptionsMenu:
                                        self.vidselimg,
                                        (320, 240),
                                        lambda: VideoSettings().main(
-                                           screen, keys))
+                                           screen, keys, self.config),
+                                       self.config)
         # ^------------------------------------------------------------------^
         # Sound settings menu element
         # v------------------------------------------------------------------v
@@ -87,7 +89,8 @@ class OptionsMenu:
         self.snd = menuItem.menuitem(self.sndimg,
                                      self.sndselimg,
                                      (320, 320), lambda: AudioSettings().main(
-                                         screen, keys))
+                                         screen, keys, self.config),
+                                     self.config)
         # ^------------------------------------------------------------------^
         # Controls/Controllers menu element
         # v------------------------------------------------------------------v
@@ -99,7 +102,8 @@ class OptionsMenu:
                                       self.ctrlselimg,
                                       (320, 400),
                                       lambda: ControlSettings().main(
-                                          screen, keys))
+                                          screen, keys, self.config),
+                                      self.config)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
@@ -110,7 +114,8 @@ class OptionsMenu:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),
-                                          lambda: self.goToMenu())
+                                          lambda: self.goToMenu(),
+                                          self.config)
         # ^------------------------------------------------------------------^
         self.items = [self.video, self.snd, self.ctrl, self.mainmenu]
         self.clock = pygame.time.Clock()
