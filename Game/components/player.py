@@ -517,7 +517,6 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):
-            game.eraseCurrentLevel()
             game.loadNextLevel(game.currentcampaign, game.screen)
             game.loadLevelPart2(game.keys)
         # ^--------------------------------------------------------------^

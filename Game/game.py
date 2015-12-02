@@ -194,15 +194,21 @@ class Game(object):
         Returns:
         - Nothing
         """
-        # TODO: Make the program not crash when the end of the campaign
-        #       is reached.
+        print ("Cindex: " + str(self.campaignIndex + 1))
+        print ("Length: " + str(len(campaign)))
         self.campaignIndex += 1
-        # Debug Area
-        # v--------------------------------------------------------------v
-        print("LoadNextLevel: "+str(campaign))
-        print(self.campaignIndex)
-        # ^--------------------------------------------------------------^
-        self.LoadLevel(campaign[self.campaignIndex], screen)
+        if (self.campaignIndex) >= len(campaign):
+            self.running = False
+        else:
+            # TODO: Make the program not crash when the end of the campaign
+            #       is reached.
+            # Debug Area
+            # v--------------------------------------------------------------v
+            print("LoadNextLevel: "+str(campaign))
+            print(self.campaignIndex)
+            # ^--------------------------------------------------------------^
+            self.eraseCurrentLevel()
+            self.LoadLevel(campaign[self.campaignIndex], screen)
 
     def loadCampaign(self, campaignfile):
         """
@@ -224,11 +230,12 @@ class Game(object):
         Erases the whole level, tilemap, kills the player and
         prepares for a new load
         """
-        self.tilemap = None
-        self.player.kill()
-        self.plats.empty()
-        self.sprites.empty()
-        self.player = None
+        if self.player != None:
+            self.tilemap = None
+            self.player.kill()
+            self.plats.empty()
+            self.sprites.empty()
+            self.player = None
 
     def loadLevelPart2(self, keys):
         """
@@ -295,6 +302,7 @@ class Game(object):
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = screen
+        self.player = None
         self.keys = keys
         self.config = config
         self.helptxts = pygame.sprite.Group()
