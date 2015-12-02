@@ -200,8 +200,6 @@ class Game(object):
         if (self.campaignIndex) >= len(campaign):
             self.running = False
         else:
-            # TODO: Make the program not crash when the end of the campaign
-            #       is reached.
             # Debug Area
             # v--------------------------------------------------------------v
             print("LoadNextLevel: "+str(campaign))

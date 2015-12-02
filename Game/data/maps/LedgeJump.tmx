@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="53">
+ <tileset firstgid="1" name="TestTiles" tilewidth="32" tileheight="32" tilecount="72">
+  <image source="resources/tiles/TestTile.png" width="256" height="288"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzdmcFuFDEQRPtK4MqFk48RFyIE0WpPo5z4/y8iFpS2tqbL7pnZJUBLpWwyHruf2922sw8R8bmgh2K7ve2PqI/1Pmp2Lrbb237vO93exf/H0Sb6FzieXvXxVY8D9THab93LpyMcPUe+i57jFxurjwGmFnMe51MTVd6ZGcfjNNE5LkwVlrfiWCbqY4CpwuJ84rXa4lgOwpjjx0QvcWFiFvhT5eC16nJwZk3aKcfImGmJC4uLjePgtZrlYAsfZ/xd524LBxuzZOusDTiWuI6r5qBbc42eYbyjHMwCf3SdZWukxTquLK0lKjzDeLfgAItbZ5jbFtfzyb5oDmotUeEZxnMcbQcLeNA3fMDc6nyyLzp35/Br7kTPMJ7jcLVnCwt8eIn1vKovaufwa26Jdfwcx2hf+Cq/f4v1GSDzQedTfVAOmKv/mSlHlq9QtbarD8w08kU5tphy9LE0X3mPyurhzCrzCbvlfr5EXjOyvN3Cla3De3BErNeC7lFZPXRcmk8VuxVHN7e2URO1FjquLfkE03MJtIcDlu1RWT10XC6fRuJzicZ4L4caYq58jsvl00h8LtEY35pDzXG5fBqJzyUa43ZnDsfl8ml251wS9WejmNyDg9u784UTn0s0xiMf780Rxi+nbAw84/NtE/0Jjlu8o+fbFtf3qrfmaLGuu/jMhpjgGdfz7js4tL+srz0crl/2p3KGeyQO3GPQ7kQcrp5zXxW/tP1sv8jqbrbn8P2I77UYi9eV2390ro7uadk9FcruXnwHZt8hzg9Xz7O5OrqnZfdUVdYONSuLFTgq/VX8quxpLFd/XbslmS/Oj0p/Fb+0/Wy/cDZ658OrvsR1rGZ1V/eorXsa1nSlrnfL7ix6/8IdbIlLrEZ5rlb5f+2WfMpsVttdTLPv1Z7o59E8r/i+hcOZ48jG/9u/V+vfR30qqNpub/u97+C9n7yk3Yw=
+  </data>
+ </layer>
+ <objectgroup name="Triggers" visible="0">
+  <object id="36" x="32" y="0" width="1536" height="32">
+   <properties>
+    <property name="deadly" value="b"/>
+   </properties>
+  </object>
+  <object id="37" x="32" y="1248" width="1536" height="32">
+   <properties>
+    <property name="deadly" value="t"/>
+   </properties>
+  </object>
+  <object id="39" x="320" y="32" width="32" height="256">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="40" x="320" y="480" width="32" height="768">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="41" x="704" y="608" width="32" height="640">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="42" x="704" y="32" width="32" height="448">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="43" x="1120" y="32" width="32" height="992">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="44" x="1120" y="1120" width="32" height="128">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="45" x="0" y="0" width="32" height="1280">
+   <properties>
+    <property name="blocker" value="r"/>
+   </properties>
+  </object>
+  <object id="46" x="1568" y="0" width="32" height="1280">
+   <properties>
+    <property name="blocker" value="l"/>
+   </properties>
+  </object>
+  <object id="47" x="32" y="160" width="160" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="48" x="448" y="480" width="160" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="49" x="832" y="576" width="160" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="50" x="1280" y="1120" width="192" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="51" x="64" y="128" width="32" height="32">
+   <properties>
+    <property name="playerEntrance" value=""/>
+   </properties>
+  </object>
+  <object id="52" x="1408" y="1088" width="32" height="32">
+   <properties>
+    <property name="playerExit" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

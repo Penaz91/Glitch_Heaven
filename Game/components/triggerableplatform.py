@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import pygame
-
+import os
 
 class TriggerablePlatform(pygame.sprite.Sprite):
     """
@@ -21,8 +21,12 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         - Nothing
         """
         super(TriggerablePlatform, self).__init__(*groups)
-        self.image = pygame.surface.Surface((100, 32))
-        self.image.fill((255, 255, 255))
+        self.activeimg = pygame.image.load(os.path.join("Resources", "tiles", "platx3.png"))
+        self.inactiveimg = pygame.image.load(os.path.join("Resources", "tiles", "platx3_glitched.png"))
+        if active:
+            self.image = self.activeimg
+        else:
+            self.image = self.inactiveimg
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

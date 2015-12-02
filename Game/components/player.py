@@ -234,7 +234,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.x_speed         # Move the player
         if game.glitches["multijump"]:
             if key[self.keys["jump"]]:
-                self.jumpsound.play()
+                if self.y_speed >=0:
+                    self.jumpsound.play()
                 if game.glitches["gravity"]:
                     game.gravity *= -1
                 else:
@@ -259,7 +260,8 @@ class Player(pygame.sprite.Sprite):
                     # ^------------------------------------------------------^
         elif game.glitches["hover"]:
             if key[self.keys["jump"]]:
-                self.jumpsound.play()
+                if self.y_speed == 0:
+                    self.jumpsound.play()
                 self.y_speed = self.jump_speed*game.gravity*0.8
         else:
             if key[self.keys["jump"]] and self.resting:
@@ -286,13 +288,6 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = (min(200, self.y_speed+20))
                 elif game.gravity == -1:
                     self.y_speed = -(min(200, abs(self.y_speed)+20))
-            # Why? Gravity will never be 0.
-            # TODO: Find a reason for this useless piece of code or go
-            # Order 66 on it
-            # v--------------------------v
-            # elif game.gravity == 0:
-                # self.y_speed = 0
-            # ^--------------------------^
         else:
             if game.glitches["ledgejump"]:
                 if game.gravity == 1:
@@ -304,13 +299,6 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = (min(400, self.y_speed+40))
                 elif game.gravity == -1:
                     self.y_speed = -(min(400, abs(self.y_speed)+40))
-            # Why? Gravity will never be 0.
-            # TODO: Find a reason for this useless piece of code or go
-            # Order 66 on it
-            # v--------------------------v
-            # elif game.gravity == 0:
-            # self.y_speed = 0
-            # ^--------------------------^
         if game.glitches['ledgewalk']:
             if not self.resting:
                 self.rect.y += self.y_speed * dt   # Move the player vertically
@@ -474,11 +462,11 @@ class Player(pygame.sprite.Sprite):
         for block in collision:
             if self.y_speed == 0:
                 self.resting = True
-            elif self.y_speed > 0:
+            elif self.y_speed * game.gravity > 0:
                 self.rect.bottom = block.rect.top
                 self.resting = True
                 self.y_speed = 0
-            elif self.y_speed < 0:
+            elif self.y_speed * game.gravity < 0:
                 self.rect.top = block.rect.bottom
                 self.resting = False
                 self.y_speed = 0
@@ -550,4 +538,5 @@ class Player(pygame.sprite.Sprite):
                 for plat in game.plats:
                     if plat.id == butt:
                         plat.active = True
+                        plat.image = plat.activeimg
         # ^--------------------------------------------------------------^
