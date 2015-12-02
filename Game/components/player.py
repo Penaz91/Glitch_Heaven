@@ -109,6 +109,10 @@ class Player(pygame.sprite.Sprite):
                                                   self.rect.y)
             body = DeadBody(x, y, game.sprites, game=game)
             game.deadbodies.add(body)
+        if game.glitches["invertedgravity"]:
+            game.gravity = -1
+        else:
+            game.gravity = 1
         # ^-----------------------------------------------------^
         self.kill()     # Kills the player sprite
         # Does a complete respawn of the player
