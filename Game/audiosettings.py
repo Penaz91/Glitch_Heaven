@@ -65,10 +65,7 @@ class AudioSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-                                       
-                                       
-                                       
-        audio1 = meter.Meter((320,240), (200,10))
+        audio1 = meter.Meter((320, 240), (200, 10))
         """
         # Video Settings menu element
         # v------------------------------------------------------------------v

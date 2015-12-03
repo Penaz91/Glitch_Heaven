@@ -22,7 +22,6 @@ if __name__ == "__main__":
     for key in keys:
         keys[key] = int(keys[key])
     # ^-------------------------------^
-    # 
     # Sets the screen flags
     # v-------------------------------v
     if fullscreen:
