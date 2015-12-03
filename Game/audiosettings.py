@@ -3,7 +3,7 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
-from components.UI import menuItem
+from components.UI import menuItem, meter
 from libs import animation, timedanimation
 
 
@@ -56,11 +56,6 @@ class AudioSettings:
         self.titlerect.y = 32
         # ^------------------------------------------------------------------^
 
-        
-        self.meter = pygame.surface.Surface((200, 10))
-        self.meter.fill((255, 255, 255))
-        self.meterrect = pygame.rect.Rect(320, 240, 200, 10)
-
         self.font = pygame.font.Font(os.path.join(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 24)
@@ -70,6 +65,10 @@ class AudioSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
+                                       
+                                       
+                                       
+        audio1 = meter.Meter((320,240), (200,10))
         """
         # Video Settings menu element
         # v------------------------------------------------------------------v
@@ -157,8 +156,8 @@ class AudioSettings:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.function()
-                    if self.meterrect.collidepoint(*pygame.mouse.get_pos()):
-                        print((pygame.mouse.get_pos()[0] - 320)/2, "%")
+                    if audio1.rect.collidepoint(*pygame.mouse.get_pos()):
+                        print(audio1.set_quantity(pygame.mouse.get_pos()))
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v
@@ -168,6 +167,5 @@ class AudioSettings:
             screen.blit(self.title, self.titlerect.topleft)
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
-
-            screen.blit(self.meter, (320, 240))
+            audio1.draw(screen)
             pygame.display.update()
