@@ -10,7 +10,7 @@ class Meter(object):
     """
     # TODO: Add a way to make the slider really work when you keep the
     #       mouse button pressed
-    def __init__(self, location, size=(0, 0)):
+    def __init__(self, location, size, config, what):
         """
         Constructor
 
@@ -20,6 +20,8 @@ class Meter(object):
         """
         self.location = location
         self.size = size
+        self.config = config
+        self.what = what
         self.image = pygame.surface.Surface(((size[0]), (size[1])),
                                             pygame.SRCALPHA,
                                             32).convert_alpha()
@@ -31,6 +33,7 @@ class Meter(object):
                                              32).convert_alpha()
         self.fillerrect = self.filler.get_rect()
         self.filler.fill((255, 0, 0))
+        self.draw_from_x(int(self.config.getfloat("Sound",self.what)))
 
     def set_quantity(self, mousepos):
         """
@@ -46,6 +49,9 @@ class Meter(object):
         self.fillerrect = self.filler.get_rect()
         self.filler.fill((255, 0, 0))
         self.fillerrect.x, self.fillerrect.y = self.location
+        self.config.set("Sound",self.what,str((x/(self.rect.width))*100))
+        with open("game.conf","w") as conf:
+            self.config.write(conf)
         return (x/(self.rect.width))*100
 
     def draw_from_x(self, x):
@@ -55,7 +61,7 @@ class Meter(object):
         Keyword Arguments:
         - x = The updated volume
         """
-        self.filler = pygame.surface.Surface(((x/100.)*self.rect.size,
+        self.filler = pygame.surface.Surface(((x/100)*self.size[0],
                                              self.size[1]), pygame.SRCALPHA,
                                              32).convert_alpha()
         self.fillerrect = self.filler.get_rect()
@@ -66,7 +72,7 @@ class Meter(object):
         Increases volume by 1%
         Will be used for keyboard
         """
-        x = None  # Volume to get from config
+        x = int(self.config.getfloat("Sound",self.what))  # Volume to get from config
         x += 1
         if x > 100:
             x = 100
@@ -78,7 +84,7 @@ class Meter(object):
         Decreases volume by 1%
         Will be used for keyboard
         """
-        x = None  # Volume to get from config
+        x = int(self.config.getfloat("Sound",self.what))  # Volume to get from config
         x -= 1
         if x < 0:
             x = 0

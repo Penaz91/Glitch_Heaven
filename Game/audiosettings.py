@@ -65,7 +65,12 @@ class AudioSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        audio1 = meter.Meter((320, 240), (200, 10))
+        self.menumeter = meter.Meter((320, 240), (200, 10), self.config, "menuvolume")
+        self.menuwriting = self.font.render("Menu Volume: ", False, (255, 255, 255)).convert_alpha()
+        self.sfxmeter = meter.Meter((320, 240), (200, 10), self.config, "sfxvolume")
+        self.sfxwriting = self.font.render("SFX Volume: ", False, (255, 255, 255)).convert_alpha()
+        self.musicmeter = meter.Meter((320, 240), (200, 10), self.config, "musicvolume")
+        self.musicwriting = self.font.render("Music Volume: ", False, (255, 255, 255)).convert_alpha()
         """
         # Video Settings menu element
         # v------------------------------------------------------------------v
@@ -153,8 +158,8 @@ class AudioSettings:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.function()
-                    if audio1.rect.collidepoint(*pygame.mouse.get_pos()):
-                        print(audio1.set_quantity(pygame.mouse.get_pos()))
+                    if self.menumeter.rect.collidepoint(*pygame.mouse.get_pos()):
+                        print(self.menumeter.set_quantity(pygame.mouse.get_pos()))
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v
@@ -162,7 +167,8 @@ class AudioSettings:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
+            screen.blit(self.menuwriting, (200,240))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
-            audio1.draw(screen)
+            self.menumeter.draw(screen)
             pygame.display.update()
