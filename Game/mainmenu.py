@@ -7,11 +7,13 @@ from components.UI import menuItem
 from game import Game
 from libs import timedanimation
 from optionsmenu import OptionsMenu
+import logging
 # TODO AREA:
 # ---------------
 # Tie Menu graphic to resolution
 # ---------------
 
+module_logger = logging.getLogger("Glitch_Heaven.MainMenu")
 
 class menu:
     """ Represents the main Game menu """
@@ -24,6 +26,7 @@ class menu:
         - screen: The surface to draw the menu to.
         - keys: The control keys collection used
         """
+        self.logger = logging.getLogger("Glitch_Heaven.MainMenu.Main()")
         self.screensize = screen.get_size()
         # Title animation and properties
         # v------------------------------------------------------------------v
@@ -117,6 +120,7 @@ class menu:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    self.logger.info("QUIT signal received, quitting the Game")
                     self.running = False
                 # Keyboard handling
                 # v------------------------------------------------------------------v
@@ -164,5 +168,3 @@ class menu:
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()
-        pygame.quit()
-        quit()

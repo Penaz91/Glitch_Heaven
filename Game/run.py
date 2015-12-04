@@ -5,36 +5,62 @@
 import pygame
 from mainmenu import menu
 import configparser
-
+import logging
 if __name__ == "__main__":
-    # Reads the game configuration
-    # v-------------------------------------------------------------------v
-    config = configparser.ConfigParser()
-    config.read("game.conf")
-    screensize = (int(config["Video"]["screenwidth"]),
-                  int(config["Video"]["screenheight"]))
-    fullscreen = config.getboolean("Video", "fullscreen")
-    doublebuffer = config.getboolean("Video", "doublebuffer")
-    flags = None
-    # Reads the control keys
-    # v-------------------------------v
-    keys = dict(config["Controls"])
-    for key in keys:
-        keys[key] = int(keys[key])
-    # ^-------------------------------^
-    # Sets the screen flags
-    # v-------------------------------v
-    if fullscreen:
-        if doublebuffer:
-            flags = pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF
+    logging.basicConfig(filename="latest.log", level=logging.DEBUG, format='[%(asctime)s] (%(name)s) - %(levelname)s --- %(message)s')
+    logging.info("----------------------------------------Initialising logging----------------------------------------")
+    logger = logging.getLogger("Glitch_Heaven.Bootstrapper")
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.ERROR)
+    formatter = logging.Formatter('[%(asctime)s] (%(name)s) - %(levelname)s --- %(message)s')
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+    try:
+        # Reads the game configuration
+        # v-------------------------------------------------------------------v
+        logger.info("Loading configuration file")
+        config = configparser.ConfigParser()
+        config.read("game.conf")
+        screensize = (int(config["Video"]["screenwidth"]),
+                      int(config["Video"]["screenheight"]))
+        logger.debug("Screensize set to: " + str(screensize))
+        fullscreen = config.getboolean("Video", "fullscreen")
+        logger.debug("Fullscreen Flag Set to: "+str(fullscreen))
+        doublebuffer = config.getboolean("Video", "doublebuffer")
+        logger.debug("Doublebuffer Flag set to: " +str(doublebuffer))
+        flags = None
+        # Reads the control keys
+        # v-------------------------------v
+        logger.info("Zipping key dictionary")
+        keys = dict(config["Controls"])
+        for key in keys:
+            keys[key] = int(keys[key])
+        logger.debug("Key Dictionary is:" +str(keys))
+        # ^-------------------------------^
+        # Sets the screen flags
+        # v-------------------------------v
+        logger.info("Setting screen flags")
+        if fullscreen:
+            if doublebuffer:
+                flags = pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF
+            else:
+                flags = pygame.FULLSCREEN | pygame.HWSURFACE
         else:
-            flags = pygame.FULLSCREEN | pygame.HWSURFACE
-    else:
-        flags = 0
-    # ^-------------------------------^
-    # ^-------------------------------------------------------------------^
-    pygame.mixer.pre_init(48000, 16, 2, 4096)
-    pygame.init()
-    pygame.mixer.init()
-    screen = pygame.display.set_mode(screensize, flags)
-    menu().main(screen, keys, config)
+            flags = 0
+        # ^-------------------------------^
+        # ^-------------------------------------------------------------------^
+        logger.info("Pre-initialising Mixer")
+        pygame.mixer.pre_init(48000, 16, 2, 4096)
+        logger.info("Initialising Pygame")
+        pygame.init()
+        logger.info("Initialising Mixer")
+        pygame.mixer.init()
+        logger.info("Setting up the Screen")
+        screen = pygame.display.set_mode(screensize, flags)
+        logger.info("Opening the menu")
+        menu().main(screen, keys, config)
+        logger.info("Quitting")
+        pygame.quit()
+        quit()
+    except:
+        logger.critical("There has been an exception, printing traceback", exc_info=True)
