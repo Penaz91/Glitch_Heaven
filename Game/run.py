@@ -6,15 +6,25 @@ import pygame
 from mainmenu import menu
 import configparser
 import logging
+from logging import handlers as loghandler
+from os.path import join as pathjoin
 if __name__ == "__main__":
-    logging.basicConfig(filename="latest.log", level=logging.DEBUG, format='[%(asctime)s] (%(name)s) - %(levelname)s --- %(message)s')
-    logging.info("----------------------------------------Initialising logging----------------------------------------")
+    fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                                             "midnight", 1)
+    logging.basicConfig(level=logging.DEBUG,
+                        format='[%(asctime)s] (%(name)s) -'
+                        ' %(levelname)s --- %(message)s')
+    logging.info("-----------------Initialising logging-----------------")
     logger = logging.getLogger("Glitch_Heaven.Bootstrapper")
     ch = logging.StreamHandler()
     ch.setLevel(logging.ERROR)
-    formatter = logging.Formatter('[%(asctime)s] (%(name)s) - %(levelname)s --- %(message)s')
+    formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
+                                  ' %(levelname)s --- %(message)s')
     ch.setFormatter(formatter)
+    fh.setFormatter(formatter)
     logger.addHandler(ch)
+    logger.addHandler(fh)
+    logger.info("----------Logger initialised----------")
     try:
         # Reads the game configuration
         # v-------------------------------------------------------------------v
@@ -27,7 +37,8 @@ if __name__ == "__main__":
         fullscreen = config.getboolean("Video", "fullscreen")
         logger.debug("Fullscreen Flag Set to: "+str(fullscreen))
         doublebuffer = config.getboolean("Video", "doublebuffer")
-        logger.debug("Doublebuffer Flag set to: " +str(doublebuffer))
+        logger.debug("Doublebuffer Flag set to: " +
+                     str(doublebuffer))
         flags = None
         # Reads the control keys
         # v-------------------------------v
@@ -35,7 +46,7 @@ if __name__ == "__main__":
         keys = dict(config["Controls"])
         for key in keys:
             keys[key] = int(keys[key])
-        logger.debug("Key Dictionary is:" +str(keys))
+        logger.debug("Key Dictionary is:" + str(keys))
         # ^-------------------------------^
         # Sets the screen flags
         # v-------------------------------v
@@ -62,5 +73,8 @@ if __name__ == "__main__":
         logger.info("Quitting")
         pygame.quit()
         quit()
+    except SystemExit:
+        logger.info("Game has exited correctly")
     except:
-        logger.critical("There has been an exception, printing traceback", exc_info=True)
+        logger.critical("There has been an exception, printing traceback",
+                        exc_info=True)

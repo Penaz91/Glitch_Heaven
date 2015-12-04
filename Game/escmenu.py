@@ -1,10 +1,24 @@
-# Main Menu Component
+# Pause Menu Component
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
 from components.UI import menuItem
 from libs import animation, timedanimation
+import logging
+from logging import handlers as loghandler
+from os.path import join as pathjoin
+module_logger = logging.getLogger("Glitch_Heaven.PauseMenu")
+fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                                         "midnight", 1)
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
+                              ' %(levelname)s --- %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+module_logger.addHandler(fh)
+module_logger.addHandler(ch)
 
 
 class pauseMenu:
@@ -12,6 +26,7 @@ class pauseMenu:
 
     def unpause(self):
         """ Stops the menu from running and resumes the game"""
+        module_logger.info("Game unpaused")
         self.running = False
 
     def goToMenu(self, game):
@@ -25,6 +40,7 @@ class pauseMenu:
         Returns:
         - Nothing
         """
+        module_logger.info("Going back to main menu")
         game.running = False
         self.running = False
 
@@ -40,6 +56,7 @@ class pauseMenu:
         Returns:
         - Nothing
         """
+        module_logger.info("Opening the Pause Menu")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties
@@ -100,7 +117,8 @@ class pauseMenu:
                                              (255, 0, 0)).convert_alpha()
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
-                                      (320, 560), lambda: quit(),
+                                      (320, 560), lambda: pygame.event.post(
+                                        pygame.event.Event(pygame.QUIT)),
                                       self.config)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
@@ -121,7 +139,8 @@ class pauseMenu:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    break
+                    module_logger.info("QUIT event has been raised, exiting")
+                    quit()
                 # Keyboard Handling
                 # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN:

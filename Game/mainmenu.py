@@ -8,12 +8,24 @@ from game import Game
 from libs import timedanimation
 from optionsmenu import OptionsMenu
 import logging
+from logging import handlers as loghandler
+from os.path import join as pathjoin
+module_logger = logging.getLogger("Glitch_Heaven.MainMenu")
+fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                                         "midnight", 1)
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
+                              ' %(levelname)s --- %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+module_logger.addHandler(fh)
+module_logger.addHandler(ch)
 # TODO AREA:
 # ---------------
 # Tie Menu graphic to resolution
 # ---------------
 
-module_logger = logging.getLogger("Glitch_Heaven.MainMenu")
 
 class menu:
     """ Represents the main Game menu """
@@ -26,7 +38,7 @@ class menu:
         - screen: The surface to draw the menu to.
         - keys: The control keys collection used
         """
-        self.logger = logging.getLogger("Glitch_Heaven.MainMenu.Main()")
+        module_logger.info("Entering Main Menu")
         self.screensize = screen.get_size()
         # Title animation and properties
         # v------------------------------------------------------------------v
@@ -75,7 +87,8 @@ class menu:
                                              (255, 0, 0)).convert_alpha()
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
-                                      (320, 560), lambda: quit(),
+                                      (320, 560), lambda: pygame.event.post(
+                                          pygame.event.Event(pygame.QUIT)),
                                       self.gameconfig)
         # ^------------------------------------------------------------------^
         # If there is a savefile, enable the continue game button
@@ -120,7 +133,7 @@ class menu:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.logger.info("QUIT signal received, quitting the Game")
+                    module_logger.info("QUIT signal received, quitting")
                     self.running = False
                 # Keyboard handling
                 # v------------------------------------------------------------------v

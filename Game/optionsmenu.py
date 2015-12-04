@@ -8,6 +8,20 @@ from libs import animation, timedanimation
 from videosettings import VideoSettings
 from audiosettings import AudioSettings
 from controlsettings import ControlSettings
+import logging
+from logging import handlers as loghandler
+from os.path import join as pathjoin
+module_logger = logging.getLogger("Glitch_Heaven.OptionsMenu")
+fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                                         "midnight", 1)
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
+                              ' %(levelname)s --- %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+module_logger.addHandler(fh)
+module_logger.addHandler(ch)
 
 
 class OptionsMenu:
@@ -25,6 +39,7 @@ class OptionsMenu:
         - Nothing
         """
         self.running = False
+        module_logger.info("Going to the previous Menu")
 
     def main(self, screen, keys, config):
         """
@@ -38,6 +53,7 @@ class OptionsMenu:
         Returns:
         - Nothing
         """
+        module_logger.info("Entering options Menu")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties

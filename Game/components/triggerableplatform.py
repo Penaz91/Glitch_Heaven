@@ -21,8 +21,8 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         - Nothing
         """
         super(TriggerablePlatform, self).__init__(*groups)
-        self.activeimg = pygame.image.load(os.path.join("Resources", "tiles", "platx3.png"))
-        self.inactiveimg = pygame.image.load(os.path.join("Resources", "tiles", "platx3_glitched.png"))
+        self.activeimg = pygame.image.load(os.path.join("resources", "tiles", "platx3.png"))
+        self.inactiveimg = pygame.image.load(os.path.join("resources", "tiles", "platx3_glitched.png"))
         if active:
             self.image = self.activeimg
         else:

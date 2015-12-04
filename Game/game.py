@@ -19,6 +19,20 @@ from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
 import shelve
+import logging
+from logging import handlers as loghandler
+from os.path import join as pathjoin
+mod_logger = logging.getLogger("Glitch_Heaven.Game")
+fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                                         "midnight", 1)
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
+                              ' %(levelname)s --- %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+mod_logger.addHandler(fh)
+mod_logger.addHandler(ch)
 
 
 class Game(object):
@@ -39,10 +53,10 @@ class Game(object):
         truth = self.glitches.get(glitch)
         if truth:
             truth = False
-            print("The {0} glitch has been disabled".format(glitch))
+            mod_logger.debug("The {0} glitch has been disabled".format(glitch))
         else:
             truth = True
-            print("The {0} glitch has been enabled".format(glitch))
+            mod_logger.debug("The {0} glitch has been enabled".format(glitch))
         mydict = {glitch: truth}
         self.glitches.update(mydict)
 
@@ -194,16 +208,15 @@ class Game(object):
         Returns:
         - Nothing
         """
-        print ("Cindex: " + str(self.campaignIndex + 1))
-        print ("Length: " + str(len(campaign)))
+        mod_logger.debug("Campaign index: " + str(self.campaignIndex + 1))
+        mod_logger.debug("Length of campaign: " + str(len(campaign)))
         self.campaignIndex += 1
         if (self.campaignIndex) >= len(campaign):
             self.running = False
         else:
             # Debug Area
             # v--------------------------------------------------------------v
-            print("LoadNextLevel: "+str(campaign))
-            print(self.campaignIndex)
+            mod_logger.debug("Loading Level: "+str(campaign))
             # ^--------------------------------------------------------------^
             self.eraseCurrentLevel()
             self.LoadLevel(campaign[self.campaignIndex], screen)
@@ -215,6 +228,7 @@ class Game(object):
         Keyword Arguments:
         - campaignFile: The file (Without extension) defining the campaign
         """
+        mod_logger.info("Loading campaign"+campaignfile)
         with open(os.path.join("data", "campaigns", campaignfile+".cmp"),
                   "r") as campfile:
             x = campfile.readlines()
@@ -228,7 +242,7 @@ class Game(object):
         Erases the whole level, tilemap, kills the player and
         prepares for a new load
         """
-        if self.player != None:
+        if self.player is not None:
             self.tilemap = None
             self.player.kill()
             self.plats.empty()
@@ -280,8 +294,8 @@ class Game(object):
         shelf.close()
         # Debug Area
         # v--------------------------------------------------------------v
-        print("Loadgame: "+str(self.currentcampaign))
-        print(self.campaignIndex)
+        mod_logger.debug("Loadgame: "+str(self.currentcampaign))
+        mod_logger.debug("Campaign Index: "+self.campaignIndex)
         # ^--------------------------------------------------------------^
 
     def main(self, screen, keys, mode, config):
@@ -328,12 +342,13 @@ class Game(object):
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
         self.loadLevelPart2(self.keys)
-        print(self.glitches)
+        mod_logger.debug("Glitches Loaded: "+str(self.glitches))
         """Game Loop"""
         while self.running:
             dt = self.clock.tick(self.fps)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    mod_logger.info("QUIT signal received, quitting")
                     pygame.quit()
                     quit()
                 # Debug Area - Glitch Toggles
@@ -354,7 +369,7 @@ class Game(object):
                     self.toggleGlitch("stickyceil")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
                     self.gravity *= -1
-                    print("Gravity has been inverted")
+                    mod_logger.debug("Gravity has been inverted")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
                     self.toggleGlitch("permbodies")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:

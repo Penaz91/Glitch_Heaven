@@ -5,6 +5,20 @@ import pygame
 import os
 from components.UI import menuItem
 from libs import animation, timedanimation
+import logging
+from logging import handlers as loghandler
+from os.path import join as pathjoin
+module_logger = logging.getLogger("Glitch_Heaven.ControlSettings")
+fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                                         "midnight", 1)
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
+                              ' %(levelname)s --- %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+module_logger.addHandler(fh)
+module_logger.addHandler(ch)
 
 
 class VideoSettings:
@@ -21,6 +35,7 @@ class VideoSettings:
         Returns:
         - Nothing
         """
+        module_logger.info("Going to the previous menu")
         self.running = False
 
     def main(self, screen, keys, config):
@@ -35,6 +50,7 @@ class VideoSettings:
         Returns:
         - Nothing
         """
+        module_logger.info("Opening the Video Settings Menu")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties

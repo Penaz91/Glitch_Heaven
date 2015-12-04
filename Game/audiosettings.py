@@ -1,10 +1,24 @@
-# Main Menu Component
+# Audio Settings Component
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
 from components.UI import menuItem, meter
 from libs import animation, timedanimation
+import logging
+from logging import handlers as loghandler
+from os.path import join as pathjoin
+module_logger = logging.getLogger("Glitch_Heaven.AudioSettings")
+fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                                         "midnight", 1)
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
+                              ' %(levelname)s --- %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+module_logger.addHandler(fh)
+module_logger.addHandler(ch)
 
 
 class AudioSettings:
@@ -22,6 +36,7 @@ class AudioSettings:
         - Nothing
         """
         self.running = False
+        module_logger.info("Returning to previous menu")
 
     def main(self, screen, keys, config):
         """
@@ -35,6 +50,7 @@ class AudioSettings:
         Returns:
         - Nothing
         """
+        module_logger.info("Entering Audio Settings Menu")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties
@@ -65,12 +81,18 @@ class AudioSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        self.menumeter = meter.Meter((320, 240), (200, 10), self.config, "menuvolume")
-        self.menuwriting = self.font.render("Menu Volume: ", False, (255, 255, 255)).convert_alpha()
-        self.sfxmeter = meter.Meter((320, 240), (200, 10), self.config, "sfxvolume")
-        self.sfxwriting = self.font.render("SFX Volume: ", False, (255, 255, 255)).convert_alpha()
-        self.musicmeter = meter.Meter((320, 240), (200, 10), self.config, "musicvolume")
-        self.musicwriting = self.font.render("Music Volume: ", False, (255, 255, 255)).convert_alpha()
+        self.menumeter = meter.Meter((320, 240), (200, 10),
+                                     self.config, "menuvolume")
+        self.menuwriting = self.font.render("Menu Volume: ", False,
+                                            (255, 255, 255)).convert_alpha()
+        self.sfxmeter = meter.Meter((320, 240), (200, 10),
+                                    self.config, "sfxvolume")
+        self.sfxwriting = self.font.render("SFX Volume: ", False,
+                                           (255, 255, 255)).convert_alpha()
+        self.musicmeter = meter.Meter((320, 240), (200, 10),
+                                      self.config, "musicvolume")
+        self.musicwriting = self.font.render("Music Volume: ", False,
+                                             (255, 255, 255)).convert_alpha()
         """
         # Video Settings menu element
         # v------------------------------------------------------------------v
@@ -167,7 +189,7 @@ class AudioSettings:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
-            screen.blit(self.menuwriting, (200,240))
+            screen.blit(self.menuwriting, (200, 240))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             self.menumeter.draw(screen)
