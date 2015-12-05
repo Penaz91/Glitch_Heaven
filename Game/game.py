@@ -113,8 +113,10 @@ class Game(object):
         """
         # Loads the level configuration and the control keys
         # v--------------------------------------------------------------v
+        mod_logger.info("LoadLevel Routing is loading: " + level)
         levelconfig = configparser.ConfigParser()
         levelconfig.read(os.path.join("data", "maps", level+".conf"))
+        mod_logger.info("Level configuration loaded")
         self.helpflagActive = False
         self.currenthelp = ""
         self.screen = screen
@@ -122,6 +124,7 @@ class Game(object):
         self.tempkeys = self.tempglitches.keys()
         self.tempvalues = self.tempglitches.values()
         self.newvalues = []
+        mod_logger.debug("Zipping new glitches")
         for value in self.tempvalues:
             if value.lower() in ["true", "1", "on", "yes"]:
                 self.newvalues.append(True)
@@ -129,6 +132,7 @@ class Game(object):
                 self.newvalues.append(False)
         self.glitches = dict(zip(self.tempkeys,
                              self.newvalues))
+        mod_logger.debug("Glitches Active: " +str(self.glitches))
         # Will this stop the automatic Garbage collector from working?
         # v--------v
         del self.tempglitches, self.tempkeys, self.tempvalues, self.newvalues
@@ -136,8 +140,10 @@ class Game(object):
         # ^--------------------------------------------------------------^
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
+        mod_logger.info("Loading Tilemap")
         self.tilemap = tmx.load(os.path.join("data", "maps", level+".tmx"),
                                 screen.get_size())
+        mod_logger.info("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
         self.bg = pygame.image.load(
                   os.path.join("resources",
@@ -195,6 +201,7 @@ class Game(object):
                                 100, False, platform['id'], self.plats,
                                 game=self, bouncy=bouncy)
         self.tilemap.layers.append(self.plats)
+        mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
     def loadNextLevel(self, campaign, screen):
@@ -254,17 +261,21 @@ class Game(object):
         Terminates the level loading by defining the sprite layer,
         and spawning the player.
         """
+        mod_logger.info("Starting loadLevelPart2 Routine")
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
         self.tilemap.layers.append(self.sprites)
         self.backpos = [0, 0]       # DEPRECATED??
         self.middlepos = [0, 0]     # DEPRECATED??
+        mod_logger.info("Positioning Player")
         self.player = Player((start_cell.px, start_cell.py),
                              self.sprites, keys=keys, game=self)
+        mod_logger.info("Creating Particle Surface")
         self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
                                                     self.tilemap.px_height),
                                                    pygame.SRCALPHA,
                                                    32).convert_alpha()
+        mod_logger.info("Loading of the level completed successfully, ready to play")
 
     def saveGame(self):
         """
@@ -311,6 +322,7 @@ class Game(object):
         Returns:
         - Nothing
         """
+        mod_logger.info("Entering main game")
         self.running = True
         self.clock = pygame.time.Clock()
         self.screen = screen
@@ -323,9 +335,11 @@ class Game(object):
         # new campaign should be started.
         # v--------------------------------------------------------------v
         if mode.lower() == "load":
+            mod_logger.info("Using Load mode")
             self.loadGame()
             self.loadNextLevel(self.currentcampaign, screen)
         else:
+            mod_logger.info("Using New Game mode")
             self.campaignFile = "TestCampaign"
             self.currentcampaign = self.loadCampaign(self.campaignFile)
             self.campaignIndex = -1

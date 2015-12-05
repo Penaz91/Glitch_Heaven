@@ -87,7 +87,7 @@ class menu:
                                              (255, 0, 0)).convert_alpha()
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
-                                      (320, 560), lambda: pygame.event.post(
+                                      (700, 560), lambda: pygame.event.post(
                                           pygame.event.Event(pygame.QUIT)),
                                       self.gameconfig)
         # ^------------------------------------------------------------------^

@@ -355,15 +355,16 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         collision = pygame.sprite.spritecollide(self, game.plats, False)
         for block in collision:
-            if self.y_speed * game.gravity > 0 and block.active:
-                if block.bouncy:
-                    self.rect.bottom = block.rect.top
-                    self.y_speed = -800 * game.gravity
-                else:
-                    self.y_speed = 0
-                    self.rect.bottom = block.rect.top
-                    self.resting = True  # Allows jump
-            self.rect.x += block.xspeed * dt * block.direction
+            if block.active:
+                if self.y_speed * game.gravity > 0:
+                    if block.bouncy:
+                        self.rect.bottom = block.rect.top
+                        self.y_speed = -800 * game.gravity
+                    else:
+                        self.y_speed = 0
+                        self.rect.bottom = block.rect.top
+                        self.resting = True  # Allows jump
+                self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,

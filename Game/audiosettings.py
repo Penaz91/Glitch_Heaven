@@ -81,15 +81,15 @@ class AudioSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        self.menumeter = meter.Meter((320, 240), (200, 10),
+        self.menumeter = meter.Meter((320, 250), (200, 10),
                                      self.config, "menuvolume")
         self.menuwriting = self.font.render("Menu Volume: ", False,
                                             (255, 255, 255)).convert_alpha()
-        self.sfxmeter = meter.Meter((320, 240), (200, 10),
+        self.sfxmeter = meter.Meter((320, 330), (200, 10),
                                     self.config, "sfxvolume")
         self.sfxwriting = self.font.render("SFX Volume: ", False,
                                            (255, 255, 255)).convert_alpha()
-        self.musicmeter = meter.Meter((320, 240), (200, 10),
+        self.musicmeter = meter.Meter((320, 410), (200, 10),
                                       self.config, "musicvolume")
         self.musicwriting = self.font.render("Music Volume: ", False,
                                              (255, 255, 255)).convert_alpha()
@@ -126,15 +126,15 @@ class AudioSettings:
                                       (320, 400),
                                       lambda: ControlSettings.main())"""
         # ^------------------------------------------------------------------^
-        # "Main Menu" menu element
+        # "Previous Menu" menu element
         # v------------------------------------------------------------------v
-        self.menu = self.font.render("Main Menu",
+        self.menu = self.font.render("Previous Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = self.font.render("Main Menu",
+        self.menusel = self.font.render("Previous Menu",
                                         False, (255, 0, 0)).convert_alpha()
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
-                                          (320, 560),
+                                          (50, 560),
                                           lambda: self.goToMenu(),
                                           self.config)
         # ^------------------------------------------------------------------^
@@ -177,11 +177,19 @@ class AudioSettings:
                         else:
                             item.makeUnselected()
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    mousepos = pygame.mouse.get_pos()
                     for item in self.items:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos()):
+                        if item.rect.collidepoint(*mousepos):
                             item.function()
-                    if self.menumeter.rect.collidepoint(*pygame.mouse.get_pos()):
-                        print(self.menumeter.set_quantity(pygame.mouse.get_pos()))
+                    if self.menumeter.rect.collidepoint(*mousepos):
+                        amount = self.menumeter.set_quantity(mousepos)
+                        module_logger.debug("Menu volume set at: " + str(amount))
+                    if self.sfxmeter.rect.collidepoint(*mousepos):
+                        amount = self.sfxmeter.set_quantity(mousepos)
+                        module_logger.debug("Sfx volume set at: " + str(amount))
+                    if self.musicmeter.rect.collidepoint(*mousepos):
+                        amount = self.musicmeter.set_quantity(mousepos)
+                        module_logger.debug("Music volume set at: " + str(amount))
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v
@@ -189,8 +197,12 @@ class AudioSettings:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
-            screen.blit(self.menuwriting, (200, 240))
+            screen.blit(self.menuwriting, (190, 240))
+            screen.blit(self.sfxwriting, (190, 320))
+            screen.blit(self.sfxwriting, (190, 400))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             self.menumeter.draw(screen)
+            self.sfxmeter.draw(screen)
+            self.musicmeter.draw(screen)
             pygame.display.update()
