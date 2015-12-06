@@ -125,12 +125,15 @@ class Player(pygame.sprite.Sprite):
         else:
             game.gravity = 1
         # ^-----------------------------------------------------^
-        self.kill()     # Kills the player sprite
+        # self.kill()     # Kills the player sprite
         # Does a complete respawn of the player
         # v-----------------------------------------------------v
         start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
-        game.player = Player((start_cell.px, start_cell.py),
-                             game.sprites, keys=self.keys, game=self.game)
+        #game.player = Player((start_cell.px, start_cell.py),
+        #                     game.sprites, keys=self.keys, game=self.game)
+        game.player.rect.x, game.player.rect.y = start_cell.px, start_cell.py
+        game.player.y_speed = 0
+        game.player.x_speed = 0
         # ^-----------------------------------------------------^
 
     def animate(self, yspeed, xspeed, resting,
