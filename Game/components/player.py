@@ -129,7 +129,7 @@ class Player(pygame.sprite.Sprite):
         # Does a complete respawn of the player
         # v-----------------------------------------------------v
         start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
-        #game.player = Player((start_cell.px, start_cell.py),
+        # game.player = Player((start_cell.px, start_cell.py),
         #                     game.sprites, keys=self.keys, game=self.game)
         game.player.rect.x, game.player.rect.y = start_cell.px, start_cell.py
         game.player.y_speed = 0
@@ -426,12 +426,13 @@ class Player(pygame.sprite.Sprite):
                             self.resting = True
                 else:
                     self.rect.bottom = cell.top
-                    if game.glitches["stickyceil"]:
-                        self.y_speed = 3/dt
-                    else:
-                        self.y_speed = 0
-                    if game.gravity == 1:
-                        self.resting = True
+                    if not key[self.keys["down"]]:
+                        if game.glitches["stickyceil"]:
+                            self.y_speed = 3/dt
+                        else:
+                            self.y_speed = 0
+                        if game.gravity == 1:
+                            self.resting = True
             if 'b' in blockers and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
@@ -442,13 +443,14 @@ class Player(pygame.sprite.Sprite):
                         if game.glitches["stickyceil"]:
                             self.y_speed = -5/dt
                         else:
-                            self.y_speed = 0
+                            self.y_speed = 2/dt
                 else:
                     self.rect.top = cell.bottom
-                    if game.glitches["stickyceil"]:
-                        self.y_speed = -5/dt
-                    else:
-                        self.y_speed = 0
+                    if not key[self.keys["down"]]:
+                        if game.glitches["stickyceil"]:
+                            self.y_speed = -5/dt
+                        else:
+                            self.y_speed = 0
                 if game.gravity == -1:
                     self.resting = True
         # ^--------------------------------------------------------------^
