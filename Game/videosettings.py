@@ -80,6 +80,10 @@ class VideoSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
+        self.line = self.font.render("Video settings are not" +
+                                     " available in this version",
+                                     False,
+                                     (255, 255, 255))
         """
         # Video Settings menu element
         # v------------------------------------------------------------------v
@@ -174,6 +178,7 @@ class VideoSettings:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
+            screen.blit(self.line, (100, 200))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

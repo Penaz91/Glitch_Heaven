@@ -33,7 +33,7 @@ class Meter(object):
                                              32).convert_alpha()
         self.fillerrect = self.filler.get_rect()
         self.filler.fill((255, 0, 0))
-        self.draw_from_x(int(self.config.getfloat("Sound",self.what)))
+        self.draw_from_x(int(self.config.getfloat("Sound", self.what)))
 
     def set_quantity(self, mousepos):
         """
@@ -49,8 +49,8 @@ class Meter(object):
         self.fillerrect = self.filler.get_rect()
         self.filler.fill((255, 0, 0))
         self.fillerrect.x, self.fillerrect.y = self.location
-        self.config.set("Sound",self.what,str((x/(self.rect.width))*100))
-        with open("game.conf","w") as conf:
+        self.config.set("Sound", self.what, str((x/(self.rect.width))*100))
+        with open("game.conf", "w") as conf:
             self.config.write(conf)
         return (x/(self.rect.width))*100
 
@@ -72,7 +72,7 @@ class Meter(object):
         Increases volume by 1%
         Will be used for keyboard
         """
-        x = int(self.config.getfloat("Sound",self.what))  # Volume to get from config
+        x = int(self.config.getfloat("Sound", self.what))  # Volume from config
         x += 1
         if x > 100:
             x = 100
@@ -84,7 +84,7 @@ class Meter(object):
         Decreases volume by 1%
         Will be used for keyboard
         """
-        x = int(self.config.getfloat("Sound",self.what))  # Volume to get from config
+        x = int(self.config.getfloat("Sound", self.what))  # Volume from config
         x -= 1
         if x < 0:
             x = 0

@@ -80,6 +80,22 @@ class ControlSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
+
+
+        self.line1 = self.font.render("Current Controls:", False,
+                                      (255, 255, 255))
+        self.line2 = self.font.render("Left/Right Arrow Keys: Movement", False,
+                                      (255, 255, 255))
+        self.line3 = self.font.render("Up Arrow Key: Jump", False,
+                                      (255, 255, 255))
+        self.line4 = self.font.render("Down Arrow Key: Interact", False,
+                                      (255, 255, 255))
+        self.line5 = self.font.render("Z: Keep pressed to run", False,
+                                      (255, 255, 255))
+        self.line6 = self.font.render("1->9: Debug Keys/Cheats", False,
+                                      (255, 255, 255))
+        self.line7 = self.font.render("q->y: Debug Keys/Cheats", False,
+                                      (255, 255, 255))
         """
         # Video Settings menu element
         # v------------------------------------------------------------------v
@@ -174,6 +190,13 @@ class ControlSettings:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
+            screen.blit(self.line1, (100, 120))
+            screen.blit(self.line2, (100, 140))
+            screen.blit(self.line3, (100, 160))
+            screen.blit(self.line4, (100, 180))
+            screen.blit(self.line5, (100, 200))
+            screen.blit(self.line6, (100, 240))
+            screen.blit(self.line7, (100, 260))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

@@ -60,14 +60,16 @@ class Player(pygame.sprite.Sprite):
         self.y_speed = 0
         self.x_speed = 0
         self.jump_speed = -500
-        self.fallingsprite = pygame.image.load(os.path.join("resources",
-                                                            "sprites",
-                                                            "Player",
-                                                            "jump_fall.png"))
-        self.jumpsprite = pygame.image.load(os.path.join("resources",
-                                                         "sprites",
-                                                         "Player",
-                                                         "jump_rise.png"))
+        self.fallingsprite = pygame.image.load(
+                os.path.join("resources",
+                             "sprites",
+                             "Player",
+                             "jump_fall.png")).convert_alpha()
+        self.jumpsprite = pygame.image.load(
+                os.path.join("resources",
+                             "sprites",
+                             "Player",
+                             "jump_rise.png")).convert_alpha()
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
@@ -130,8 +132,9 @@ class Player(pygame.sprite.Sprite):
         game.player = Player((start_cell.px, start_cell.py),
                              game.sprites, keys=self.keys, game=self.game)
         # ^-----------------------------------------------------^
-        
-    def animate (self, yspeed, xspeed, resting, direction, dt, gravity, running):
+
+    def animate(self, yspeed, xspeed, resting,
+                direction, dt, gravity, running):
         if resting:
             # Player is on the ground
             if direction == 1:
@@ -197,6 +200,7 @@ class Player(pygame.sprite.Sprite):
             oldimg = self.image
             self.image = pygame.transform.flip(
                          oldimg, False, True)
+
     def update(self, dt, game):
         """
         Updates the status of the player
@@ -210,27 +214,6 @@ class Player(pygame.sprite.Sprite):
         """
         last = self.rect.copy()     # Copy last position for collision compare
         key = pygame.key.get_pressed()
-        if not key[self.keys["left"]] or not key[self.keys["right"]]\
-                or not [self.keys["jump"]]:
-            """if self.direction == 1:
-                if game.gravity == 1:
-                    self.image = self.idleani.next(dt)  # Use the Idle animation
-                else:
-                    self.image = pygame.transform.flip(
-                                 self.idleani.next(dt),
-                                 False,
-                                 True)
-            else:
-                if game.gravity == 1:
-                    self.image = pygame.transform.flip(
-                                 self.idleani.next(dt),
-                                True,
-                                False)  # Use the Idle animation
-                else:
-                    self.image = pygame.transform.flip(
-                                 self.idleani.next(dt),
-                                 True,
-                                 True)"""
         if key[self.keys["left"]]:
             self.direction = -1     # Mainly for different bounce mechanics
             if not self.bounced:        # Not bounced away -> control in air
@@ -240,16 +223,6 @@ class Player(pygame.sprite.Sprite):
                 # v--------------------------------------------------------v
                 if key[self.keys["run"]]:
                     self.running = True
-                    """if game.gravity == 1:
-                        self.image = pygame.transform.flip(
-                                    self.runanimation.next(dt),
-                                    True,
-                                    False)     # Use running animation
-                    else:
-                        self.image = pygame.transform.flip(
-                                    self.runanimation.next(dt),
-                                    True,
-                                    True)     # Use running animation"""
                     self.x_speed = max(-self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed-self.playeraccel*dt *
@@ -266,16 +239,6 @@ class Player(pygame.sprite.Sprite):
                     # ^----------------------------------------------------^
                 else:
                     self.running = False
-                    """if game.gravity == 1:
-                        self.image = pygame.transform.flip(
-                                    self.walkanimation.next(dt),
-                                    True,
-                                    False)     # Use walking animation
-                    else:
-                        self.image = pygame.transform.flip(
-                                    self.walkanimation.next(dt),
-                                    True,
-                                    True)     # Use walking animation"""
                     self.x_speed = max(-self.playermaxspeed * dt,
                                        self.x_speed -
                                        self.playeraccel*dt)  # Use walk speed
@@ -293,13 +256,6 @@ class Player(pygame.sprite.Sprite):
                 self.direction = 1  # Used mainly for bouncy mechanics
                 if key[self.keys["run"]]:
                     self.running = True
-                    """if game.gravity == 1:
-                        self.image = self.runanimation.next(dt)  # Use run ani
-                    else:
-                        self.image = pygame.transform.flip(
-                                     self.runanimation.next(dt),
-                                     False,
-                                     True)"""
                     self.x_speed = min(self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
@@ -315,13 +271,6 @@ class Player(pygame.sprite.Sprite):
                     # ^----------------------------------------------------^
                 else:
                     self.running = False
-                    """if game.gravity == 1:
-                        self.image = self.walkanimation.next(dt)  # Walk animation
-                    else:
-                        self.image = pygame.transform.flip(
-                                     self.walkanimation.next(dt),
-                                     False,
-                                     True)"""
                     self.x_speed = min(self.playermaxspeed*dt,
                                        self.x_speed +
                                        self.playeraccel*dt)  # Walk Speed
@@ -349,7 +298,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.x_speed         # Move the player
         if game.glitches["multijump"]:
             if key[self.keys["jump"]]:
-                if self.y_speed*game.gravity >=0:
+                if self.y_speed*game.gravity >= 0:
                     self.jumpsound.play()
                 if game.glitches["gravity"]:
                     game.gravity *= -1
@@ -359,15 +308,8 @@ class Player(pygame.sprite.Sprite):
                     # v------------------------------------------------------v
                     # TODO ?: tie highjump glitch to jump_speed so i can make
                     #         1 comparison per level loaded
-                    """ ######### Old code ###########
-                    if game.glitches["highjump"]:
-                        if self.y_speed > -(self.jump_speed/2) or self.resting:
-                            self.y_speed = self.jump_speed*2*game.gravity
-                    else:
-                        if self.y_speed > -(self.jump_speed/2) or self.resting:
-                            self.y_speed = self.jump_speed*game.gravity
-                    """
-                    if self.y_speed*game.gravity > -(self.jump_speed/2) or self.resting:
+                    if self.y_speed*game.gravity > -(self.jump_speed/2) or\
+                            self.resting:
                         if game.glitches["highjump"]:
                             self.y_speed = self.jump_speed*2*game.gravity
                         else:
@@ -654,4 +596,5 @@ class Player(pygame.sprite.Sprite):
                         plat.active = True
                         plat.image = plat.activeimg
         # ^--------------------------------------------------------------^
-        self.animate(self.y_speed, self.x_speed, self.resting, self.direction, dt, game.gravity, self.running)
+        self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
+                     dt, game.gravity, self.running)

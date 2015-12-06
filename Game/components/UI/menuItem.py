@@ -16,7 +16,7 @@ class menuitem(object):
         :param unselected: The surface representing the unselected button
         :param selected: The surface representing the selected button (hovered)
         :param location: Location of the top-left corner of the menu element
-        :param function: Usually a lambda, recalled by the button when clicked/used
+        :param function: Usually a lambda, recalled by the button when used
 
         :return: Nothing
         """
@@ -29,8 +29,8 @@ class menuitem(object):
         self.selectedStatus = False
         self.function = function
         self.sound = pygame.mixer.Sound(os.path.join("resources",
-                                            "sounds",
-                                            "menuSelection.wav"))
+                                                     "sounds",
+                                                     "menuSelection.wav"))
         self.confirmSound = pygame.mixer.Sound(os.path.join("resources",
                                                             "sounds",
                                                             "select.wav"))
@@ -50,7 +50,7 @@ class menuitem(object):
         self.selectedStatus = False
 
     def update(self):
-        """ 
+        """
         Changes the status if the update function is called
 
         #MIGHT NEED DEPRECATION#

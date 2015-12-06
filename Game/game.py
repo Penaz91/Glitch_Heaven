@@ -132,7 +132,7 @@ class Game(object):
                 self.newvalues.append(False)
         self.glitches = dict(zip(self.tempkeys,
                              self.newvalues))
-        mod_logger.debug("Glitches Active: " +str(self.glitches))
+        mod_logger.debug("Glitches Active: " + str(self.glitches))
         # Will this stop the automatic Garbage collector from working?
         # v--------v
         del self.tempglitches, self.tempkeys, self.tempvalues, self.newvalues
@@ -275,7 +275,8 @@ class Game(object):
                                                     self.tilemap.px_height),
                                                    pygame.SRCALPHA,
                                                    32).convert_alpha()
-        mod_logger.info("Loading of the level completed successfully, ready to play")
+        mod_logger.info("Loading of the level completed" +
+                        " successfully, ready to play")
 
     def saveGame(self):
         """
@@ -331,6 +332,12 @@ class Game(object):
         self.config = config
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
+        # NEIN NEIN NEIN NEIN
+        # v--------------------------------------------------------------v
+        self.no = pygame.mixer.Sound(os.path.join("resources",
+                                                  "sounds",
+                                                  "no.wav"))
+        # ^--------------------------------------------------------------^
         # Defines if a level should be loaded or a
         # new campaign should be started.
         # v--------------------------------------------------------------v
@@ -368,36 +375,51 @@ class Game(object):
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
-                    self.toggleGlitch("wallclimb")
+                    # self.toggleGlitch("wallclimb")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
-                    self.toggleGlitch("multijump")
+                    self.no.play()
+                    # self.toggleGlitch("multijump")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
-                    self.toggleGlitch("highjump")
+                    self.no.play()
+                    #self.toggleGlitch("highjump")
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_4:
-                    self.toggleGlitch("featherfalling")
+                    #self.toggleGlitch("featherfalling")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_5:
-                    self.toggleGlitch("gravity")
+                    #self.toggleGlitch("gravity")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_6:
-                    self.toggleGlitch("hover")
+                    #self.toggleGlitch("hover")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_7:
-                    self.toggleGlitch("stickyceil")
+                    #self.toggleGlitch("stickyceil")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
-                    self.gravity *= -1
-                    mod_logger.debug("Gravity has been inverted")
+                    #self.gravity *= -1
+                    #mod_logger.debug("Gravity has been inverted")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
-                    self.toggleGlitch("permbodies")
+                    #self.toggleGlitch("permbodies")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    self.toggleGlitch("solidhelp")
+                    #self.toggleGlitch("solidhelp")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-                    self.toggleGlitch("cliponcommand")
+                    #self.toggleGlitch("cliponcommand")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
-                    self.toggleGlitch("hwrapping")
+                    #self.toggleGlitch("hwrapping")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                    self.toggleGlitch("vwrapping")
+                    #self.toggleGlitch("vwrapping")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_t:
-                    self.toggleGlitch("ledgewalk")
+                    #self.toggleGlitch("ledgewalk")
+                    self.no.play()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
-                    self.toggleGlitch("ledge")
+                    #self.toggleGlitch("ledge")
+                    self.no.play()
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
