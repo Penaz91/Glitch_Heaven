@@ -527,10 +527,10 @@ class Player(pygame.sprite.Sprite):
                 self.rect.bottom = block.rect.top
                 self.resting = True
                 self.y_speed = 0
-            elif self.y_speed * game.gravity < 0:
-                self.rect.top = block.rect.bottom
-                self.resting = False
-                self.y_speed = 0
+            # elif self.y_speed * game.gravity < 0:
+            #    self.rect.top = block.rect.bottom
+            #    self.resting = False
+            #    self.y_speed = 0
         # ^--------------------------------------------------------------^
         # If help writings are solid, test for collision and act as platforms
         # v--------------------------------------------------------------v
