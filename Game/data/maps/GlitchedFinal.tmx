@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="80" tilewidth="32" tileheight="32" nextobjectid="116">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="72">
+  <image source="resources/tiles/TestTile.png" width="256" height="288"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztnNtKAzEURUMRxXoD0QqCf2F9Up/U//8km4eBYcjkJJkzZ3ZO94L90tI9l8VcSbMPITwqZN8YjWV7SdwfN0GH61DvQmvZXoj7kD5woA8s6AML+sCCPrCgDyzoAwvvPi5X7tfGu4/7lfu1oQ8s6AML+sCCPrCgDyzoAwv6wII+sKAPLJb4eDhlN0qtiyG7RK4a12kKso/bxGc1PrT2/xJPubwmEnvehAy/T3039EgdJSnZhpyP91OOo2w99qJ1vMYaY2JyQRlfgoh0vmq55q15PdS8niPSq4+jg6To1YdH4vWPPrBA8vFUsL7n7uMu6NynjZM7p34I6+PVx3CvrvU8aPVc6dXHAKqP+GydOn7ow7YnEo/dl5nvPPoYv1dA9JHDo48x9IHFlj6m7/9KMvZxsWyVNye1/b0eHzX3yD3Rqw+v0AcWcfu+ZvJd0bPl+crTuYvHBxb0gUWvPkrvj3s7f/Xqwyv0gQV9YEEfWNAHFvSBBX1gkduPn2H+Xco0VvvonH1s0SNBH+U9vxX5a1wOfdj2SNCHbY8Efdj2SNCHbY8Efdj2SNCHbY8Efdj2SHj3kRvPUDO2gT504PGBxdY+fkLdcz192PZI0IdtjwR92PZI0IdtjwR92PZIePdxUOqhDyzoAwv6wII+lqH9X8hefLT8h7THxHlJOJ7h/KAPLOgDC/rAgj6wmPp4LvxdydxzpJ5h/sDpPMlL51lm0vNlS4ku/gHiX2Sw
+  </data>
+ </layer>
+ <objectgroup name="Triggers" visible="0">
+  <object id="1" x="32" y="2528" width="128" height="32">
+   <properties>
+    <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="3" x="160" y="2528" width="224" height="32">
+   <properties>
+    <property name="deadly" value="t"/>
+   </properties>
+  </object>
+  <object id="4" x="96" y="2496" width="32" height="32">
+   <properties>
+    <property name="playerEntrance" value=""/>
+   </properties>
+  </object>
+  <object id="5" x="416" y="2496" width="32" height="32">
+   <properties>
+    <property name="Help" value="Trololol XD"/>
+   </properties>
+  </object>
+  <object id="6" x="384" y="2528" width="2368" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="7" x="480" y="2304" width="1856" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="PlatReverse" value=""/>
+    <property name="blocker" value="tb"/>
+   </properties>
+  </object>
+  <object id="8" x="2752" y="2528" width="416" height="32">
+   <properties>
+    <property name="bouncy" value="t"/>
+    <property name="power" value="800"/>
+   </properties>
+  </object>
+  <object id="10" x="384" y="1344" width="1376" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
+   </properties>
+  </object>
+  <object id="11" x="512" y="1408" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="12" x="608" y="1472" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="13" x="768" y="1568" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="14" x="864" y="1664" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="15" x="992" y="1728" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="16" x="1120" y="1792" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="17" x="1280" y="1856" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="18" x="1376" y="1920" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="19" x="1472" y="2080" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="20" x="1568" y="2176" width="32" height="32">
+   <properties>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="21" x="1696" y="2272" width="32" height="32">
+   <properties>
+    <property name="button" value="1"/>
+   </properties>
+  </object>
+  <object id="23" x="2368" y="2304" width="384" height="32">
+   <properties>
+    <property name="bouncy" value="tbr"/>
+    <property name="power" value="1200"/>
+   </properties>
+  </object>
+  <object id="24" x="2368" y="1632" width="384" height="32">
+   <properties>
+    <property name="bouncy" value="tbr"/>
+    <property name="power" value="1200"/>
+   </properties>
+  </object>
+  <object id="25" x="2784" y="1952" width="384" height="32">
+   <properties>
+    <property name="bouncy" value="tbl"/>
+    <property name="power" value="1200"/>
+   </properties>
+  </object>
+  <object id="26" x="2336" y="928" width="32" height="1408">
+   <properties>
+    <property name="blocker" value="brl"/>
+   </properties>
+  </object>
+  <object id="27" x="2016" y="896" width="928" height="32">
+   <properties>
+    <property name="blocker" value="tblr"/>
+   </properties>
+  </object>
+  <object id="28" x="1760" y="704" width="1408" height="32">
+   <properties>
+    <property name="blocker" value="tbl"/>
+   </properties>
+  </object>
+  <object id="29" x="1760" y="736" width="32" height="1440">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="PlatReverse" value=""/>
+    <property name="blocker" value="blr"/>
+   </properties>
+  </object>
+  <object id="30" x="1792" y="1216" width="224" height="32">
+   <properties>
+    <property name="deadly" value="tbr"/>
+   </properties>
+  </object>
+  <object id="31" x="1792" y="1888" width="320" height="32">
+   <properties>
+    <property name="deadly" value="tbr"/>
+   </properties>
+  </object>
+  <object id="32" x="1984" y="1568" width="352" height="32">
+   <properties>
+    <property name="deadly" value="tbl"/>
+   </properties>
+  </object>
+  <object id="33" x="0" y="0" width="32" height="2560">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="r"/>
+   </properties>
+  </object>
+  <object id="34" x="32" y="1152" width="128" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
+    <property name="blocker" value="tbr"/>
+   </properties>
+  </object>
+  <object id="35" x="32" y="1248" width="224" height="32">
+   <properties>
+    <property name="blocker" value="tbr"/>
+   </properties>
+  </object>
+  <object id="36" x="32" y="1344" width="352" height="32">
+   <properties>
+    <property name="blocker" value="tbr"/>
+   </properties>
+  </object>
+  <object id="37" x="2880" y="864" width="32" height="32">
+   <properties>
+    <property name="Help" value="Your enemy can be your best friend"/>
+   </properties>
+  </object>
+  <object id="38" x="3168" y="0" width="32" height="2560">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="l"/>
+   </properties>
+  </object>
+  <object id="39" x="2976" y="960" width="192" height="32">
+   <properties>
+    <property name="blocker" value="tlb"/>
+   </properties>
+  </object>
+  <object id="40" x="2944" y="992" width="64" height="32">
+   <properties>
+    <property name="blocker" value="tbrl"/>
+   </properties>
+  </object>
+  <object id="41" x="2752" y="1088" width="416" height="32">
+   <properties>
+    <property name="blocker" value="tbl"/>
+   </properties>
+  </object>
+  <object id="42" x="480" y="1824" width="704" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
+   </properties>
+  </object>
+  <object id="43" x="1248" y="1952" width="160" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
+   </properties>
+  </object>
+  <object id="44" x="1408" y="2112" width="96" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
+   </properties>
+  </object>
+  <object id="45" x="160" y="1152" width="32" height="32">
+   <properties>
+    <property name="Platform" value="h"/>
+    <property name="id" value="2"/>
+   </properties>
+  </object>
+  <object id="46" x="64" y="1120" width="32" height="32">
+   <properties>
+    <property name="button" value="2"/>
+   </properties>
+  </object>
+  <object id="47" x="640" y="1152" width="96" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
+   </properties>
+  </object>
+  <object id="48" x="1088" y="1152" width="32" height="32">
+   <properties>
+    <property name="Platform" value="h"/>
+    <property name="id" value="2"/>
+   </properties>
+  </object>
+  <object id="49" x="1312" y="1152" width="32" height="32">
+   <properties>
+    <property name="Platform" value="h"/>
+    <property name="id" value="2"/>
+   </properties>
+  </object>
+  <object id="50" x="1216" y="1152" width="96" height="32">
+   <properties>
+    <property name="PlatReverse" value=""/>
+   </properties>
+  </object>
+  <object id="51" x="1600" y="1120" width="160" height="32">
+   <properties>
+    <property name="blocker" value="tbl"/>
+   </properties>
+  </object>
+  <object id="52" x="1664" y="1024" width="96" height="32">
+   <properties>
+    <property name="blocker" value="tbl"/>
+   </properties>
+  </object>
+  <object id="53" x="1696" y="928" width="64" height="32">
+   <properties>
+    <property name="blocker" value="tbl"/>
+   </properties>
+  </object>
+  <object id="54" x="32" y="800" width="1568" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="tbr"/>
+   </properties>
+  </object>
+  <object id="55" x="1728" y="832" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tbl"/>
+   </properties>
+  </object>
+  <object id="57" x="1600" y="704" width="160" height="32">
+   <properties>
+    <property name="blocker" value="b"/>
+   </properties>
+  </object>
+  <object id="58" x="320" y="672" width="1280" height="64">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="tbl"/>
+   </properties>
+  </object>
+  <object id="59" x="192" y="704" width="128" height="32">
+   <properties>
+    <property name="blocker" value="tbl"/>
+   </properties>
+  </object>
+  <object id="60" x="448" y="640" width="768" height="32">
+   <properties>
+    <property name="blocker" value="tlr"/>
+   </properties>
+  </object>
+  <object id="61" x="32" y="0" width="3136" height="32">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="b"/>
+   </properties>
+  </object>
+  <object id="62" x="1600" y="672" width="160" height="32">
+   <properties>
+    <property name="bouncy" value="t"/>
+    <property name="power" value="1000"/>
+   </properties>
+  </object>
+  <object id="63" x="1760" y="288" width="32" height="416">
+   <properties>
+    <property name="blocker" value="trl"/>
+   </properties>
+  </object>
+  <object id="64" x="1792" y="672" width="256" height="32">
+   <properties>
+    <property name="deadly" value="t"/>
+   </properties>
+  </object>
+  <object id="65" x="2048" y="672" width="64" height="32">
+   <properties>
+    <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="66" x="2112" y="672" width="160" height="32">
+   <properties>
+    <property name="deadly" value="t"/>
+   </properties>
+  </object>
+  <object id="67" x="2272" y="672" width="64" height="32">
+   <properties>
+    <property name="bouncy" value="t"/>
+    <property name="power" value="800"/>
+   </properties>
+  </object>
+  <object id="70" x="2336" y="672" width="544" height="32">
+   <properties>
+    <property name="deadly" value="t"/>
+   </properties>
+  </object>
+  <object id="71" x="2880" y="672" width="288" height="32">
+   <properties>
+    <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="72" x="3008" y="640" width="32" height="32">
+   <properties>
+    <property name="playerExit" value=""/>
+   </properties>
+  </object>
+  <object id="73" x="704" y="576" width="320" height="64">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="tlr"/>
+   </properties>
+  </object>
+  <object id="74" x="832" y="512" width="192" height="64">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="tlr"/>
+   </properties>
+  </object>
+  <object id="75" x="960" y="448" width="64" height="64">
+   <properties>
+    <property name="ObsReverse" value=""/>
+    <property name="blocker" value="lrt"/>
+   </properties>
+  </object>
+  <object id="76" x="480" y="592" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="78" x="536" y="528" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="79" x="704" y="464" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="80" x="768" y="464" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="81" x="632" y="536" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="82" x="880" y="424" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="83" x="976" y="336" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="84" x="104" y="664" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="85" x="2480" y="848" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="250"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="86" x="584" y="2368" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="87" x="624" y="2400" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="88" x="688" y="2432" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="89" x="760" y="2392" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="90" x="832" y="2440" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="91" x="904" y="2352" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="93" x="1024" y="2384" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="94" x="1056" y="2440" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="95" x="1104" y="2376" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="96" x="1152" y="2472" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="97" x="1216" y="2392" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="98" x="1272" y="2456" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="99" x="1320" y="2376" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="100" x="1368" y="2424" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="102" x="1552" y="2416" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="103" x="1592" y="2368" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="104" x="1648" y="2416" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="105" x="1696" y="2472" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="106" x="1744" y="2376" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="107" x="1792" y="2424" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="108" x="1856" y="2360" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="109" x="1896" y="2432" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="111" x="2048" y="2400" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="112" x="2104" y="2344" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="113" x="2160" y="2392" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="114" x="2240" y="2400" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+  <object id="115" x="2296" y="2488" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="200"/>
+    <property name="Obstacle" value="v"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

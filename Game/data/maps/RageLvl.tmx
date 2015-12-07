@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="107" tilewidth="32" tileheight="32" nextobjectid="82">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="107" tilewidth="32" tileheight="32" nextobjectid="83">
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="72">
   <image source="resources/tiles/TestTile.png" width="256" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="30" height="107">
   <data encoding="base64" compression="zlib">
-   eJzt2k1LxDAQBuDgQXD16sWTrhfZqx8gnori//9JbqDBUJLJO1/JbrcDc5EmTyeJ7SZ0H0LYE3lQJNUvlc9BF0/G7tsx37P86OSiMcL9EppaV1rrObqaMda4mlqlrrbWlK9zfz/H/O1Qq7TmS3Kt5pbrWtV6qu5yja+93s3dXEu39o5YQ7278P8upMLy2cyp2bLW0W7MfKynOXu4rXn2cqnx9lhTLdfbLLmT8/im+f0u1Ovt1ub2c76n3q633Xp2eI13y/WqGXlWWtu1textn8Meyapmzhhb2pqzFaktrVVra8/rcrtnrXmga9yqVo5rXWsMZJ6ta01B1exRK+K2ao2/p5D9g7Wb2kpsC1diW7nons3a5dqWLse2dlFb4qY9oMc919pOAXNba9zTpcbba5xbtnSOoou+w0v9tN4L1ByhdqkfzRxx7GXNyBy1/icQW+LGfCDqTuuMsqUuMuaBsDUuMuY1O95zPmZcV/vcT75k73BpZ5TSOe7hWtfM+U29hrP+ES533zL6TEV7riLZo434jkLravaj53SOY7nvjvaB8PNv4jz2+snPv7u7BdpNlaxd14obwkUs9H64bqnvWli6y36QPhGbO85oSF2uw21fcrUm0k/NtYqaTc2vZ2zuOPdlTk08FrLlttqUrln+nbo+d0uWZ0rnN793SZzSutrcfu492P4avO6u4l4JcydsF90/vK3xHw==
+   eJztmk1LAzEQhoMHwerViyetF+nVDxBPi+L//0k2sMGwJJN3vpLutgNzKUmevDPT7E7YfQhhT/hB4dS6lD8HnT0Zc9+O/p75RycuaiO4X0KmlivVukauJsYarkarlKvVmvx1Xu/n6L8dtEo1nxPXKrdcrpXWU+Uua3xLepH/75b0Xrj9ubUa24LeXfh/FlJmeTZzNFtqHc2Nnsd6mr0Ht5VnLy4Vb4+aanG9mSXu5BzflN/vgl5vbi23n/OeenO92a2zwyveLa6XZuSstGbXatmbvYYeyUozJ8aWbM3dipQt1apla+/rcnZPrbmhNW6llcO11hoNybO11mSUZg+tCLelNb5PIf2DNTfNlbAtuBK2FRft2ay5XLYll8O25qJsCTf1gB57rs2dAsZt1bgnl4q3V5xbbGmOIhd9hpfWaT0XqByh7NI6mhxx2EvNSI5a/wmELeFGfyB0pzqj2FIuEvNAsDVcJOY1dtxzHjMuV3vuJ76kdzi3O0ppjntwrTVz3qm3cNc/gsvtW0bfqWjvVSQ92ojvKLRcTT+6pnscy747sg8EP/8mzqPXT/z8u7tbYN5U8dq4lt0QXISF7ofLLa1dM0vuch1kTYTNjTNqUi6Xw51f4mqZyDo1rpXV2FR+Pe3CHcd9mV1jjwVvcVtzSmOWv1Pjc26J5enS/OZ7l9gp1dWF2497D86/BsfdVbhXQt8J50XuHySO8ak=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -407,6 +407,11 @@
   <object id="81" x="800" y="2688" width="128" height="32">
    <properties>
     <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="82" x="320" y="576" width="64" height="32">
+   <properties>
+    <property name="deadly" value="tblr"/>
    </properties>
   </object>
  </objectgroup>
