@@ -41,6 +41,7 @@ class Player(pygame.sprite.Sprite):
         - Nothing
         """
         super(Player, self).__init__(*groups)
+        self.glitched = False
         self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
                                                          "sounds",
                                                          "jump.wav"))
@@ -52,6 +53,13 @@ class Player(pygame.sprite.Sprite):
                                               "sprites",
                                               "Player",
                                               "Idle"))
+        self.gidleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
+                                                      0.25, 0.25])
+        self.gidleani.loadFromDir(os.path.join("resources",
+                                               "sprites",
+                                               "Glitched_Player",
+                                               "Idle"))
+
         self.image = self.idleani.first()
         self.rect = pygame.rect.Rect(location, self.image.get_size())
         self.rect.x = location[0]
@@ -69,6 +77,16 @@ class Player(pygame.sprite.Sprite):
                 os.path.join("resources",
                              "sprites",
                              "Player",
+                             "jump_rise.png")).convert_alpha()
+        self.gfallingsprite = pygame.image.load(
+                os.path.join("resources",
+                             "sprites",
+                             "Glitched_Player",
+                             "jump_fall.png")).convert_alpha()
+        self.gjumpsprite = pygame.image.load(
+                os.path.join("resources",
+                             "sprites",
+                             "Glitched_Player",
                              "jump_rise.png")).convert_alpha()
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
@@ -88,6 +106,21 @@ class Player(pygame.sprite.Sprite):
                                                    "sprites",
                                                    "Player",
                                                    "Running"))
+        self.gwalkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06,
+                                                            0.06, 0.06, 0.06,
+                                                            0.06, 0.06, 0.06,
+                                                            0.06])
+        self.gwalkanimation.loadFromDir(os.path.join("resources",
+                                                     "sprites",
+                                                     "Glitched_Player",
+                                                     "Walking"))
+        self.grunanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04,
+                                                           0.04, 0.04, 0.04,
+                                                           0.04, 0.04])
+        self.grunanimation.loadFromDir(os.path.join("resources",
+                                                    "sprites",
+                                                    "Glitched_Player",
+                                                    "Running"))
         self.particles = pygame.sprite.Group()
         self.game = game
         self.running = False
@@ -137,68 +170,131 @@ class Player(pygame.sprite.Sprite):
         # ^-----------------------------------------------------^
 
     def animate(self, yspeed, xspeed, resting,
-                direction, dt, gravity, running):
-        if resting:
-            # Player is on the ground
-            if direction == 1:
-                # Player is pointing right
-                if xspeed == 0:
-                    # Player is idle, pointing right
-                    self.image = self.idleani.next(dt)
-                else:
-                    # Player is moving right
-                    if running:
-                        # Player is running rightwards
-                        self.image = self.runanimation.next(dt)
+                direction, dt, gravity, running, glitched):
+        if glitched:
+            if resting:
+                # Player is on the ground
+                if direction == 1:
+                    # Player is pointing right
+                    if xspeed == 0:
+                        # Player is idle, pointing right
+                        self.image = self.gidleani.next(dt)
                     else:
-                        # Player is walking rightwards
-                        self.image = self.walkanimation.next(dt)
-            elif direction == -1:
-                # Player is pointing left
-                if xspeed == 0:
-                    # Player is idle, pointing left
-                    self.image = pygame.transform.flip(
-                                self.idleani.next(dt),
-                                True,
-                                False)
-                else:
-                    # Player is moving left
-                    if running:
-                        # Player is running leftwards
+                        # Player is moving right
+                        if running:
+                            # Player is running rightwards
+                            self.image = self.grunanimation.next(dt)
+                        else:
+                            # Player is walking rightwards
+                            self.image = self.gwalkanimation.next(dt)
+                elif direction == -1:
+                    # Player is pointing left
+                    if xspeed == 0:
+                        # Player is idle, pointing left
                         self.image = pygame.transform.flip(
-                                     self.runanimation.next(dt),
+                                    self.gidleani.next(dt),
+                                    True,
+                                    False)
+                    else:
+                        # Player is moving left
+                        if running:
+                            # Player is running leftwards
+                            self.image = pygame.transform.flip(
+                                         self.grunanimation.next(dt),
+                                         True,
+                                         False)
+                        else:
+                            # Player is walking leftwards
+                            self.image = pygame.transform.flip(
+                                         self.gwalkanimation.next(dt),
+                                         True,
+                                         False)
+            else:
+                # Player is either jumping or falling
+                if direction == 1:
+                    # Player is pointing right
+                    if yspeed * gravity > 0:
+                        # Player is falling
+                        self.image = self.gfallingsprite
+                    elif yspeed * gravity < 0:
+                        # Player is jumping
+                        self.image = self.gjumpsprite
+                elif direction == -1:
+                    # Player is pointing left
+                    if yspeed * gravity > 0:
+                        # Player is falling
+                        self.image = pygame.transform.flip(
+                                     self.gfallingsprite,
                                      True,
                                      False)
-                    else:
-                        # Player is walking leftwards
+                    elif yspeed * gravity < 0:
+                        # Player is jumping
                         self.image = pygame.transform.flip(
-                                     self.walkanimation.next(dt),
+                                     self.gjumpsprite,
                                      True,
                                      False)
         else:
-            # Player is either jumping or falling
-            if direction == 1:
-                # Player is pointing right
-                if yspeed * gravity > 0:
-                    # Player is falling
-                    self.image = self.fallingsprite
-                elif yspeed * gravity < 0:
-                    # Player is jumping
-                    self.image = self.jumpsprite
-            elif direction == -1:
-                # Player is pointing left
-                if yspeed * gravity > 0:
-                    # Player is falling
-                    self.image = pygame.transform.flip(
-                                 self.fallingsprite,
-                                 True,
-                                 False)
-                elif yspeed * gravity < 0:
-                    # Player is jumping
-                    self.image = pygame.transform.flip(
-                                 self.jumpsprite,
-                                 True,
-                                 False)
+            if resting:
+                # Player is on the ground
+                if direction == 1:
+                    # Player is pointing right
+                    if xspeed == 0:
+                        # Player is idle, pointing right
+                        self.image = self.idleani.next(dt)
+                    else:
+                        # Player is moving right
+                        if running:
+                            # Player is running rightwards
+                            self.image = self.runanimation.next(dt)
+                        else:
+                            # Player is walking rightwards
+                            self.image = self.walkanimation.next(dt)
+                elif direction == -1:
+                    # Player is pointing left
+                    if xspeed == 0:
+                        # Player is idle, pointing left
+                        self.image = pygame.transform.flip(
+                                    self.idleani.next(dt),
+                                    True,
+                                    False)
+                    else:
+                        # Player is moving left
+                        if running:
+                            # Player is running leftwards
+                            self.image = pygame.transform.flip(
+                                         self.runanimation.next(dt),
+                                         True,
+                                         False)
+                        else:
+                            # Player is walking leftwards
+                            self.image = pygame.transform.flip(
+                                         self.walkanimation.next(dt),
+                                         True,
+                                         False)
+            else:
+                # Player is either jumping or falling
+                if direction == 1:
+                    # Player is pointing right
+                    if yspeed * gravity > 0:
+                        # Player is falling
+                        self.image = self.fallingsprite
+                    elif yspeed * gravity < 0:
+                        # Player is jumping
+                        self.image = self.jumpsprite
+                elif direction == -1:
+                    # Player is pointing left
+                    if yspeed * gravity > 0:
+                        # Player is falling
+                        self.image = pygame.transform.flip(
+                                     self.fallingsprite,
+                                     True,
+                                     False)
+                    elif yspeed * gravity < 0:
+                        # Player is jumping
+                        self.image = pygame.transform.flip(
+                                     self.jumpsprite,
+                                     True,
+                                     False)
         if gravity == -1:
             oldimg = self.image
             self.image = pygame.transform.flip(
@@ -443,7 +539,7 @@ class Player(pygame.sprite.Sprite):
                         if game.glitches["stickyceil"]:
                             self.y_speed = -5/dt
                         else:
-                            self.y_speed = 2/dt
+                            self.y_speed = 0
                 else:
                     self.rect.top = cell.bottom
                     if not key[self.keys["down"]]:
@@ -601,5 +697,11 @@ class Player(pygame.sprite.Sprite):
                         plat.active = True
                         plat.image = plat.activeimg
         # ^--------------------------------------------------------------^
+        # Handles the Glitched Area animations
+        # v--------------------------------------------------------------v
+        self.glitched = False
+        for cell in game.tilemap.layers['Triggers'].collide(
+                self.rect, "GlitchedAnimation"):
+            self.glitched = True
         self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
-                     dt, game.gravity, self.running)
+                     dt, game.gravity, self.running, self.glitched)
