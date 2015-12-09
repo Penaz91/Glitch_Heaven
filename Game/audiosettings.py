@@ -202,7 +202,7 @@ class AudioSettings:
             screen.blit(self.title, self.titlerect.topleft)
             screen.blit(self.menuwriting, (190, 240))
             screen.blit(self.sfxwriting, (190, 320))
-            screen.blit(self.sfxwriting, (190, 400))
+            screen.blit(self.musicwriting, (190, 400))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             self.menumeter.draw(screen)

@@ -19,6 +19,19 @@ from components.deadbody import DeadBody
 from components.help import Help
 from libs import timedanimation
 from libs import emitter
+import logging
+from logging import handlers as loghandler
+mod_logger = logging.getLogger("Glitch_Heaven.PlayerEntity")
+fh = loghandler.TimedRotatingFileHandler(os.path.join("logs", "Game.log"),
+                                         "midnight", 1)
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
+                              ' %(levelname)s --- %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+mod_logger.addHandler(fh)
+mod_logger.addHandler(ch)
 
 
 class Player(pygame.sprite.Sprite):
@@ -47,6 +60,16 @@ class Player(pygame.sprite.Sprite):
                                                          "jump.wav"))
         self.jumpsound.set_volume((game.config.getfloat("Sound",
                                                         "sfxvolume"))/100)
+        self.deathsound = pygame.mixer.Sound(os.path.join("resources",
+                                                          "sounds",
+                                                          "death.wav"))
+        self.deathsound.set_volume((game.config.getfloat("Sound",
+                                                         "sfxvolume"))/100)
+        self.bouncesound = pygame.mixer.Sound(os.path.join("resources",
+                                                           "sounds",
+                                                           "bounce.wav"))
+        self.bouncesound.set_volume((game.config.getfloat("Sound",
+                                                          "sfxvolume"))/100)
         self.idleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
                                                       0.25, 0.25])
         self.idleani.loadFromDir(os.path.join("resources",
@@ -148,15 +171,17 @@ class Player(pygame.sprite.Sprite):
         #       respawn
         # If the permbody glitch is active, will add a body at death position
         # v-----------------------------------------------------v
+        x, y = game.tilemap.pixel_from_screen(self.rect.x,
+                                              self.rect.y)
+        mod_logger.info("Player respawned, position of death: (" + str(x) + "," + str(y) + ")")
         if game.glitches["permbodies"]:
-            x, y = game.tilemap.pixel_from_screen(self.rect.x,
-                                                  self.rect.y)
             body = DeadBody(x, y, game.sprites, game=game)
             game.deadbodies.add(body)
         if game.glitches["invertedgravity"]:
             game.gravity = -1
         else:
             game.gravity = 1
+        self.deathsound.play()
         # ^-----------------------------------------------------^
         # self.kill()     # Kills the player sprite
         # Does a complete respawn of the player
@@ -479,6 +504,7 @@ class Player(pygame.sprite.Sprite):
                     if block.bouncy:
                         self.rect.bottom = block.rect.top
                         self.y_speed = -800 * game.gravity
+                        self.bouncesound.play()
                     else:
                         self.y_speed = 0
                         self.rect.bottom = block.rect.top
@@ -558,6 +584,7 @@ class Player(pygame.sprite.Sprite):
             power = int(cell["power"])
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
+                self.bouncesound.play()
                 self.rect.bottom = cell.top
                 if game.gravity == 1:
                     self.y_speed = - power*game.gravity
@@ -565,6 +592,7 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = power*game.gravity
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
+                self.bouncesound.play()
                 self.rect.top = cell.bottom
                 if game.gravity == 1:
                     self.y_speed = power*game.gravity
@@ -572,6 +600,7 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = - power*game.gravity
             if 'l' in bouncy and last.right <= cell.left and\
                     self.rect.right > cell.left:
+                self.bouncesound.play()
                 self.bounced = True
                 self.rect.right = cell.left
                 self.x_speed = -power*dt
@@ -581,6 +610,7 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = game.gravity*power
             if 'r' in bouncy and last.left >= cell.right and\
                     self.rect.left < cell.right:
+                self.bouncesound.play()
                 self.bounced = True
                 self.rect.left = cell.right
                 self.x_speed = power*dt
