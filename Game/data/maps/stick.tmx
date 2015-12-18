@@ -8,7 +8,7 @@
    eJztmcsKAjEMRYMgwvgCN4I7cefWx8b//y8nYKCWNNNx0kfGXrgrtfQ0Mb3MdABwNe6u9wXs6wyNoyY1jrza914Jn1vgQIbu4wXwPCU5cH+PCB8YP721SnLsFNfKyYHnj31B53xUXDsXBzJgP2jt/Q7fvZf6PqcaaJ49p5T10K6BJJdjKXyPznWM187vN8Lar96niY7pK+xFbvbF+Ne5OtYch1SXWmXhPo+RxGGpLtbqETpbaxwhIQf+16fOvdS+efv260IcGrMvpYfuUut9RXWxzkHiOGqet37OzZV3c2mOfRXqJ408mtoxfbWF8nO35V1bspp3uVwyl3pYzIkotyYtJ9ahf8iJtSqUEeeWE5HFfTciPfurVcRB73p8l563Y3LiGyQBOT8=
   </data>
  </layer>
- <objectgroup name="Triggers">
+ <objectgroup name="Triggers" visible="0">
   <object id="1" x="224" y="1280" width="1376" height="32">
    <properties>
     <property name="deadly" value="t"/>
