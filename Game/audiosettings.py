@@ -184,15 +184,15 @@ class AudioSettings:
                     if self.menumeter.rect.collidepoint(*mousepos):
                         amount = self.menumeter.set_quantity(mousepos)
                         module_logger.debug("Menu volume set at: " +
-                                            str(amount))
+                                            str(amount) + "%")
                     if self.sfxmeter.rect.collidepoint(*mousepos):
                         amount = self.sfxmeter.set_quantity(mousepos)
                         module_logger.debug("Sfx volume set at: " +
-                                            str(amount))
+                                            str(amount)) + "%"
                     if self.musicmeter.rect.collidepoint(*mousepos):
                         amount = self.musicmeter.set_quantity(mousepos)
                         module_logger.debug("Music volume set at: " +
-                                            str(amount))
+                                            str(amount)) + "%"
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v
