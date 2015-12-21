@@ -553,8 +553,8 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = 3/dt
                         else:
                             self.y_speed = 0
-                        if game.gravity == 1:
-                            self.resting = True
+                    if game.gravity == 1:
+                        self.resting = True
             if 'b' in blockers and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
