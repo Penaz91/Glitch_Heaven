@@ -93,6 +93,8 @@ class AudioSettings:
                                       self.config, "musicvolume")
         self.musicwriting = self.font.render("Music Volume: ", False,
                                              (255, 255, 255)).convert_alpha()
+        self.rebootwriting = self.font.render("Restart the game to apply the settings", False,
+                                              (255, 255, 255)).convert_alpha()
         """
         # Video Settings menu element
         # v------------------------------------------------------------------v
@@ -182,17 +184,14 @@ class AudioSettings:
                         if item.rect.collidepoint(*mousepos):
                             item.function()
                     if self.menumeter.rect.collidepoint(*mousepos):
-                        amount = self.menumeter.set_quantity(mousepos)
-                        module_logger.debug("Menu volume set at: " +
-                                            str(amount) + "%")
+                        self.amount = self.menumeter.set_quantity(mousepos)
+                        module_logger.debug("Menu volume set at: " + str(self.amount) + "%")
                     if self.sfxmeter.rect.collidepoint(*mousepos):
-                        amount = self.sfxmeter.set_quantity(mousepos)
-                        module_logger.debug("Sfx volume set at: " +
-                                            str(amount)) + "%"
+                        self.amount = self.sfxmeter.set_quantity(mousepos)
+                        module_logger.debug("Sfx volume set at: " + str(self.amount) + "%")
                     if self.musicmeter.rect.collidepoint(*mousepos):
-                        amount = self.musicmeter.set_quantity(mousepos)
-                        module_logger.debug("Music volume set at: " +
-                                            str(amount)) + "%"
+                        self.amount = self.musicmeter.set_quantity(mousepos)
+                        module_logger.debug("Music volume set at: " + str(self.amount) + "%")
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v
@@ -203,6 +202,7 @@ class AudioSettings:
             screen.blit(self.menuwriting, (190, 240))
             screen.blit(self.sfxwriting, (190, 320))
             screen.blit(self.musicwriting, (190, 400))
+            screen.blit(self.rebootwriting, (50, 500))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             self.menumeter.draw(screen)

@@ -492,15 +492,15 @@ class Player(pygame.sprite.Sprite):
             self.resting = False
         # ^--------------^
         # Moving plats collision check
-        # FIXME: This type of collision check makes the player tp over the
-        #        platform even if they shouldn't
         # NOTE: This has to stay here to avoid being able to go through
         #       walls while on a platform
         # v--------------------------------------------------------------v
         collision = pygame.sprite.spritecollide(self, game.plats, False)
         for block in collision:
             if block.active:
-                if self.y_speed * game.gravity > 0:
+                # ENHANCEMENT: Change the collision detection with a
+                # time-comparison of rects, like in Blocker trigger
+                if (self.y_speed * game.gravity > 0) and (self.rect.y + 30 < block.rect.y):
                     if block.bouncy:
                         self.rect.bottom = block.rect.top
                         self.y_speed = -800 * game.gravity

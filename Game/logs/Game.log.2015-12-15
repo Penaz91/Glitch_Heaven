@@ -1,7 +1,0 @@
-[2015-12-18 23:24:24,793] (Glitch_Heaven.AudioSettings) - INFO --- Entering Audio Settings Menu
-[2015-12-18 23:24:25,984] (Glitch_Heaven.AudioSettings.Meter) - DEBUG --- menuvolumeVolume set at 0.18
-[2015-12-18 23:24:25,984] (Glitch_Heaven.AudioSettings) - DEBUG --- Menu volume set at: 18.0
-[2015-12-18 23:24:38,889] (Glitch_Heaven.AudioSettings.Meter) - DEBUG --- menuvolumeVolume set at 0.99
-[2015-12-18 23:24:38,889] (Glitch_Heaven.AudioSettings) - DEBUG --- Menu volume set at: 99.0
-[2015-12-18 23:24:45,073] (Glitch_Heaven.AudioSettings.Meter) - DEBUG --- menuvolumeVolume set at 0.06
-[2015-12-18 23:24:45,073] (Glitch_Heaven.AudioSettings) - DEBUG --- Menu volume set at: 6.0
