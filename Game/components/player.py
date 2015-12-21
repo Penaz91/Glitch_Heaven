@@ -486,7 +486,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.rect.y += self.y_speed * dt    # Move the player vertically
         # This avoids the ability to jump in air after leaving a platform
-        # TODO: Framework for a "airjump" glitch?
+        # + ledgejump glitch framework
         # v--------------v
         if not game.glitches["ledgejump"] and not game.glitches["ledgewalk"]:
             self.resting = False

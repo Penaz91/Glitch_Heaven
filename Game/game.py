@@ -26,7 +26,6 @@ mod_logger = logging.getLogger("Glitch_Heaven.Game")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
                               ' %(levelname)s --- %(message)s')
 ch.setFormatter(formatter)
@@ -332,12 +331,6 @@ class Game(object):
         self.config = config
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
-        # NEIN NEIN NEIN NEIN
-        # v--------------------------------------------------------------v
-        self.no = pygame.mixer.Sound(os.path.join("resources",
-                                                  "sounds",
-                                                  "no.wav"))
-        # ^--------------------------------------------------------------^
         # Defines if a level should be loaded or a
         # new campaign should be started.
         # v--------------------------------------------------------------v
@@ -374,52 +367,38 @@ class Game(object):
                     quit()
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
-                    # self.toggleGlitch("wallclimb")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
-                    self.no.play()
-                    # self.toggleGlitch("multijump")
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
-                    self.no.play()
-                    #self.toggleGlitch("highjump")
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_4:
-                    #self.toggleGlitch("featherfalling")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_5:
-                    #self.toggleGlitch("gravity")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_6:
-                    #self.toggleGlitch("hover")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_7:
-                    #self.toggleGlitch("stickyceil")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
-                    #self.gravity *= -1
-                    #mod_logger.debug("Gravity has been inverted")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
-                    #self.toggleGlitch("permbodies")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    #self.toggleGlitch("solidhelp")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-                    #self.toggleGlitch("cliponcommand")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
-                    #self.toggleGlitch("hwrapping")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                    #self.toggleGlitch("vwrapping")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_t:
-                    #self.toggleGlitch("ledgewalk")
-                    self.no.play()
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
-                    #self.toggleGlitch("ledge")
-                    self.no.play()
+                if config.getboolean("Debug","debugmode"):
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+                        self.toggleGlitch("wallclimb")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
+                        self.toggleGlitch("multijump")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
+                        self.toggleGlitch("highjump")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_4:
+                        self.toggleGlitch("featherfalling")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_5:
+                        self.toggleGlitch("gravity")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_6:
+                        self.toggleGlitch("hover")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_7:
+                        self.toggleGlitch("stickyceil")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
+                        self.gravity *= -1
+                        mod_logger.debug("Gravity has been inverted")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
+                        self.toggleGlitch("permbodies")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                        self.toggleGlitch("solidhelp")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+                        self.toggleGlitch("cliponcommand")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                        self.toggleGlitch("hwrapping")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                        self.toggleGlitch("vwrapping")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_t:
+                        self.toggleGlitch("ledgewalk")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
+                        self.toggleGlitch("ledge")
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v

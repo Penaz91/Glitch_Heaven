@@ -9,9 +9,16 @@ import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
 if __name__ == "__main__":
+    try:
+        config = configparser.ConfigParser()
+        config.read("game.conf")
+    except IOError:
+        print("There has been an error while loading the configuration file. Exiting")
     fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                              "midnight", 1)
-    logging.basicConfig(level=logging.DEBUG,
+    loglist = {"DEBUG":10,"INFO":20,"WARNING":30,"ERROR":40,"CRITICAL":50}
+    logkey = loglist[config["Debug"]["loggerlevel"]]
+    logging.basicConfig(level = logkey, 
                         format='[%(asctime)s] (%(name)s) -'
                         ' %(levelname)s --- %(message)s')
     logging.info("-----------------Initialising logging-----------------")
@@ -28,9 +35,7 @@ if __name__ == "__main__":
     try:
         # Reads the game configuration
         # v-------------------------------------------------------------------v
-        logger.info("Loading configuration file")
-        config = configparser.ConfigParser()
-        config.read("game.conf")
+        logger.info("Parsing configuration file")
         screensize = (int(config["Video"]["screenwidth"]),
                       int(config["Video"]["screenheight"]))
         logger.debug("Screensize set to: " + str(screensize))
@@ -75,6 +80,7 @@ if __name__ == "__main__":
         quit()
     except SystemExit:
         logger.info("Game has exited correctly")
+        logging.shutdown()
     except:
         logger.critical("There has been an exception, printing traceback",
                         exc_info=True)
