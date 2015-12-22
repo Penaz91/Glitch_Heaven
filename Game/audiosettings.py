@@ -12,7 +12,6 @@ module_logger = logging.getLogger("Glitch_Heaven.AudioSettings")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
                               ' %(levelname)s --- %(message)s')
 ch.setFormatter(formatter)
@@ -95,38 +94,6 @@ class AudioSettings:
                                              (255, 255, 255)).convert_alpha()
         self.rebootwriting = self.font.render("Restart the game to apply the settings", False,
                                               (255, 255, 255)).convert_alpha()
-        """
-        # Video Settings menu element
-        # v------------------------------------------------------------------v
-        self.videoimg = self.font.render("Video Settings", False,
-                                         (255, 255, 255)).convert_alpha()
-        self.vidselimg = self.font.render("Video Settings", False,
-                                          (255, 0, 0)).convert_alpha()
-        self.video = menuItem.menuitem(self.videoimg,
-                                       self.vidselimg,
-                                       (320, 240),
-                                       lambda: VideoSettings.main())
-        # ^------------------------------------------------------------------^
-        # Sound settings menu element
-        # v------------------------------------------------------------------v
-        self.sndimg = self.font.render("Audio Settings", False,
-                                       (255, 255, 255)).convert_alpha()
-        self.sndselimg = self.font.render("Audio Settings", False,
-                                          (255, 0, 0)).convert_alpha()
-        self.snd = menuItem.menuitem(self.sndimg,
-                                     self.sndselimg,
-                                     (320, 320), lambda: AudioSettings.main())
-        # ^------------------------------------------------------------------^
-        # Controls/Controllers menu element
-        # v------------------------------------------------------------------v
-        self.ctrlimg = self.font.render("Control Settings",
-                                        False, (255, 255, 255)).convert_alpha()
-        self.ctrlselimg = self.font.render("Control Settings", False,
-                                           (255, 0, 0)).convert_alpha()
-        self.ctrl = menuItem.menuitem(self.ctrlimg,
-                                      self.ctrlselimg,
-                                      (320, 400),
-                                      lambda: ControlSettings.main())"""
         # ^------------------------------------------------------------------^
         # "Previous Menu" menu element
         # v------------------------------------------------------------------v
@@ -192,6 +159,8 @@ class AudioSettings:
                     if self.musicmeter.rect.collidepoint(*mousepos):
                         self.amount = self.musicmeter.set_quantity(mousepos)
                         module_logger.debug("Music volume set at: " + str(self.amount) + "%")
+                if event.type == pygame.QUIT:
+                    quit()
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v

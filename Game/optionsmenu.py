@@ -15,7 +15,6 @@ module_logger = logging.getLogger("Glitch_Heaven.OptionsMenu")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
                               ' %(levelname)s --- %(message)s')
 ch.setFormatter(formatter)
@@ -175,6 +174,8 @@ class OptionsMenu:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.function()
+                if event.type == pygame.QUIT:
+                    quit()
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v

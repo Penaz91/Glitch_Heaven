@@ -3,6 +3,7 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import os
+from libs import timedanimation
 
 
 class Obstacle(pygame.sprite.Sprite):
@@ -23,9 +24,15 @@ class Obstacle(pygame.sprite.Sprite):
         - Nothing
         """
         super(Obstacle, self).__init__(*groups)
-        self.image = pygame.image.load(os.path.join("resources",
-                                                    "sprites",
-                                                    "player.png"))
+        self.ani = timedanimation.TimedAnimation([0.5, 0.5, 0.5, 0.5,
+                                                 0.5, 0.5, 0.5, 0.5,
+                                                 0.5, 0.5, 0.5, 0.5,
+                                                 0.5, 0.5, 0.5, 0.5,
+                                                 0.5, 0.5, 0.5, 0.5])
+        self.ani.loadFromDir(os.path.join("Resources",
+                                          "sprites",
+                                          "MobileObstacle"))
+        self.image = self.ani.first()
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = location
         if vertical:
@@ -47,6 +54,7 @@ class Obstacle(pygame.sprite.Sprite):
         """
         self.rect.x += self.direction * self.xspeed * dt    # |
         self.rect.y += self.direction * self.yspeed * dt    # | Moves obstacle
+        self.image = self.ani.rand_next(dt)
         # Reverses the obstacle when a "ObsReverse" trigger is touched
         # v-----------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,

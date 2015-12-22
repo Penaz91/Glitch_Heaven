@@ -367,7 +367,7 @@ class Game(object):
                     quit()
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
-                if config.getboolean("Debug","debugmode"):
+                if config.getboolean("Debug","debugmode") and pygame.key.get_pressed()[304]:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                         self.toggleGlitch("wallclimb")
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
@@ -402,10 +402,10 @@ class Game(object):
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                if event.type == pygame.KEYDOWN and event.key == keys["escape"]:
                     pauseMenu().main(screen, keys, self, self.config)
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                    self.saveGame()
+                if event.type == pygame.QUIT:
+                    self.running = False
                 # ^----------------------------------------------------------^
             screen.blit(self.bg, (-self.tilemap.viewport.x/6,
                                   -self.tilemap.viewport.y/6))

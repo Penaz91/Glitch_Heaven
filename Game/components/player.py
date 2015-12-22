@@ -25,7 +25,6 @@ mod_logger = logging.getLogger("Glitch_Heaven.PlayerEntity")
 fh = loghandler.TimedRotatingFileHandler(os.path.join("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
                               ' %(levelname)s --- %(message)s')
 ch.setFormatter(formatter)
@@ -500,7 +499,7 @@ class Player(pygame.sprite.Sprite):
             if block.active:
                 # ENHANCEMENT: Change the collision detection with a
                 # time-comparison of rects, like in Blocker trigger
-                if (self.y_speed * game.gravity > 0) and (self.rect.y + 30 < block.rect.y):
+                if (self.y_speed * game.gravity > 0) and (self.rect.y < block.rect.y):
                     if block.bouncy:
                         self.rect.bottom = block.rect.top
                         self.y_speed = -800 * game.gravity
@@ -721,7 +720,7 @@ class Player(pygame.sprite.Sprite):
                                                             "button"):
             if key[self.keys["down"]]:
                 butt = cell['button']
-                print(butt)
+                mod_logger.info("Player pressed the button with ID: " + str(butt))
                 for plat in game.plats:
                     if plat.id == butt:
                         plat.active = True

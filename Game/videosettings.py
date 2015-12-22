@@ -12,7 +12,6 @@ module_logger = logging.getLogger("Glitch_Heaven.ControlSettings")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
                               ' %(levelname)s --- %(message)s')
 ch.setFormatter(formatter)
@@ -84,48 +83,16 @@ class VideoSettings:
                                      " available in this version",
                                      False,
                                      (255, 255, 255))
-        """
-        # Video Settings menu element
-        # v------------------------------------------------------------------v
-        self.videoimg = self.font.render("Video Settings", False,
-                                         (255, 255, 255)).convert_alpha()
-        self.vidselimg = self.font.render("Video Settings", False,
-                                          (255, 0, 0)).convert_alpha()
-        self.video = menuItem.menuitem(self.videoimg,
-                                       self.vidselimg,
-                                       (320, 240),
-                                       lambda: VideoSettings.main())
-        # ^------------------------------------------------------------------^
-        # Sound settings menu element
-        # v------------------------------------------------------------------v
-        self.sndimg = self.font.render("Audio Settings", False,
-                                       (255, 255, 255)).convert_alpha()
-        self.sndselimg = self.font.render("Audio Settings", False,
-                                          (255, 0, 0)).convert_alpha()
-        self.snd = menuItem.menuitem(self.sndimg,
-                                     self.sndselimg,
-                                     (320, 320), lambda: AudioSettings.main())
-        # ^------------------------------------------------------------------^
-        # Controls/Controllers menu element
-        # v------------------------------------------------------------------v
-        self.ctrlimg = self.font.render("Control Settings",
-                                        False, (255, 255, 255)).convert_alpha()
-        self.ctrlselimg = self.font.render("Control Settings", False,
-                                           (255, 0, 0)).convert_alpha()
-        self.ctrl = menuItem.menuitem(self.ctrlimg,
-                                      self.ctrlselimg,
-                                      (320, 400),
-                                      lambda: ControlSettings.main())"""
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
-        self.menu = self.font.render("Main Menu",
+        self.menu = self.font.render("Previous Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = self.font.render("Main Menu",
+        self.menusel = self.font.render("Previous Menu",
                                         False, (255, 0, 0)).convert_alpha()
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
-                                          (320, 560),
+                                          (50, 560),
                                           lambda: self.goToMenu(),
                                           self.config)
         # ^------------------------------------------------------------------^
@@ -171,6 +138,8 @@ class VideoSettings:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.function()
+                if event.type == pygame.QUIT:
+                    quit()
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v

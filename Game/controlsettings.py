@@ -92,9 +92,9 @@ class ControlSettings:
                                       (255, 255, 255))
         self.line5 = self.font.render("Z: Keep pressed to run", False,
                                       (255, 255, 255))
-        self.line6 = self.font.render("1->9: Debug Keys/Cheats", False,
+        self.line6 = self.font.render("Left Shift + 1->9: Debug Keys/Cheats", False,
                                       (255, 255, 255))
-        self.line7 = self.font.render("q->y: Debug Keys/Cheats", False,
+        self.line7 = self.font.render("Left Shift + q->y: Debug Keys/Cheats", False,
                                       (255, 255, 255))
         """
         # Video Settings menu element
