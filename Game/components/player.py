@@ -337,7 +337,7 @@ class Player(pygame.sprite.Sprite):
         """
         last = self.rect.copy()     # Copy last position for collision compare
         key = pygame.key.get_pressed()
-        if key[self.keys["left"]]:
+        if key[self.keys["left"]] and not game.glitches["noleft"]:
             self.direction = -1     # Mainly for different bounce mechanics
             if not self.bounced:        # Not bounced away -> control in air
                 # Why do i have different control in air if i'm running?
@@ -374,7 +374,7 @@ class Player(pygame.sprite.Sprite):
                         self.rightemitter.emit(1)
                     # ^----------------------------------------------------^
 
-        elif key[self.keys["right"]]:
+        elif key[self.keys["right"]] and not game.glitches["noright"]:
             if not self.bounced:
                 self.direction = 1  # Used mainly for bouncy mechanics
                 if key[self.keys["run"]]:
@@ -420,7 +420,7 @@ class Player(pygame.sprite.Sprite):
             # ^--------------------------------------------------------------^
         self.rect.x += self.x_speed         # Move the player
         if game.glitches["multijump"]:
-            if key[self.keys["jump"]]:
+            if key[self.keys["jump"]] and not game.glitches["nojump"]:
                 if self.y_speed*game.gravity >= 0:
                     self.jumpsound.play()
                 if game.glitches["gravity"]:
@@ -439,12 +439,12 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = self.jump_speed*game.gravity
                     # ^------------------------------------------------------^
         elif game.glitches["hover"]:
-            if key[self.keys["jump"]]:
+            if key[self.keys["jump"]] and not game.glitches["nojump"]:
                 if self.y_speed == 0:
                     self.jumpsound.play()
                 self.y_speed = self.jump_speed*game.gravity*0.8
         else:
-            if key[self.keys["jump"]] and self.resting:
+            if key[self.keys["jump"]] and self.resting and not game.glitches["nojump"]:
                 self.jumpsound.play()
                 if game.glitches["gravity"]:
                     game.gravity *= -1
@@ -509,6 +509,16 @@ class Player(pygame.sprite.Sprite):
                         self.rect.bottom = block.rect.top
                         self.resting = True  # Allows jump
                 self.rect.x += block.xspeed * dt * block.direction
+        # Test for collision with scrolling ground
+        # v--------------------------------------------------------------v
+        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+                                                            'slide'):
+            slide = int(cell['slide'])
+            if game.glitches["slideinvert"]:
+                if key[self.keys["down"]]:
+                    slide *= -1
+            self.rect.x += slide * dt
+        # ^--------------------------------------------------------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,

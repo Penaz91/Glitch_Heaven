@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="68">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="72">
-  <image source="resources/tiles/TestTile.png" width="256" height="288"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="77">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+  <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmN0KwjAMhcNuxOkciDIQvBDFC0HYhe79H80FCZbabl3T9Wf0wAEFXfM1W5K1BIC9Bze9n5IrR9cue28gfa0hc8Qk4liFDsRCW+Ezcdw1v32BnrHu/TZw17tlR/2/did8H+NAVZr4mgnr2nAM7ZO8tgmHD2HeOfsUCwdXxDGFPUYtre6S5Ps0lXo8lg+sVSmwmNxXOx+BMGXCoeofseXI9jnX9Ua5j/vSUuvVnFL1bG7OcHYpIP33qBt8GTJHHMocP4nP7UlhH7V3KfmgcyOfHJS/QmFu7kL0QdzDh2AX7z7IgTmJbV4SZdI/iePqNzTnWgIHziZUs1LmuEDmmFOq53poPhY5Uj73IQ7XZ6860T67nl1ccRyY/+eKZpMhDpMY59pnU7WCVXGFPjswlY4jNckcx4CxcIUMqjnap3FGPQuuLa/zAR0vIvg=
+   eJztmE0LwjAMhsMugjidO4myk+BBEMWDInhW//8vckGCZbRdv9Ktow+8sMPo8jZtmq4EgE0ENa2eHVWBxi5bLSF9FpB9jAnyMRs6EAdWwjP5uCrefYHaY93qbaCPf8jSb4vj9vlAKkV8DUN8Irp56n7bxEcMMO8+8zQWH76QD+41ws3U6i7RXaep1OO+fGCtSsGLybpaxwjEExMfsvNDl6N7mNCscN3norejRFznuIqp1itOZGe2b86wdykg/XvUBX4eso9xkH38EfftXqIYtXcq+aD/RjF9UP4KiXxzN8Q5iHP4EBTi7oM+MCdj7mlNzk/ycY4bWnCm4AN7E6pZKfs4QfbBiWxf6/pj0UfK/33IRyxonkP3LqF8bAOM4QP1JjpMYuSaZ19s91mGh53Fuze2KNyR9dF9mmtkOxb2qAdBtcMYqC+V3Sqn
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -14,9 +14,9 @@
     <property name="blocker" value="lrbt"/>
    </properties>
   </object>
-  <object id="2" x="0" y="1248" width="1056" height="32">
+  <object id="2" x="0" y="1248" width="416" height="32">
    <properties>
-    <property name="blocker" value="lrbt"/>
+    <property name="blocker" value="lbt"/>
    </properties>
   </object>
   <object id="3" x="0" y="32" width="32" height="1024">
@@ -54,7 +54,7 @@
     <property name="blocker" value="ltbr"/>
    </properties>
   </object>
-  <object id="13" x="416" y="480" width="320" height="32">
+  <object id="13" x="416" y="480" width="96" height="32">
    <properties>
     <property name="blocker" value="ltbr"/>
    </properties>
@@ -279,6 +279,28 @@
    <properties>
     <property name="bouncy" value="t"/>
     <property name="power" value="800"/>
+   </properties>
+  </object>
+  <object id="69" x="416" y="1248" width="224" height="32">
+   <properties>
+    <property name="blocker" value="t"/>
+    <property name="slide" value="300"/>
+   </properties>
+  </object>
+  <object id="70" x="640" y="1248" width="416" height="32">
+   <properties>
+    <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="72" x="672" y="480" width="64" height="32">
+   <properties>
+    <property name="blocker" value="ltbr"/>
+   </properties>
+  </object>
+  <object id="75" x="512" y="480" width="160" height="32">
+   <properties>
+    <property name="blocker" value="tb"/>
+    <property name="slide" value="-500"/>
    </properties>
   </object>
  </objectgroup>

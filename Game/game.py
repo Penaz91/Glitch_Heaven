@@ -399,6 +399,18 @@ class Game(object):
                         self.toggleGlitch("ledgewalk")
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
                         self.toggleGlitch("ledge")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_u:
+                        self.toggleGlitch("slideinvert")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_i:
+                        self.toggleGlitch("noleft")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_o:
+                        self.toggleGlitch("noright")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                        self.toggleGlitch("nojump")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
+                        mod_logger.debug("Debug key used, Loading next level")
+                        self.loadNextLevel(self.currentcampaign, self.screen)
+                        self.loadLevelPart2(self.keys)
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v

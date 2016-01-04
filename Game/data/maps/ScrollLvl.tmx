@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+  <image source="resources/tiles/TestTile.png" width="352" height="288"/>
+ </tileset>
+ <layer name="Livello tile 1" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztl0EKwjAQRYfuo+hKUFeCC6XiKdRLeP9rmCwGQkjaJpmZTiQP/qpV31NKrQGAQ+Mzdhtonyf0Dk30Dl3kdGw5RSrJ6XjZ3Zgn0aGZ3qGL3qGL3sHL3u5t91l4vrYO9D9nvk5LR6k/skYHOvsr9UckOkLvWucYXB2+O5W3e89rYg+g6+Bw99lNHKP4PWqv0aVwdUj5IxwdrkHKH6HucM9T0g2O08QxLffBWv6t4zsz7ufy3N0THa3TO3QxQtsd7j42AO3/K0nQ33hrrcM1mMgknj+GYJfEwvNiizVQd8ScU59LvZqO0FvKuaZjze86p+M447+255KVXFfa9gM+4i08
+  </data>
+ </layer>
+ <objectgroup name="Triggers"/>
+</map>
