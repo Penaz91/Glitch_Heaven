@@ -593,7 +593,7 @@ class Player(pygame.sprite.Sprite):
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 self.rect.bottom = cell.top
-                if not key[self.keys["down"]] and not game.glitches["stopbounce"]:
+                if not (key[self.keys["down"]] and game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     if game.gravity == 1:
                         self.y_speed = - power*game.gravity
@@ -602,7 +602,7 @@ class Player(pygame.sprite.Sprite):
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 self.rect.top = cell.bottom
-                if not key[self.keys["down"]] and not game.glitches["stopbounce"]:
+                if not (key[self.keys["down"]] and game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     if game.gravity == 1:
                         self.y_speed = power*game.gravity
@@ -611,7 +611,7 @@ class Player(pygame.sprite.Sprite):
             if 'l' in bouncy and last.right <= cell.left and\
                     self.rect.right > cell.left:
                 self.rect.right = cell.left
-                if not key[self.keys["down"]] and not game.glitches["stopbounce"]:
+                if not (key[self.keys["down"]] and game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     self.bounced = True
                     self.x_speed = -power*dt
@@ -622,7 +622,7 @@ class Player(pygame.sprite.Sprite):
             if 'r' in bouncy and last.left >= cell.right and\
                     self.rect.left < cell.right:
                 self.rect.left = cell.right
-                if not key[self.keys["down"]] and not game.glitches["stopbounce"]:
+                if not (key[self.keys["down"]] and game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     self.bounced = True
                     self.x_speed = power*dt

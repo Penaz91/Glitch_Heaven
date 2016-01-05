@@ -407,6 +407,8 @@ class Game(object):
                         self.toggleGlitch("noright")
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                         self.toggleGlitch("nojump")
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
+                        self.toggleGlitch("stopbounce")
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
                         mod_logger.debug("Debug key used, Loading next level")
                         self.loadNextLevel(self.currentcampaign, self.screen)
