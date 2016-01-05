@@ -592,40 +592,44 @@ class Player(pygame.sprite.Sprite):
             power = int(cell["power"])
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
-                self.bouncesound.play()
                 self.rect.bottom = cell.top
-                if game.gravity == 1:
-                    self.y_speed = - power*game.gravity
-                elif game.gravity == -1:
-                    self.y_speed = power*game.gravity
+                if not key[self.keys["down"]] and not game.glitches["stopbounce"]:
+                    self.bouncesound.play()
+                    if game.gravity == 1:
+                        self.y_speed = - power*game.gravity
+                    elif game.gravity == -1:
+                        self.y_speed = power*game.gravity
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
-                self.bouncesound.play()
                 self.rect.top = cell.bottom
-                if game.gravity == 1:
-                    self.y_speed = power*game.gravity
-                elif game.gravity == -1:
-                    self.y_speed = - power*game.gravity
+                if not key[self.keys["down"]] and not game.glitches["stopbounce"]:
+                    self.bouncesound.play()
+                    if game.gravity == 1:
+                        self.y_speed = power*game.gravity
+                    elif game.gravity == -1:
+                        self.y_speed = - power*game.gravity
             if 'l' in bouncy and last.right <= cell.left and\
                     self.rect.right > cell.left:
-                self.bouncesound.play()
-                self.bounced = True
                 self.rect.right = cell.left
-                self.x_speed = -power*dt
-                if self.y_speed < 0:
-                    self.y_speed = - game.gravity*power
-                else:
-                    self.y_speed = game.gravity*power
+                if not key[self.keys["down"]] and not game.glitches["stopbounce"]:
+                    self.bouncesound.play()
+                    self.bounced = True
+                    self.x_speed = -power*dt
+                    if self.y_speed < 0:
+                        self.y_speed = - game.gravity*power
+                    else:
+                        self.y_speed = game.gravity*power
             if 'r' in bouncy and last.left >= cell.right and\
                     self.rect.left < cell.right:
-                self.bouncesound.play()
-                self.bounced = True
                 self.rect.left = cell.right
-                self.x_speed = power*dt
-                if self.y_speed < 0:
-                    self.y_speed = - game.gravity*power
-                else:
-                    self.y_speed = game.gravity*power
+                if not key[self.keys["down"]] and not game.glitches["stopbounce"]:
+                    self.bouncesound.play()
+                    self.bounced = True
+                    self.x_speed = power*dt
+                    if self.y_speed < 0:
+                        self.y_speed = - game.gravity*power
+                    else:
+                        self.y_speed = game.gravity*power
         # ^--------------------------------------------------------------^
         # Test for collisions with deadly ground and act accordingly
         # v--------------------------------------------------------------v

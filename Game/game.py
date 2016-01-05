@@ -411,6 +411,8 @@ class Game(object):
                         mod_logger.debug("Debug key used, Loading next level")
                         self.loadNextLevel(self.currentcampaign, self.screen)
                         self.loadLevelPart2(self.keys)
+                if event.type == pygame.KEYDOWN and config.getboolean("Debug","keydebug"):
+                    mod_logger.debug("A key was pressed: {0}".format(pygame.key.name(event.key)))
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
