@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="77">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="79">
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
   <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmE0LwjAMhsMugjidO4myk+BBEMWDInhW//8vckGCZbRdv9Ktow+8sMPo8jZtmq4EgE0ENa2eHVWBxi5bLSF9FpB9jAnyMRs6EAdWwjP5uCrefYHaY93qbaCPf8jSb4vj9vlAKkV8DUN8Irp56n7bxEcMMO8+8zQWH76QD+41ws3U6i7RXaep1OO+fGCtSsGLybpaxwjEExMfsvNDl6N7mNCscN3norejRFznuIqp1itOZGe2b86wdykg/XvUBX4eso9xkH38EfftXqIYtXcq+aD/RjF9UP4KiXxzN8Q5iHP4EBTi7oM+MCdj7mlNzk/ycY4bWnCm4AN7E6pZKfs4QfbBiWxf6/pj0UfK/33IRyxonkP3LqF8bAOM4QP1JjpMYuSaZ19s91mGh53Fuze2KNyR9dF9mmtkOxb2qAdBtcMYqC+V3Sqn
+   eJztmE0LwjAMhsMugjidO4niSfAgiOJBETx5UP//L3JBgmWkXbt+rB194AXBkeVt1jRbCQCrANo2erRUOYpdNppD+swg+4gJ8jEZOpEeLITf5OMiufYFco91o7eGPvYps/cW43b5QCpJflsP+Ymo1ql9bx0fIcC626xTLD5sIR++nxHfjK3vEu3nNJV+3FUP7FUpeNF5rpYhErFExwd3fqhqdHOTmhF997no7cDI1zkuY6z9yifcmW1bM5xdCkj/PeoMPw/ZRxxkH3/EfbtjFKL3jqUe9N0opA+qX8HItnZDnIO4hndBuu8+T8V/6ANrEvNMq3N+ko9T2NScMwYfOJtQz0rZxxGyD59w+1o1H4s+Uv7uQz5CQevsenZx5WPtIIYNNJuo0MnR1zrbYrrPMn7YGFx7NYytmvFcwc3RXZoqZBoLZ9S9oLpHDNQXvYIrKw==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -301,6 +301,16 @@
    <properties>
     <property name="blocker" value="tb"/>
     <property name="slide" value="-500"/>
+   </properties>
+  </object>
+  <object id="77" x="800" y="1216" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
+   </properties>
+  </object>
+  <object id="78" x="1344" y="800" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
    </properties>
   </object>
  </objectgroup>

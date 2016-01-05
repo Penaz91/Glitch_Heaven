@@ -155,7 +155,7 @@ class Player(pygame.sprite.Sprite):
                                                 (0, 81, 138),
                                                 (141, 200, 241), 1, -1,
                                                 self.particles)
-
+        self.lastcheckpoint = location
     def respawn(self, game):
         """
         Method used to respawn the player after death
@@ -185,10 +185,9 @@ class Player(pygame.sprite.Sprite):
         # self.kill()     # Kills the player sprite
         # Does a complete respawn of the player
         # v-----------------------------------------------------v
-        start_cell = game.tilemap.layers['Triggers'].find('playerEntrance')[0]
         # game.player = Player((start_cell.px, start_cell.py),
         #                     game.sprites, keys=self.keys, game=self.game)
-        game.player.rect.x, game.player.rect.y = start_cell.px, start_cell.py
+        game.player.rect.x, game.player.rect.y = self.lastcheckpoint
         game.player.y_speed = 0
         game.player.x_speed = 0
         # ^-----------------------------------------------------^
@@ -744,3 +743,14 @@ class Player(pygame.sprite.Sprite):
             self.glitched = True
         self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
                      dt, game.gravity, self.running, self.glitched)
+        # ^--------------------------------------------------------------^
+        # Handles The checkpoints
+        # v--------------------------------------------------------------v
+        for cell in game.tilemap.layers['Triggers'].collide(
+                self.rect, 'CheckPoint'):
+                chk = cell['CheckPoint']
+                if chk == 1:
+                    self.lastcheckpoint =(self.rect.x, self.rect.y)
+                    cell['CheckPoint'] = 0
+                    mod_logger.info("Checkpoint Saved")
+        # ^--------------------------------------------------------------^
