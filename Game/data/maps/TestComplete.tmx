@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="79">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="84">
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
   <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmE0LwjAMhsMugjidO4niSfAgiOJBETx5UP//L3JBgmWkXbt+rB194AXBkeVt1jRbCQCrANo2erRUOYpdNppD+swg+4gJ8jEZOpEeLITf5OMiufYFco91o7eGPvYps/cW43b5QCpJflsP+Ymo1ql9bx0fIcC626xTLD5sIR++nxHfjK3vEu3nNJV+3FUP7FUpeNF5rpYhErFExwd3fqhqdHOTmhF997no7cDI1zkuY6z9yifcmW1bM5xdCkj/PeoMPw/ZRxxkH3/EfbtjFKL3jqUe9N0opA+qX8HItnZDnIO4hndBuu8+T8V/6ANrEvNMq3N+ko9T2NScMwYfOJtQz0rZxxGyD59w+1o1H4s+Uv7uQz5CQevsenZx5WPtIIYNNJuo0MnR1zrbYrrPMn7YGFx7NYytmvFcwc3RXZoqZBoLZ9S9oLpHDNQXvYIrKw==
+   eJztmE0LwjAMhsMugjidO4niSfAgiOJBEbzoQT34/3+PCxIMo+3a9WPt2AsvCI4sT7Om2XIAWATwuvKt5sJR7LzyFNLXBAaOmEQco64TaaEZ+00cJ8m1T5AzlpVfGn7bpyy8N4/bxIEqJPmtPeTHpVqn+r11OEII626zTrFw2Io4fD8jvtW3vkuqP6ep9OOmemCvSoFF57mah0jEUjocovNDVaOLm9SM1Hafc7adwL7OcZn62q98SnRm29YMZ5cM0n+POsKPYeCIQwPHX3zfbgQO0Xu7qsed/f44iEffjUJyUP0ygW1r18U5iGt4ZdZ993ko/kMOrEnMM63O+Ukch7CpOVcfOHA2oZ6VMsce4ubQ7dGxcoj2tWo+5hwpf/chjlCidXY9u7jiWDqIYSOaTVTSydHXOtvKdJ8N8qOVwbVnw9iqGc+VRHN0k8cKm8bCGXXLXLaIgf4CxgssRQ==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -311,6 +311,26 @@
   <object id="78" x="1344" y="800" width="32" height="32">
    <properties>
     <property name="CheckPoint" value="1"/>
+   </properties>
+  </object>
+  <object id="79" x="960" y="736" width="32" height="32">
+   <properties>
+    <property name="TpOut" value="1"/>
+   </properties>
+  </object>
+  <object id="80" x="1216" y="960" width="32" height="32">
+   <properties>
+    <property name="TpIn" value="1"/>
+   </properties>
+  </object>
+  <object id="82" x="1312" y="960" width="32" height="32">
+   <properties>
+    <property name="TpOut" value="2"/>
+   </properties>
+  </object>
+  <object id="83" x="864" y="736" width="32" height="32">
+   <properties>
+    <property name="TpIn" value="2"/>
    </properties>
   </object>
  </objectgroup>

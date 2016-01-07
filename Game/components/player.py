@@ -739,6 +739,19 @@ class Player(pygame.sprite.Sprite):
                         plat.active = True
                         plat.image = plat.activeimg
         # ^--------------------------------------------------------------^
+        # Handles the triggering of teleporters
+        # v--------------------------------------------------------------v
+        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+                                                            "TpIn"):
+            if key[self.keys["down"]]:
+                tpin = cell['TpIn']
+                mod_logger.info("Player pressed the button with ID: " + str(tpin))
+                for out in game.tilemap.layers['Triggers'].find("TpOut"):
+                    tpout = out['TpOut']
+                    if tpout == tpin:
+                        self.rect.x = out.px
+                        self.rect.y = out.py
+        # ^--------------------------------------------------------------^
         # Handles the Glitched Area animations
         # v--------------------------------------------------------------v
         self.glitched = False
