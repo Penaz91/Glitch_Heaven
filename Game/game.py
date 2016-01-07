@@ -50,15 +50,19 @@ class Game(object):
         Retuns:
         - Nothing
         """
-        truth = self.glitches.get(glitch)
-        if truth:
-            truth = False
-            mod_logger.debug("The {0} glitch has been disabled".format(glitch))
+        if glitch.lower() == "invertedgravity":
+            self.gravity *= -1
+            mod_logger.debug("Gravity has been inverted")
         else:
-            truth = True
-            mod_logger.debug("The {0} glitch has been enabled".format(glitch))
-        mydict = {glitch: truth}
-        self.glitches.update(mydict)
+            truth = self.glitches.get(glitch)
+            if truth:
+                truth = False
+                mod_logger.debug("The {0} glitch has been disabled".format(glitch))
+            else:
+                truth = True
+                mod_logger.debug("The {0} glitch has been enabled".format(glitch))
+            mydict = {glitch: truth}
+            self.glitches.update(mydict)
 
     def getHelpFlag(self):
         """
@@ -255,6 +259,7 @@ class Game(object):
         prepares for a new load
         """
         if self.player is not None:
+            self.gravity = 1
             self.tilemap = None
             self.player.kill()
             self.plats.empty()
@@ -391,8 +396,7 @@ class Game(object):
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_7:
                         self.toggleGlitch("stickyceil")
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
-                        self.gravity *= -1
-                        mod_logger.debug("Gravity has been inverted")
+                        self.toggleGlitch("invertedgravity")
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
                         self.toggleGlitch("permbodies")
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_q:

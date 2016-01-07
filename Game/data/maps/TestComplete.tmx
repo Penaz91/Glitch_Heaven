@@ -8,7 +8,7 @@
    eJztmE0LwjAMhsMugjidO4niSfAgiOJBEbzoQT34/3+PCxIMo+3a9WPt2AsvCI4sT7Om2XIAWATwuvKt5sJR7LzyFNLXBAaOmEQco64TaaEZ+00cJ8m1T5AzlpVfGn7bpyy8N4/bxIEqJPmtPeTHpVqn+r11OEII626zTrFw2Io4fD8jvtW3vkuqP6ep9OOmemCvSoFF57mah0jEUjocovNDVaOLm9SM1Hafc7adwL7OcZn62q98SnRm29YMZ5cM0n+POsKPYeCIQwPHX3zfbgQO0Xu7qsed/f44iEffjUJyUP0ygW1r18U5iGt4ZdZ993ko/kMOrEnMM63O+Ukch7CpOVcfOHA2oZ6VMsce4ubQ7dGxcoj2tWo+5hwpf/chjlCidXY9u7jiWDqIYSOaTVTSydHXOtvKdJ8N8qOVwbVnw9iqGc+VRHN0k8cKm8bCGXXLXLaIgf4CxgssRQ==
   </data>
  </layer>
- <objectgroup name="Triggers" visible="0">
+ <objectgroup name="Triggers">
   <object id="1" x="0" y="0" width="864" height="32">
    <properties>
     <property name="blocker" value="lrbt"/>
@@ -335,7 +335,7 @@
   </object>
   <object id="84" x="928" y="512" width="32" height="32">
    <properties>
-    <property name="ToggleGlitch" value="noleft,noright"/>
+    <property name="ToggleGlitch" value="invertedGravity"/>
    </properties>
   </object>
  </objectgroup>
