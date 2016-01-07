@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="7">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="72">
-  <image source="resources/tiles/TestTile.png" width="256" height="288"/>
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+  <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJzjYmBgEKIS5gJibgbqAc5R80bNGzVv1LxR8xhEyTSDB808UBnNRCUMMgsAwTQDGg==
+   eJzjZWBgkKAS5gViPgbqAZ5R80bNGzVv1LxR8xikyTSDH808UBnNRCUMMgsA0QgEBw==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">

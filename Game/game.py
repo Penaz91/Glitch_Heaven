@@ -18,6 +18,7 @@ import configparser
 from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
+from components.collectibletrigger import CollectibleTrigger
 import shelve
 import logging
 from logging import handlers as loghandler
@@ -200,6 +201,11 @@ class Game(object):
                                 100, False, platform['id'], self.plats,
                                 game=self, bouncy=bouncy)
         self.tilemap.layers.append(self.plats)
+        for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
+            totrigger = trig['ToggleGlitch']
+            tr=CollectibleTrigger(trig.px, trig.py, self, totrigger)
+            self.GlitchTriggers.add(tr)
+        self.tilemap.layers.append(self.GlitchTriggers)
         mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
@@ -252,6 +258,7 @@ class Game(object):
             self.tilemap = None
             self.player.kill()
             self.plats.empty()
+            self.GlitchTriggers.empty()
             self.sprites.empty()
             self.player = None
 
@@ -331,6 +338,7 @@ class Game(object):
         self.config = config
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
+        self.GlitchTriggers = tmx.SpriteLayer()
         # Defines if a level should be loaded or a
         # new campaign should be started.
         # v--------------------------------------------------------------v

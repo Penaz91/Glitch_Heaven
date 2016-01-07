@@ -771,3 +771,9 @@ class Player(pygame.sprite.Sprite):
                     cell['CheckPoint'] = 0
                     mod_logger.info("Checkpoint Saved")
         # ^--------------------------------------------------------------^
+        # Handles The Glitch Triggers
+        # v--------------------------------------------------------------v
+        collision = pygame.sprite.spritecollide(self, game.GlitchTriggers, False)
+        for block in collision:
+            block.toggle(self.game)
+            block.kill()

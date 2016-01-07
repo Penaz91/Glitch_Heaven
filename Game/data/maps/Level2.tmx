@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="33">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="72">
-  <image source="resources/tiles/TestTile.png" width="256" height="288"/>
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+  <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmcEKwjAMhosI4hQEQYQdfQRRDx59/4dyOQxCpZgsof078kNghy7p1/10JR1SSufOY5jikPrXPq2P49hwHlvj+8RB3nr+iZexTkkPp7pr9FXPCg4sBQeWggNLwYGl4MBScNh1d8zVkuPtmCs47ELl0PodlUM7r+D4VUuOj1NdUksOq3ivCI3jNMUmi51gjGdf1OITmhv1q0r9W97TQu3vUi/uasxR8z9Ia849UvN85VWLGOjb83Wvue8u9fzsd+7p3Duo/49ZUr+jcsT5yi4pR+megt9P9MAhERrHhT1rPN+ag/b1/LzCzy2jMG6KsaMytyTXF+pTGso=
+   eJztmcEKwjAMhosIXpyCJ0E87e5TiHrz7vs/iMthECrFZAnt35EfAjt0Sb/upyvpkFI6dx7DFIfUv/ZpfRzHhvPYGt8nDvLW80+8jHVKejjVXaOvelZwYCk4sBQcWAoOLAUHloLDrrtjrpYcb8dcwWEXKofW76gc2nkFx69acnyc6pJacljFe0VoHKcpNlnsBGM8+6IWn9DcqF9V6t/ynhZqf5d6cVdjjpr/QVpz7pGa5yuvWsRA356ve819d6nnZ79zT+feQf1/zJL6HZUjzld2STlK9xT8fqIHDonQOC7sWeP51hy0r+fnFX5uGYVxU4wdlbklub4KyiPE
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
