@@ -29,7 +29,7 @@ class Obstacle(pygame.sprite.Sprite):
                                                  0.5, 0.5, 0.5, 0.5,
                                                  0.5, 0.5, 0.5, 0.5,
                                                  0.5, 0.5, 0.5, 0.5])
-        self.ani.loadFromDir(os.path.join("Resources",
+        self.ani.loadFromDir(os.path.join("resources",
                                           "sprites",
                                           "MobileObstacle"))
         self.image = self.ani.first()
