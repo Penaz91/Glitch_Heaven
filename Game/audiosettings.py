@@ -19,7 +19,6 @@ fh.setFormatter(formatter)
 module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
-
 class AudioSettings:
     """ Represents a pause menu window"""
 

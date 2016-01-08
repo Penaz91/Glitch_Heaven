@@ -25,7 +25,6 @@ module_logger.addHandler(ch)
 # Tie Menu graphic to resolution
 # ---------------
 
-
 class menu:
     """ Represents the main Game menu """
 

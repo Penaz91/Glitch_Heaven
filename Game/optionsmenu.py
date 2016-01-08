@@ -22,7 +22,6 @@ fh.setFormatter(formatter)
 module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
-
 class OptionsMenu:
     """ Represents a pause menu window"""
 

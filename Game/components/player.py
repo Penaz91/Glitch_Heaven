@@ -32,7 +32,6 @@ fh.setFormatter(formatter)
 mod_logger.addHandler(fh)
 mod_logger.addHandler(ch)
 
-
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
     size = (32, 32)     # Might be removed in future+taken from img
@@ -89,7 +88,7 @@ class Player(pygame.sprite.Sprite):
         self.resting = False
         self.y_speed = 0
         self.x_speed = 0
-        self.jump_speed = -500
+        self.jump_speed = -650
         self.fallingsprite = pygame.image.load(
                 os.path.join("resources",
                              "sprites",
@@ -459,25 +458,25 @@ class Player(pygame.sprite.Sprite):
         if game.glitches["featherfalling"]:
             if game.glitches["ledgejump"]:
                 if game.gravity == 1:
-                    self.y_speed = (min(200, self.y_speed+20))
+                    self.y_speed = (min(350, self.y_speed+35))
                 elif game.gravity == -1:
-                    self.y_speed = max(-200, self.y_speed-20)
+                    self.y_speed = max(-250, self.y_speed-25)
             else:
                 if game.gravity == 1:
-                    self.y_speed = (min(200, self.y_speed+20))
+                    self.y_speed = (min(350, self.y_speed+35))
                 elif game.gravity == -1:
-                    self.y_speed = max(-200, self.y_speed-20)
+                    self.y_speed = max(-250, self.y_speed-25)
         else:
             if game.glitches["ledgejump"]:
                 if game.gravity == 1:
-                    self.y_speed = (min(400, self.y_speed+40))
+                    self.y_speed = (min(600, self.y_speed+60))
                 elif game.gravity == -1:
-                    self.y_speed = max(-400, self.y_speed-40)
+                    self.y_speed = max(-500, self.y_speed-50)
             else:
                 if game.gravity == 1:
-                    self.y_speed = (min(400, self.y_speed+40))
+                    self.y_speed = (min(600, self.y_speed+60))
                 elif game.gravity == -1:
-                    self.y_speed = max(-400, self.y_speed-40)
+                    self.y_speed = max(-500, self.y_speed-50)
         if game.glitches['ledgewalk']:
             if not self.resting:
                 self.rect.y += self.y_speed * dt   # Move the player vertically

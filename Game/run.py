@@ -22,7 +22,7 @@ if __name__ == "__main__":
                         format='[%(asctime)s] (%(name)s) -'
                         ' %(levelname)s --- %(message)s')
     logging.info("-----------------Initialising logging-----------------")
-    logger = logging.getLogger("Glitch_Heaven.Bootstrapper")
+    logger = logging.getLogger()
     ch = logging.StreamHandler()
     ch.setLevel(logging.ERROR)
     formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
