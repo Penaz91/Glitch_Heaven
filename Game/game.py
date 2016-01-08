@@ -297,8 +297,10 @@ class Game(object):
         """
         # TODO: If custom campaign support will be added
         #       add support for multiple savefiles.
-        shelf = shelve.open(os.path.join("savegames",
-                                         "SaveGame"))
+        Tk().withdraw()
+        formats = [("Glitch_Heaven Savegame", "*.dat")]
+        path=filedialog.asksaveasfilename(filetypes=formats)
+        shelf = shelve.open(path)
         shelf["currentcampaign"] = self.currentcampaign
         shelf["campaignfile"] = self.campaignFile
         # When loadNextLevel will be called, it will be the right one
