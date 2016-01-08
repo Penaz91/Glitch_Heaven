@@ -19,6 +19,7 @@ fh.setFormatter(formatter)
 module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
+
 class AudioSettings:
     """ Represents a pause menu window"""
 
@@ -91,7 +92,8 @@ class AudioSettings:
                                       self.config, "musicvolume")
         self.musicwriting = self.font.render("Music Volume: ", False,
                                              (255, 255, 255)).convert_alpha()
-        self.rebootwriting = self.font.render("Restart the game to apply the settings", False,
+        self.rebootwriting = self.font.render("Restart to apply the settings",
+                                              False,
                                               (255, 255, 255)).convert_alpha()
         # ^------------------------------------------------------------------^
         # "Previous Menu" menu element
@@ -151,13 +153,16 @@ class AudioSettings:
                             item.function()
                     if self.menumeter.rect.collidepoint(*mousepos):
                         self.amount = self.menumeter.set_quantity(mousepos)
-                        module_logger.debug("Menu volume set at: " + str(self.amount) + "%")
+                        module_logger.debug("Menu volume set at: " +
+                                            str(self.amount) + "%")
                     if self.sfxmeter.rect.collidepoint(*mousepos):
                         self.amount = self.sfxmeter.set_quantity(mousepos)
-                        module_logger.debug("Sfx volume set at: " + str(self.amount) + "%")
+                        module_logger.debug("Sfx volume set at: " +
+                                            str(self.amount) + "%")
                     if self.musicmeter.rect.collidepoint(*mousepos):
                         self.amount = self.musicmeter.set_quantity(mousepos)
-                        module_logger.debug("Music volume set at: " + str(self.amount) + "%")
+                        module_logger.debug("Music volume set at: " +
+                                            str(self.amount) + "%")
                 if event.type == pygame.QUIT:
                     quit()
                 # ^----------------------------------------------------------^

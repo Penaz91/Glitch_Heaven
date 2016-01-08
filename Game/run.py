@@ -13,12 +13,17 @@ if __name__ == "__main__":
         config = configparser.ConfigParser()
         config.read("game.conf")
     except IOError:
-        print("There has been an error while loading the configuration file. Exiting")
+        print("There has been an error while loading the " +
+              "configuration file. Exiting")
     fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                              "midnight", 1)
-    loglist = {"DEBUG":10,"INFO":20,"WARNING":30,"ERROR":40,"CRITICAL":50}
+    loglist = {"DEBUG": 10,
+               "INFO": 20,
+               "WARNING": 30,
+               "ERROR": 40,
+               "CRITICAL": 50}
     logkey = loglist[config["Debug"]["loggerlevel"]]
-    logging.basicConfig(level = logkey, 
+    logging.basicConfig(level=logkey,
                         format='[%(asctime)s] (%(name)s) -'
                         ' %(levelname)s --- %(message)s')
     logging.info("-----------------Initialising logging-----------------")

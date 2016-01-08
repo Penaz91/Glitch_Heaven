@@ -20,6 +20,7 @@ fh.setFormatter(formatter)
 module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
+
 class ControlSettings:
     """ Represents a pause menu window"""
 
@@ -80,7 +81,6 @@ class ControlSettings:
                                        "UI",
                                        "back.png")).convert_alpha()
 
-
         self.line1 = self.font.render("Current Controls:", False,
                                       (255, 255, 255))
         self.line2 = self.font.render("Left/Right Arrow Keys: Movement", False,
@@ -91,9 +91,11 @@ class ControlSettings:
                                       (255, 255, 255))
         self.line5 = self.font.render("Z: Keep pressed to run", False,
                                       (255, 255, 255))
-        self.line6 = self.font.render("Left Shift + 1->9: Debug Keys/Cheats", False,
+        self.line6 = self.font.render("Left Shift + 1->9: Debug Keys/Cheats",
+                                      False,
                                       (255, 255, 255))
-        self.line7 = self.font.render("Left Shift + q->y: Debug Keys/Cheats", False,
+        self.line7 = self.font.render("Left Shift + q->y: Debug Keys/Cheats",
+                                      False,
                                       (255, 255, 255))
         """
         # Video Settings menu element

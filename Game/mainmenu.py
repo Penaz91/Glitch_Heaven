@@ -25,6 +25,7 @@ module_logger.addHandler(ch)
 # Tie Menu graphic to resolution
 # ---------------
 
+
 class menu:
     """ Represents the main Game menu """
 
@@ -91,8 +92,7 @@ class menu:
         # ^------------------------------------------------------------------^
         # If there is a savefile, enable the continue game button
         # v------------------------------------------------------------------v
-        if not os.path.exists(os.path.join("savegames",
-                                           "SaveGame.dat")):
+        if not os.listdir(os.path.join("savegames")):
             self.cont = self.font.render("Continue Game", False,
                                          (100, 100, 100)).convert_alpha()
             self.cgam = menuItem.menuitem(self.cont,

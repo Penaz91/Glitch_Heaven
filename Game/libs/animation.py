@@ -11,7 +11,9 @@ class Animation(object):
     def __init__(self):
         """ Constructor - No parameters """
         self.frames = []
-        self.currentframe = -1      # Setting this at -1 so the first call of next() returns the frame 0
+        # Setting this at -1 so the first call of next()
+        # v----- returns the frame 0 -----v
+        self.currentframe = -1
 
     def __iter__(self):
         """ Allows to return an iterator if necessary """
@@ -29,7 +31,9 @@ class Animation(object):
         Returns:
         - Next frame from the frame list
         """
-        self.currentframe = (self.currentframe+1) % len(self.frames)     # Returns the frame number in a circular fashion, 0 -> ... -> n-1 -> n -> 0
+        # Returns the frame number in a circular fashion
+        # v-----     0 -> ... -> n-1 -> n -> 0   -----v
+        self.currentframe = (self.currentframe+1) % len(self.frames)
         toret = self.frames[self.currentframe]
         return toret
 

@@ -59,10 +59,12 @@ class Game(object):
             truth = self.glitches.get(glitch)
             if truth:
                 truth = False
-                mod_logger.debug("The {0} glitch has been disabled".format(glitch))
+                mod_logger.debug("The {0} glitch has been disabled"
+                                 .format(glitch))
             else:
                 truth = True
-                mod_logger.debug("The {0} glitch has been enabled".format(glitch))
+                mod_logger.debug("The {0} glitch has been enabled"
+                                 .format(glitch))
             mydict = {glitch: truth}
             self.glitches.update(mydict)
 
@@ -209,7 +211,7 @@ class Game(object):
         self.tilemap.layers.append(self.plats)
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
             totrigger = trig['ToggleGlitch']
-            tr=CollectibleTrigger(trig.px, trig.py, self, totrigger)
+            tr = CollectibleTrigger(trig.px, trig.py, self, totrigger)
             self.GlitchTriggers.add(tr)
         self.tilemap.layers.append(self.GlitchTriggers)
         mod_logger.info("Map Loaded and built Successfully")
@@ -299,15 +301,15 @@ class Game(object):
         #       add support for multiple savefiles.
         Tk().withdraw()
         formats = [("Glitch_Heaven Savegame", "*.dat")]
-        path=filedialog.asksaveasfilename(filetypes=formats)
-        shelf = shelve.open(path)
-        shelf["currentcampaign"] = self.currentcampaign
-        shelf["campaignfile"] = self.campaignFile
-        # When loadNextLevel will be called, it will be the right one
-        # v--------v
-        shelf["campaignIndex"] = self.campaignIndex - 1
-        # ^--------^
-        shelf.close()
+        path = filedialog.asksaveasfilename(filetypes=formats,
+                                            initialdir="./savegames")
+        with shelve.open(path, 'c') as shelf:
+            shelf["currentcampaign"] = self.currentcampaign
+            shelf["campaignfile"] = self.campaignFile
+            # When loadNextLevel will be called, it will be the right one
+            # v--------v
+            shelf["campaignIndex"] = self.campaignIndex - 1
+            # ^--------^
 
     def loadGame(self):
         """
@@ -315,12 +317,13 @@ class Game(object):
         """
         Tk().withdraw()
         formats = [("Glitch_Heaven Savegame", "*.dat")]
-        path=filedialog.askopenfilename(filetypes=formats)
-        shelf = shelve.open(path[:-4])
-        self.currentcampaign = shelf["currentcampaign"]
-        self.campaignFile = shelf["campaignfile"]
-        self.campaignIndex = shelf["campaignIndex"]
-        shelf.close()
+        path = filedialog.askopenfilename(filetypes=formats,
+                                          initialdir="./savegames")
+        mod_logger.info("Loading Save from: "+path)
+        with shelve.open(path, 'r') as shelf:
+            self.currentcampaign = shelf["currentcampaign"]
+            self.campaignFile = shelf["campaignfile"]
+            self.campaignIndex = shelf["campaignIndex"]
         # Debug Area
         # v--------------------------------------------------------------v
         mod_logger.debug("Loadgame: "+str(self.currentcampaign))
@@ -386,58 +389,63 @@ class Game(object):
                     quit()
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
-                if config.getboolean("Debug","debugmode") and pygame.key.get_pressed()[304]:
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
-                        self.toggleGlitch("wallclimb")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
-                        self.toggleGlitch("multijump")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_3:
-                        self.toggleGlitch("highjump")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_4:
-                        self.toggleGlitch("featherfalling")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_5:
-                        self.toggleGlitch("gravity")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_6:
-                        self.toggleGlitch("hover")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_7:
-                        self.toggleGlitch("stickyceil")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_8:
-                        self.toggleGlitch("invertedgravity")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_9:
-                        self.toggleGlitch("permbodies")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                        self.toggleGlitch("solidhelp")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-                        self.toggleGlitch("cliponcommand")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
-                        self.toggleGlitch("hwrapping")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                        self.toggleGlitch("vwrapping")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_t:
-                        self.toggleGlitch("ledgewalk")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_y:
-                        self.toggleGlitch("ledge")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_u:
-                        self.toggleGlitch("slideinvert")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_i:
-                        self.toggleGlitch("noleft")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_o:
-                        self.toggleGlitch("noright")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-                        self.toggleGlitch("nojump")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                        self.toggleGlitch("stopbounce")
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
-                        mod_logger.debug("Debug key used, Loading next level")
-                        self.loadNextLevel(self.currentcampaign, self.screen)
-                        self.loadLevelPart2(self.keys)
-                if event.type == pygame.KEYDOWN and config.getboolean("Debug","keydebug"):
-                    mod_logger.debug("A key was pressed: {0}".format(pygame.key.name(event.key)))
+                if config.getboolean("Debug", "debugmode") and\
+                        pygame.key.get_pressed()[304]:
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_1:
+                            self.toggleGlitch("wallclimb")
+                        if event.key == pygame.K_2:
+                            self.toggleGlitch("multijump")
+                        if event.key == pygame.K_3:
+                            self.toggleGlitch("highjump")
+                        if event.key == pygame.K_4:
+                            self.toggleGlitch("featherfalling")
+                        if event.key == pygame.K_5:
+                            self.toggleGlitch("gravity")
+                        if event.key == pygame.K_6:
+                            self.toggleGlitch("hover")
+                        if event.key == pygame.K_7:
+                            self.toggleGlitch("stickyceil")
+                        if event.key == pygame.K_8:
+                            self.toggleGlitch("invertedgravity")
+                        if event.key == pygame.K_9:
+                            self.toggleGlitch("permbodies")
+                        if event.key == pygame.K_q:
+                            self.toggleGlitch("solidhelp")
+                        if event.key == pygame.K_w:
+                            self.toggleGlitch("cliponcommand")
+                        if event.key == pygame.K_e:
+                            self.toggleGlitch("hwrapping")
+                        if event.key == pygame.K_r:
+                            self.toggleGlitch("vwrapping")
+                        if event.key == pygame.K_t:
+                            self.toggleGlitch("ledgewalk")
+                        if event.key == pygame.K_y:
+                            self.toggleGlitch("ledge")
+                        if event.key == pygame.K_u:
+                            self.toggleGlitch("slideinvert")
+                        if event.key == pygame.K_i:
+                            self.toggleGlitch("noleft")
+                        if event.key == pygame.K_o:
+                            self.toggleGlitch("noright")
+                        if event.key == pygame.K_p:
+                            self.toggleGlitch("nojump")
+                        if event.key == pygame.K_a:
+                            self.toggleGlitch("stopbounce")
+                        if event.key == pygame.K_BACKSPACE:
+                            mod_logger.debug("Debug key used,a" +
+                                             "Loading next level")
+                            self.loadNextLevel(self.currentcampaign,
+                                               self.screen)
+                            self.loadLevelPart2(self.keys)
+                    if config.getboolean("Debug", "keydebug"):
+                        mod_logger.debug("A key was pressed: {0}"
+                                         .format(pygame.key.name(event.key)))
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
-                if event.type == pygame.KEYDOWN and event.key == keys["escape"]:
-                    pauseMenu().main(screen, keys, self, self.config)
+                    if event.key == keys["escape"]:
+                        pauseMenu().main(screen, keys, self, self.config)
                 if event.type == pygame.QUIT:
                     self.running = False
                 # ^----------------------------------------------------------^

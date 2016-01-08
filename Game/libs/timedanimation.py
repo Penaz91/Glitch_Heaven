@@ -4,6 +4,7 @@
 from libs.animation import Animation
 import random
 
+
 class TimedAnimation(Animation):
     def __init__(self, frametimings):
         super(Animation, self).__init__()
@@ -11,7 +12,7 @@ class TimedAnimation(Animation):
         self.currentframe = -1
         self.timings = frametimings
         self.currenttime = 0
-    
+
     def next(self, dt):
         """
         This method returns the next frame in the animation,
@@ -24,11 +25,11 @@ class TimedAnimation(Animation):
         if self.currentframe == -1:
             return self.first()
         if self.currenttime >= self.timings[self.currentframe]:
-            self.currentframe = (self.currentframe+1) % len(self.frames)     # Returns the frame number in a circular fashion, 0 -> ... -> n-1 -> n -> 0
+            self.currentframe = (self.currentframe+1) % len(self.frames)
             self.currenttime = 0
         toret = self.frames[self.currentframe]
         return toret
-        
+
     def rand_next(self, dt):
         """
         This method returns the next frame in the animation,
@@ -41,7 +42,7 @@ class TimedAnimation(Animation):
         if self.currentframe == -1:
             return self.first()
         if self.currenttime >= self.timings[self.currentframe]:
-            self.currentframe = random.randint(0,len(self.frames)-1)
+            self.currentframe = random.randint(0, len(self.frames)-1)
             self.currenttime = 0
         toret = self.frames[self.currentframe]
         return toret

@@ -32,6 +32,7 @@ fh.setFormatter(formatter)
 mod_logger.addHandler(fh)
 mod_logger.addHandler(ch)
 
+
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
     size = (32, 32)     # Might be removed in future+taken from img
@@ -155,6 +156,7 @@ class Player(pygame.sprite.Sprite):
                                                 (141, 200, 241), 1, -1,
                                                 self.particles)
         self.lastcheckpoint = location
+
     def respawn(self, game):
         """
         Method used to respawn the player after death
@@ -171,7 +173,8 @@ class Player(pygame.sprite.Sprite):
         # v-----------------------------------------------------v
         x, y = game.tilemap.pixel_from_screen(self.rect.x,
                                               self.rect.y)
-        mod_logger.info("Player respawned, position of death: (" + str(x) + "," + str(y) + ")")
+        mod_logger.info("Player respawned, position of death: (" +
+                        str(x) + "," + str(y) + ")")
         if game.glitches["permbodies"]:
             body = DeadBody(x, y, game.sprites, game=game)
             game.deadbodies.add(body)
@@ -442,7 +445,8 @@ class Player(pygame.sprite.Sprite):
                     self.jumpsound.play()
                 self.y_speed = self.jump_speed*game.gravity*0.8
         else:
-            if key[self.keys["jump"]] and self.resting and not game.glitches["nojump"]:
+            if key[self.keys["jump"]] and self.resting and\
+                    not game.glitches["nojump"]:
                 self.jumpsound.play()
                 if game.glitches["gravity"]:
                     game.gravity *= -1
@@ -497,7 +501,8 @@ class Player(pygame.sprite.Sprite):
             if block.active:
                 # ENHANCEMENT: Change the collision detection with a
                 # time-comparison of rects, like in Blocker trigger
-                if (self.y_speed * game.gravity > 0) and (self.rect.y < block.rect.y):
+                if (self.y_speed * game.gravity > 0) and\
+                        (self.rect.y < block.rect.y):
                     if block.bouncy:
                         self.rect.bottom = block.rect.top
                         self.y_speed = -800 * game.gravity
@@ -592,7 +597,8 @@ class Player(pygame.sprite.Sprite):
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 self.rect.bottom = cell.top
-                if not (key[self.keys["down"]] and game.glitches["stopbounce"]):
+                if not (key[self.keys["down"]] and
+                        game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     if game.gravity == 1:
                         self.y_speed = - power*game.gravity
@@ -601,7 +607,8 @@ class Player(pygame.sprite.Sprite):
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 self.rect.top = cell.bottom
-                if not (key[self.keys["down"]] and game.glitches["stopbounce"]):
+                if not (key[self.keys["down"]] and
+                        game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     if game.gravity == 1:
                         self.y_speed = power*game.gravity
@@ -610,7 +617,8 @@ class Player(pygame.sprite.Sprite):
             if 'l' in bouncy and last.right <= cell.left and\
                     self.rect.right > cell.left:
                 self.rect.right = cell.left
-                if not (key[self.keys["down"]] and game.glitches["stopbounce"]):
+                if not (key[self.keys["down"]] and
+                        game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     self.bounced = True
                     self.x_speed = -power*dt
@@ -621,7 +629,8 @@ class Player(pygame.sprite.Sprite):
             if 'r' in bouncy and last.left >= cell.right and\
                     self.rect.left < cell.right:
                 self.rect.left = cell.right
-                if not (key[self.keys["down"]] and game.glitches["stopbounce"]):
+                if not (key[self.keys["down"]] and
+                        game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     self.bounced = True
                     self.x_speed = power*dt
@@ -732,7 +741,8 @@ class Player(pygame.sprite.Sprite):
                                                             "button"):
             if key[self.keys["down"]]:
                 butt = cell['button']
-                mod_logger.info("Player pressed the button with ID: " + str(butt))
+                mod_logger.info("Player pressed the button with ID: " +
+                                str(butt))
                 for plat in game.plats:
                     if plat.id == butt:
                         plat.active = True
@@ -744,7 +754,8 @@ class Player(pygame.sprite.Sprite):
                                                             "TpIn"):
             if key[self.keys["down"]]:
                 tpin = cell['TpIn']
-                mod_logger.info("Player pressed the button with ID: " + str(tpin))
+                mod_logger.info("Player entered the TP with ID: " +
+                                str(tpin))
                 for out in game.tilemap.layers['Triggers'].find("TpOut"):
                     tpout = out['TpOut']
                     if tpout == tpin:
@@ -766,13 +777,15 @@ class Player(pygame.sprite.Sprite):
                 self.rect, 'CheckPoint'):
                 chk = cell['CheckPoint']
                 if chk == 1:
-                    self.lastcheckpoint =(self.rect.x, self.rect.y)
+                    self.lastcheckpoint = (self.rect.x, self.rect.y)
                     cell['CheckPoint'] = 0
                     mod_logger.info("Checkpoint Saved")
         # ^--------------------------------------------------------------^
         # Handles The Glitch Triggers
         # v--------------------------------------------------------------v
-        collision = pygame.sprite.spritecollide(self, game.GlitchTriggers, False)
+        collision = pygame.sprite.spritecollide(self,
+                                                game.GlitchTriggers,
+                                                False)
         for block in collision:
             block.toggle(self.game)
             block.kill()
