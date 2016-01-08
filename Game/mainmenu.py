@@ -91,7 +91,8 @@ class menu:
         # ^------------------------------------------------------------------^
         # If there is a savefile, enable the continue game button
         # v------------------------------------------------------------------v
-        if not os.path.exists(os.path.join("SaveGame.dat")):
+        if not os.path.exists(os.path.join("savegames",
+                                           "SaveGame.dat")):
             self.cont = self.font.render("Continue Game", False,
                                          (100, 100, 100)).convert_alpha()
             self.cgam = menuItem.menuitem(self.cont,

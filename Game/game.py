@@ -23,6 +23,8 @@ import shelve
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
+from tkinter import filedialog
+from tkinter import Tk
 mod_logger = logging.getLogger("Glitch_Heaven.Game")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
@@ -295,7 +297,8 @@ class Game(object):
         """
         # TODO: If custom campaign support will be added
         #       add support for multiple savefiles.
-        shelf = shelve.open("SaveGame")
+        shelf = shelve.open(os.path.join("savegames",
+                                         "SaveGame"))
         shelf["currentcampaign"] = self.currentcampaign
         shelf["campaignfile"] = self.campaignFile
         # When loadNextLevel will be called, it will be the right one
@@ -308,9 +311,10 @@ class Game(object):
         """
         Opens the game from a shelf file
         """
-        # TODO: If custom campaign support will be added
-        #       add support for multiple savefiles.
-        shelf = shelve.open("SaveGame")
+        Tk().withdraw()
+        formats = [("Glitch_Heaven Savegame", "*.dat")]
+        path=filedialog.askopenfilename(filetypes=formats)
+        shelf = shelve.open(path[:-4])
         self.currentcampaign = shelf["currentcampaign"]
         self.campaignFile = shelf["campaignfile"]
         self.campaignIndex = shelf["campaignIndex"]
@@ -318,7 +322,7 @@ class Game(object):
         # Debug Area
         # v--------------------------------------------------------------v
         mod_logger.debug("Loadgame: "+str(self.currentcampaign))
-        mod_logger.debug("Campaign Index: "+self.campaignIndex)
+        mod_logger.debug("Campaign Index: "+str(self.campaignIndex))
         # ^--------------------------------------------------------------^
 
     def main(self, screen, keys, mode, config):
