@@ -10,6 +10,9 @@ from optionsmenu import OptionsMenu
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
+from credits import Credits
+from tkinter import Tk
+from tkinter import filedialog
 module_logger = logging.getLogger("Glitch_Heaven.MainMenu")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
@@ -28,6 +31,16 @@ module_logger.addHandler(ch)
 
 class menu:
     """ Represents the main Game menu """
+    
+    def loadcustom(self, keys, gameconfig, screen):
+        """
+        Loads a custom campaign from a open file dialog
+        """
+        Tk().withdraw()
+        formats = [("Glitch_Heaven Campaign", "*.cmp")]
+        self.camp = filedialog.askopenfilename(filetypes=formats,
+                                          initialdir="./data/campaigns")
+        Game().main(screen, keys, "newgame", self.camp, gameconfig)
 
     def main(self, screen, keys, config):
         """
@@ -64,18 +77,44 @@ class menu:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        # New game menu element
+        # Main campaign menu element
         # v------------------------------------------------------------------v
-        self.newgameimg = self.font.render("NewGame", False,
+        self.newmainimg = self.font.render("Start Main Campaign", False,
                                            (255, 255, 255)).convert_alpha()
-        self.selectedimg = self.font.render("NewGame", False,
+        self.selectedmainimg = self.font.render("Start Main Campaign", False,
                                             (255, 0, 0)).convert_alpha()
-        self.newgame = menuItem.menuitem(self.newgameimg,
-                                         self.selectedimg,
-                                         (320, 240),
+        self.newmaingame = menuItem.menuitem(self.newmainimg,
+                                         self.selectedmainimg,
+                                         (50, 180),
                                          lambda: Game().main(screen, keys,
                                                              "newgame",
+                                                             pathjoin("data",
+                                                                      "campaigns",
+                                                                      "main.cmp"
+                                                             ),
                                                              self.gameconfig),
+                                         self.gameconfig)
+        # Custom campaign menu element
+        # v------------------------------------------------------------------v
+        self.newcustomimg = self.font.render("Start Custom Campaign", False,
+                                           (255, 255, 255)).convert_alpha()
+        self.selectedcustomimg = self.font.render("Start Custom Campaign", False,
+                                            (255, 0, 0)).convert_alpha()
+        self.newcustomgame = menuItem.menuitem(self.newcustomimg,
+                                         self.selectedcustomimg,
+                                         (50, 240),
+                                         lambda: self.loadcustom(keys, self.gameconfig, screen),
+                                         self.gameconfig)
+        # Credits menu element
+        # v------------------------------------------------------------------v
+        self.creditsimg = self.font.render("Credits", False,
+                                           (255, 255, 255)).convert_alpha()
+        self.selectedcreditsimg = self.font.render("Credits", False,
+                                            (255, 0, 0)).convert_alpha()
+        self.credits = menuItem.menuitem(self.creditsimg,
+                                         self.selectedcreditsimg,
+                                         (50, 420),
+                                         lambda: Credits().main(screen, keys, self.gameconfig),
                                          self.gameconfig)
         # ^------------------------------------------------------------------^
         # Quit game menu element
@@ -93,21 +132,21 @@ class menu:
         # If there is a savefile, enable the continue game button
         # v------------------------------------------------------------------v
         if not os.listdir(os.path.join("savegames")):
-            self.cont = self.font.render("Continue Game", False,
+            self.cont = self.font.render("Load Saved Game", False,
                                          (100, 100, 100)).convert_alpha()
             self.cgam = menuItem.menuitem(self.cont,
                                           self.cont,
-                                          (320, 320),
+                                          (50, 300),
                                           lambda: None,
                                           self.gameconfig)
         else:
-            self.cont = self.font.render("Continue Game", False,
+            self.cont = self.font.render("Load Saved Game", False,
                                          (255, 255, 255)).convert_alpha()
-            self.contsel = self.font.render("Continue Game", False,
+            self.contsel = self.font.render("Load Saved Game", False,
                                             (255, 0, 0)).convert_alpha()
             self.cgam = menuItem.menuitem(self.cont,
                                           self.contsel,
-                                          (320, 320),
+                                          (50, 300),
                                           lambda: Game().main(screen, keys,
                                                               "load",
                                                               self.gameconfig),
@@ -121,12 +160,12 @@ class menu:
                                        (255, 0, 0)).convert_alpha()
         self.options = menuItem.menuitem(self.optimg,
                                          self.optsel,
-                                         (320, 440),
+                                         (50, 360),
                                          lambda: OptionsMenu().main(
                                              screen, keys, self.gameconfig),
                                          self.gameconfig)
         # ^------------------------------------------------------------------^
-        self.items = [self.newgame, self.cgam, self.options, self.exit]
+        self.items = [self.newmaingame, self.newcustomgame, self.cgam, self.options, self.credits, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.

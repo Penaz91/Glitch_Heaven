@@ -1,4 +1,4 @@
-# Video Settings Component
+# Credits Screen Component
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
@@ -8,7 +8,7 @@ from libs import animation, timedanimation
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
-module_logger = logging.getLogger("Glitch_Heaven.ControlSettings")
+module_logger = logging.getLogger("Glitch_Heaven.Credits")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
@@ -19,7 +19,8 @@ fh.setFormatter(formatter)
 module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
-class VideoSettings:
+
+class Credits:
     """ Represents a pause menu window"""
 
     def goToMenu(self):
@@ -33,8 +34,8 @@ class VideoSettings:
         Returns:
         - Nothing
         """
-        module_logger.info("Going to the previous menu")
         self.running = False
+        module_logger.info("Going to the previous Menu")
 
     def main(self, screen, keys, config):
         """
@@ -43,12 +44,12 @@ class VideoSettings:
         Keyword Arguments:
         - Screen: the Screen surface to make the menu on
         - Keys: The list of control keys to use
-        - game: The game instance.
+        - Config: The game configuration
 
         Returns:
         - Nothing
         """
-        module_logger.info("Opening the Video Settings Menu")
+        module_logger.info("Entering Credits Screen")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties
@@ -78,23 +79,28 @@ class VideoSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        self.line = self.font.render("Video settings are not" +
-                                     " available in this version",
-                                     False,
-                                     (255, 255, 255))
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
-        self.menu = self.font.render("Previous Menu",
+        self.menu = self.font.render("Main Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = self.font.render("Previous Menu",
+        self.menusel = self.font.render("Main Menu",
                                         False, (255, 0, 0)).convert_alpha()
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
-                                          (50, 560),
+                                          (320, 560),
                                           lambda: self.goToMenu(),
                                           self.config)
         # ^------------------------------------------------------------------^
+        # Credits text
+        # v------------------------------------------------------------------v
+        self.texts = [
+            ((self.font.render("Glitch_Heaven, a game by:", False, (255,255,255))).convert_alpha(), (50,100)),
+            ((self.font.render("Penaz", False, (255,0,0))).convert_alpha(), (50,120)),
+            ((self.font.render("Thanks to:", False, (255,255,255))).convert_alpha(), (50, 150)),
+            ((self.font.render("Dexter561 and ScansPlays", False, (255,0,0))).convert_alpha(), (50,170)),
+            ((self.font.render("For putting up with this game, and even making a playthrough", False, (255,255,255))).convert_alpha(), (50,190))
+        ]
         self.items = [self.mainmenu]
         self.clock = pygame.time.Clock()
         while self.running:
@@ -145,8 +151,9 @@ class VideoSettings:
             self.title = self.titleani.next(self.dt)
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
+            for text in self.texts:
+                screen.blit(*text)
             screen.blit(self.title, self.titlerect.topleft)
-            screen.blit(self.line, (100, 200))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

@@ -249,7 +249,7 @@ class Game(object):
         - campaignFile: The file (Without extension) defining the campaign
         """
         mod_logger.info("Loading campaign"+campaignfile)
-        with open(os.path.join("data", "campaigns", campaignfile+".cmp"),
+        with open(campaignfile,
                   "r") as campfile:
             x = campfile.readlines()
             y = []
@@ -330,7 +330,7 @@ class Game(object):
         mod_logger.debug("Campaign Index: "+str(self.campaignIndex))
         # ^--------------------------------------------------------------^
 
-    def main(self, screen, keys, mode, config):
+    def main(self, screen, keys, mode, cmp, config):
         """
         Main Game method
 
@@ -362,7 +362,7 @@ class Game(object):
             self.loadNextLevel(self.currentcampaign, screen)
         else:
             mod_logger.info("Using New Game mode")
-            self.campaignFile = "TestCampaign"
+            self.campaignFile = cmp
             self.currentcampaign = self.loadCampaign(self.campaignFile)
             self.campaignIndex = -1
             self.loadNextLevel(self.currentcampaign, screen)
@@ -444,8 +444,8 @@ class Game(object):
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
-                    if event.key == keys["escape"]:
-                        pauseMenu().main(screen, keys, self, self.config)
+                if event.type == pygame.KEYDOWN and event.key == keys["escape"]:
+                    pauseMenu().main(screen, keys, self, self.config)
                 if event.type == pygame.QUIT:
                     self.running = False
                 # ^----------------------------------------------------------^
