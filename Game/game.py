@@ -444,7 +444,8 @@ class Game(object):
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
-                if event.type == pygame.KEYDOWN and event.key == keys["escape"]:
+                if event.type == pygame.KEYDOWN and\
+                        event.key == keys["escape"]:
                     pauseMenu().main(screen, keys, self, self.config)
                 if event.type == pygame.QUIT:
                     self.running = False

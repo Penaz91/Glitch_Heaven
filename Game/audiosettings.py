@@ -50,6 +50,7 @@ class AudioSettings:
         - Nothing
         """
         module_logger.info("Entering Audio Settings Menu")
+        pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties

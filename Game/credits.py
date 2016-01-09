@@ -50,6 +50,7 @@ class Credits:
         - Nothing
         """
         module_logger.info("Entering Credits Screen")
+        pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties
@@ -95,11 +96,35 @@ class Credits:
         # Credits text
         # v------------------------------------------------------------------v
         self.texts = [
-            ((self.font.render("Glitch_Heaven, a game by:", False, (255,255,255))).convert_alpha(), (50,100)),
-            ((self.font.render("Penaz", False, (255,0,0))).convert_alpha(), (50,120)),
-            ((self.font.render("Thanks to:", False, (255,255,255))).convert_alpha(), (50, 150)),
-            ((self.font.render("Dexter561 and ScansPlays", False, (255,0,0))).convert_alpha(), (50,170)),
-            ((self.font.render("For putting up with this game, and even making a playthrough", False, (255,255,255))).convert_alpha(), (50,190))
+            ((self.font.render("Glitch_Heaven, a game by:",
+                               False,
+                               (255, 255, 255))).convert_alpha(),
+             (50, 100)),
+            ((self.font.render("Penaz",
+                               False,
+                               (255, 0, 0))).convert_alpha(),
+             (50, 120)),
+            ((self.font.render("Thanks to:",
+                               False,
+                               (255, 255, 255))).convert_alpha(),
+             (50, 150)),
+            ((self.font.render("Dexter561 and ScansPlays",
+                               False,
+                               (255, 0, 0))).convert_alpha(),
+             (50, 170)),
+            ((self.font.render("For putting up with this game, " +
+                               "and even making a playthrough",
+                               False,
+                               (255, 255, 255))).convert_alpha(),
+             (50, 190)),
+            ((self.font.render("----Special Thanks----",
+                               False,
+                               (255, 255, 255))).convert_alpha(),
+             (50, 220)),
+            ((self.font.render("[Many names shall be put here in the future]",
+                               False,
+                               (255, 255, 255))).convert_alpha(),
+             (50, 240))
         ]
         self.items = [self.mainmenu]
         self.clock = pygame.time.Clock()

@@ -51,6 +51,7 @@ class ControlSettings:
         - Nothing
         """
         module_logger.info("Entering Control menu")
+        pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties

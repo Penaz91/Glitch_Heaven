@@ -19,6 +19,7 @@ fh.setFormatter(formatter)
 module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
+
 class VideoSettings:
     """ Represents a pause menu window"""
 
@@ -49,6 +50,7 @@ class VideoSettings:
         - Nothing
         """
         module_logger.info("Opening the Video Settings Menu")
+        pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties
