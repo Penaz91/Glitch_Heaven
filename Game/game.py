@@ -19,7 +19,7 @@ from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
 from components.collectibletrigger import CollectibleTrigger
-import shelve
+import pickle
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
@@ -290,6 +290,12 @@ class Game(object):
                                                     self.tilemap.px_height),
                                                    pygame.SRCALPHA,
                                                    32).convert_alpha()
+        self.gravity = 1
+        # In case the invertedgravity glitch is up, invert gravity
+        # v--------v
+        if self.glitches["invertedgravity"]:
+            self.gravity = -1
+        # ^--------^
         mod_logger.info("Loading of the level completed" +
                         " successfully, ready to play")
 
@@ -303,14 +309,18 @@ class Game(object):
         formats = [("Glitch_Heaven Savegame", "*.dat")]
         path = filedialog.asksaveasfilename(filetypes=formats,
                                             initialdir="./savegames")
-        with shelve.open(path, 'c') as shelf:
+        shelf = {"currentcampaign": self.currentcampaign,
+                 "campaignfile": self.campaignFile,
+                 "campaignIndex": self.campaignIndex - 1}
+        pickle.dump(shelf, open(path, "wb"))
+        """with shelve.open(path, 'c') as shelf:
             shelf["currentcampaign"] = self.currentcampaign
             shelf["campaignfile"] = self.campaignFile
             # When loadNextLevel will be called, it will be the right one
             # v--------v
             shelf["campaignIndex"] = self.campaignIndex - 1
             # ^--------^
-
+        """
     def loadGame(self):
         """
         Opens the game from a shelf file
@@ -319,13 +329,15 @@ class Game(object):
         formats = [("Glitch_Heaven Savegame", "*.dat")]
         path = filedialog.askopenfilename(filetypes=formats,
                                           initialdir="./savegames")
-        if path=="":
+        if not path:
             raise FileNotFoundError
         mod_logger.info("Loading Save from: "+path)
-        with shelve.open(path[:-4], 'r') as shelf:
-            self.currentcampaign = shelf["currentcampaign"]
-            self.campaignFile = shelf["campaignfile"]
-            self.campaignIndex = shelf["campaignIndex"]
+        """with shelve.open(path, 'r') as shelf:
+        """
+        shelf = pickle.load(open(path, "rb"))
+        self.currentcampaign = shelf["currentcampaign"]
+        self.campaignFile = shelf["campaignfile"]
+        self.campaignIndex = shelf["campaignIndex"]
         # Debug Area
         # v--------------------------------------------------------------v
         mod_logger.debug("Loadgame: "+str(self.currentcampaign))
@@ -360,8 +372,12 @@ class Game(object):
         # v--------------------------------------------------------------v
         if mode.lower() == "load":
             mod_logger.info("Using Load mode")
-            self.loadGame()
-            self.loadNextLevel(self.currentcampaign, screen)
+            try:
+                self.loadGame()
+                self.loadNextLevel(self.currentcampaign, screen)
+            except FileNotFoundError:
+                mod_logger.info("No file provided, loading cancelled")
+                self.running = False
         else:
             mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
@@ -370,17 +386,12 @@ class Game(object):
             self.loadNextLevel(self.currentcampaign, screen)
         # ^--------------------------------------------------------------^
         self.fps = 30
-        self.gravity = 1
         self.deadbodies = pygame.sprite.Group()
-        # In case the invertedgravity glitch is up, invert gravity
-        # v--------v
-        if self.glitches["invertedgravity"]:
-            self.gravity = -1
-        # ^--------^
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
-        self.loadLevelPart2(self.keys)
-        mod_logger.debug("Glitches Loaded: "+str(self.glitches))
+        if self.running:
+            self.loadLevelPart2(self.keys)
+            mod_logger.debug("Glitches Loaded: "+str(self.glitches))
         """Game Loop"""
         while self.running:
             dt = self.clock.tick(self.fps)/1000.
