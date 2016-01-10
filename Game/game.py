@@ -319,8 +319,10 @@ class Game(object):
         formats = [("Glitch_Heaven Savegame", "*.dat")]
         path = filedialog.askopenfilename(filetypes=formats,
                                           initialdir="./savegames")
+        if path=="":
+            raise FileNotFoundError
         mod_logger.info("Loading Save from: "+path)
-        with shelve.open(path, 'r') as shelf:
+        with shelve.open(path[:-4], 'r') as shelf:
             self.currentcampaign = shelf["currentcampaign"]
             self.campaignFile = shelf["campaignfile"]
             self.campaignIndex = shelf["campaignIndex"]

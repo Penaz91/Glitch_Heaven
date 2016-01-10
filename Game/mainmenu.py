@@ -36,11 +36,14 @@ class menu:
         """
         Loads a custom campaign from a open file dialog
         """
-        Tk().withdraw()
-        formats = [("Glitch_Heaven Campaign", "*.cmp")]
-        self.camp = filedialog.askopenfilename(filetypes=formats,
-                                               initialdir="./data/campaigns")
-        Game().main(screen, keys, "newgame", self.camp, gameconfig)
+        try:
+            Tk().withdraw()
+            formats = [("Glitch_Heaven Campaign", "*.cmp")]
+            self.camp = filedialog.askopenfilename(filetypes=formats,
+                                                   initialdir="./data/campaigns")
+            Game().main(screen, keys, "newgame", self.camp, gameconfig)
+        except FileNotFoundError:
+            module_logger.info("No File selected, Loading of campaign aborted")
 
     def main(self, screen, keys, config):
         """
@@ -158,6 +161,7 @@ class menu:
                                           (50, 300),
                                           lambda: Game().main(screen, keys,
                                                               "load",
+                                                              None,
                                                               self.gameconfig),
                                           self.gameconfig)
         # ^------------------------------------------------------------------^
