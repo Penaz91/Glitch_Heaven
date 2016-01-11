@@ -8,6 +8,7 @@ from libs import animation, timedanimation
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
+from libs.textglitcher import makeGlitched
 module_logger = logging.getLogger("Glitch_Heaven.Credits")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
@@ -100,17 +101,13 @@ class Credits:
                                False,
                                (255, 255, 255))).convert_alpha(),
              (50, 100)),
-            ((self.font.render("Penaz",
-                               False,
-                               (255, 0, 0))).convert_alpha(),
+            (makeGlitched("Penaz", self.font),
              (50, 120)),
             ((self.font.render("Thanks to:",
                                False,
                                (255, 255, 255))).convert_alpha(),
              (50, 150)),
-            ((self.font.render("Dexter561 and ScansPlays",
-                               False,
-                               (255, 0, 0))).convert_alpha(),
+            (makeGlitched("Dexter561 and ScansPlays", self.font),
              (50, 170)),
             ((self.font.render("For putting up with this game, " +
                                "and even making a playthrough",

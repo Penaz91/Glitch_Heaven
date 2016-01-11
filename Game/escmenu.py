@@ -8,6 +8,7 @@ from libs import animation, timedanimation
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
+from libs.textglitcher import makeGlitched
 module_logger = logging.getLogger("Glitch_Heaven.PauseMenu")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
@@ -91,8 +92,7 @@ class pauseMenu:
         # v------------------------------------------------------------------v
         self.resgameimg = self.font.render("Resume Game", False,
                                            (255, 255, 255)).convert_alpha()
-        self.selectedimg = self.font.render("Resume Game", False,
-                                            (255, 0, 0)).convert_alpha()
+        self.selectedimg = makeGlitched("Resume Game", self.font)
         self.resgame = menuItem.menuitem(self.resgameimg,
                                          self.selectedimg,
                                          (320, 240),
@@ -103,8 +103,7 @@ class pauseMenu:
         # v------------------------------------------------------------------v
         self.saveimg = self.font.render("Save Game", False,
                                         (255, 255, 255)).convert_alpha()
-        self.saveselected = self.font.render("Save Game", False,
-                                             (255, 0, 0)).convert_alpha()
+        self.saveselected = makeGlitched("Save Game", self.font)
         self.savegame = menuItem.menuitem(self.saveimg,
                                           self.saveselected,
                                           (320, 320), lambda: game.saveGame(),
@@ -114,8 +113,7 @@ class pauseMenu:
         # v------------------------------------------------------------------v
         self.exitimg = self.font.render("Quit to Desktop",
                                         False, (255, 255, 255)).convert_alpha()
-        self.exitselected = self.font.render("Quit to Desktop", False,
-                                             (255, 0, 0)).convert_alpha()
+        self.exitselected = makeGlitched("Quit to Desktop", self.font)
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (320, 560), lambda: pygame.event.post(
@@ -126,8 +124,7 @@ class pauseMenu:
         # v------------------------------------------------------------------v
         self.menu = self.font.render("Main Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = self.font.render("Main Menu",
-                                        False, (255, 0, 0)).convert_alpha()
+        self.menusel = makeGlitched("Main Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 400),

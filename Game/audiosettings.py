@@ -8,6 +8,7 @@ from libs import animation, timedanimation
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
+from libs.textglitcher import makeGlitched
 module_logger = logging.getLogger("Glitch_Heaven.AudioSettings")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
@@ -101,8 +102,7 @@ class AudioSettings:
         # v------------------------------------------------------------------v
         self.menu = self.font.render("Previous Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = self.font.render("Previous Menu",
-                                        False, (255, 0, 0)).convert_alpha()
+        self.menusel = makeGlitched("Previous Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),

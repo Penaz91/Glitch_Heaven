@@ -11,6 +11,7 @@ from controlsettings import ControlSettings
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
+from libs.textglitcher import makeGlitched
 module_logger = logging.getLogger("Glitch_Heaven.OptionsMenu")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
@@ -87,8 +88,7 @@ class OptionsMenu:
         # v------------------------------------------------------------------v
         self.videoimg = self.font.render("Video Settings", False,
                                          (255, 255, 255)).convert_alpha()
-        self.vidselimg = self.font.render("Video Settings", False,
-                                          (255, 0, 0)).convert_alpha()
+        self.vidselimg = makeGlitched("Video Settings", self.font)
         self.video = menuItem.menuitem(self.videoimg,
                                        self.vidselimg,
                                        (320, 240),
@@ -100,8 +100,7 @@ class OptionsMenu:
         # v------------------------------------------------------------------v
         self.sndimg = self.font.render("Audio Settings", False,
                                        (255, 255, 255)).convert_alpha()
-        self.sndselimg = self.font.render("Audio Settings", False,
-                                          (255, 0, 0)).convert_alpha()
+        self.sndselimg = makeGlitched("Audio Settings", self.font)
         self.snd = menuItem.menuitem(self.sndimg,
                                      self.sndselimg,
                                      (320, 320), lambda: AudioSettings().main(
@@ -112,8 +111,7 @@ class OptionsMenu:
         # v------------------------------------------------------------------v
         self.ctrlimg = self.font.render("Control Settings",
                                         False, (255, 255, 255)).convert_alpha()
-        self.ctrlselimg = self.font.render("Control Settings", False,
-                                           (255, 0, 0)).convert_alpha()
+        self.ctrlselimg = makeGlitched("Control Settings", self.font)
         self.ctrl = menuItem.menuitem(self.ctrlimg,
                                       self.ctrlselimg,
                                       (320, 400),
@@ -125,8 +123,7 @@ class OptionsMenu:
         # v------------------------------------------------------------------v
         self.menu = self.font.render("Main Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = self.font.render("Main Menu",
-                                        False, (255, 0, 0)).convert_alpha()
+        self.menusel = makeGlitched("Main Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),

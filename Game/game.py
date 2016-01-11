@@ -308,7 +308,8 @@ class Game(object):
         Tk().withdraw()
         formats = [("Glitch_Heaven Savegame", "*.dat")]
         path = filedialog.asksaveasfilename(filetypes=formats,
-                                            initialdir="./savegames")
+                                            initialdir="./savegames",
+                                            defaultextension=".dat")
         shelf = {"currentcampaign": self.currentcampaign,
                  "campaignfile": self.campaignFile,
                  "campaignIndex": self.campaignIndex - 1}

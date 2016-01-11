@@ -8,6 +8,7 @@ from libs import animation, timedanimation
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
+from libs.textglitcher import makeGlitched
 module_logger = logging.getLogger("Glitch_Heaven.ControlSettings")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
@@ -98,45 +99,12 @@ class ControlSettings:
         self.line7 = self.font.render("Left Shift + q->y: Debug Keys/Cheats",
                                       False,
                                       (255, 255, 255))
-        """
-        # Video Settings menu element
-        # v------------------------------------------------------------------v
-        self.videoimg = self.font.render("Video Settings", False,
-                                         (255, 255, 255)).convert_alpha()
-        self.vidselimg = self.font.render("Video Settings", False,
-                                          (255, 0, 0)).convert_alpha()
-        self.video = menuItem.menuitem(self.videoimg,
-                                       self.vidselimg,
-                                       (320, 240),
-                                       lambda: VideoSettings.main())
-        # ^------------------------------------------------------------------^
-        # Sound settings menu element
-        # v------------------------------------------------------------------v
-        self.sndimg = self.font.render("Audio Settings", False,
-                                       (255, 255, 255)).convert_alpha()
-        self.sndselimg = self.font.render("Audio Settings", False,
-                                          (255, 0, 0)).convert_alpha()
-        self.snd = menuItem.menuitem(self.sndimg,
-                                     self.sndselimg,
-                                     (320, 320), lambda: AudioSettings.main())
-        # ^------------------------------------------------------------------^
-        # Controls/Controllers menu element
-        # v------------------------------------------------------------------v
-        self.ctrlimg = self.font.render("Control Settings",
-                                        False, (255, 255, 255)).convert_alpha()
-        self.ctrlselimg = self.font.render("Control Settings", False,
-                                           (255, 0, 0)).convert_alpha()
-        self.ctrl = menuItem.menuitem(self.ctrlimg,
-                                      self.ctrlselimg,
-                                      (320, 400),
-                                      lambda: ControlSettings.main())"""
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
         self.menu = self.font.render("Main Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = self.font.render("Main Menu",
-                                        False, (255, 0, 0)).convert_alpha()
+        self.menusel = makeGlitched("Main Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),
