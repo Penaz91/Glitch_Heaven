@@ -13,6 +13,7 @@ from os.path import join as pathjoin
 from credits import Credits
 from tkinter import Tk
 from tkinter import filedialog
+from libs.textglitcher import makeGlitched
 module_logger = logging.getLogger("Glitch_Heaven.MainMenu")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
@@ -39,8 +40,9 @@ class menu:
         try:
             Tk().withdraw()
             formats = [("Glitch_Heaven Campaign", "*.cmp")]
-            self.camp = filedialog.askopenfilename(filetypes=formats,
-                                                   initialdir="./data/campaigns")
+            self.camp = filedialog.askopenfilename(
+                    filetypes=formats,
+                    initialdir="./data/campaigns")
             Game().main(screen, keys, "newgame", self.camp, gameconfig)
         except FileNotFoundError:
             module_logger.info("No File selected, Loading of campaign aborted")
@@ -85,8 +87,7 @@ class menu:
         # v------------------------------------------------------------------v
         self.newmainimg = self.font.render("Start Main Campaign", False,
                                            (255, 255, 255)).convert_alpha()
-        self.selectedmainimg = self.font.render("Start Main Campaign", False,
-                                                (255, 0, 0)).convert_alpha()
+        self.selectedmainimg = makeGlitched("Start Main Campaign", self.font)
         self.newmaingame = menuItem.menuitem(self.newmainimg,
                                              self.selectedmainimg,
                                              (50, 180),
@@ -103,9 +104,8 @@ class menu:
         # v------------------------------------------------------------------v
         self.newcustomimg = self.font.render("Start Custom Campaign", False,
                                              (255, 255, 255)).convert_alpha()
-        self.selectedcustomimg = self.font.render("Start Custom Campaign",
-                                                  False,
-                                                  (255, 0, 0)).convert_alpha()
+        self.selectedcustomimg = makeGlitched("Start Custom Campaign",
+                                              self.font)
         self.newcustomgame = menuItem.menuitem(self.newcustomimg,
                                                self.selectedcustomimg,
                                                (50, 240),
@@ -118,8 +118,7 @@ class menu:
         # v------------------------------------------------------------------v
         self.creditsimg = self.font.render("Credits", False,
                                            (255, 255, 255)).convert_alpha()
-        self.selectedcreditsimg = self.font.render("Credits", False,
-                                                   (255, 0, 0)).convert_alpha()
+        self.selectedcreditsimg = makeGlitched("Credits", self.font)
         self.credits = menuItem.menuitem(self.creditsimg,
                                          self.selectedcreditsimg,
                                          (50, 420),
@@ -133,8 +132,7 @@ class menu:
         # v------------------------------------------------------------------v
         self.exitimg = self.font.render("Quit", False,
                                         (255, 255, 255)).convert_alpha()
-        self.exitselected = self.font.render("Quit", False,
-                                             (255, 0, 0)).convert_alpha()
+        self.exitselected = makeGlitched("Quit", self.font)
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (700, 560), lambda: pygame.event.post(
@@ -154,8 +152,7 @@ class menu:
         else:
             self.cont = self.font.render("Load Saved Game", False,
                                          (255, 255, 255)).convert_alpha()
-            self.contsel = self.font.render("Load Saved Game", False,
-                                            (255, 0, 0)).convert_alpha()
+            self.contsel = makeGlitched("Load Saved Game", self.font)
             self.cgam = menuItem.menuitem(self.cont,
                                           self.contsel,
                                           (50, 300),
@@ -169,8 +166,7 @@ class menu:
         # v------------------------------------------------------------------v
         self.optimg = self.font.render("Options", False,
                                        (255, 255, 255)).convert_alpha()
-        self.optsel = self.font.render("Options", False,
-                                       (255, 0, 0)).convert_alpha()
+        self.optsel = makeGlitched("Options", self.font)
         self.options = menuItem.menuitem(self.optimg,
                                          self.optsel,
                                          (50, 360),
