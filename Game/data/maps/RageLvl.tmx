@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="107" tilewidth="32" tileheight="32" nextobjectid="83">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="107" tilewidth="32" tileheight="32" nextobjectid="84">
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
   <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
@@ -412,6 +412,11 @@
   <object id="82" x="320" y="576" width="64" height="32">
    <properties>
     <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="83" x="800" y="1856" width="32" height="32">
+   <properties>
+    <property name="ToggleGlitch" value="invertedgravity,featherfalling"/>
    </properties>
   </object>
  </objectgroup>

@@ -118,6 +118,7 @@ class VideoSettings:
                         self.currentItem = ((self.currentItem-1) %
                                             len(self.items))
                     if event.key == keys["confirm"]:
+                        self.items[self.currentItem].confirmSound.play()
                         self.items[self.currentItem].function()
                     if event.key == keys["escape"]:
                         print("esc")
@@ -138,6 +139,7 @@ class VideoSettings:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     for item in self.items:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
+                            item.confirmSound.play()
                             item.function()
                 if event.type == pygame.QUIT:
                     quit()

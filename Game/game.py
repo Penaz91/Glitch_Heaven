@@ -67,6 +67,11 @@ class Game(object):
                                  .format(glitch))
             mydict = {glitch: truth}
             self.glitches.update(mydict)
+        if self.glitches["speed"]:
+            self.player.toggleDoubleSpeed()
+        else:
+            self.player.untoggleDoubleSpeed()
+
 
     def getHelpFlag(self):
         """
@@ -296,6 +301,10 @@ class Game(object):
         if self.glitches["invertedgravity"]:
             self.gravity = -1
         # ^--------^
+        if self.glitches["speed"]:
+            self.player.toggleDoubleSpeed()
+        else:
+            self.player.untoggleDoubleSpeed()
         mod_logger.info("Loading of the level completed" +
                         " successfully, ready to play")
 
@@ -450,6 +459,8 @@ class Game(object):
                             self.toggleGlitch("nojump")
                         if event.key == pygame.K_a:
                             self.toggleGlitch("stopbounce")
+                        if event.key == pygame.K_s:
+                            self.toggleGlitch("speed")
                         if event.key == pygame.K_BACKSPACE:
                             mod_logger.debug("Debug key used,a" +
                                              "Loading next level")

@@ -36,10 +36,15 @@ mod_logger.addHandler(ch)
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
     size = (32, 32)     # Might be removed in future+taken from img
-    playermaxspeed = 200
     runmultiplier = 2
-    playeraccel = 50
 
+    def toggleDoubleSpeed(self):
+        self.playermaxspeed = 350
+        self.playeraccel = 100
+
+    def untoggleDoubleSpeed(self):
+        self.playermaxspeed = 200
+        self.playeraccel = 50
     def __init__(self, location, *groups, keys, game):
         """
         Default Constructor
@@ -53,6 +58,8 @@ class Player(pygame.sprite.Sprite):
         - Nothing
         """
         super(Player, self).__init__(*groups)
+        self.playermaxspeed = 200
+        self.playeraccel = 50
         self.glitched = False
         self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
                                                          "sounds",

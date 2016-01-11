@@ -38,6 +38,7 @@ and more challenging.
 - **NoMovement Glitches:** A pack of 3 glitches (NoLeft, NoRight, NoJump) that disallow the usage of 1 or more commands for the player.
 - **SlideInvert Glitch:** Pressing the action button (usually down arrow) will make the sliding floor pull you backwards.
 - **StopBounce Glitch:** Pressing the action button (usually down arrow) will make you stop bouncing on the bouncy floor.
+- **Speed Glitch:** Gotta go fast!!
 
 ### Glitches Planned:
 - None At The Moment

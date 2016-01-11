@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="23">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+  <image source="resources/tiles/TestTile.png" width="352" height="288"/>
+ </tileset>
+ <layer name="Livello tile 1" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztlcEOAiEMRBsvXkDjnkzU31H//4u0B7OYrCClhbpOk0n2ADN9KQuRiI4Nio37NTx5/Y7a6tC4X8MzEDikmRae3jj2Qs9RHNenbhnV9uRtHlJPcMgzLTw1ONgjd9ZZ90pPzKNfpoUnOOSZFp54B+f653loe4JDnmnhifdcnmnhCQ55poUn3sG51jIP3Fd6nhocZ8Geifz9H7XFDJfCmhHzqCm+p0oMXN45vi0rDj4Lm46KyfdWgePVfxysElOOY3LQ/5KWWFKO0w8wfGIJ9D639Hx6V3rOQqdMa57RPUDr1QN4oC8f
+  </data>
+ </layer>
+ <objectgroup name="Triggers" visible="0">
+  <object id="3" x="32" y="1120" width="128" height="32">
+   <properties>
+    <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="4" x="160" y="1088" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tl"/>
+   </properties>
+  </object>
+  <object id="5" x="192" y="1056" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tl"/>
+   </properties>
+  </object>
+  <object id="6" x="224" y="1024" width="64" height="32">
+   <properties>
+    <property name="blocker" value="tl"/>
+   </properties>
+  </object>
+  <object id="7" x="288" y="992" width="896" height="32">
+   <properties>
+    <property name="blocker" value="tl"/>
+   </properties>
+  </object>
+  <object id="8" x="512" y="32" width="32" height="864">
+   <properties>
+    <property name="blocker" value="blr"/>
+   </properties>
+  </object>
+  <object id="9" x="1184" y="32" width="32" height="960">
+   <properties>
+    <property name="blocker" value="l"/>
+   </properties>
+  </object>
+  <object id="10" x="928" y="864" width="256" height="32">
+   <properties>
+    <property name="blocker" value="tlb"/>
+   </properties>
+  </object>
+  <object id="11" x="896" y="896" width="64" height="32">
+   <properties>
+    <property name="blocker" value="brlt"/>
+   </properties>
+  </object>
+  <object id="12" x="864" y="928" width="64" height="32">
+   <properties>
+    <property name="blocker" value="brlt"/>
+   </properties>
+  </object>
+  <object id="13" x="928" y="736" width="256" height="32">
+   <properties>
+    <property name="blocker" value="tlb"/>
+   </properties>
+  </object>
+  <object id="14" x="928" y="448" width="256" height="32">
+   <properties>
+    <property name="blocker" value="tlb"/>
+   </properties>
+  </object>
+  <object id="15" x="928" y="160" width="256" height="32">
+   <properties>
+    <property name="blocker" value="tlb"/>
+   </properties>
+  </object>
+  <object id="16" x="544" y="800" width="288" height="32">
+   <properties>
+    <property name="blocker" value="tbr"/>
+   </properties>
+  </object>
+  <object id="17" x="544" y="608" width="288" height="32">
+   <properties>
+    <property name="blocker" value="tbr"/>
+   </properties>
+  </object>
+  <object id="18" x="544" y="288" width="288" height="32">
+   <properties>
+    <property name="blocker" value="tbr"/>
+   </properties>
+  </object>
+  <object id="19" x="64" y="1088" width="32" height="32">
+   <properties>
+    <property name="playerEntrance" value=""/>
+   </properties>
+  </object>
+  <object id="20" x="1120" y="128" width="32" height="32">
+   <properties>
+    <property name="playerExit" value=""/>
+   </properties>
+  </object>
+  <object id="21" x="1088" y="704" width="32" height="32">
+   <properties>
+    <property name="ToggleGlitch" value="highjump"/>
+   </properties>
+  </object>
+  <object id="22" x="512" y="0" width="704" height="32">
+   <properties>
+    <property name="blocker" value="b"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
