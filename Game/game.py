@@ -19,7 +19,7 @@ from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
 from components.collectibletrigger import CollectibleTrigger
-import pickle
+import json
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
@@ -312,7 +312,9 @@ class Game(object):
         shelf = {"currentcampaign": self.currentcampaign,
                  "campaignfile": self.campaignFile,
                  "campaignIndex": self.campaignIndex - 1}
-        pickle.dump(shelf, open(path, "wb"))
+        with open(path, "w") as savefile:
+            string = json.dumps(shelf)
+            savefile.write(string)
         """with shelve.open(path, 'c') as shelf:
             shelf["currentcampaign"] = self.currentcampaign
             shelf["campaignfile"] = self.campaignFile
@@ -334,10 +336,12 @@ class Game(object):
         mod_logger.info("Loading Save from: "+path)
         """with shelve.open(path, 'r') as shelf:
         """
-        shelf = pickle.load(open(path, "rb"))
-        self.currentcampaign = shelf["currentcampaign"]
-        self.campaignFile = shelf["campaignfile"]
-        self.campaignIndex = shelf["campaignIndex"]
+        with open(path, "r") as savefile:
+            string = savefile.read()
+            shelf = json.loads(string)
+            self.currentcampaign = shelf["currentcampaign"]
+            self.campaignFile = shelf["campaignfile"]
+            self.campaignIndex = shelf["campaignIndex"]
         # Debug Area
         # v--------------------------------------------------------------v
         mod_logger.debug("Loadgame: "+str(self.currentcampaign))
