@@ -39,6 +39,8 @@ and more challenging.
 - **SlideInvert Glitch:** Pressing the action button (usually down arrow) will make the sliding floor pull you backwards.
 - **StopBounce Glitch:** Pressing the action button (usually down arrow) will make you stop bouncing on the bouncy floor.
 - **Speed Glitch:** Gotta go fast!!
+- **Inverted Running:** You run by default, need to press the run button to walk
+- **Inverted Controls:** Do i really have to explain this?
 
 ### Glitches Planned:
 - None At The Moment

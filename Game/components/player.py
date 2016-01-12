@@ -45,6 +45,7 @@ class Player(pygame.sprite.Sprite):
     def untoggleDoubleSpeed(self):
         self.playermaxspeed = 200
         self.playeraccel = 50
+
     def __init__(self, location, *groups, keys, game):
         """
         Default Constructor
@@ -345,15 +346,24 @@ class Player(pygame.sprite.Sprite):
         """
         last = self.rect.copy()     # Copy last position for collision compare
         key = pygame.key.get_pressed()
-        if key[self.keys["left"]] and not game.glitches["noleft"]:
+        if game.glitches["invertedrun"]:
+            self.running = not bool(key[self.keys["run"]])
+        else:
+            self.running = bool(key[self.keys["run"]])
+        if game.glitches["invertedcontrols"]:
+            self.left = key[self.keys["right"]]
+            self.right = key[self.keys["left"]]
+        else:
+            self.left = key[self.keys["left"]]
+            self.right = key[self.keys["right"]]
+        if self.left and not game.glitches["noleft"]:
             self.direction = -1     # Mainly for different bounce mechanics
             if not self.bounced:        # Not bounced away -> control in air
                 # Why do i have different control in air if i'm running?
                 # This might lead to a change of speed in air
                 # Do i want this?
                 # v--------------------------------------------------------v
-                if key[self.keys["run"]]:
-                    self.running = True
+                if self.running:
                     self.x_speed = max(-self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed-self.playeraccel*dt *
@@ -369,7 +379,6 @@ class Player(pygame.sprite.Sprite):
                         self.rightemitter.emit(2)
                     # ^----------------------------------------------------^
                 else:
-                    self.running = False
                     self.x_speed = max(-self.playermaxspeed * dt,
                                        self.x_speed -
                                        self.playeraccel*dt)  # Use walk speed
@@ -382,11 +391,10 @@ class Player(pygame.sprite.Sprite):
                         self.rightemitter.emit(1)
                     # ^----------------------------------------------------^
 
-        elif key[self.keys["right"]] and not game.glitches["noright"]:
+        elif self.right and not game.glitches["noright"]:
             if not self.bounced:
                 self.direction = 1  # Used mainly for bouncy mechanics
-                if key[self.keys["run"]]:
-                    self.running = True
+                if self.running:
                     self.x_speed = min(self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
@@ -401,7 +409,6 @@ class Player(pygame.sprite.Sprite):
                         self.leftemitter.emit(2)
                     # ^----------------------------------------------------^
                 else:
-                    self.running = False
                     self.x_speed = min(self.playermaxspeed*dt,
                                        self.x_speed +
                                        self.playeraccel*dt)  # Walk Speed

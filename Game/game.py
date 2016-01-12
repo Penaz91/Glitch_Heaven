@@ -72,7 +72,6 @@ class Game(object):
         else:
             self.player.untoggleDoubleSpeed()
 
-
     def getHelpFlag(self):
         """
         Getter method for helpflagactive
