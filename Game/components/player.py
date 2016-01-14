@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
         - Nothing
         """
         super(Player, self).__init__(*groups)
-        self.playermaxspeed = 200
+        self.playermaxspeed = 250
         self.playeraccel = 50
         self.glitched = False
         self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
@@ -478,23 +478,23 @@ class Player(pygame.sprite.Sprite):
                 if game.gravity == 1:
                     self.y_speed = (min(350, self.y_speed+35))
                 elif game.gravity == -1:
-                    self.y_speed = max(-250, self.y_speed-25)
+                    self.y_speed = max(-350, self.y_speed-35)
             else:
                 if game.gravity == 1:
                     self.y_speed = (min(350, self.y_speed+35))
                 elif game.gravity == -1:
-                    self.y_speed = max(-250, self.y_speed-25)
+                    self.y_speed = max(-350, self.y_speed-35)
         else:
             if game.glitches["ledgejump"]:
                 if game.gravity == 1:
                     self.y_speed = (min(600, self.y_speed+60))
                 elif game.gravity == -1:
-                    self.y_speed = max(-500, self.y_speed-50)
+                    self.y_speed = max(-600, self.y_speed-60)
             else:
                 if game.gravity == 1:
                     self.y_speed = (min(600, self.y_speed+60))
                 elif game.gravity == -1:
-                    self.y_speed = max(-500, self.y_speed-50)
+                    self.y_speed = max(-600, self.y_speed-60)
         if game.glitches['ledgewalk']:
             if not self.resting:
                 self.rect.y += self.y_speed * dt   # Move the player vertically

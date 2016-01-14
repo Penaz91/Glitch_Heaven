@@ -45,7 +45,7 @@
   <object id="8" x="2752" y="2528" width="416" height="32">
    <properties>
     <property name="bouncy" value="t"/>
-    <property name="power" value="800"/>
+    <property name="power" value="1000"/>
    </properties>
   </object>
   <object id="10" x="384" y="1344" width="1376" height="32">
@@ -121,19 +121,19 @@
   <object id="23" x="2368" y="2304" width="384" height="32">
    <properties>
     <property name="bouncy" value="tbr"/>
-    <property name="power" value="1200"/>
+    <property name="power" value="1400"/>
    </properties>
   </object>
   <object id="24" x="2368" y="1632" width="384" height="32">
    <properties>
     <property name="bouncy" value="tbr"/>
-    <property name="power" value="1200"/>
+    <property name="power" value="1500"/>
    </properties>
   </object>
   <object id="25" x="2784" y="1952" width="384" height="32">
    <properties>
     <property name="bouncy" value="tbl"/>
-    <property name="power" value="1200"/>
+    <property name="power" value="1400"/>
    </properties>
   </object>
   <object id="26" x="2336" y="928" width="32" height="1408">
@@ -325,7 +325,7 @@
   <object id="62" x="1600" y="672" width="160" height="32">
    <properties>
     <property name="bouncy" value="t"/>
-    <property name="power" value="1000"/>
+    <property name="power" value="1300"/>
    </properties>
   </object>
   <object id="63" x="1760" y="288" width="32" height="416">
@@ -351,7 +351,7 @@
   <object id="67" x="2272" y="672" width="64" height="32">
    <properties>
     <property name="bouncy" value="t"/>
-    <property name="power" value="800"/>
+    <property name="power" value="1300"/>
    </properties>
   </object>
   <object id="70" x="2336" y="672" width="544" height="32">
