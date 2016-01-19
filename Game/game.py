@@ -408,6 +408,8 @@ class Game(object):
         """Game Loop"""
         while self.running:
             dt = self.clock.tick(self.fps)/1000.
+            if dt > 0.05:
+                dt = 0.05
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     mod_logger.info("QUIT signal received, quitting")
