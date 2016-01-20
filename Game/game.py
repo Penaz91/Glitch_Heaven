@@ -58,13 +58,12 @@ class Game(object):
         else:
             truth = self.glitches.get(glitch)
             if truth:
-                truth = False
                 mod_logger.debug("The {0} glitch has been disabled"
                                  .format(glitch))
             else:
-                truth = True
                 mod_logger.debug("The {0} glitch has been enabled"
                                  .format(glitch))
+            truth = not truth
             mydict = {glitch: truth}
             self.glitches.update(mydict)
         if self.glitches["speed"]:
