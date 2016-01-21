@@ -121,7 +121,7 @@ class menu:
         self.selectedcreditsimg = makeGlitched("Credits", self.font)
         self.credits = menuItem.menuitem(self.creditsimg,
                                          self.selectedcreditsimg,
-                                         (50, 420),
+                                         (50, 480),
                                          lambda: Credits().main(
                                              screen,
                                              keys,
@@ -146,7 +146,7 @@ class menu:
                                          (100, 100, 100)).convert_alpha()
             self.cgam = menuItem.menuitem(self.cont,
                                           self.cont,
-                                          (50, 300),
+                                          (50, 360),
                                           lambda: None,
                                           self.gameconfig)
         else:
@@ -155,7 +155,7 @@ class menu:
             self.contsel = makeGlitched("Load Saved Game", self.font)
             self.cgam = menuItem.menuitem(self.cont,
                                           self.contsel,
-                                          (50, 300),
+                                          (50, 360),
                                           lambda: Game().main(screen, keys,
                                                               "load",
                                                               None,
@@ -169,13 +169,23 @@ class menu:
         self.optsel = makeGlitched("Options", self.font)
         self.options = menuItem.menuitem(self.optimg,
                                          self.optsel,
-                                         (50, 360),
+                                         (50, 420),
                                          lambda: OptionsMenu().main(
                                              screen, keys, self.gameconfig),
                                          self.gameconfig)
         # ^------------------------------------------------------------------^
-        self.items = [self.newmaingame, self.newcustomgame, self.cgam,
-                      self.options, self.credits, self.exit]
+        # ^------------------------------------------------------------------^
+        # Insert a speedrun mode button
+        # v------------------------------------------------------------------v
+        self.srimg = self.font.render("SpeedRun Mode", False,
+                                      (100, 100, 100)).convert_alpha()
+        self.sr = menuItem.menuitem(self.srimg,
+                                    self.srimg,
+                                    (50, 300),
+                                    lambda: None,
+                                    self.gameconfig)
+        self.items = [self.newmaingame, self.newcustomgame, self.sr,
+                      self.cgam, self.options, self.credits, self.exit]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.
