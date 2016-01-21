@@ -5,8 +5,9 @@ screen = pygame.display.set_mode((800, 240))
 # v-----------------------------------------------------------------v
 _normal_ = 0
 _bouncy_ = 32
-size = 2
-type = _bouncy_
+_glitched_ = 64
+size = 15
+type = _normal_
 graphics = pygame.image.load("Plats.png").convert_alpha()
 lcorner = (0,type,32,32)
 center = (32,type,32,32)
