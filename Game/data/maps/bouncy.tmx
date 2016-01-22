@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="31">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99" columns="11">
   <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="40">
@@ -11,8 +11,10 @@
  <objectgroup name="Triggers" visible="0">
   <object id="1" x="864" y="480" width="32" height="32">
    <properties>
+    <property name="PlatSize" value="5"/>
+    <property name="PlatSpeed" value="150"/>
     <property name="Platform" value="h"/>
-    <property name="bouncyplat" value=""/>
+    <property name="bouncyplat" value="1200"/>
     <property name="id" value="1"/>
    </properties>
   </object>
@@ -142,11 +144,6 @@
   <object id="29" x="96" y="192" width="32" height="32">
    <properties>
     <property name="playerExit" value=""/>
-   </properties>
-  </object>
-  <object id="30" x="1344" y="352" width="32" height="32">
-   <properties>
-    <property name="ToggleGlitch" value="multijump"/>
    </properties>
   </object>
  </objectgroup>

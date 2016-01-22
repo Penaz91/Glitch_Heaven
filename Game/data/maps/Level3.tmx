@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="37">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99" columns="11">
   <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="40">
@@ -146,6 +146,8 @@
   </object>
   <object id="32" x="256" y="128" width="32" height="32">
    <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
     <property name="Platform" value="h"/>
     <property name="id" value="1"/>
    </properties>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="80" tilewidth="32" tileheight="32" nextobjectid="118">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="80" tilewidth="32" tileheight="32" nextobjectid="129">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99" columns="11">
   <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Tile Layer 1" width="100" height="80">
   <data encoding="base64" compression="zlib">
-   eJztnMtOwzAQRa0KwYbyWiEoKyQ+hbIFtsD/fwb1IlIUOR7bmUyup/dId9OqN4+jPOV6H0J4VMi+MRrL9pK4P26CDteh3oXWsr0Q9yF94EAfWNAHFvSBBX1gQR9Y0AcW3n1crtyvjXcf9yv3a0MfWNAHFvSBBX1gQR9Y0AcW9IEFfWBBH1gs8fFwym6UWhdDdolcNa7TFGQft4nPanxo7f8lnnJ5TST2vAkZfp/6buiROkpSsg05H++nHEfZeuxF63iNNcbE5IIyvgQR6XzVcs1b83qoeT1HpFcfRwdJ0asPj8TrH31ggeTjqWB9z93HXdC5Txsnd079ENbHq4/hXl3redDqudKrjwFUH/HZOnX80IdtTyQeuy8z33n0MX6vgOgjh0cfY+gDiy19TN//lWTs42LZKm9Oavt7PT5q7pF7olcfXqEPLOL2fc3ku6Jny/OVp3MXjw8s6AOLXn2U3h/3dv7q1YdX6AML+sCCPrCgDyzoAwv6wCK3Hz/D/LuUaaz20Tn72KJHgj7Ke34r8te4HPqw7ZGgD9seCfqw7ZGgD9seCfqw7ZGgD9seCfqw7ZHw7iM3nqFmbAN96MDjA4utffyEuud6+rDtkaAP2x4J+rDtkaAP2x4J+rDtkfDu46DUQx9Y0AcW9IEFfSxD+7+Qvfho+Q9pj4nzknA8w/lBH1jQBxb0gQV9YDH18Vz4u5K550g9w/yB03mSl86zzKTny5YSXfwDASyE1Q==
+   eJztnMlOwzAURa0KwYZ5hRhWSHwKZQtsgf//DOpFpChy8+LEebl2z5HuhqovsY/sDLi+CiE8FMjVzJQ4diuJ/XEdynAZ8l2UOnYrxD7Ehw740AIfWuBDC3xogQ8t8KFF6z7OV65fmtZ93K1cvzT40AIfWuBDC3xogQ8t8KEFPrTAhxb40GKJj/tDdr3kuuiyS+Ri5jkNUfZxk/hbjo9S/b/E01heE4l13ox030991tWxakzJlDaM+Xg/ZN/L1msv5q7XWGNNzFhU1pcoYs1Xc655a14PS17PFanVx76BfCTaV6uPFonXP6tt+PBFaXw8TjjfU/dxG8rcp/WTO6f2adVHd69eqm1ez5Wt+ugo1Y+lfcRn69T4wYdvnUgcuy9HPmvRR/+9AvOVForjYwx8rFdn+P5vSvo+zpad8uak2l/rfJVzj1wTzFda4EOL2L6vI/nOqLPlfNXS3MX40AIfWtTqY8n/fJSp1Uer4EMLfGiBDy3woQU+tMCHFmP9+BmOv0sZxquPTtnHFnUs8DG9zm9G/mYeBx++dSzw4VvHAh++dSzw4VvHAh++dSzw4VvHAh++dSxa9zG2niFnbQM+ysD40GJrHz8h77keH751LPDhW8cCH751LPDhW8cCH751LFr38VyoDj60wIcW+NACH8so/VvIWnzM+Q1pjYn7krCe4fTAhxb40AIfWuBDi6GPp4nfm7L3HOTT7R843Cd56T7LJL1ftpXo4h9fyIUR
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -53,62 +53,10 @@
     <property name="PlatReverse" value=""/>
    </properties>
   </object>
-  <object id="11" x="512" y="1408" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
-  <object id="12" x="608" y="1472" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
-  <object id="13" x="768" y="1568" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
-  <object id="14" x="864" y="1664" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
-  <object id="15" x="992" y="1728" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
-  <object id="16" x="1120" y="1792" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
-  <object id="17" x="1280" y="1856" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
-  <object id="18" x="1376" y="1920" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
-  <object id="19" x="1472" y="2080" width="32" height="32">
-   <properties>
-    <property name="Platform" value="v"/>
-    <property name="id" value="1"/>
-   </properties>
-  </object>
   <object id="20" x="1568" y="2176" width="32" height="32">
    <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
     <property name="Platform" value="v"/>
     <property name="id" value="1"/>
    </properties>
@@ -238,6 +186,8 @@
   </object>
   <object id="45" x="160" y="1152" width="32" height="32">
    <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
     <property name="Platform" value="h"/>
     <property name="id" value="2"/>
    </properties>
@@ -250,18 +200,6 @@
   <object id="47" x="640" y="1152" width="96" height="32">
    <properties>
     <property name="PlatReverse" value=""/>
-   </properties>
-  </object>
-  <object id="48" x="1088" y="1152" width="32" height="32">
-   <properties>
-    <property name="Platform" value="h"/>
-    <property name="id" value="2"/>
-   </properties>
-  </object>
-  <object id="49" x="1312" y="1152" width="32" height="32">
-   <properties>
-    <property name="Platform" value="h"/>
-    <property name="id" value="2"/>
    </properties>
   </object>
   <object id="50" x="1216" y="1152" width="96" height="32">
@@ -284,7 +222,7 @@
     <property name="blocker" value="tbl"/>
    </properties>
   </object>
-  <object id="54" x="32" y="800" width="1568" height="32">
+  <object id="54" x="32" y="800" width="1600" height="32">
    <properties>
     <property name="ObsReverse" value=""/>
     <property name="blocker" value="tbr"/>
@@ -611,6 +549,94 @@
   <object id="117" x="2016" y="736" width="672" height="160">
    <properties>
     <property name="GlitchedAnimation" value=""/>
+   </properties>
+  </object>
+  <object id="118" x="1088" y="1152" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="h"/>
+    <property name="id" value="2"/>
+   </properties>
+  </object>
+  <object id="119" x="1312" y="1152" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="h"/>
+    <property name="id" value="2"/>
+   </properties>
+  </object>
+  <object id="120" x="1472" y="2080" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="121" x="1376" y="1920" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="122" x="1280" y="1856" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="123" x="1120" y="1792" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="124" x="992" y="1728" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="125" x="864" y="1664" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="126" x="768" y="1568" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="127" x="608" y="1472" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="128" x="512" y="1408" width="32" height="32">
+   <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="100"/>
+    <property name="Platform" value="v"/>
+    <property name="id" value="1"/>
    </properties>
   </object>
  </objectgroup>

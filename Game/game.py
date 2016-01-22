@@ -192,6 +192,8 @@ class Game(object):
         self.tilemap.layers.append(self.obstacles)
         for platform in self.tilemap.layers['Triggers'].find('Platform'):
             plat = platform['Platform']
+            size = int(platform['PlatSize'])
+            spd = int(platform['PlatSpeed'])
             """if "v" in plat:
                 TriggerablePlatform(platform.px, platform.py, True, 100,
                                     False, platform['id'], self.plats,
@@ -206,10 +208,12 @@ class Game(object):
                 vertical = False
             if "bouncyplat" in platform:
                 bouncy = True
+                bouncepwr = int(platform['bouncyplat'])
             else:
                 bouncy = False
-            TriggerablePlatform(platform.px, platform.py, vertical,
-                                100, 3, False, platform['id'], self.plats,
+                bouncepwr = 0
+            TriggerablePlatform(platform.px, platform.py, vertical, bouncepwr,
+                                spd, size, False, platform['id'], self.plats,
                                 game=self, bouncy=bouncy)
         self.tilemap.layers.append(self.plats)
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):

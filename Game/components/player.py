@@ -519,7 +519,7 @@ class Player(pygame.sprite.Sprite):
                         (self.rect.y < block.rect.y):
                     if block.bouncy:
                         self.rect.bottom = block.rect.top
-                        self.y_speed = -800 * game.gravity
+                        self.y_speed = - block.bouncepwr * game.gravity
                         self.bouncesound.play()
                     else:
                         self.y_speed = 0

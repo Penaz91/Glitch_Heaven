@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="34">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99" columns="11">
   <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
@@ -21,6 +21,8 @@
   </object>
   <object id="3" x="1312" y="864" width="32" height="32">
    <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="150"/>
     <property name="Platform" value="v"/>
     <property name="id" value="1"/>
    </properties>
@@ -47,6 +49,8 @@
   </object>
   <object id="8" x="896" y="128" width="32" height="32">
    <properties>
+    <property name="PlatSize" value="3"/>
+    <property name="PlatSpeed" value="150"/>
     <property name="Platform" value="h"/>
     <property name="id" value="2"/>
    </properties>
@@ -169,11 +173,6 @@
   <object id="32" x="992" y="128" width="288" height="32">
    <properties>
     <property name="blocker" value="tlbr"/>
-   </properties>
-  </object>
-  <object id="33" x="1184" y="832" width="32" height="32">
-   <properties>
-    <property name="ToggleGlitch" value="gravity"/>
    </properties>
   </object>
  </objectgroup>
