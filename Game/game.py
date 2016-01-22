@@ -209,7 +209,7 @@ class Game(object):
             else:
                 bouncy = False
             TriggerablePlatform(platform.px, platform.py, vertical,
-                                100, False, platform['id'], self.plats,
+                                100, 3, False, platform['id'], self.plats,
                                 game=self, bouncy=bouncy)
         self.tilemap.layers.append(self.plats)
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):

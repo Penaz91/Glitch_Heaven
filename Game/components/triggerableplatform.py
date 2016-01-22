@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 import pygame
-import os
+from libs import platgen
+
 
 class TriggerablePlatform(pygame.sprite.Sprite):
     """
     Represents a mobile platform that can be triggered
     inherits properties from MobilePlatform
     """
-    def __init__(self, x, y, vertical, spd, active, id, *groups, game, bouncy=False):
+    def __init__(self, x, y, vertical, spd, size,
+                 active, id, *groups, game, bouncy=False):
         """
         Default Constructor
 
@@ -21,8 +23,18 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         - Nothing
         """
         super(TriggerablePlatform, self).__init__(*groups)
-        self.activeimg = pygame.image.load(os.path.join("resources", "tiles", "platx3.png"))
-        self.inactiveimg = pygame.image.load(os.path.join("resources", "tiles", "platx3_glitched.png"))
+        if bouncy:
+            self.activeimg = platgen.generate(size, 32)
+        else:
+            self.activeimg = platgen.generate(size, 0)
+        # self.activeimg = pygame.image.load(os.path.join("resources",
+        # "tiles",
+        # "platx3.png"))
+        self.inactiveimg = platgen.generate(size, 64)
+        # self.inactiveimg = pygame.image.load(os.path.join(
+        # "resources",
+        # "tiles",
+        # "platx3_glitched.png"))
         if active:
             self.image = self.activeimg
         else:
@@ -57,7 +69,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         self.dt = dt
         if self.active:
             self.rect.x += self.direction * self.xspeed * dt    # |
-            self.rect.y += self.direction * self.yspeed * dt    # | Moves platform
+            self.rect.y += self.direction * self.yspeed * dt    # | Moves plat
             # Reverses the platform when a "PlatReverse" trigger is touched
             # v-----------------------------------------------------------------v
             for cell in game.tilemap.layers['Triggers'].collide(self.rect,
