@@ -24,6 +24,7 @@ import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
 from tkinter import filedialog
+from libs.textglitcher import makeGlitched
 from tkinter import Tk
 mod_logger = logging.getLogger("Glitch_Heaven.Game")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
@@ -221,6 +222,12 @@ class Game(object):
             tr = CollectibleTrigger(trig.px, trig.py, self, totrigger)
             self.GlitchTriggers.add(tr)
         self.tilemap.layers.append(self.GlitchTriggers)
+        self.title = makeGlitched(
+                        str(levelconfig['Level_Info']['Name']),
+                        self.font)
+        center = 400 - int(self.title.get_rect().width)/2
+        print(center)
+        self.titleposition = (center, 578)
         mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
@@ -327,14 +334,7 @@ class Game(object):
         with open(path, "w") as savefile:
             string = json.dumps(shelf)
             savefile.write(string)
-        """with shelve.open(path, 'c') as shelf:
-            shelf["currentcampaign"] = self.currentcampaign
-            shelf["campaignfile"] = self.campaignFile
-            # When loadNextLevel will be called, it will be the right one
-            # v--------v
-            shelf["campaignIndex"] = self.campaignIndex - 1
-            # ^--------^
-        """
+
     def loadGame(self):
         """
         Opens the game from a shelf file
@@ -346,8 +346,6 @@ class Game(object):
         if not path:
             raise FileNotFoundError
         mod_logger.info("Loading Save from: "+path)
-        """with shelve.open(path, 'r') as shelf:
-        """
         with open(path, "r") as savefile:
             string = savefile.read()
             shelf = json.loads(string)
@@ -375,7 +373,17 @@ class Game(object):
         """
         mod_logger.info("Entering main game")
         self.running = True
+        self.gameviewport = pygame.surface.Surface((800,576))
         self.clock = pygame.time.Clock()
+        self.titleholder = pygame.image.load(os.path.join(
+                                             "resources",
+                                             "UI",
+                                             "TitleHolder.png"))
+        self.font = pygame.font.Font(os.path.join(
+                            "resources", "fonts",
+                            "TranscendsGames.otf"), 20)
+        self.title = None
+        self.titleposition = None
         self.screen = screen
         self.player = None
         self.keys = keys
@@ -390,7 +398,7 @@ class Game(object):
             mod_logger.info("Using Load mode")
             try:
                 self.loadGame()
-                self.loadNextLevel(self.currentcampaign, screen)
+                self.loadNextLevel(self.currentcampaign, self.gameviewport)
             except FileNotFoundError:
                 mod_logger.info("No file provided, loading cancelled")
                 self.running = False
@@ -399,7 +407,7 @@ class Game(object):
             self.campaignFile = cmp
             self.currentcampaign = self.loadCampaign(self.campaignFile)
             self.campaignIndex = -1
-            self.loadNextLevel(self.currentcampaign, screen)
+            self.loadNextLevel(self.currentcampaign, self.gameviewport)
         # ^--------------------------------------------------------------^
         self.fps = 30
         self.deadbodies = pygame.sprite.Group()
@@ -483,21 +491,24 @@ class Game(object):
                 if event.type == pygame.QUIT:
                     self.running = False
                 # ^----------------------------------------------------------^
-            screen.blit(self.bg, (-self.tilemap.viewport.x/6,
+            self.gameviewport.blit(self.bg, (-self.tilemap.viewport.x/6,
                                   -self.tilemap.viewport.y/6))
-            screen.blit(self.middleback, (-self.tilemap.viewport.x/4,
+            self.gameviewport.blit(self.middleback, (-self.tilemap.viewport.x/4,
                                           -self.tilemap.viewport.y/4))
             self.tilemap.update(dt, self)
             self.helptxts.update(dt, self)
-            screen.blit(self.middle, (-self.tilemap.viewport.x/2,
+            self.gameviewport.blit(self.middle, (-self.tilemap.viewport.x/2,
                                       -self.tilemap.viewport.y/2))
-            self.tilemap.draw(screen)
+            self.tilemap.draw(self.gameviewport)
             self.particlesurf.fill((0, 0, 0, 0))
             self.player.particles.update()
             self.player.particles.draw(self.particlesurf)
-            screen.blit(self.particlesurf, (-self.tilemap.viewport.x,
+            self.gameviewport.blit(self.particlesurf, (-self.tilemap.viewport.x,
                                             -self.tilemap.viewport.y))
             if self.hasOverlay:
-                screen.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
+                self.gameviewport.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
                                            -self.tilemap.viewport.y*1.5))
+            screen.blit(self.gameviewport, (0,0))
+            screen.blit(self.titleholder, (0,576))
+            screen.blit(self.title, self.titleposition)
             pygame.display.update()
