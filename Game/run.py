@@ -108,6 +108,10 @@ if __name__ == "__main__":
         for sound in sounds["sfx"]:
             sounds["sfx"][sound].set_volume((config.getfloat("Sound",
                                                              "sfxvolume"))/100)
+        for sound in sounds["music"]:
+            sounds["music"][sound].set_volume(
+                    (config.getfloat("Sound",
+                                     "musicvolume"))/100)
         logger.info("Setting up the Screen")
         screen = pygame.display.set_mode(screensize, flags)
         logger.info("Opening the menu")

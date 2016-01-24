@@ -24,7 +24,7 @@ module_logger.addHandler(ch)
 class AudioSettings:
     """ Represents a pause menu window"""
 
-    def goToMenu(self):
+    def goToMenu(self, sounds, config):
         """
         Kills the current game and menu instance, and returns
         To the main menu, which is already running in BG.
@@ -35,6 +35,17 @@ class AudioSettings:
         Returns:
         - Nothing
         """
+        for sound in sounds["menu"]:
+            sounds["menu"][sound].set_volume((
+                config.getfloat("Sound",
+                                "menuvolume"))/100)
+        for sound in sounds["sfx"]:
+            sounds["sfx"][sound].set_volume((config.getfloat("Sound",
+                                                             "sfxvolume"))/100)
+        for sound in sounds["music"]:
+            sounds["music"][sound].set_volume(
+                    (config.getfloat("Sound",
+                                     "musicvolume"))/100)
         self.running = False
         module_logger.info("Returning to previous menu")
 
@@ -97,19 +108,17 @@ class AudioSettings:
                                       sounds)
         self.musicwriting = self.font.render("Music Volume: ", False,
                                              (255, 255, 255)).convert_alpha()
-        self.rebootwriting = self.font.render("Restart to apply the settings",
-                                              False,
-                                              (255, 255, 255)).convert_alpha()
         # ^------------------------------------------------------------------^
         # "Previous Menu" menu element
         # v------------------------------------------------------------------v
-        self.menu = self.font.render("Previous Menu",
+        self.menu = self.font.render("Apply and go back",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = makeGlitched("Previous Menu", self.font)
+        self.menusel = makeGlitched("Apply and go back", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
-                                          lambda: self.goToMenu(),
+                                          lambda: self.goToMenu(sounds,
+                                                                config),
                                           self.config,
                                           sounds)
         # ^------------------------------------------------------------------^
@@ -182,7 +191,6 @@ class AudioSettings:
             screen.blit(self.menuwriting, (190, 240))
             screen.blit(self.sfxwriting, (190, 320))
             screen.blit(self.musicwriting, (190, 400))
-            screen.blit(self.rebootwriting, (50, 500))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             self.menumeter.draw(screen)
