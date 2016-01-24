@@ -3,14 +3,13 @@
 # Copyright 2015 - Penaz <penazarea@altervista.org>
 
 # from libs import animation
-import pygame
-import os
 
 
 class menuitem(object):
     """ Represents a menu item """
 
-    def __init__(self, unselected, selected, location, function, config):
+    def __init__(self, unselected, selected,
+                 location, function, config, sounds):
         """
         Default constructor
         :param unselected: The surface representing the unselected button
@@ -28,15 +27,8 @@ class menuitem(object):
         self.image = self.unselected
         self.selectedStatus = False
         self.function = function
-        self.sound = pygame.mixer.Sound(os.path.join("resources",
-                                                     "sounds",
-                                                     "menuSelection.wav"))
-        self.confirmSound = pygame.mixer.Sound(os.path.join("resources",
-                                                            "sounds",
-                                                            "select.wav"))
-        self.sound.set_volume((config.getfloat("Sound",  "menuvolume"))/100)
-        self.confirmSound.set_volume((config.getfloat("Sound",
-                                                      "menuvolume"))/100)
+        self.sound = sounds["menu"]["select"]
+        self.confirmSound = sounds["menu"]["confirm"]
 
     def makeSelected(self):
         """ Turns the element status to "Selected" """

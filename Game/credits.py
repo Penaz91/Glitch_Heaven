@@ -38,7 +38,7 @@ class Credits:
         self.running = False
         module_logger.info("Going to the previous Menu")
 
-    def main(self, screen, keys, config):
+    def main(self, screen, keys, config, sounds):
         """
         The main method to show and make the menu work
 
@@ -92,7 +92,8 @@ class Credits:
                                           self.menusel,
                                           (320, 560),
                                           lambda: self.goToMenu(),
-                                          self.config)
+                                          self.config,
+                                          sounds)
         # ^------------------------------------------------------------------^
         # Credits text
         # v------------------------------------------------------------------v

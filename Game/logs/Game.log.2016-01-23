@@ -1,0 +1,23 @@
+[2016-01-24 13:26:12,584] (Glitch_Heaven.Bootstrapper) - INFO --- ----------Logger initialised----------
+[2016-01-24 13:26:12,585] (Glitch_Heaven.Bootstrapper) - INFO --- Parsing configuration file
+[2016-01-24 13:26:12,585] (Glitch_Heaven.Bootstrapper) - DEBUG --- Screensize set to: (800, 600)
+[2016-01-24 13:26:12,585] (Glitch_Heaven.Bootstrapper) - DEBUG --- Fullscreen Flag Set to: False
+[2016-01-24 13:26:12,586] (Glitch_Heaven.Bootstrapper) - DEBUG --- Doublebuffer Flag set to: False
+[2016-01-24 13:26:12,586] (Glitch_Heaven.Bootstrapper) - INFO --- Zipping key dictionary
+[2016-01-24 13:26:12,587] (Glitch_Heaven.Bootstrapper) - DEBUG --- Key Dictionary is:{'right': 275, 'down': 274, 'confirm': 13, 'left': 276, 'up': 273, 'run': 122, 'jump': 273, 'escape': 27}
+[2016-01-24 13:26:12,587] (Glitch_Heaven.Bootstrapper) - INFO --- Setting screen flags
+[2016-01-24 13:26:12,588] (Glitch_Heaven.Bootstrapper) - INFO --- Pre-initialising Mixer
+[2016-01-24 13:26:12,588] (Glitch_Heaven.Bootstrapper) - INFO --- Initialising Pygame
+[2016-01-24 13:26:15,477] (Glitch_Heaven.Bootstrapper) - INFO --- Initialising Mixer
+[2016-01-24 13:26:15,478] (Glitch_Heaven.Bootstrapper) - INFO --- Loading sounds
+[2016-01-24 13:26:15,562] (Glitch_Heaven.Bootstrapper) - INFO --- Setting up the Screen
+[2016-01-24 13:26:15,829] (Glitch_Heaven.Bootstrapper) - INFO --- Opening the menu
+[2016-01-24 13:26:16,018] (Glitch_Heaven.Bootstrapper) - CRITICAL --- There has been an exception, printing traceback
+Traceback (most recent call last):
+  File "run.py", line 111, in <module>
+    menu().main(screen, keys, config, sounds)
+  File "/home/penaz/Varie/Progetti/Roba In Python/GH/Glitch_Heaven/Game/mainmenu.py", line 194, in main
+    self.makeCampaignMenu(screen, keys, config, sounds)
+  File "/home/penaz/Varie/Progetti/Roba In Python/GH/Glitch_Heaven/Game/mainmenu.py", line 66, in makeCampaignMenu
+    self.gameconfig
+TypeError: __init__() missing 1 required positional argument: 'sounds'

@@ -76,10 +76,42 @@ if __name__ == "__main__":
         pygame.init()
         logger.info("Initialising Mixer")
         pygame.mixer.init()
+        logger.info("Loading sounds")
+        sounds = {
+                "sfx": {
+                    "jump": pygame.mixer.Sound(pathjoin("resources",
+                                                        "sounds",
+                                                        "jump.wav")),
+                    "death": pygame.mixer.Sound(pathjoin("resources",
+                                                         "sounds",
+                                                         "death.wav")),
+                    "bounce": pygame.mixer.Sound(pathjoin("resources",
+                                                          "sounds",
+                                                          "bounce.wav"))
+                    },
+                "menu": {
+                    "test": pygame.mixer.Sound(pathjoin("resources",
+                                                        "sounds",
+                                                        "testSound.wav")),
+                    "select": pygame.mixer.Sound(pathjoin("resources",
+                                                          "sounds",
+                                                          "menuSelect.wav")),
+                    "confirm": pygame.mixer.Sound(pathjoin("resources",
+                                                           "sounds",
+                                                           "select.wav"))
+                    },
+                "music": {}}
+        for sound in sounds["menu"]:
+            sounds["menu"][sound].set_volume((
+                config.getfloat("Sound",
+                                "menuvolume"))/100)
+        for sound in sounds["sfx"]:
+            sounds["sfx"][sound].set_volume((config.getfloat("Sound",
+                                                             "sfxvolume"))/100)
         logger.info("Setting up the Screen")
         screen = pygame.display.set_mode(screensize, flags)
         logger.info("Opening the menu")
-        menu().main(screen, keys, config)
+        menu().main(screen, keys, config, sounds)
         logger.info("Quitting")
         pygame.quit()
         quit()

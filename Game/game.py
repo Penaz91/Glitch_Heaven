@@ -285,7 +285,7 @@ class Game(object):
             self.sprites.empty()
             self.player = None
 
-    def loadLevelPart2(self, keys):
+    def loadLevelPart2(self, keys, sounds):
         """
         Terminates the level loading by defining the sprite layer,
         and spawning the player.
@@ -298,7 +298,8 @@ class Game(object):
         self.middlepos = [0, 0]     # DEPRECATED??
         mod_logger.info("Positioning Player")
         self.player = Player((start_cell.px, start_cell.py),
-                             self.sprites, keys=keys, game=self)
+                             self.sprites, keys=keys, game=self,
+                             sounds=sounds)
         mod_logger.info("Creating Particle Surface")
         self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
                                                     self.tilemap.px_height),
@@ -358,7 +359,7 @@ class Game(object):
         mod_logger.debug("Campaign Index: "+str(self.campaignIndex))
         # ^--------------------------------------------------------------^
 
-    def main(self, screen, keys, mode, cmp, config):
+    def main(self, screen, keys, mode, cmp, config, sounds):
         """
         Main Game method
 
@@ -373,7 +374,7 @@ class Game(object):
         """
         mod_logger.info("Entering main game")
         self.running = True
-        self.gameviewport = pygame.surface.Surface((800,576))
+        self.gameviewport = pygame.surface.Surface((800, 576))
         self.clock = pygame.time.Clock()
         self.titleholder = pygame.image.load(os.path.join(
                                              "resources",
@@ -414,7 +415,7 @@ class Game(object):
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
         if self.running:
-            self.loadLevelPart2(self.keys)
+            self.loadLevelPart2(self.keys, sounds)
             mod_logger.debug("Glitches Loaded: "+str(self.glitches))
         """Game Loop"""
         while self.running:
@@ -487,28 +488,31 @@ class Game(object):
                 # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN and\
                         event.key == keys["escape"]:
-                    pauseMenu().main(screen, keys, self, self.config)
+                    pauseMenu().main(screen, keys, self, self.config, sounds)
                 if event.type == pygame.QUIT:
                     self.running = False
                 # ^----------------------------------------------------------^
             self.gameviewport.blit(self.bg, (-self.tilemap.viewport.x/6,
-                                  -self.tilemap.viewport.y/6))
-            self.gameviewport.blit(self.middleback, (-self.tilemap.viewport.x/4,
-                                          -self.tilemap.viewport.y/4))
+                                   -self.tilemap.viewport.y/6))
+            self.gameviewport.blit(self.middleback,
+                                   (-self.tilemap.viewport.x/4,
+                                    -self.tilemap.viewport.y/4))
             self.tilemap.update(dt, self)
             self.helptxts.update(dt, self)
             self.gameviewport.blit(self.middle, (-self.tilemap.viewport.x/2,
-                                      -self.tilemap.viewport.y/2))
+                                                 -self.tilemap.viewport.y/2))
             self.tilemap.draw(self.gameviewport)
             self.particlesurf.fill((0, 0, 0, 0))
             self.player.particles.update()
             self.player.particles.draw(self.particlesurf)
-            self.gameviewport.blit(self.particlesurf, (-self.tilemap.viewport.x,
-                                            -self.tilemap.viewport.y))
+            self.gameviewport.blit(self.particlesurf,
+                                   (-self.tilemap.viewport.x,
+                                    -self.tilemap.viewport.y))
             if self.hasOverlay:
-                self.gameviewport.blit(self.overlay, (-self.tilemap.viewport.x*1.5,
-                                           -self.tilemap.viewport.y*1.5))
-            screen.blit(self.gameviewport, (0,0))
-            screen.blit(self.titleholder, (0,576))
+                self.gameviewport.blit(self.overlay,
+                                       (-self.tilemap.viewport.x*1.5,
+                                        -self.tilemap.viewport.y*1.5))
+            screen.blit(self.gameviewport, (0, 0))
+            screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
             pygame.display.update()

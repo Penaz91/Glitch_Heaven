@@ -1,0 +1,154 @@
+[2016-01-18 21:55:41,763] (Glitch_Heaven.Game) - INFO --- Entering main game
+[2016-01-18 21:55:41,764] (Glitch_Heaven.Game) - INFO --- Using New Game mode
+[2016-01-18 21:55:41,764] (Glitch_Heaven.Game) - INFO --- Loading campaigndata/campaigns/main.cmp
+[2016-01-18 21:55:41,807] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 0
+[2016-01-18 21:55:41,807] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:55:41,808] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:55:41,808] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: TestComplete
+[2016-01-18 21:55:41,836] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:55:41,837] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:55:41,837] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': True, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': True, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': True}
+[2016-01-18 21:55:41,838] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:55:41,931] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:55:43,009] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:55:43,016] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:55:43,017] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:55:43,571] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:55:43,579] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:55:43,580] (Glitch_Heaven.Game) - DEBUG --- Glitches Loaded: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': True, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': True, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': True}
+[2016-01-18 21:55:45,698] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:55:45,699] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 1
+[2016-01-18 21:55:45,699] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:55:45,699] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:55:45,700] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: ScrollLvl
+[2016-01-18 21:55:45,720] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:55:45,721] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:55:45,721] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': False, 'noleft': True, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': True, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:55:45,721] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:55:45,749] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:55:46,060] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:55:46,061] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:55:46,061] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:55:46,074] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:55:46,079] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:55:46,719] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:55:46,719] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 2
+[2016-01-18 21:55:46,720] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:55:46,720] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:55:46,721] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: Level1
+[2016-01-18 21:55:46,736] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:55:46,737] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:55:46,738] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': False, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:55:46,738] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:55:46,751] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:55:47,318] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:55:47,318] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:55:47,318] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:55:47,331] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:55:47,332] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:56:00,973] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:56:00,973] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 3
+[2016-01-18 21:56:00,974] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:56:00,974] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:56:00,974] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: Level3
+[2016-01-18 21:56:00,988] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:56:00,989] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:56:00,989] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': False, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:56:00,989] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:56:01,006] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:56:01,303] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:56:01,303] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:56:01,303] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:56:01,315] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:56:01,319] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:56:01,658] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:56:01,658] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 4
+[2016-01-18 21:56:01,658] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:56:01,659] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:56:01,659] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: Level2
+[2016-01-18 21:56:01,677] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:56:01,678] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:56:01,678] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': False, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:56:01,679] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:56:01,730] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:56:02,139] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:56:02,139] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:56:02,139] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:56:02,147] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:56:02,151] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:56:02,589] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:56:02,590] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 5
+[2016-01-18 21:56:02,590] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:56:02,590] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:56:02,591] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: bouncy
+[2016-01-18 21:56:02,616] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:56:02,617] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:56:02,617] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': False, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': True, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:56:02,617] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:56:02,638] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:56:03,089] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:56:03,089] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:56:03,089] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:56:03,101] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:56:03,105] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:56:03,544] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:56:03,545] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 6
+[2016-01-18 21:56:03,545] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:56:03,545] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:56:03,546] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: HighJump
+[2016-01-18 21:56:03,576] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:56:03,577] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:56:03,577] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': False, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:56:03,578] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:56:03,587] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:56:03,778] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:56:03,778] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:56:03,778] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:56:03,786] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:56:03,789] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:56:04,423] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:56:04,423] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 7
+[2016-01-18 21:56:04,423] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:56:04,424] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:56:04,425] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: RageLvl
+[2016-01-18 21:56:04,427] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:56:04,428] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:56:04,428] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': False, 'noleft': False, 'gravity': True, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:56:04,428] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:56:04,475] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:56:04,757] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:56:04,757] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:56:04,757] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:56:04,769] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:56:04,776] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:56:05,545] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:56:05,545] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 8
+[2016-01-18 21:56:05,554] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:56:05,554] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:56:05,556] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: LedgeJump
+[2016-01-18 21:56:05,699] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:56:05,700] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:56:05,700] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': False, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': True, 'speed': False, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:56:05,701] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:56:05,764] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:56:05,970] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:56:05,970] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:56:05,970] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:56:05,978] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:56:05,982] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:56:06,617] (Glitch_Heaven.Game) - DEBUG --- Debug key used,aLoading next level
+[2016-01-18 21:56:06,617] (Glitch_Heaven.Game) - DEBUG --- Campaign index: 9
+[2016-01-18 21:56:06,617] (Glitch_Heaven.Game) - DEBUG --- Length of campaign: 16
+[2016-01-18 21:56:06,618] (Glitch_Heaven.Game) - DEBUG --- Loading Level: ['TestComplete', 'ScrollLvl', 'Level1', 'Level3', 'Level2', 'bouncy', 'HighJump', 'RageLvl', 'LedgeJump', 'help', 'stick', 'LedgeTest', 'Wrap', 'deadbodies', 'hover', 'GlitchedFinal']
+[2016-01-18 21:56:06,619] (Glitch_Heaven.Game) - INFO --- LoadLevel Routing is loading: help
+[2016-01-18 21:56:06,642] (Glitch_Heaven.Game) - INFO --- Level configuration loaded
+[2016-01-18 21:56:06,643] (Glitch_Heaven.Game) - DEBUG --- Zipping new glitches
+[2016-01-18 21:56:06,644] (Glitch_Heaven.Game) - DEBUG --- Glitches Active: {'ledgewalk': False, 'stickyceil': False, 'solidhelp': True, 'invertedgravity': False, 'nojump': False, 'highjump': False, 'cliponcommand': False, 'featherfalling': False, 'hwrapping': False, 'multijump': False, 'permbodies': False, 'stopbounce': False, 'ledgejump': False, 'speed': False, 'noleft': False, 'gravity': False, 'hover': False, 'slideinvert': False, 'noright': False, 'wallclimb': False, 'invertedrun': False, 'vwrapping': False, 'invertedcontrols': False}
+[2016-01-18 21:56:06,644] (Glitch_Heaven.Game) - INFO --- Loading Tilemap
+[2016-01-18 21:56:06,656] (Glitch_Heaven.Game) - INFO --- Tilemap Loaded, building map
+[2016-01-18 21:56:06,954] (Glitch_Heaven.Game) - INFO --- Map Loaded and built Successfully
+[2016-01-18 21:56:06,954] (Glitch_Heaven.Game) - INFO --- Starting loadLevelPart2 Routine
+[2016-01-18 21:56:06,955] (Glitch_Heaven.Game) - INFO --- Positioning Player
+[2016-01-18 21:56:06,966] (Glitch_Heaven.Game) - INFO --- Creating Particle Surface
+[2016-01-18 21:56:06,970] (Glitch_Heaven.Game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-01-18 21:56:25,715] (Glitch_Heaven.Game) - INFO --- QUIT signal received, quitting

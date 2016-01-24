@@ -46,7 +46,7 @@ class Player(pygame.sprite.Sprite):
         self.playermaxspeed = 200
         self.playeraccel = 50
 
-    def __init__(self, location, *groups, keys, game):
+    def __init__(self, location, *groups, keys, game, sounds):
         """
         Default Constructor
 
@@ -62,21 +62,10 @@ class Player(pygame.sprite.Sprite):
         self.playermaxspeed = 250
         self.playeraccel = 50
         self.glitched = False
-        self.jumpsound = pygame.mixer.Sound(os.path.join("resources",
-                                                         "sounds",
-                                                         "jump.wav"))
-        self.jumpsound.set_volume((game.config.getfloat("Sound",
-                                                        "sfxvolume"))/100)
-        self.deathsound = pygame.mixer.Sound(os.path.join("resources",
-                                                          "sounds",
-                                                          "death.wav"))
-        self.deathsound.set_volume((game.config.getfloat("Sound",
-                                                         "sfxvolume"))/100)
-        self.bouncesound = pygame.mixer.Sound(os.path.join("resources",
-                                                           "sounds",
-                                                           "bounce.wav"))
-        self.bouncesound.set_volume((game.config.getfloat("Sound",
-                                                          "sfxvolume"))/100)
+        self.soundslink = sounds
+        self.jumpsound = sounds["sfx"]["jump"]
+        self.deathsound = sounds["sfx"]["death"]
+        self.bouncesound = sounds["sfx"]["bounce"]
         self.idleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
                                                       0.25, 0.25])
         self.idleani.loadFromDir(os.path.join("resources",
@@ -727,7 +716,7 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):
             game.loadNextLevel(game.currentcampaign, game.screen)
-            game.loadLevelPart2(game.keys)
+            game.loadLevelPart2(game.keys, self.soundslink)
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
         game.backpos[0] = -game.tilemap.view_x      # Moves background?

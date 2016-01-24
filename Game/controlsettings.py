@@ -39,7 +39,7 @@ class ControlSettings:
         self.running = False
         module_logger.info("Returning to previous menu")
 
-    def main(self, screen, keys, config):
+    def main(self, screen, keys, config, sounds):
         """
         The main method to show and make the menu work
 
@@ -109,7 +109,8 @@ class ControlSettings:
                                           self.menusel,
                                           (320, 560),
                                           lambda: self.goToMenu(),
-                                          self.config)
+                                          self.config,
+                                          sounds)
         # ^------------------------------------------------------------------^
         self.items = [self.mainmenu]
         self.clock = pygame.time.Clock()

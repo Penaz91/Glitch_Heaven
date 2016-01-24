@@ -38,7 +38,7 @@ class AudioSettings:
         self.running = False
         module_logger.info("Returning to previous menu")
 
-    def main(self, screen, keys, config):
+    def main(self, screen, keys, config, sounds):
         """
         The main method to show and make the menu work
 
@@ -83,15 +83,18 @@ class AudioSettings:
                                        "UI",
                                        "back.png")).convert_alpha()
         self.menumeter = meter.Meter((320, 250), (200, 10),
-                                     self.config, "menuvolume")
+                                     self.config, "menuvolume",
+                                     sounds)
         self.menuwriting = self.font.render("Menu Volume: ", False,
                                             (255, 255, 255)).convert_alpha()
         self.sfxmeter = meter.Meter((320, 330), (200, 10),
-                                    self.config, "sfxvolume")
+                                    self.config, "sfxvolume",
+                                    sounds)
         self.sfxwriting = self.font.render("SFX Volume: ", False,
                                            (255, 255, 255)).convert_alpha()
         self.musicmeter = meter.Meter((320, 410), (200, 10),
-                                      self.config, "musicvolume")
+                                      self.config, "musicvolume",
+                                      sounds)
         self.musicwriting = self.font.render("Music Volume: ", False,
                                              (255, 255, 255)).convert_alpha()
         self.rebootwriting = self.font.render("Restart to apply the settings",

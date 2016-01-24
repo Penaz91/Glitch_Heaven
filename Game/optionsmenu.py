@@ -41,7 +41,7 @@ class OptionsMenu:
         self.running = False
         module_logger.info("Going to the previous Menu")
 
-    def main(self, screen, keys, config):
+    def main(self, screen, keys, config, sounds):
         """
         The main method to show and make the menu work
 
@@ -94,7 +94,8 @@ class OptionsMenu:
                                        (320, 240),
                                        lambda: VideoSettings().main(
                                            screen, keys, self.config),
-                                       self.config)
+                                       self.config,
+                                       sounds)
         # ^------------------------------------------------------------------^
         # Sound settings menu element
         # v------------------------------------------------------------------v
@@ -104,8 +105,10 @@ class OptionsMenu:
         self.snd = menuItem.menuitem(self.sndimg,
                                      self.sndselimg,
                                      (320, 320), lambda: AudioSettings().main(
-                                         screen, keys, self.config),
-                                     self.config)
+                                         screen, keys, self.config,
+                                         sounds),
+                                     self.config,
+                                     sounds)
         # ^------------------------------------------------------------------^
         # Controls/Controllers menu element
         # v------------------------------------------------------------------v
@@ -117,7 +120,8 @@ class OptionsMenu:
                                       (320, 400),
                                       lambda: ControlSettings().main(
                                           screen, keys, self.config),
-                                      self.config)
+                                      self.config,
+                                      sounds)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
@@ -128,7 +132,8 @@ class OptionsMenu:
                                           self.menusel,
                                           (320, 560),
                                           lambda: self.goToMenu(),
-                                          self.config)
+                                          self.config,
+                                          sounds)
         # ^------------------------------------------------------------------^
         self.items = [self.video, self.snd, self.ctrl, self.mainmenu]
         self.clock = pygame.time.Clock()

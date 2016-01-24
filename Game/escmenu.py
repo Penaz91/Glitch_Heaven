@@ -45,7 +45,7 @@ class pauseMenu:
         game.running = False
         self.running = False
 
-    def main(self, screen, keys, game, config):
+    def main(self, screen, keys, game, config, sounds):
         """
         The main method to show and make the menu work
 
@@ -97,7 +97,8 @@ class pauseMenu:
                                          self.selectedimg,
                                          (320, 240),
                                          lambda: self.unpause(),
-                                         self.config)
+                                         self.config,
+                                         sounds)
         # ^------------------------------------------------------------------^
         # Save game menu element
         # v------------------------------------------------------------------v
@@ -107,7 +108,8 @@ class pauseMenu:
         self.savegame = menuItem.menuitem(self.saveimg,
                                           self.saveselected,
                                           (320, 320), lambda: game.saveGame(),
-                                          self.config)
+                                          self.config,
+                                          sounds)
         # ^------------------------------------------------------------------^
         # Quit to desktop menu element
         # v------------------------------------------------------------------v
@@ -118,7 +120,8 @@ class pauseMenu:
                                       self.exitselected,
                                       (320, 560), lambda: pygame.event.post(
                                         pygame.event.Event(pygame.QUIT)),
-                                      self.config)
+                                      self.config,
+                                      sounds)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
@@ -129,7 +132,8 @@ class pauseMenu:
                                           self.menusel,
                                           (320, 400),
                                           lambda: self.goToMenu(game),
-                                          self.config)
+                                          self.config,
+                                          sounds)
         # ^------------------------------------------------------------------^
         self.items = [self.resgame, self.savegame, self.mainmenu, self.exit]
         self.clock = pygame.time.Clock()

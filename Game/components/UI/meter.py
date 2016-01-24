@@ -24,7 +24,7 @@ class Meter(object):
     """
     # TODO: Add a way to make the slider really work when you keep the
     #       mouse button pressed
-    def __init__(self, location, size, config, what):
+    def __init__(self, location, size, config, what, sounds):
         """
         Constructor
 
@@ -47,9 +47,7 @@ class Meter(object):
                                              32).convert_alpha()
         self.fillerrect = self.filler.get_rect()
         self.filler.fill((255, 0, 0))
-        self.testsound = pygame.mixer.Sound(pathjoin("resources",
-                                                     "sounds",
-                                                     "testSound.wav"))
+        self.testsound = sounds["menu"]["test"]
         self.draw_from_x(int(self.config.getfloat("Sound", self.what)))
 
     def set_quantity(self, mousepos):
