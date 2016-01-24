@@ -38,7 +38,7 @@ class VideoSettings:
         module_logger.info("Going to the previous menu")
         self.running = False
 
-    def main(self, screen, keys, config):
+    def main(self, screen, keys, config, sounds):
         """
         The main method to show and make the menu work
 
@@ -95,7 +95,8 @@ class VideoSettings:
                                           self.menusel,
                                           (50, 560),
                                           lambda: self.goToMenu(),
-                                          self.config)
+                                          self.config,
+                                          sounds)
         # ^------------------------------------------------------------------^
         self.items = [self.mainmenu]
         self.clock = pygame.time.Clock()

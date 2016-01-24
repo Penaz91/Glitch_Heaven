@@ -93,7 +93,7 @@ class OptionsMenu:
                                        self.vidselimg,
                                        (320, 240),
                                        lambda: VideoSettings().main(
-                                           screen, keys, self.config),
+                                           screen, keys, self.config, sounds),
                                        self.config,
                                        sounds)
         # ^------------------------------------------------------------------^
@@ -119,7 +119,7 @@ class OptionsMenu:
                                       self.ctrlselimg,
                                       (320, 400),
                                       lambda: ControlSettings().main(
-                                          screen, keys, self.config),
+                                          screen, keys, self.config, sounds),
                                       self.config,
                                       sounds)
         # ^------------------------------------------------------------------^

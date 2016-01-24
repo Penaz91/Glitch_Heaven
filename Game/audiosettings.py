@@ -110,7 +110,8 @@ class AudioSettings:
                                           self.menusel,
                                           (50, 560),
                                           lambda: self.goToMenu(),
-                                          self.config)
+                                          self.config,
+                                          sounds)
         # ^------------------------------------------------------------------^
         self.items = [self.mainmenu]
         self.clock = pygame.time.Clock()
