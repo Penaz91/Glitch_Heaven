@@ -86,8 +86,7 @@ class Credits:
         # v------------------------------------------------------------------v
         self.menu = self.font.render("Main Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = self.font.render("Main Menu",
-                                        False, (255, 0, 0)).convert_alpha()
+        self.menusel = makeGlitched("Main Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),
@@ -137,18 +136,16 @@ class Credits:
                     if self.currentItem is None:
                         self.currentItem = 0
                     if event.key == keys["down"]:
-                        print("down")
                         self.currentItem = ((self.currentItem+1) %
                                             len(self.items))
                     if event.key == keys["up"]:
-                        print("up")
                         self.currentItem = ((self.currentItem-1) %
                                             len(self.items))
                     if event.key == keys["confirm"]:
                         self.items[self.currentItem].confirmSound.play()
                         self.items[self.currentItem].function()
                     if event.key == keys["escape"]:
-                        print("esc")
+                        self.goToMenu()
                     for item in self.items:
                         item.makeUnselected()
                     self.items[self.currentItem].makeSelected()

@@ -43,7 +43,8 @@ class menu:
             self.camp = filedialog.askopenfilename(
                     filetypes=formats,
                     initialdir="./data/campaigns")
-            Game().main(screen, keys, "newgame", self.camp, gameconfig, sounds)
+            if self.camp:
+                Game().main(screen, keys, "newgame", self.camp, gameconfig, sounds)
         except FileNotFoundError:
             module_logger.info("No File selected, Loading of campaign aborted")
 

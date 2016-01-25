@@ -262,7 +262,7 @@ class Game(object):
         Keyword Arguments:
         - campaignFile: The file (Without extension) defining the campaign
         """
-        mod_logger.info("Loading campaign"+campaignfile)
+        mod_logger.info("Loading campaign"+str(campaignfile))
         with open(campaignfile,
                   "r") as campfile:
             x = campfile.readlines()
@@ -329,12 +329,13 @@ class Game(object):
         path = filedialog.asksaveasfilename(filetypes=formats,
                                             initialdir="./savegames",
                                             defaultextension=".dat")
-        shelf = {"currentcampaign": self.currentcampaign,
-                 "campaignfile": self.campaignFile,
-                 "campaignIndex": self.campaignIndex - 1}
-        with open(path, "w") as savefile:
-            string = json.dumps(shelf)
-            savefile.write(string)
+        if path:
+            shelf = {"currentcampaign": self.currentcampaign,
+                     "campaignfile": self.campaignFile,
+                     "campaignIndex": self.campaignIndex - 1}
+            with open(path, "w") as savefile:
+                string = json.dumps(shelf)
+                savefile.write(string)
 
     def loadGame(self):
         """
