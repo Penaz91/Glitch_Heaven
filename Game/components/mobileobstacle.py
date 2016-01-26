@@ -70,10 +70,10 @@ class Obstacle(pygame.sprite.Sprite):
             else:
                 if last.left >= cell.right and\
                     self.rect.left < cell.right:
-                    self.rect.right = cell.left
+                    self.rect.left = cell.right
                 elif last.right <= cell.left and\
                     self.rect.right > cell.left:
-                    self.rect.left = cell.right
+                    self.rect.right = cell.left
             self.direction *= -1
         # ^------------------------------------------------------------------^
         if self.rect.colliderect(game.player.rect):

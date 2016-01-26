@@ -69,6 +69,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         """
         self.dt = dt
         if self.active:
+            last = self.rect.copy()
             self.rect.x += self.direction * self.xspeed * dt    # |
             self.rect.y += self.direction * self.yspeed * dt    # | Moves plat
             # Reverses the platform when a "PlatReverse" trigger is touched
@@ -76,14 +77,18 @@ class TriggerablePlatform(pygame.sprite.Sprite):
             for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                                 'PlatReverse'):
                 if self.vertical:
-                    if self.direction > 0:
+                    if last.bottom <= cell.top and\
+                        self.rect.bottom > cell.top:
                         self.rect.bottom = cell.top
-                    else:
+                    elif last.top >= cell.bottom and\
+                        self.rect.top < cell.bottom:
                         self.rect.top = cell.bottom
                 else:
-                    if self.direction > 0:
-                        self.rect.right = cell.left
-                    else:
+                    if last.left >= cell.right and\
+                        self.rect.left < cell.right:
                         self.rect.left = cell.right
+                    elif last.right <= cell.left and\
+                        self.rect.right > cell.left:
+                        self.rect.right = cell.left
                 self.direction *= -1
             # ^------------------------------------------------------------------^
