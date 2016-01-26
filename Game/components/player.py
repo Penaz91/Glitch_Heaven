@@ -548,6 +548,24 @@ class Player(pygame.sprite.Sprite):
                     slide *= -1
             self.rect.x += slide * dt
         # ^--------------------------------------------------------------^
+        # Test for collision with deadbody platforms and act accordingly
+        # v--------------------------------------------------------------v
+        collision = pygame.sprite.spritecollide(self, game.deadbodies, False)
+        for block in collision:
+            if self.y_speed == 0:
+                self.resting = True
+            elif self.y_speed * game.gravity > 0:
+                if game.gravity == 1:
+                    self.rect.bottom = block.rect.top
+                else:
+                    self.rect.top = block.rect.bottom
+                self.resting = True
+                self.y_speed = 0
+            # elif self.y_speed * game.gravity < 0:
+            #    self.rect.top = block.rect.bottom
+            #    self.resting = False
+            #    self.y_speed = 0
+        # ^--------------------------------------------------------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
@@ -688,21 +706,6 @@ class Player(pygame.sprite.Sprite):
                     self.rect.left < cell.right:
                 self.rect.left = cell.right
                 self.respawn(game)
-        # ^--------------------------------------------------------------^
-        # Test for collision with deadbody platforms and act accordingly
-        # v--------------------------------------------------------------v
-        collision = pygame.sprite.spritecollide(self, game.deadbodies, False)
-        for block in collision:
-            if self.y_speed == 0:
-                self.resting = True
-            elif self.y_speed * game.gravity > 0:
-                self.rect.bottom = block.rect.top
-                self.resting = True
-                self.y_speed = 0
-            # elif self.y_speed * game.gravity < 0:
-            #    self.rect.top = block.rect.bottom
-            #    self.resting = False
-            #    self.y_speed = 0
         # ^--------------------------------------------------------------^
         # If help writings are solid, test for collision and act as platforms
         # v--------------------------------------------------------------v
