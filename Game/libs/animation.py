@@ -52,3 +52,15 @@ class Animation(object):
              for f in os.listdir(directory)
              if os.path.isfile(os.path.join(directory, f))]
         self.frames = [pygame.image.load(y).convert_alpha() for y in sorted(x)]
+
+    def loadFromList(self, lst):
+        """
+        Loads the frames from a given list
+
+        Keyword Arguments:
+        - lst: A list of frames
+
+        Returns:
+        - Nothing
+        """
+        self.frames = lst
