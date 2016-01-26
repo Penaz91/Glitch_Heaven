@@ -52,6 +52,7 @@ class Obstacle(pygame.sprite.Sprite):
         - dt: The time slice (clock.tick())
         - game: The game instance.
         """
+        last = self.rect.copy()
         self.rect.x += self.direction * self.xspeed * dt    # |
         self.rect.y += self.direction * self.yspeed * dt    # | Moves obstacle
         self.image = self.ani.rand_next(dt)
@@ -60,14 +61,18 @@ class Obstacle(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'ObsReverse'):
             if self.vertical:
-                if self.direction > 0:
+                if last.bottom <= cell.top and\
+                    self.rect.bottom > cell.top:
                     self.rect.bottom = cell.top
-                else:
+                elif last.top >= cell.bottom and\
+                    self.rect.top < cell.bottom:
                     self.rect.top = cell.bottom
             else:
-                if self.direction > 0:
+                if last.left >= cell.right and\
+                    self.rect.left < cell.right:
                     self.rect.right = cell.left
-                else:
+                elif last.right <= cell.left and\
+                    self.rect.right > cell.left:
                     self.rect.left = cell.right
             self.direction *= -1
         # ^------------------------------------------------------------------^

@@ -480,7 +480,7 @@ class Game(object):
                                              "Loading next level")
                             self.loadNextLevel(self.currentcampaign,
                                                self.screen)
-                            self.loadLevelPart2(self.keys)
+                            self.loadLevelPart2(self.keys, sounds)
                     if config.getboolean("Debug", "keydebug"):
                         mod_logger.debug("A key was pressed: {0}"
                                          .format(pygame.key.name(event.key)))
