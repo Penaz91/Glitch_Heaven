@@ -53,8 +53,8 @@ class Obstacle(pygame.sprite.Sprite):
         - game: The game instance.
         """
         last = self.rect.copy()
-        self.rect.x += self.direction * self.xspeed * dt    # |
-        self.rect.y += self.direction * self.yspeed * dt    # | Moves obstacle
+        self.rect.x += self.direction * self.xspeed * 0.033    # |
+        self.rect.y += self.direction * self.yspeed * 0.033    # | Moves obstacle
         self.image = self.ani.rand_next(dt)
         # Reverses the obstacle when a "ObsReverse" trigger is touched
         # v-----------------------------------------------------------------v
