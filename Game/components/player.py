@@ -504,7 +504,7 @@ class Player(pygame.sprite.Sprite):
             if block.active:
                 # ENHANCEMENT: Change the collision detection with a
                 # time-comparison of rects, like in Blocker trigger
-                if (self.y_speed * game.gravity > 0) and\
+                """if (self.y_speed * game.gravity > 0) and\
                         (self.rect.y < block.rect.y):
                     if block.bouncy:
                         self.rect.bottom = block.rect.top
@@ -513,8 +513,31 @@ class Player(pygame.sprite.Sprite):
                     else:
                         self.y_speed = 0
                         self.rect.bottom = block.rect.top
-                        self.resting = True  # Allows jump
-                self.rect.x += block.xspeed * dt * block.direction
+                        self.resting = True  # Allows jump"""
+                if game.gravity == 1:
+                    if last.bottom <= block.rect.top and\
+                    self.rect.bottom > block.rect.top:
+                        if block.bouncy:
+                            self.rect.bottom = block.rect.top
+                            self.y_speed = - block.bouncepwr * game.gravity
+                            self.bouncesound.play()
+                        else:
+                            self.y_speed = 0
+                            self.rect.bottom = block.rect.top
+                            self.resting = True
+                            self.rect.x += block.xspeed * dt * block.direction
+                elif game.gravity == -1:
+                    if last.top >= block.rect.bottom and\
+                    self.rect.top < block.rect.bottom:
+                        if block.bouncy:
+                            self.rect.bottom = block.rect.top
+                            self.y_speed = - block.bouncepwr * game.gravity
+                            self.bouncesound.play()
+                        else:
+                            self.y_speed = 0
+                            self.rect.top = block.rect.bottom
+                            self.resting = True
+                            self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with scrolling ground
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
