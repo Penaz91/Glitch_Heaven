@@ -91,7 +91,7 @@ class OptionsMenu:
         self.vidselimg = makeGlitched("Video Settings", self.font)
         self.video = menuItem.menuitem(self.videoimg,
                                        self.vidselimg,
-                                       (320, 240),
+                                       (50, 240),
                                        lambda: VideoSettings().main(
                                            screen, keys, self.config, sounds),
                                        self.config,
@@ -104,7 +104,7 @@ class OptionsMenu:
         self.sndselimg = makeGlitched("Audio Settings", self.font)
         self.snd = menuItem.menuitem(self.sndimg,
                                      self.sndselimg,
-                                     (320, 320), lambda: AudioSettings().main(
+                                     (50, 320), lambda: AudioSettings().main(
                                          screen, keys, self.config,
                                          sounds),
                                      self.config,
@@ -117,7 +117,7 @@ class OptionsMenu:
         self.ctrlselimg = makeGlitched("Control Settings", self.font)
         self.ctrl = menuItem.menuitem(self.ctrlimg,
                                       self.ctrlselimg,
-                                      (320, 400),
+                                      (50, 400),
                                       lambda: ControlSettings().main(
                                           screen, keys, self.config, sounds),
                                       self.config,
@@ -130,7 +130,7 @@ class OptionsMenu:
         self.menusel = makeGlitched("Main Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
-                                          (320, 560),
+                                          (650, 560),
                                           lambda: self.goToMenu(),
                                           self.config,
                                           sounds)
@@ -141,7 +141,7 @@ class OptionsMenu:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    break
+                    quit()
                 # Keyboard Handling
                 # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN:

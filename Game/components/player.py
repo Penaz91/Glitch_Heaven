@@ -504,7 +504,7 @@ class Player(pygame.sprite.Sprite):
             if block.active:
                 # ENHANCEMENT: Change the collision detection with a
                 # time-comparison of rects, like in Blocker trigger
-                """if (self.y_speed * game.gravity > 0) and\
+                if (self.y_speed * game.gravity > 0) and\
                         (self.rect.y < block.rect.y):
                     if block.bouncy:
                         self.rect.bottom = block.rect.top
@@ -513,16 +513,19 @@ class Player(pygame.sprite.Sprite):
                     else:
                         self.y_speed = 0
                         self.rect.bottom = block.rect.top
-                        self.resting = True  # Allows jump"""
-                if game.gravity == 1:
+                        self.resting = True  # Allows jump
+                    self.rect.x += block.xspeed * dt * block.direction
+                """if game.gravity == 1:
                     if last.bottom <= block.rect.top and\
                     self.rect.bottom > block.rect.top:
+                        print("Collision2")
                         if block.bouncy:
                             self.rect.bottom = block.rect.top
                             self.y_speed = - block.bouncepwr * game.gravity
                             self.bouncesound.play()
                         else:
-                            self.y_speed = 0
+                            print("Collision1")
+                            self.y_speed = block.yspeed * block.direction *dt
                             self.rect.bottom = block.rect.top
                             self.resting = True
                             self.rect.x += block.xspeed * dt * block.direction
@@ -534,17 +537,17 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = - block.bouncepwr * game.gravity
                             self.bouncesound.play()
                         else:
-                            self.y_speed = 0
+                            self.y_speed = block.yspeed * block.direction * dt
                             self.rect.top = block.rect.bottom
                             self.resting = True
-                            self.rect.x += block.xspeed * dt * block.direction
+                            self.rect.x += block.xspeed * dt * block.direction"""
         # Test for collision with scrolling ground
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'slide'):
             slide = int(cell['slide'])
             if game.glitches["slideinvert"]:
-                if key[self.keys["down"]]:
+                if key[self.keys["action"]]:
                     slide *= -1
             self.rect.x += slide * dt
         # ^--------------------------------------------------------------^
@@ -594,7 +597,7 @@ class Player(pygame.sprite.Sprite):
                 # Framework for clip-on-command glitch
                 self.bounced = False
                 if game.glitches["cliponcommand"]:
-                    if not key[self.keys["down"]]:
+                    if not key[self.keys["action"]]:
                         self.rect.bottom = cell.top
                         if game.glitches["stickyceil"]:
                             self.y_speed = 3/dt
@@ -604,7 +607,7 @@ class Player(pygame.sprite.Sprite):
                             self.resting = True
                 else:
                     self.rect.bottom = cell.top
-                    if not key[self.keys["down"]]:
+                    if not key[self.keys["action"]]:
                         if game.glitches["stickyceil"]:
                             self.y_speed = 3/dt
                         else:
@@ -616,7 +619,7 @@ class Player(pygame.sprite.Sprite):
                 # Part of the clip-on-command glitch Framework
                 self.bounced = False
                 if game.glitches["cliponcommand"]:
-                    if not key[self.keys["down"]]:
+                    if not key[self.keys["action"]]:
                         self.rect.top = cell.bottom
                         if game.glitches["stickyceil"]:
                             self.y_speed = -5/dt
@@ -624,7 +627,7 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = 0
                 else:
                     self.rect.top = cell.bottom
-                    if not key[self.keys["down"]]:
+                    if not key[self.keys["action"]]:
                         if game.glitches["stickyceil"]:
                             self.y_speed = -5/dt
                         else:
@@ -641,7 +644,7 @@ class Player(pygame.sprite.Sprite):
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 self.rect.bottom = cell.top
-                if not (key[self.keys["down"]] and
+                if not (key[self.keys["action"]] and
                         game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     if game.gravity == 1:
@@ -651,7 +654,7 @@ class Player(pygame.sprite.Sprite):
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 self.rect.top = cell.bottom
-                if not (key[self.keys["down"]] and
+                if not (key[self.keys["action"]] and
                         game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     if game.gravity == 1:
@@ -661,7 +664,7 @@ class Player(pygame.sprite.Sprite):
             if 'l' in bouncy and last.right <= cell.left and\
                     self.rect.right > cell.left:
                 self.rect.right = cell.left
-                if not (key[self.keys["down"]] and
+                if not (key[self.keys["action"]] and
                         game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     self.bounced = True
@@ -673,7 +676,7 @@ class Player(pygame.sprite.Sprite):
             if 'r' in bouncy and last.left >= cell.right and\
                     self.rect.left < cell.right:
                 self.rect.left = cell.right
-                if not (key[self.keys["down"]] and
+                if not (key[self.keys["action"]] and
                         game.glitches["stopbounce"]):
                     self.bouncesound.play()
                     self.bounced = True
@@ -768,7 +771,7 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             "button"):
-            if key[self.keys["down"]]:
+            if key[self.keys["action"]]:
                 butt = cell['button']
                 mod_logger.info("Player pressed the button with ID: " +
                                 str(butt))
@@ -781,7 +784,7 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             "TpIn"):
-            if key[self.keys["down"]]:
+            if key[self.keys["action"]]:
                 tpin = cell['TpIn']
                 mod_logger.info("Player entered the TP with ID: " +
                                 str(tpin))

@@ -1,4 +1,4 @@
-# Control Settings Component
+# Keyboard Settings Component
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
@@ -9,12 +9,11 @@ import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
 from libs.textglitcher import makeGlitched
-from keyboardsettings import KeyboardSettings
+from components.UI import keyboarditem
 module_logger = logging.getLogger("Glitch_Heaven.ControlSettings")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
                               ' %(levelname)s --- %(message)s')
 ch.setFormatter(formatter)
@@ -23,7 +22,7 @@ module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
 
-class ControlSettings:
+class KeyboardSettings:
     """ Represents a pause menu window"""
 
     def goToMenu(self):
@@ -37,35 +36,8 @@ class ControlSettings:
         Returns:
         - Nothing
         """
+        module_logger.info("Going to the previous menu")
         self.running = False
-        module_logger.info("Returning to previous menu")
-
-    def makeKeyboardMenu(self, screen, keys, config, sounds):
-        self.keybimg = self.font.render("Keyboard Settings", False,
-                                           (255, 255, 255)).convert_alpha()
-        self.keybselimg = makeGlitched("Keyboard Settings", self.font)
-        self.keyboard = menuItem.menuitem(self.keybimg,
-                                          self.keybselimg,
-                                          (50, 240),
-                                          lambda: KeyboardSettings().main(screen,
-                                                                        keys,
-                                                                        config,
-                                                                        sounds),
-                                          self.gameconfig,
-                                          sounds
-                                          )
-                                          
-    def makeJoypadMenu(self, screen, keys, config, sounds):
-        self.joyimg = self.font.render("Joypad Settings", False,
-                                           (255, 255, 255)).convert_alpha()
-        self.joyselimg = makeGlitched("Joypad Settings", self.font)
-        self.joypad = menuItem.menuitem(self.joyimg,
-                                        self.joyselimg,
-                                        (50, 380),
-                                        lambda: None,
-                                        self.gameconfig,
-                                        sounds
-                                        )
 
     def main(self, screen, keys, config, sounds):
         """
@@ -79,9 +51,8 @@ class ControlSettings:
         Returns:
         - Nothing
         """
-        module_logger.info("Entering Control menu")
+        module_logger.info("Opening the Keyboard Settings Menu")
         pygame.display.set_caption("Glitch_Heaven")
-        self.gameconfig = config
         self.screensize = screen.get_size()
         self.config = config
         # Title animation and properties
@@ -111,28 +82,106 @@ class ControlSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        self.makeKeyboardMenu(screen, keys, config, sounds)
-        self.makeJoypadMenu(screen, keys, config, sounds)
+        # ^------------------------------------------------------------------^
+        # "Left Key" menu element
+        # v------------------------------------------------------------------v
+        self.lefttext = self.font.render("Move Left: ",
+                                     False, (255, 255, 255)).convert_alpha()
+        key = config.get("Controls", "left")
+        keytext = pygame.key.name(int(key))
+        self.leftimg = self.font.render(keytext.upper(),
+                                     False, (255, 255, 255)).convert_alpha()
+        self.leftsel = makeGlitched(keytext.upper(), self.font)
+        self.left = keyboarditem.KeyboardItem(self.leftimg,
+                                          self.leftsel,
+                                          (self.lefttext.get_rect().width + 70, 180),
+                                          lambda: self.left.KeySelect(self.font, "left", config, keys),
+                                          self.config,
+                                          sounds)
+        # ^------------------------------------------------------------------^
+        # "Right Key" menu element
+        # v------------------------------------------------------------------v
+        self.righttext = self.font.render("Move Right: ",
+                                     False, (255, 255, 255)).convert_alpha()
+        key = config.get("Controls", "right")
+        keytext = pygame.key.name(int(key))
+        self.rightimg = self.font.render(keytext.upper(),
+                                     False, (255, 255, 255)).convert_alpha()
+        self.rightsel = makeGlitched(keytext.upper(), self.font)
+        self.right = keyboarditem.KeyboardItem(self.rightimg,
+                                          self.rightsel,
+                                          (self.righttext.get_rect().width + 70, 240),
+                                          lambda: self.right.KeySelect(self.font, "right", config, keys),
+                                          self.config,
+                                          sounds)
+        # ^------------------------------------------------------------------^
+        # "Jump Key" menu element
+        # v------------------------------------------------------------------v
+        self.jumptext = self.font.render("Jump: ",
+                                     False, (255, 255, 255)).convert_alpha()
+        key = config.get("Controls", "jump")
+        keytext = pygame.key.name(int(key))
+        self.jumpimg = self.font.render(keytext.upper(),
+                                     False, (255, 255, 255)).convert_alpha()
+        self.jumpsel = makeGlitched(keytext.upper(), self.font)
+        self.jump = keyboarditem.KeyboardItem(self.jumpimg,
+                                          self.jumpsel,
+                                          (self.jumptext.get_rect().width + 70, 300),
+                                          lambda: self.jump.KeySelect(self.font, "jump", config, keys),
+                                          self.config,
+                                          sounds)
+        # ^------------------------------------------------------------------^
+        # "Run Key" menu element
+        # v------------------------------------------------------------------v
+        self.runtext = self.font.render("Run: ",
+                                     False, (255, 255, 255)).convert_alpha()
+        key = config.get("Controls", "run")
+        keytext = pygame.key.name(int(key))
+        self.runimg = self.font.render(keytext.upper(),
+                                     False, (255, 255, 255)).convert_alpha()
+        self.runsel = makeGlitched(keytext.upper(), self.font)
+        self.run = keyboarditem.KeyboardItem(self.runimg,
+                                          self.runsel,
+                                          (self.runtext.get_rect().width + 70, 360),
+                                          lambda: self.run.KeySelect(self.font, "run", config, keys),
+                                          self.config,
+                                          sounds)
+        # ^------------------------------------------------------------------^
+        # "Action Key" menu element
+        # v------------------------------------------------------------------v
+        self.acttext = self.font.render("Action/Interact: ",
+                                     False, (255, 255, 255)).convert_alpha()
+        key = config.get("Controls", "action")
+        keytext = pygame.key.name(int(key))
+        self.actimg = self.font.render(keytext.upper(),
+                                     False, (255, 255, 255)).convert_alpha()
+        self.actsel = makeGlitched(keytext.upper(), self.font)
+        self.action = keyboarditem.KeyboardItem(self.actimg,
+                                          self.actsel,
+                                          (self.acttext.get_rect().width + 70, 420),
+                                          lambda: self.action.KeySelect(self.font, "action", config, keys),
+                                          self.config,
+                                          sounds)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
-        self.menu = self.font.render("Main Menu",
+        self.menu = self.font.render("Previous Menu",
                                      False, (255, 255, 255)).convert_alpha()
-        self.menusel = makeGlitched("Main Menu", self.font)
+        self.menusel = makeGlitched("Previous Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
-                                          (320, 560),
+                                          (50, 560),
                                           lambda: self.goToMenu(),
                                           self.config,
                                           sounds)
         # ^------------------------------------------------------------------^
-        self.items = [self.keyboard, self.joypad, self.mainmenu]
+        self.items = [self.left,self.right, self.jump, self.run, self.action, self.mainmenu]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    break
+                    quit()
                 # Keyboard Handling
                 # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN:
@@ -168,6 +217,8 @@ class ControlSettings:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.confirmSound.play()
                             item.function()
+                if event.type == pygame.QUIT:
+                    quit()
                 # ^----------------------------------------------------------^
             # Animates The title
             # v----------------------------------------------------------v
@@ -175,6 +226,11 @@ class ControlSettings:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
+            screen.blit(self.lefttext, (50,180))
+            screen.blit(self.righttext, (50,240))
+            screen.blit(self.jumptext, (50,300))
+            screen.blit(self.jumptext, (50,360))
+            screen.blit(self.acttext, (50,420))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()
