@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" nextobjectid="222">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" nextobjectid="225">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99" columns="11">
   <image source="resources/tiles/TestTile.png" width="352" height="288"/>
  </tileset>
  <layer name="Tile Layer 1" width="200" height="40">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -1092,6 +1092,21 @@
   <object id="221" x="5632" y="544" width="32" height="32">
    <properties>
     <property name="playerExit" value=""/>
+   </properties>
+  </object>
+  <object id="222" x="3072" y="1120" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
+   </properties>
+  </object>
+  <object id="223" x="3456" y="96" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
+   </properties>
+  </object>
+  <object id="224" x="4864" y="128" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
    </properties>
   </object>
  </objectgroup>
