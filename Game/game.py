@@ -186,10 +186,10 @@ class Game(object):
             speed = obstacle['ObsSpeed']
             if "v" in obs:
                 Obstacle((obstacle.px, obstacle.py), True, speed, None,
-                         self.obstacles)
+                         self.obstacles, preloaded_ani=self.preloaded_sprites["glitches"])
             else:
                 Obstacle((obstacle.px, obstacle.py), False, speed, None,
-                         self.obstacles)
+                         self.obstacles, preloaded_ani=self.preloaded_sprites["glitches"])
         self.tilemap.layers.append(self.obstacles)
         for platform in self.tilemap.layers['Triggers'].find('Platform'):
             plat = platform['Platform']
@@ -215,11 +215,13 @@ class Game(object):
                 bouncepwr = 0
             TriggerablePlatform(platform.px, platform.py, vertical, bouncepwr,
                                 spd, size, False, platform['id'], self.plats,
-                                game=self, bouncy=bouncy)
+                                game=self, bouncy=bouncy,
+                                image=self.preloaded_sprites["platforms"])
         self.tilemap.layers.append(self.plats)
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
             totrigger = trig['ToggleGlitch']
-            tr = CollectibleTrigger(trig.px, trig.py, self, totrigger)
+            tr = CollectibleTrigger(trig.px, trig.py, self, totrigger,
+                                    preloaded_animation=self.preloaded_sprites["collectibleitem"])
             self.GlitchTriggers.add(tr)
         self.tilemap.layers.append(self.GlitchTriggers)
         self.title = makeGlitched(
@@ -360,6 +362,23 @@ class Game(object):
         mod_logger.debug("Campaign Index: "+str(self.campaignIndex))
         # ^--------------------------------------------------------------^
 
+    def preloadFromDir(self, directory):
+        """
+        Loads the frames from a given directory using List generators,
+        frames are sorted by name
+
+        Keyword Arguments:
+        - directory: The Directory to load the frames from
+
+        Returns:
+        - Nothing
+        """
+        x = [(os.path.join(directory, f))
+             for f in os.listdir(directory)
+             if os.path.isfile(os.path.join(directory, f))]
+        frames = [pygame.image.load(y).convert_alpha() for y in sorted(x)]
+        return frames
+
     def main(self, screen, keys, mode, cmp, config, sounds):
         """
         Main Game method
@@ -393,6 +412,20 @@ class Game(object):
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
+        # Preloading graphics area
+        # v-------------------------------------------------------------------v
+        self.preloaded_sprites = {
+                "platforms": pygame.image.load(pathjoin("resources",
+                                                        "tiles",
+                                                        "Plats.png")).convert_alpha(),
+                "glitches": self.preloadFromDir(pathjoin("resources",
+                                                         "sprites",
+                                                         "MobileObstacle")),
+                "collectibleitem": self.preloadFromDir(pathjoin("resources",
+                                                                "sprites",
+                                                                "GlitchTrigger"))
+                }
+        # ^-------------------------------------------------------------------^
         # Defines if a level should be loaded or a
         # new campaign should be started.
         # v--------------------------------------------------------------v

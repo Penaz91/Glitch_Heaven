@@ -3,10 +3,13 @@ import pygame
 from os.path import join as pjoin
 
 
-def generate(size, plattype):
-    graphics = pygame.image.load(pjoin("resources",
-                                       "tiles",
-                                       "Plats.png")).convert_alpha()
+def generate(size, plattype, image=None):
+    if image is None:
+        graphics = pygame.image.load(pjoin("resources",
+                                           "tiles",
+                                           "Plats.png")).convert_alpha()
+    else:
+        graphics = image
     lcorner = (0, plattype, 32, 32)
     center = (32, plattype, 32, 32)
     rcorner = (64, plattype, 32, 32)

@@ -44,7 +44,8 @@ class menu:
                     filetypes=formats,
                     initialdir="./data/campaigns")
             if self.camp:
-                Game().main(screen, keys, "newgame", self.camp, gameconfig, sounds)
+                Game().main(screen, keys, "newgame",
+                            self.camp, gameconfig, sounds)
         except FileNotFoundError:
             module_logger.info("No File selected, Loading of campaign aborted")
 

@@ -2,14 +2,13 @@
 # Part of the Glitch_Heaven Project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
-import os
 from libs import timedanimation
 
 
 class Obstacle(pygame.sprite.Sprite):
     """ Represents a mobile enemy that kills the player on touch """
 
-    def __init__(self, location, vertical, spd, image, *groups):
+    def __init__(self, location, vertical, spd, image, *groups, preloaded_ani):
         """
         Default constructor
 
@@ -29,9 +28,8 @@ class Obstacle(pygame.sprite.Sprite):
                                                  0.5, 0.5, 0.5, 0.5,
                                                  0.5, 0.5, 0.5, 0.5,
                                                  0.5, 0.5, 0.5, 0.5])
-        self.ani.loadFromDir(os.path.join("resources",
-                                          "sprites",
-                                          "MobileObstacle"))
+        self.preloaded_ani = preloaded_ani
+        self.ani.loadFromList(preloaded_ani)
         self.image = self.ani.first()
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = location

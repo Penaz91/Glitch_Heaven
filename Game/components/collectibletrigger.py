@@ -3,14 +3,13 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 #
 import pygame
-import os
 from libs.timedanimation import TimedAnimation as TAni
 
 
 class CollectibleTrigger(pygame.sprite.Sprite):
     """ A simple object with image and position """
 
-    def __init__(self, x, y, game, *trigger):
+    def __init__(self, x, y, game, *trigger, preloaded_animation):
         """
         Default constructor
 
@@ -26,9 +25,8 @@ class CollectibleTrigger(pygame.sprite.Sprite):
         super(CollectibleTrigger, self).__init__()
         self.triggers = trigger[0].split(",")
         self.ani = TAni([1, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25])
-        self.ani.loadFromDir(os.path.join("resources",
-                                          "sprites",
-                                          "GlitchTrigger"))
+        self.preloaded_animation = preloaded_animation
+        self.ani.loadFromList(preloaded_animation)
         self.image = self.ani.first()
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, y

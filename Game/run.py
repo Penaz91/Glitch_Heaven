@@ -76,6 +76,8 @@ if __name__ == "__main__":
         pygame.init()
         logger.info("Initialising Mixer")
         pygame.mixer.init()
+        # Sound Loading
+        # v-------------------------------------------------------------------v
         logger.info("Loading sounds")
         sounds = {
                 "sfx": {
@@ -112,6 +114,7 @@ if __name__ == "__main__":
             sounds["music"][sound].set_volume(
                     (config.getfloat("Sound",
                                      "musicvolume"))/100)
+        # ^-------------------------------------------------------------------^
         logger.info("Setting up the Screen")
         screen = pygame.display.set_mode(screensize, flags)
         logger.info("Opening the menu")

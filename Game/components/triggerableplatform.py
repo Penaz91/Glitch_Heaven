@@ -9,7 +9,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
     inherits properties from MobilePlatform
     """
     def __init__(self, x, y, vertical, bpwr, spd, size,
-                 active, id, *groups, game, bouncy=False):
+                 active, id, *groups, game, bouncy=False, image):
         """
         Default Constructor
 
@@ -25,13 +25,13 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         super(TriggerablePlatform, self).__init__(*groups)
         self.bouncepwr = bpwr
         if bouncy:
-            self.activeimg = platgen.generate(size, 32)
+            self.activeimg = platgen.generate(size, 32, image)
         else:
-            self.activeimg = platgen.generate(size, 0)
+            self.activeimg = platgen.generate(size, 0, image)
         # self.activeimg = pygame.image.load(os.path.join("resources",
         # "tiles",
         # "platx3.png"))
-        self.inactiveimg = platgen.generate(size, 64)
+        self.inactiveimg = platgen.generate(size, 64, image)
         # self.inactiveimg = pygame.image.load(os.path.join(
         # "resources",
         # "tiles",
