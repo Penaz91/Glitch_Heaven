@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="36">
- <tileset firstgid="1" name="TestTiles" tilewidth="32" tileheight="32" tilecount="99">
-  <image source="resources/tiles/TestTile.png" width="352" height="288"/>
+ <tileset firstgid="1" name="TestTiles" tilewidth="32" tileheight="32" tilecount="117">
+  <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmU0KAjEMhYMgbnQUVwMyqzmFJ9Bj9P6n0CrFENI6relP6jx42zbfvKSLzAAAV+U+PD2Afu1h5WhJmONYs5AfZTnsjGyIdzWLSpDjoJ5qFpUgxzEia2OwqjnnW8GzenyvNEszB+5LzRxYrXLEvgGtcsQqN4fk2xpSr3mU+n7S6jUPrYrhaLnn/jGPpaqR25qHjKSyq80hJc0cZ/jsRTTvE+mORAsH/v4ug9Y5aM1c3Ro4fHu1b6bseK9oGEsodFYqRyirXBwhneC9E4ytd/R48nCY/CgvOR7s2PkwAXPiZjPHztuy5ZxzX0/neEdoTu6uG/I98eySHNzdoXsuEWdxvVxqf89x0D7X8E/H9cKMzPXG3LhtjQ+URydR
+   eJztmUEKAjEMRYMg7hwVlwPics7hEfT+Z9EixRDS0XbSJqnz4W/bvP60i3QAgJtzDy8fwL/2sHJYEuY4ahayUIEj3JEN8U6zqAJFDuqrZlEFihwjsjeGIM17vhVcq8f3yrM8c+C+9MyBZZUj9w2wypGr2hySb+uces2j1flJq9c8vCqHw3LP/WMev0ojtzUPGUllp80hJc8cZ/jMRTzPE+mMxAsHPv+YgXUOWjNXtweO1Fztmym79lyxlMNaVid4zwRz6x0T1p4tRh7s2mfO3c0avRnYanKkerpGb9Kc4l535Efh2i05uL3n9rlkrMX1cqs7xnHQPvfwpxN7YULmemMy7lDjE14PItA=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">

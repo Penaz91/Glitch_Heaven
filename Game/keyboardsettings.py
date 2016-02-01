@@ -190,6 +190,27 @@ class KeyboardSettings:
                                       self.config,
                                       sounds)
         # ^------------------------------------------------------------------^
+        # "Restart Key" menu element
+        # v------------------------------------------------------------------v
+        self.resttext = self.font.render("Restart Level: ",
+                                        False, (255, 255, 255)).convert_alpha()
+        key = config.get("Controls", "restart")
+        keytext = pygame.key.name(int(key))
+        self.restimg = self.font.render(keytext.upper(),
+                                       False,
+                                       (255, 255, 255)).convert_alpha()
+        self.restsel = makeGlitched(keytext.upper(), self.font)
+        self.rest = kitem.KeyboardItem(self.restimg,
+                                       self.restsel,
+                                      (self.resttext.get_rect().width + 70,
+                                          480),
+                                      lambda: self.rest.KeySelect(self.font,
+                                                                  "restart",
+                                                                  config,
+                                                                  keys),
+                                      self.config,
+                                      sounds)
+        # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
         self.menu = self.font.render("Previous Menu",
@@ -203,7 +224,7 @@ class KeyboardSettings:
                                           sounds)
         # ^------------------------------------------------------------------^
         self.items = [self.left, self.right, self.jump,
-                      self.run, self.act, self.mainmenu]
+                      self.run, self.act, self.rest, self.mainmenu]
         self.clock = pygame.time.Clock()
         while self.running:
             self.dt = self.clock.tick(30)/1000.
@@ -259,6 +280,7 @@ class KeyboardSettings:
             screen.blit(self.jumptext, (50, 300))
             screen.blit(self.runtext, (50, 360))
             screen.blit(self.acttext, (50, 420))
+            screen.blit(self.resttext, (50, 480))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

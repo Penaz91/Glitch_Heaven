@@ -523,6 +523,12 @@ class Game(object):
                 if event.type == pygame.KEYDOWN and\
                         event.key == keys["escape"]:
                     pauseMenu().main(screen, keys, self, self.config, sounds)
+                if event.type == pygame.KEYDOWN and\
+                        event.key == self.keys["restart"]:
+                            self.campaignIndex -= 1
+                            self.loadNextLevel(self.currentcampaign,
+                                               self.screen)
+                            self.loadLevelPart2(self.keys, sounds)
                 if event.type == pygame.QUIT:
                     self.running = False
                 # ^----------------------------------------------------------^

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="107" tilewidth="32" tileheight="32" nextobjectid="84">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="99">
-  <image source="resources/tiles/TestTile.png" width="352" height="288"/>
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
+  <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="30" height="107">
   <data encoding="base64" compression="zlib">
-   eJzt2k1OwzAQBWCLBSsKB2DJmrLuAUpZVWwjEPc/BrVUS1aUGb/5c9TUlrxr/OWNnTSOsk8p7Zl+MHRuXK5/JFt7d3Y/L/1U9a9OLtrWcL+VptXVZr1F11Jji4tm3Tm6kqyUm/vxOt7vpf85Zm250sz35ErXsZeruWY91nQvd77Gt5QXuX5vKe9a63m4tEutsS3kzev8mNrN+oyhzeyZdW0397rW07X3cFvzHOVy9Y5YUy032lxyp+D6lvn9Wcgb7VJze07881mUG2237h1R9W65UZmRe6W3Ta3laDtyj+TpemSW1NjTtrxb0drarFbb+r6utntmrRu6xr2ySlzvrLkh8+ydtTQuc0RWxG1lzc9TyP7B2y3HamwPV2N7ueiezduV2p6uxPZ2UVvjlj1gxDlTx04Jc1trPNLl6h1V55atnaPsngGXGqf1v8DNEWovjWOZI4k9z4zMUeuaQGyNm/sbk7usM87WukjNE2NbXKTmlJ3Pua6Z1LXe94uv2Tvc2ztK7Rz3cL0zS56pt/Cufw1Xum9Z+52K9b2KZo9mzRz9/YbHvNat1LqnqbU9993ZPjB+/U1cxF6/+PV3d8/AcRPRqd+12hPjIhZ6PlJ3aWyqebrzcZAxEVtaZ7RpXakjPX7JtZrIOJTr1Sibm9/INtzhDne4w9W5r+Dxj+DvXgj3Qdl3yuOy+w+N1zz/
+   eJzt2k1OwzAQBWCLBUsKJ2DNASgH6AkKLBH7CMT9l9RSLVmRZ/zmL1FSW/Ku9pdnO2ls5ZhSOjL1ZKhcv1x9S7by6uy+X+pHVT8XctGyhvutNK2uNusWXcsYW1w068HRlWSl3FzP1/5+L/XPMWvPlWa+JVe6jr1czT3rsaaXcudrfE95kft3S3nXWs/DpV1qje0hb17n59Qv1ncMbWbPrGu7udZjPV3rEm5vnqNcbrwj1lTPjTZb7hQ8vmV+fxp5o11qbr8S/34W5UbbvWdH1Hj33KjMyLPS26bWcrQduUfydD0yS8bY07acrWhtbVarbT2vq+0ls9YFXeNeWSWud9ZckHn2zloKlzkiK+L2sub3KWT/4O2Wthrbw9XYXi66Z/N2pbanK7G9XdTWuGUPGHHNVNspYW5vjUe63HhHjXPP1s5RdtH/8FY/vf8Fbo5Qu9WPZY4k9jwzMke9ewKxNW6uL0zuss44W+siY54Y2+IiY07Z+ZrrMZO61ud+8TV7h1s7o9TO8RKud2bJO/UezvrXcKX7lrXPVKznKpo9mjVz9PcbHvNaly2d43juu7N9Yvz6m7iIvX7x6+/uHoF2E1Gp3/XKA+MiFno9UrfVN1U83Xk/SJ+ILR1ntGhdqSNt33KtJtIP5XoVyubmN7IMd7jDHe5wde4z2P4e/N0T4d4p60HZLrv/R9l0KQ==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
