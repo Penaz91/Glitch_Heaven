@@ -29,6 +29,8 @@ class pauseMenu:
         """ Stops the menu from running and resumes the game"""
         module_logger.info("Game unpaused")
         self.running = False
+        pygame.mouse.set_visible(False)  # Make the cursor invisible
+        module_logger.info("Mouse cursor hidden")
 
     def goToMenu(self, game):
         """
@@ -137,6 +139,8 @@ class pauseMenu:
         # ^------------------------------------------------------------------^
         self.items = [self.resgame, self.savegame, self.mainmenu, self.exit]
         self.clock = pygame.time.Clock()
+        pygame.mouse.set_visible(True)  # Make the cursor visible
+        module_logger.info("Mouse cursor shown")
         while self.running:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():

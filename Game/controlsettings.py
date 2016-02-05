@@ -128,6 +128,8 @@ class ControlSettings:
         # ^------------------------------------------------------------------^
         self.items = [self.keyboard, self.joypad, self.mainmenu]
         self.clock = pygame.time.Clock()
+        pygame.mouse.set_visible(True)  # Make the cursor visible
+        module_logger.info("Mouse cursor shown")
         while self.running:
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():

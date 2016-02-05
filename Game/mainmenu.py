@@ -226,6 +226,8 @@ class menu:
         self.items = [self.newmaingame, self.newcustomgame, self.sr,
                       self.cgam, self.options, self.credits, self.exit]
         self.clock = pygame.time.Clock()
+        pygame.mouse.set_visible(True)  # Make the cursor visible
+        module_logger.info("Mouse cursor shown")
         while self.running:
             self.dt = self.clock.tick(30)/1000.
             if self.update:

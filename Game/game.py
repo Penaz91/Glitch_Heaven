@@ -319,6 +319,8 @@ class Game(object):
             self.player.untoggleDoubleSpeed()
         mod_logger.info("Loading of the level completed" +
                         " successfully, ready to play")
+        pygame.mouse.set_visible(False)
+        mod_logger.info("Mouse cursor hidden")
 
     def saveGame(self):
         """
@@ -341,7 +343,7 @@ class Game(object):
 
     def loadGame(self):
         """
-        Opens the game from a shelf file
+        Opens the game from a json file
         """
         Tk().withdraw()
         formats = [("Glitch_Heaven Savegame", "*.dat")]
