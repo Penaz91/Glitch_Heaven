@@ -10,7 +10,7 @@ from logging import handlers as loghandler
 from os.path import join as pathjoin
 from libs.textglitcher import makeGlitched
 from components.UI import keyboarditem as kitem
-module_logger = logging.getLogger("Glitch_Heaven.ControlSettings")
+module_logger = logging.getLogger("Glitch_Heaven.KeyboardSettings")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()

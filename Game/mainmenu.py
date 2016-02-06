@@ -4,9 +4,9 @@
 import pygame
 import os
 from components.UI import menuItem
-from game import Game
 from libs import timedanimation
 from optionsmenu import OptionsMenu
+from newgamemenu import NewGameMenu
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
@@ -33,58 +33,21 @@ module_logger.addHandler(ch)
 class menu:
     """ Represents the main Game menu """
 
-    def loadcustom(self, keys, gameconfig, screen, sounds):
-        """
-        Loads a custom campaign from a open file dialog
-        """
-        try:
-            Tk().withdraw()
-            formats = [("Glitch_Heaven Campaign", "*.cmp")]
-            self.camp = filedialog.askopenfilename(
-                    filetypes=formats,
-                    initialdir="./data/campaigns")
-            if self.camp:
-                Game().main(screen, keys, "newgame",
-                            self.camp, gameconfig, sounds)
-        except FileNotFoundError:
-            module_logger.info("No File selected, Loading of campaign aborted")
-
-    def makeCampaignMenu(self, screen, keys, config, sounds):
-        self.newmainimg = self.font.render("Start Main Campaign", False,
+    def makeNewGameMenu(self, screen, keys, config, sounds):
+        self.newgameimg = self.font.render("Start A New Game", False,
                                            (255, 255, 255)).convert_alpha()
-        self.selectedmainimg = makeGlitched("Start Main Campaign", self.font)
-        self.newmaingame = menuItem.menuitem(self.newmainimg,
-                                             self.selectedmainimg,
+        self.selectedgameimg = makeGlitched("Start A New Game", self.font)
+        self.newgamemenu = menuItem.menuitem(self.newgameimg,
+                                             self.selectedgameimg,
                                              (50, 180),
-                                             lambda: Game().main(
-                                                 screen, keys,
-                                                 "newgame",
-                                                 pathjoin("data",
-                                                          "campaigns",
-                                                          "main.cmp"
-                                                          ),
-                                                 self.gameconfig,
-                                                 sounds),
-                                             self.gameconfig,
-                                             sounds
-                                             )
-
-    def makeCustomCampaignMenu(self, screen, keys, config, sounds):
-        self.newcustomimg = self.font.render("Start Custom Campaign", False,
-                                             (255, 255, 255)).convert_alpha()
-        self.selectedcustomimg = makeGlitched("Start Custom Campaign",
-                                              self.font)
-        self.newcustomgame = menuItem.menuitem(self.newcustomimg,
-                                               self.selectedcustomimg,
-                                               (50, 240),
-                                               lambda: self.loadcustom(
-                                                   keys,
-                                                   self.gameconfig,
-                                                   screen,
-                                                   sounds),
-                                               self.gameconfig,
-                                               sounds
-                                               )
+                                             lambda: NewGameMenu().main(
+                                                screen,
+                                                keys,
+                                                self.gameconfig,
+                                                sounds),
+                                            self.gameconfig,
+                                            sounds
+                                            )
 
     def makeCreditsMenu(self, screen, keys, config, sounds):
         self.creditsimg = self.font.render("Credits", False,
@@ -151,16 +114,6 @@ class menu:
                                          self.gameconfig,
                                          sounds)
 
-    def makeSpeedRunMenu(self, screen, keys, config, sounds):
-        self.srimg = self.font.render("SpeedRun Mode", False,
-                                      (100, 100, 100)).convert_alpha()
-        self.sr = menuItem.menuitem(self.srimg,
-                                    self.srimg,
-                                    (50, 300),
-                                    lambda: None,
-                                    self.gameconfig,
-                                    sounds)
-
     def main(self, screen, keys, config, sounds):
         """
         Main menu method
@@ -197,12 +150,9 @@ class menu:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        # Main campaign menu element
+        # New Game Menu menu element
         # v------------------------------------------------------------------v
-        self.makeCampaignMenu(screen, keys, config, sounds)
-        # Custom campaign menu element
-        # v------------------------------------------------------------------v
-        self.makeCustomCampaignMenu(screen, keys, config, sounds)
+        self.makeNewGameMenu(screen, keys, config, sounds)
         # Credits menu element
         # v------------------------------------------------------------------v
         self.makeCreditsMenu(screen, keys, config, sounds)
@@ -219,12 +169,7 @@ class menu:
         # v------------------------------------------------------------------v
         self.makeOptionsMenu(screen, keys, config, sounds)
         # ^------------------------------------------------------------------^
-        # Insert a speedrun mode button
-        # v------------------------------------------------------------------v
-        self.makeSpeedRunMenu(screen, keys, config, sounds)
-        # ^------------------------------------------------------------------^
-        self.items = [self.newmaingame, self.newcustomgame, self.sr,
-                      self.cgam, self.options, self.credits, self.exit]
+        self.items = [self.newgamemenu, self.cgam, self.options, self.credits, self.exit]
         self.clock = pygame.time.Clock()
         pygame.mouse.set_visible(True)  # Make the cursor visible
         module_logger.info("Mouse cursor shown")
@@ -232,8 +177,7 @@ class menu:
             self.dt = self.clock.tick(30)/1000.
             if self.update:
                 self.makeLoadMenu(screen, keys, config, sounds)
-                self.items = [self.newmaingame, self.newcustomgame, self.sr,
-                              self.cgam, self.options, self.credits, self.exit]
+                self.items = [self.newgamemenu, self.cgam, self.options, self.credits, self.exit]
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     module_logger.info("QUIT signal received, quitting")
