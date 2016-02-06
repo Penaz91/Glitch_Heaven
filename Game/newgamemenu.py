@@ -43,17 +43,16 @@ class NewGameMenu:
                             self.camp, gameconfig, sounds)
         except FileNotFoundError:
             module_logger.info("No File selected, Loading of campaign aborted")
-    
+
     def newGame(self, keys, gameconfig, screen, sounds):
         self.running = False
         Game().main(screen, keys,
                     "newgame",
                     pathjoin("data",
                              "campaigns",
-                             "main.cmp"
-                            ),
-                            self.gameconfig,
-                            sounds),
+                             "main.cmp"),
+                    self.gameconfig,
+                    sounds),
 
     def makeCampaignMenu(self, screen, keys, config, sounds):
         self.newmainimg = self.font.render("Start Main Campaign", False,
@@ -87,7 +86,7 @@ class NewGameMenu:
                                                self.gameconfig,
                                                sounds
                                                )
-                                               
+
     def makeSpeedRunMenu(self, screen, keys, config, sounds):
         self.srimg = self.font.render("SpeedRun Mode", False,
                                       (100, 100, 100)).convert_alpha()
@@ -109,7 +108,7 @@ class NewGameMenu:
                                     sounds)
 
     def makeSDMenu(self, screen, keys, config, sounds):
-        self.sdimg = self.font.render("Start 'Sudden Death' Mode", False,
+        self.sdimg = self.font.render("Start 'Critical Failure' Mode", False,
                                       (100, 100, 100)).convert_alpha()
         self.sd = menuItem.menuitem(self.sdimg,
                                     self.sdimg,
@@ -117,6 +116,17 @@ class NewGameMenu:
                                     lambda: None,
                                     self.gameconfig,
                                     sounds)
+
+    def makeSMMenu(self, screen, keys, config, sounds):
+        self.smimg = self.font.render("Play a Single Map", False,
+                                      (100, 100, 100)).convert_alpha()
+        self.sm = menuItem.menuitem(self.smimg,
+                                    self.smimg,
+                                    (50, 480),
+                                    lambda: None,
+                                    self.gameconfig,
+                                    sounds)
+
     def goToMenu(self):
         """
         Kills the current game and menu instance, and returns
@@ -189,6 +199,9 @@ class NewGameMenu:
         # Insert a sudden death mode button
         # v------------------------------------------------------------------v
         self.makeSDMenu(screen, keys, config, sounds)
+        # Insert a single map mode button
+        # v------------------------------------------------------------------v
+        self.makeSMMenu(screen, keys, config, sounds)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
@@ -202,7 +215,8 @@ class NewGameMenu:
                                           self.gameconfig,
                                           sounds)
         # ^------------------------------------------------------------------^
-        self.items = [self.newmaingame, self.newcustomgame, self.sr, self.nh, self.sd, self.mainmenu]
+        self.items = [self.newmaingame, self.newcustomgame, self.sr,
+                      self.nh, self.sd, self.sm, self.mainmenu]
         self.clock = pygame.time.Clock()
         pygame.mouse.set_visible(True)  # Make the cursor visible
         module_logger.info("Mouse cursor shown")

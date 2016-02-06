@@ -2,6 +2,7 @@
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
+from game import Game
 import os
 from components.UI import menuItem
 from libs import timedanimation
@@ -11,8 +12,6 @@ import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
 from credits import Credits
-from tkinter import Tk
-from tkinter import filedialog
 from libs.textglitcher import makeGlitched
 module_logger = logging.getLogger("Glitch_Heaven.MainMenu")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
@@ -45,9 +44,8 @@ class menu:
                                                 keys,
                                                 self.gameconfig,
                                                 sounds),
-                                            self.gameconfig,
-                                            sounds
-                                            )
+                                             self.gameconfig,
+                                             sounds)
 
     def makeCreditsMenu(self, screen, keys, config, sounds):
         self.creditsimg = self.font.render("Credits", False,
@@ -55,7 +53,7 @@ class menu:
         self.selectedcreditsimg = makeGlitched("Credits", self.font)
         self.credits = menuItem.menuitem(self.creditsimg,
                                          self.selectedcreditsimg,
-                                         (50, 480),
+                                         (50, 360),
                                          lambda: Credits().main(
                                              screen,
                                              keys,
@@ -81,7 +79,7 @@ class menu:
                                          (100, 100, 100)).convert_alpha()
             self.cgam = menuItem.menuitem(self.cont,
                                           self.cont,
-                                          (50, 360),
+                                          (50, 240),
                                           lambda: None,
                                           self.gameconfig,
                                           sounds)
@@ -91,7 +89,7 @@ class menu:
             self.contsel = makeGlitched("Load Saved Game", self.font)
             self.cgam = menuItem.menuitem(self.cont,
                                           self.contsel,
-                                          (50, 360),
+                                          (50, 240),
                                           lambda: Game().main(screen, keys,
                                                               "load",
                                                               None,
@@ -107,7 +105,7 @@ class menu:
         self.optsel = makeGlitched("Options", self.font)
         self.options = menuItem.menuitem(self.optimg,
                                          self.optsel,
-                                         (50, 420),
+                                         (50, 300),
                                          lambda: OptionsMenu().main(
                                              screen, keys, self.gameconfig,
                                              sounds),
@@ -169,7 +167,8 @@ class menu:
         # v------------------------------------------------------------------v
         self.makeOptionsMenu(screen, keys, config, sounds)
         # ^------------------------------------------------------------------^
-        self.items = [self.newgamemenu, self.cgam, self.options, self.credits, self.exit]
+        self.items = [self.newgamemenu, self.cgam, self.options,
+                      self.credits, self.exit]
         self.clock = pygame.time.Clock()
         pygame.mouse.set_visible(True)  # Make the cursor visible
         module_logger.info("Mouse cursor shown")
@@ -177,7 +176,8 @@ class menu:
             self.dt = self.clock.tick(30)/1000.
             if self.update:
                 self.makeLoadMenu(screen, keys, config, sounds)
-                self.items = [self.newgamemenu, self.cgam, self.options, self.credits, self.exit]
+                self.items = [self.newgamemenu, self.cgam, self.options,
+                              self.credits, self.exit]
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     module_logger.info("QUIT signal received, quitting")

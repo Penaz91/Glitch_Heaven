@@ -14,7 +14,6 @@ def generate(size, plattype, image=None):
     center = (32, plattype, 32, 32)
     rcorner = (64, plattype, 32, 32)
     loner = (96, plattype, 32, 32)
-    print("The platform size would be: "+str((32*size, 32)))
     plat = pygame.surface.Surface((32*size, 32), pygame.SRCALPHA, 32)
     if size == 1:
         plat.blit(graphics, (0, 0), loner)
