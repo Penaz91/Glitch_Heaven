@@ -744,7 +744,7 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):
-            game.loadNextLevel(game.currentcampaign, game.screen)
+            game.loadNextLevel(game.campaignname, game.currentcampaign, game.screen)
             game.loadLevelPart2(game.keys, self.soundslink)
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus

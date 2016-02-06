@@ -112,7 +112,7 @@ class Game(object):
         """
         return self.currenthelp
 
-    def LoadLevel(self, level, screen):
+    def LoadLevel(self, level, campaignname, screen):
         """
         Method to load the defined level
 
@@ -127,7 +127,7 @@ class Game(object):
         # v--------------------------------------------------------------v
         mod_logger.info("LoadLevel Routing is loading: " + level)
         levelconfig = configparser.ConfigParser()
-        levelconfig.read(os.path.join("data", "maps", level+".conf"))
+        levelconfig.read(os.path.join("data", "maps",campaignname, level+".conf"))
         mod_logger.info("Level configuration loaded")
         self.helpflagActive = False
         self.currenthelp = ""
@@ -153,7 +153,7 @@ class Game(object):
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
         mod_logger.info("Loading Tilemap")
-        self.tilemap = tmx.load(os.path.join("data", "maps", level+".tmx"),
+        self.tilemap = tmx.load(os.path.join("data", "maps", campaignname, level+".tmx"),
                                 screen.get_size())
         mod_logger.info("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
@@ -233,7 +233,7 @@ class Game(object):
         mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
-    def loadNextLevel(self, campaign, screen):
+    def loadNextLevel(self, campaignname, campaign, screen):
         """
         Loads the next level in the current campaign
 
@@ -255,7 +255,7 @@ class Game(object):
             mod_logger.debug("Loading Level: "+str(campaign))
             # ^--------------------------------------------------------------^
             self.eraseCurrentLevel()
-            self.LoadLevel(campaign[self.campaignIndex], screen)
+            self.LoadLevel(campaign[self.campaignIndex], campaignname, screen)
 
     def loadCampaign(self, campaignfile):
         """
@@ -336,7 +336,8 @@ class Game(object):
         if path:
             shelf = {"currentcampaign": self.currentcampaign,
                      "campaignfile": self.campaignFile,
-                     "campaignIndex": self.campaignIndex - 1}
+                     "campaignIndex": self.campaignIndex - 1,
+                     "campaignname": self.campaignname}
             with open(path, "w") as savefile:
                 string = json.dumps(shelf)
                 savefile.write(string)
@@ -358,6 +359,7 @@ class Game(object):
             self.currentcampaign = shelf["currentcampaign"]
             self.campaignFile = shelf["campaignfile"]
             self.campaignIndex = shelf["campaignIndex"]
+            self.campaignname = shelf["campaignname"]
         # Debug Area
         # v--------------------------------------------------------------v
         mod_logger.debug("Loadgame: "+str(self.currentcampaign))
@@ -435,16 +437,18 @@ class Game(object):
             mod_logger.info("Using Load mode")
             try:
                 self.loadGame()
-                self.loadNextLevel(self.currentcampaign, self.gameviewport)
+                self.loadNextLevel(self.campaignname, self.currentcampaign, self.gameviewport)
             except FileNotFoundError:
                 mod_logger.info("No file provided, loading cancelled")
                 self.running = False
         else:
             mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
+            self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
+            print (self.campaignname)
             self.currentcampaign = self.loadCampaign(self.campaignFile)
             self.campaignIndex = -1
-            self.loadNextLevel(self.currentcampaign, self.gameviewport)
+            self.loadNextLevel(self.campaignname, self.currentcampaign, self.gameviewport)
         # ^--------------------------------------------------------------^
         self.fps = 30
         self.deadbodies = pygame.sprite.Group()
@@ -513,7 +517,8 @@ class Game(object):
                         if event.key == pygame.K_BACKSPACE:
                             mod_logger.debug("Debug key used,a" +
                                              "Loading next level")
-                            self.loadNextLevel(self.currentcampaign,
+                            self.loadNextLevel(self.campaignname,
+                                               self.currentcampaign,
                                                self.screen)
                             self.loadLevelPart2(self.keys, sounds)
                     if config.getboolean("Debug", "keydebug"):
@@ -528,7 +533,8 @@ class Game(object):
                 if event.type == pygame.KEYDOWN and\
                         event.key == self.keys["restart"]:
                             self.campaignIndex -= 1
-                            self.loadNextLevel(self.currentcampaign,
+                            self.loadNextLevel(self.campaignname,
+                                               self.currentcampaign,
                                                self.screen)
                             self.loadLevelPart2(self.keys, sounds)
                 if event.type == pygame.QUIT:
