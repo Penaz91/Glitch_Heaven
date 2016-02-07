@@ -9,7 +9,7 @@ class menuitem(object):
     """ Represents a menu item """
 
     def __init__(self, unselected, selected,
-                 location, function, config, sounds):
+                 location, onhover, function, config, sounds):
         """
         Default constructor
         :param unselected: The surface representing the unselected button
@@ -27,6 +27,7 @@ class menuitem(object):
         self.image = self.unselected
         self.selectedStatus = False
         self.function = function
+        self.onhover = onhover
         self.sound = sounds["menu"]["select"]
         self.confirmSound = sounds["menu"]["confirm"]
 
@@ -34,6 +35,7 @@ class menuitem(object):
         """ Turns the element status to "Selected" """
         self.image = self.selected
         self.selectedStatus = True
+        self.onhover()
         self.sound.play()
 
     def makeUnselected(self):

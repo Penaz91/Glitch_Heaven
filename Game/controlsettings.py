@@ -26,6 +26,9 @@ module_logger.addHandler(ch)
 class ControlSettings:
     """ Represents a pause menu window"""
 
+    def editdesc(self, string):
+        self.desc = makeGlitched(string, self.font)
+
     def goToMenu(self):
         """
         Kills the current game and menu instance, and returns
@@ -47,6 +50,7 @@ class ControlSettings:
         self.keyboard = menuItem.menuitem(self.keybimg,
                                           self.keybselimg,
                                           (50, 240),
+                                          lambda: self.editdesc("Edit Keyboard assignments"),
                                           lambda: KeyboardSettings().main(screen,
                                                                         keys,
                                                                         config,
@@ -62,6 +66,7 @@ class ControlSettings:
         self.joypad = menuItem.menuitem(self.joyimg,
                                         self.joyselimg,
                                         (50, 380),
+                                        lambda: self.editdesc("Edit Joypad Assignments (To be implemented)"),
                                         lambda: None,
                                         self.gameconfig,
                                         sounds
@@ -84,6 +89,7 @@ class ControlSettings:
         self.gameconfig = config
         self.screensize = screen.get_size()
         self.config = config
+        self.desc = None
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -122,6 +128,7 @@ class ControlSettings:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),
+                                          lambda: self.editdesc("Go to the main menu"),
                                           lambda: self.goToMenu(),
                                           self.config,
                                           sounds)
@@ -177,6 +184,8 @@ class ControlSettings:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
+            if self.desc is not None:
+                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

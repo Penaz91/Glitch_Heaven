@@ -1,4 +1,4 @@
-# Video Settings Component
+# New Game Menu Component
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
@@ -9,7 +9,10 @@ import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
 from libs.textglitcher import makeGlitched
-module_logger = logging.getLogger("Glitch_Heaven.VideoSettings")
+from tkinter import Tk
+from tkinter import filedialog
+from game import Game
+module_logger = logging.getLogger("Glitch_Heaven.NewGameMenu")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
@@ -21,11 +24,117 @@ module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
 
-class VideoSettings:
+class NewGameMenu:
     """ Represents a pause menu window"""
-    
+
     def editdesc(self, string):
         self.desc = makeGlitched(string, self.font)
+
+    def loadcustom(self, keys, gameconfig, screen, sounds):
+        """
+        Loads a custom campaign from a open file dialog
+        """
+        try:
+            Tk().withdraw()
+            formats = [("Glitch_Heaven Campaign", "*.cmp")]
+            self.camp = filedialog.askopenfilename(
+                    filetypes=formats,
+                    initialdir="./data/campaigns")
+            if self.camp:
+                self.running = False
+                Game().main(screen, keys, "newgame",
+                            self.camp, gameconfig, sounds)
+        except FileNotFoundError:
+            module_logger.info("No File selected, Loading of campaign aborted")
+
+    def newGame(self, keys, gameconfig, screen, sounds):
+        self.running = False
+        Game().main(screen, keys,
+                    "newgame",
+                    pathjoin("data",
+                             "campaigns",
+                             "main.cmp"),
+                    self.gameconfig,
+                    sounds),
+
+    def makeCampaignMenu(self, screen, keys, config, sounds):
+        self.newmainimg = self.font.render("Start Main Campaign", False,
+                                           (255, 255, 255)).convert_alpha()
+        self.selectedmainimg = makeGlitched("Start Main Campaign", self.font)
+        self.newmaingame = menuItem.menuitem(self.newmainimg,
+                                             self.selectedmainimg,
+                                             (50, 180),
+                                             lambda: self.editdesc("Play the Main Game"),
+                                             lambda: self.newGame(
+                                                keys,
+                                                config,
+                                                screen,
+                                                sounds),
+                                             self.gameconfig,
+                                             sounds
+                                             )
+
+    def makeCustomCampaignMenu(self, screen, keys, config, sounds):
+        self.newcustomimg = self.font.render("Start Custom Campaign", False,
+                                             (255, 255, 255)).convert_alpha()
+        self.selectedcustomimg = makeGlitched("Start Custom Campaign",
+                                              self.font)
+        self.newcustomgame = menuItem.menuitem(self.newcustomimg,
+                                               self.selectedcustomimg,
+                                               (50, 240),
+                                               lambda: self.editdesc("Load a custom Campaign"),
+                                               lambda: self.loadcustom(
+                                                   keys,
+                                                   self.gameconfig,
+                                                   screen,
+                                                   sounds),
+                                               self.gameconfig,
+                                               sounds
+                                               )
+
+    def makeSpeedRunMenu(self, screen, keys, config, sounds):
+        self.srimg = self.font.render("SpeedRun Mode", False,
+                                      (100, 100, 100)).convert_alpha()
+        self.sr = menuItem.menuitem(self.srimg,
+                                    self.srimg,
+                                    (50, 300),
+                                    lambda: self.editdesc(None),
+                                    lambda: None,
+                                    self.gameconfig,
+                                    sounds)
+
+    def makeNintendoMenu(self, screen, keys, config, sounds):
+        self.nhimg = self.font.render("Start 'Nintendo Hard' Campaign", False,
+                                      (100, 100, 100)).convert_alpha()
+        self.nh = menuItem.menuitem(self.nhimg,
+                                    self.nhimg,
+                                    (50, 360),
+                                    lambda: self.editdesc(None),
+                                    lambda: None,
+                                    self.gameconfig,
+                                    sounds)
+
+    def makeSDMenu(self, screen, keys, config, sounds):
+        self.sdimg = self.font.render("Start 'Critical Failure' Mode", False,
+                                      (100, 100, 100)).convert_alpha()
+        self.sd = menuItem.menuitem(self.sdimg,
+                                    self.sdimg,
+                                    (50, 420),
+                                    lambda: self.editdesc(None),
+                                    lambda: None,
+                                    self.gameconfig,
+                                    sounds)
+
+    def makeSMMenu(self, screen, keys, config, sounds):
+        self.smimg = self.font.render("Play a Single Map", False,
+                                      (100, 100, 100)).convert_alpha()
+        self.sm = menuItem.menuitem(self.smimg,
+                                    self.smimg,
+                                    (50, 480),
+                                    lambda: self.editdesc(None),
+                                    lambda: None,
+                                    self.gameconfig,
+                                    sounds)
 
     def goToMenu(self):
         """
@@ -56,7 +165,7 @@ class VideoSettings:
         module_logger.info("Opening the Video Settings Menu")
         pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
-        self.config = config
+        self.gameconfig = config
         self.desc = None
         # Title animation and properties
         # v------------------------------------------------------------------v
@@ -85,10 +194,24 @@ class VideoSettings:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        self.line = self.font.render("Video settings are not" +
-                                     " available in this version",
-                                     False,
-                                     (255, 255, 255))
+        # Main campaign menu element
+        # v------------------------------------------------------------------v
+        self.makeCampaignMenu(screen, keys, config, sounds)
+        # Custom campaign menu element
+        # v------------------------------------------------------------------v
+        self.makeCustomCampaignMenu(screen, keys, config, sounds)
+        # Insert a speedrun mode button
+        # v------------------------------------------------------------------v
+        self.makeSpeedRunMenu(screen, keys, config, sounds)
+        # Insert a Nintendo Hard mode button
+        # v------------------------------------------------------------------v
+        self.makeNintendoMenu(screen, keys, config, sounds)
+        # Insert a sudden death mode button
+        # v------------------------------------------------------------------v
+        self.makeSDMenu(screen, keys, config, sounds)
+        # Insert a single map mode button
+        # v------------------------------------------------------------------v
+        self.makeSMMenu(screen, keys, config, sounds)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
@@ -100,10 +223,11 @@ class VideoSettings:
                                           (50, 560),
                                           lambda: self.editdesc("Go to the main menu"),
                                           lambda: self.goToMenu(),
-                                          self.config,
+                                          self.gameconfig,
                                           sounds)
         # ^------------------------------------------------------------------^
-        self.items = [self.mainmenu]
+        self.items = [self.newmaingame, self.newcustomgame, self.sr,
+                      self.nh, self.sd, self.sm, self.mainmenu]
         self.clock = pygame.time.Clock()
         pygame.mouse.set_visible(True)  # Make the cursor visible
         module_logger.info("Mouse cursor shown")
@@ -156,7 +280,6 @@ class VideoSettings:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
-            screen.blit(self.line, (100, 200))
             if self.desc is not None:
                 screen.blit(self.desc, (750-self.desc.get_rect().width,300))
             for item in self.items:
