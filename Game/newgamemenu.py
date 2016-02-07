@@ -103,9 +103,13 @@ class NewGameMenu:
                                     self.gameconfig,
                                     sounds)
 
-    def makeNintendoMenu(self, screen, keys, config, sounds):
-        self.nhimg = self.font.render("Start 'Nintendo Hard' Campaign", False,
-                                      (100, 100, 100)).convert_alpha()
+    def makeNHMenu(self, screen, keys, config, sounds):
+        if config.getboolean("Unlockables","NHMode"):
+            self.nhimg = self.font.render("Start 'Nintendo Hard' Campaign", False,
+                                          (100, 100, 100)).convert_alpha()
+        else:
+            self.nhimg = self.font.render("(File Corrupted)", False,
+                                          (100, 100, 100)).convert_alpha()
         self.nh = menuItem.menuitem(self.nhimg,
                                     self.nhimg,
                                     (50, 360),
@@ -115,8 +119,12 @@ class NewGameMenu:
                                     sounds)
 
     def makeSDMenu(self, screen, keys, config, sounds):
-        self.sdimg = self.font.render("Start 'Critical Failure' Mode", False,
-                                      (100, 100, 100)).convert_alpha()
+        if config.getboolean("Unlockables","CFMode"):
+            self.sdimg = self.font.render("Start 'Critical Failure' Mode", False,
+                                          (100, 100, 100)).convert_alpha()
+        else:
+            self.sdimg = self.font.render("(File Corrupted)", False,
+                                          (100, 100, 100)).convert_alpha()
         self.sd = menuItem.menuitem(self.sdimg,
                                     self.sdimg,
                                     (50, 420),
@@ -203,9 +211,9 @@ class NewGameMenu:
         # Insert a speedrun mode button
         # v------------------------------------------------------------------v
         self.makeSpeedRunMenu(screen, keys, config, sounds)
-        # Insert a Nintendo Hard mode button
+        # Insert a Hard mode button
         # v------------------------------------------------------------------v
-        self.makeNintendoMenu(screen, keys, config, sounds)
+        self.makeNHMenu(screen, keys, config, sounds)
         # Insert a sudden death mode button
         # v------------------------------------------------------------------v
         self.makeSDMenu(screen, keys, config, sounds)
