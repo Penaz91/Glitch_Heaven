@@ -27,6 +27,9 @@ module_logger.addHandler(ch)
 class NewGameMenu:
     """ Represents a pause menu window"""
 
+    def editdesc(self, string):
+        self.desc = makeGlitched(string, self.font)
+
     def loadcustom(self, keys, gameconfig, screen, sounds):
         """
         Loads a custom campaign from a open file dialog
@@ -61,6 +64,7 @@ class NewGameMenu:
         self.newmaingame = menuItem.menuitem(self.newmainimg,
                                              self.selectedmainimg,
                                              (50, 180),
+                                             lambda: self.editdesc("Play the Main Game"),
                                              lambda: self.newGame(
                                                 keys,
                                                 config,
@@ -78,6 +82,7 @@ class NewGameMenu:
         self.newcustomgame = menuItem.menuitem(self.newcustomimg,
                                                self.selectedcustomimg,
                                                (50, 240),
+                                               lambda: self.editdesc("Load a custom Campaign"),
                                                lambda: self.loadcustom(
                                                    keys,
                                                    self.gameconfig,
@@ -93,6 +98,7 @@ class NewGameMenu:
         self.sr = menuItem.menuitem(self.srimg,
                                     self.srimg,
                                     (50, 300),
+                                    lambda: self.editdesc(None),
                                     lambda: None,
                                     self.gameconfig,
                                     sounds)
@@ -103,6 +109,7 @@ class NewGameMenu:
         self.nh = menuItem.menuitem(self.nhimg,
                                     self.nhimg,
                                     (50, 360),
+                                    lambda: self.editdesc(None),
                                     lambda: None,
                                     self.gameconfig,
                                     sounds)
@@ -113,6 +120,7 @@ class NewGameMenu:
         self.sd = menuItem.menuitem(self.sdimg,
                                     self.sdimg,
                                     (50, 420),
+                                    lambda: self.editdesc(None),
                                     lambda: None,
                                     self.gameconfig,
                                     sounds)
@@ -123,6 +131,7 @@ class NewGameMenu:
         self.sm = menuItem.menuitem(self.smimg,
                                     self.smimg,
                                     (50, 480),
+                                    lambda: self.editdesc(None),
                                     lambda: None,
                                     self.gameconfig,
                                     sounds)
@@ -157,6 +166,7 @@ class NewGameMenu:
         pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.gameconfig = config
+        self.desc = None
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -211,6 +221,7 @@ class NewGameMenu:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
+                                          lambda: self.editdesc("Go to the main menu"),
                                           lambda: self.goToMenu(),
                                           self.gameconfig,
                                           sounds)
@@ -269,6 +280,8 @@ class NewGameMenu:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
+            if self.desc is not None:
+                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

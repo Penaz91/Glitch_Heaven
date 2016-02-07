@@ -23,6 +23,9 @@ module_logger.addHandler(ch)
 
 class VideoSettings:
     """ Represents a pause menu window"""
+    
+    def editdesc(self, string):
+        self.desc = makeGlitched(string, self.font)
 
     def goToMenu(self):
         """
@@ -54,6 +57,7 @@ class VideoSettings:
         pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.config = config
+        self.desc = None
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -94,6 +98,7 @@ class VideoSettings:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
+                                          lambda: self.editdesc("Go to the main menu"),
                                           lambda: self.goToMenu(),
                                           self.config,
                                           sounds)
@@ -152,6 +157,8 @@ class VideoSettings:
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             screen.blit(self.line, (100, 200))
+            if self.desc is not None:
+                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

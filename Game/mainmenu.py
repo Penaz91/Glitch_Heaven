@@ -31,6 +31,9 @@ module_logger.addHandler(ch)
 
 class menu:
     """ Represents the main Game menu """
+    
+    def editdesc(self, string):
+        self.desc = makeGlitched(string, self.font)
 
     def makeNewGameMenu(self, screen, keys, config, sounds):
         self.newgameimg = self.font.render("Start A New Game", False,
@@ -39,6 +42,7 @@ class menu:
         self.newgamemenu = menuItem.menuitem(self.newgameimg,
                                              self.selectedgameimg,
                                              (50, 180),
+                                             lambda: self.editdesc("Start a new game, in any mode"),
                                              lambda: NewGameMenu().main(
                                                 screen,
                                                 keys,
@@ -54,6 +58,7 @@ class menu:
         self.credits = menuItem.menuitem(self.creditsimg,
                                          self.selectedcreditsimg,
                                          (50, 360),
+                                         lambda: self.editdesc("Look at Names"),
                                          lambda: Credits().main(
                                              screen,
                                              keys,
@@ -68,7 +73,9 @@ class menu:
         self.exitselected = makeGlitched("Quit", self.font)
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
-                                      (700, 560), lambda: pygame.event.post(
+                                      (700, 560),
+                                      lambda: self.editdesc("Quit the Game"),
+                                      lambda: pygame.event.post(
                                           pygame.event.Event(pygame.QUIT)),
                                       self.gameconfig,
                                       sounds)
@@ -80,6 +87,7 @@ class menu:
             self.cgam = menuItem.menuitem(self.cont,
                                           self.cont,
                                           (50, 240),
+                                          lambda: self.editdesc(None),
                                           lambda: None,
                                           self.gameconfig,
                                           sounds)
@@ -90,6 +98,7 @@ class menu:
             self.cgam = menuItem.menuitem(self.cont,
                                           self.contsel,
                                           (50, 240),
+                                          lambda: self.editdesc("Load a previously saved Game"),
                                           lambda: Game().main(screen, keys,
                                                               "load",
                                                               None,
@@ -106,6 +115,7 @@ class menu:
         self.options = menuItem.menuitem(self.optimg,
                                          self.optsel,
                                          (50, 300),
+                                         lambda: self.editdesc("Fiddle With Options"),
                                          lambda: OptionsMenu().main(
                                              screen, keys, self.gameconfig,
                                              sounds),
@@ -123,6 +133,7 @@ class menu:
         module_logger.info("Entering Main Menu")
         pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
+        self.desc = None
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.gameconfig = config
@@ -229,6 +240,8 @@ class menu:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
+            if self.desc is not None:
+                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

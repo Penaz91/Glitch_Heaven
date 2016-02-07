@@ -25,6 +25,9 @@ module_logger.addHandler(ch)
 class pauseMenu:
     """ Represents a pause menu window"""
 
+    def editdesc(self, string):
+        self.desc = makeGlitched(string, self.font)
+
     def unpause(self):
         """ Stops the menu from running and resumes the game"""
         module_logger.info("Game unpaused")
@@ -63,6 +66,7 @@ class pauseMenu:
         pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.config = config
+        self.desc= None
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -97,7 +101,8 @@ class pauseMenu:
         self.selectedimg = makeGlitched("Resume Game", self.font)
         self.resgame = menuItem.menuitem(self.resgameimg,
                                          self.selectedimg,
-                                         (320, 240),
+                                         (50, 240),
+                                         lambda: self.editdesc("Resume the paused Game"),
                                          lambda: self.unpause(),
                                          self.config,
                                          sounds)
@@ -109,7 +114,9 @@ class pauseMenu:
         self.saveselected = makeGlitched("Save Game", self.font)
         self.savegame = menuItem.menuitem(self.saveimg,
                                           self.saveselected,
-                                          (320, 320), lambda: game.saveGame(),
+                                          (50, 320),
+                                          lambda: self.editdesc("Save for safety"),
+                                          lambda: game.saveGame(),
                                           self.config,
                                           sounds)
         # ^------------------------------------------------------------------^
@@ -120,7 +127,9 @@ class pauseMenu:
         self.exitselected = makeGlitched("Quit to Desktop", self.font)
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
-                                      (320, 560), lambda: pygame.event.post(
+                                      (50, 560),
+                                      lambda: self.editdesc("Outta Here, NOW!!"),
+                                      lambda: pygame.event.post(
                                         pygame.event.Event(pygame.QUIT)),
                                       self.config,
                                       sounds)
@@ -132,7 +141,8 @@ class pauseMenu:
         self.menusel = makeGlitched("Main Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
-                                          (320, 400),
+                                          (50, 400),
+                                          lambda: self.editdesc("Get back to the main menu"),
                                           lambda: self.goToMenu(game),
                                           self.config,
                                           sounds)
@@ -189,6 +199,8 @@ class pauseMenu:
             # ^----------------------------------------------------------^
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
+            if self.desc is not None:
+                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             screen.blit(self.resgame.image, self.resgame.location)

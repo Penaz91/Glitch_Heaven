@@ -117,6 +117,7 @@ class AudioSettings:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
+                                          lambda: None,
                                           lambda: self.goToMenu(sounds,
                                                                 config),
                                           self.config,
