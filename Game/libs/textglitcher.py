@@ -2,6 +2,7 @@
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
+import random
 
 
 def makeGlitched(text, font):
@@ -22,3 +23,15 @@ def makeGlitched(text, font):
     entire.blit(green, (4, 0))
     entire.blit(white, (2, 0))
     return entire
+
+def makeMoreGlitched(text, chanceperc):
+    chance = random.randint(0,100)
+    txt = text
+    symlist =["@", "#", "!", "%"]
+    if chance <= chanceperc:
+        rnd = random.randint(1,len(text)//2)
+        d = list(txt)
+        for i in range(rnd):
+            rnd2=random.randint(0,len(text)-1)
+            d[rnd2] = random.choice(symlist)
+    return "".join(d)
