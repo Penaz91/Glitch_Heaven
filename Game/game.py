@@ -506,10 +506,13 @@ class Game(object):
                 self.time += dt
                 self.redsurfrect.y = -600 + (self.gsize[1] * self.time) / self.cftime
                 self.rcftime = self.cftime - self.time
-                hours = self.rcftime // 3600
-                minutes = (self.rcftime % 3600) // 60
-                seconds = (self.rcftime % 3600) % 60
-                self.timer = makeGlitched(str(int(hours)) + ":" + str(int(minutes)) + ":" + str(int(seconds)), self.font)
+                hours = int(self.rcftime // 3600)
+                minutes = int((self.rcftime % 3600) // 60)
+                seconds = ((self.rcftime % 3600) % 60)
+                th = str(hours) if hours >9 else "0"+str(hours)
+                tm = str(minutes) if minutes > 9 else "0"+str(minutes)
+                ts = "%.3f"%(seconds) if seconds > 9 else "0"+"%.3f"%(seconds)
+                self.timer = makeGlitched("Time Remaining: " + th + ":" + tm + ":" + ts, self.font)
                 if self.redsurfrect.y > 0:
                     pygame.mouse.set_visible(True)  # Make the cursor visible
                     self.running = False
