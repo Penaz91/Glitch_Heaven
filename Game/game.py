@@ -490,6 +490,7 @@ class Game(object):
         self.fps = 30
         self.time = 0
         self.deadbodies = pygame.sprite.Group()
+        self.mode = mode
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
         if self.running:
@@ -509,9 +510,9 @@ class Game(object):
                 hours = int(self.rcftime // 3600)
                 minutes = int((self.rcftime % 3600) // 60)
                 seconds = ((self.rcftime % 3600) % 60)
-                th = str(hours) if hours >9 else "0"+str(hours)
+                th = str(hours) if hours > 9 else "0"+str(hours)
                 tm = str(minutes) if minutes > 9 else "0"+str(minutes)
-                ts = "%.3f"%(seconds) if seconds > 9 else "0"+"%.3f"%(seconds)
+                ts = "%.3f" % (seconds) if seconds > 9 else "0"+"%.3f" % (seconds)
                 self.timer = makeGlitched("Time Remaining: " + th + ":" + tm + ":" + ts, self.font)
                 if self.redsurfrect.y > 0:
                     pygame.mouse.set_visible(True)  # Make the cursor visible
@@ -620,7 +621,7 @@ class Game(object):
 
             screen.blit(self.gameviewport, (0, 0))
             if mode.lower() == "criticalfailure":
-                screen.blit(self.timer, (50,50))
+                screen.blit(self.timer, (50, 50))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
             pygame.display.update()

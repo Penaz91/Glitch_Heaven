@@ -822,11 +822,12 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Handles the glitchiness in Critical Failure mode
         # v--------------------------------------------------------------v
-        redcoll = game.tilemap.pixel_to_screen(self.rect.x, self.rect.y)
-        if redcoll[1] < game.redsurfrect.bottom:
-            self.glitched = True
-        else:
-            self.glitched = False
+        if game.mode.lower() == "criticalfailure":
+            redcoll = game.tilemap.pixel_to_screen(self.rect.x, self.rect.y)
+            if redcoll[1] < game.redsurfrect.bottom:
+                self.glitched = True
+            else:
+                self.glitched = False
         # MUST BE LAST OPERATION
         # v--------------------------------------------------------------v
         self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
