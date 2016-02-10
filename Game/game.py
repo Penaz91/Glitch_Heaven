@@ -127,7 +127,9 @@ class Game(object):
         # v--------------------------------------------------------------v
         mod_logger.info("LoadLevel Routing is loading: " + level)
         levelconfig = configparser.ConfigParser()
-        levelconfig.read(os.path.join("data", "maps",campaignname, level+".conf"))
+        levelconfig.read(os.path.join("data",
+                                      "maps",
+                                      campaignname, level+".conf"))
         mod_logger.info("Level configuration loaded")
         self.helpflagActive = False
         self.currenthelp = ""
@@ -153,7 +155,10 @@ class Game(object):
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
         mod_logger.info("Loading Tilemap")
-        self.tilemap = tmx.load(os.path.join("data", "maps", campaignname, level+".tmx"),
+        self.tilemap = tmx.load(os.path.join("data",
+                                             "maps",
+                                             campaignname,
+                                             level+".tmx"),
                                 screen.get_size())
         mod_logger.info("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
@@ -186,10 +191,12 @@ class Game(object):
             speed = obstacle['ObsSpeed']
             if "v" in obs:
                 Obstacle((obstacle.px, obstacle.py), True, speed, None,
-                         self.obstacles, preloaded_ani=self.preloaded_sprites["glitches"])
+                         self.obstacles,
+                         preloaded_ani=self.preloaded_sprites["glitches"])
             else:
                 Obstacle((obstacle.px, obstacle.py), False, speed, None,
-                         self.obstacles, preloaded_ani=self.preloaded_sprites["glitches"])
+                         self.obstacles,
+                         preloaded_ani=self.preloaded_sprites["glitches"])
         self.tilemap.layers.append(self.obstacles)
         for platform in self.tilemap.layers['Triggers'].find('Platform'):
             plat = platform['Platform']
@@ -403,7 +410,8 @@ class Game(object):
         """
         mod_logger.info("Entering main game")
         self.running = True
-        self.gameviewport = pygame.surface.Surface((800, 576))
+        self.gsize = (800, 576)
+        self.gameviewport = pygame.surface.Surface(self.gsize)
         self.clock = pygame.time.Clock()
         self.titleholder = pygame.image.load(os.path.join(
                                              "resources",
@@ -426,7 +434,8 @@ class Game(object):
         self.preloaded_sprites = {
                 "platforms": pygame.image.load(pathjoin("resources",
                                                         "tiles",
-                                                        "Plats.png")).convert_alpha(),
+                                                        "Plats.png")
+                                               ).convert_alpha(),
                 "glitches": self.preloadFromDir(pathjoin("resources",
                                                          "sprites",
                                                          "MobileObstacle")),
@@ -442,17 +451,21 @@ class Game(object):
             mod_logger.info("Using Load mode")
             try:
                 self.loadGame()
-                self.loadNextLevel(self.campaignname, self.currentcampaign, self.gameviewport)
+                self.loadNextLevel(self.campaignname,
+                                   self.currentcampaign,
+                                   self.gameviewport)
             except FileNotFoundError:
                 mod_logger.info("No file provided, loading cancelled")
                 self.running = False
-        elif mode.lower() =="newgame":
+        elif mode.lower() == "newgame":
             mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
             self.currentcampaign = self.loadCampaign(self.campaignFile)
             self.campaignIndex = -1
-            self.loadNextLevel(self.campaignname, self.currentcampaign, self.gameviewport)
+            self.loadNextLevel(self.campaignname,
+                               self.currentcampaign,
+                               self.gameviewport)
         elif mode.lower() == "criticalfailure":
             mod_logger.info("Using New Game mode - Critical Failure Modifier")
             self.cftime = 0
@@ -460,14 +473,18 @@ class Game(object):
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
             self.currentcampaign = self.loadCampaign(self.campaignFile)
             self.campaignIndex = -1
-            self.loadNextLevel(self.campaignname, self.currentcampaign, self.gameviewport)
-            self.redsurf = pygame.surface.Surface((800,self.gameviewport.get_rect().height), pygame.SRCALPHA)
+            self.loadNextLevel(self.campaignname,
+                               self.currentcampaign,
+                               self.gameviewport)
+            self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
+                                                  pygame.SRCALPHA)
             linesize = 3
-            self.redsurf.fill((255,0,0,50))
-            self.redsurf.fill((255,255,255,255), pygame.rect.Rect(0,
-                                                        self.redsurf.get_rect().bottom - linesize,
-                                                        800,
-                                                        linesize))
+            self.redsurf.fill((255, 0, 0, 50))
+            self.redsurf.fill((255, 255, 255, 255),
+                              pygame.rect.Rect(0,
+                                               self.redsurf.get_rect().bottom - linesize,
+                                               800,
+                                               linesize))
             self.redsurfrect = self.redsurf.get_rect()
         # ^--------------------------------------------------------------^
         self.fps = 30
@@ -481,17 +498,22 @@ class Game(object):
         """Game Loop"""
         while self.running:
             dt = self.clock.tick(self.fps)/1000.
+            if dt > 0.05:
+                dt = 0.05
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
             if mode.lower() == "criticalfailure":
-                self.time +=dt
-                self.redsurfrect.y = -600 + (self.gameviewport.get_rect().height * self.time) / self.cftime
+                self.time += dt
+                self.redsurfrect.y = -600 + (self.gsize[1] * self.time) / self.cftime
+                self.rcftime = self.cftime - self.time
+                hours = self.rcftime // 3600
+                minutes = (self.rcftime % 3600) // 60
+                seconds = (self.rcftime % 3600) % 60
+                self.timer = makeGlitched(str(int(hours)) + ":" + str(int(minutes)) + ":" + str(int(seconds)), self.font)
                 if self.redsurfrect.y > 0:
                     pygame.mouse.set_visible(True)  # Make the cursor visible
                     self.running = False
             # ^-------------------------------------------------------------------^
-            if dt > 0.05:
-                dt = 0.05
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     mod_logger.info("QUIT signal received, quitting")
@@ -591,8 +613,11 @@ class Game(object):
                                        (-self.tilemap.viewport.x*1.5,
                                         -self.tilemap.viewport.y*1.5))
             if mode.lower() == "criticalfailure":
-                self.gameviewport.blit(self.redsurf, (0,self.redsurfrect.y))
+                self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
+
             screen.blit(self.gameviewport, (0, 0))
+            if mode.lower() == "criticalfailure":
+                screen.blit(self.timer, (50,50))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
             pygame.display.update()
