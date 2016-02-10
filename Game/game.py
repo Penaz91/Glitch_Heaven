@@ -267,11 +267,16 @@ class Game(object):
         mod_logger.info("Loading campaign"+str(campaignfile))
         with open(campaignfile,
                   "r") as campfile:
+            cmpf = json.loads(campfile.read())
+            cmpn = cmpf["Levels"]
+            self.cftime = cmpf["CFTime"]
+        return cmpn
+        """
             x = campfile.readlines()
             y = []
             for element in x:
                 y.append(element.strip())   # Strips levelname from "\n" chars
-            return y
+            return y"""
 
     def eraseCurrentLevel(self):
         """
@@ -441,16 +446,32 @@ class Game(object):
             except FileNotFoundError:
                 mod_logger.info("No file provided, loading cancelled")
                 self.running = False
-        else:
+        elif mode.lower() =="newgame":
             mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
-            print (self.campaignname)
             self.currentcampaign = self.loadCampaign(self.campaignFile)
             self.campaignIndex = -1
             self.loadNextLevel(self.campaignname, self.currentcampaign, self.gameviewport)
+        elif mode.lower() == "criticalfailure":
+            mod_logger.info("Using New Game mode - Critical Failure Modifier")
+            self.cftime = 0
+            self.campaignFile = cmp
+            self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
+            self.currentcampaign = self.loadCampaign(self.campaignFile)
+            self.campaignIndex = -1
+            self.loadNextLevel(self.campaignname, self.currentcampaign, self.gameviewport)
+            self.redsurf = pygame.surface.Surface((800,self.gameviewport.get_rect().height), pygame.SRCALPHA)
+            linesize = 3
+            self.redsurf.fill((255,0,0,50))
+            self.redsurf.fill((255,255,255,255), pygame.rect.Rect(0,
+                                                        self.redsurf.get_rect().bottom - linesize,
+                                                        800,
+                                                        linesize))
+            self.redsurfrect = self.redsurf.get_rect()
         # ^--------------------------------------------------------------^
         self.fps = 30
+        self.time = 0
         self.deadbodies = pygame.sprite.Group()
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
@@ -460,6 +481,15 @@ class Game(object):
         """Game Loop"""
         while self.running:
             dt = self.clock.tick(self.fps)/1000.
+            # For Critical Failure mode
+            # v-------------------------------------------------------------------v
+            if mode.lower() == "criticalfailure":
+                self.time +=dt
+                self.redsurfrect.y = -600 + (self.gameviewport.get_rect().height * self.time) / self.cftime
+                if self.redsurfrect.y > 0:
+                    pygame.mouse.set_visible(True)  # Make the cursor visible
+                    self.running = False
+            # ^-------------------------------------------------------------------^
             if dt > 0.05:
                 dt = 0.05
             for event in pygame.event.get():
@@ -560,6 +590,8 @@ class Game(object):
                 self.gameviewport.blit(self.overlay,
                                        (-self.tilemap.viewport.x*1.5,
                                         -self.tilemap.viewport.y*1.5))
+            if mode.lower() == "criticalfailure":
+                self.gameviewport.blit(self.redsurf, (0,self.redsurfrect.y))
             screen.blit(self.gameviewport, (0, 0))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)

@@ -1,17 +1,22 @@
-Level1
-LevelMono
-Level3
-Level2
-bouncy
-ScrollLvl
-HighJump
-RageLvl
-LedgeJump
-TestComplete
-help
-stick
-LedgeTest
-Wrap
-deadbodies
-hover
-GlitchedFinal
+{
+    "CFTime": 300,
+    "Levels": [
+        "Level1",
+        "LevelMono",
+        "Level3",
+        "Level2",
+        "bouncy",
+        "ScrollLvl",
+        "HighJump",
+        "RageLvl",
+        "LedgeJump",
+        "TestComplete",
+        "help",
+        "stick",
+        "LedgeTest",
+        "Wrap",
+        "deadbodies",
+        "hover",
+        "GlitchedFinal"
+    ]
+}

@@ -55,7 +55,17 @@ class NewGameMenu:
                              "campaigns",
                              "main.cmp"),
                     self.gameconfig,
-                    sounds),
+                    sounds)
+
+    def newCFGame(self, keys, gameconfig, screen, sounds):
+        self.running = False
+        Game().main(screen, keys,
+                    "criticalfailure",
+                    pathjoin("data",
+                             "campaigns",
+                             "main.cmp"),
+                    self.gameconfig,
+                    sounds)
 
     def makeCampaignMenu(self, screen, keys, config, sounds):
         self.newmainimg = self.font.render("Start Main Campaign", False,
@@ -121,17 +131,29 @@ class NewGameMenu:
     def makeSDMenu(self, screen, keys, config, sounds):
         if config.getboolean("Unlockables","CFMode"):
             self.sdimg = self.font.render("Start 'Critical Failure' Mode", False,
-                                          (100, 100, 100)).convert_alpha()
+                                          (255, 255, 255)).convert_alpha()
+            self.sdselimg = makeGlitched("Start 'Critical Failure' Mode", self.font)
+            self.sd = menuItem.menuitem(self.sdimg,
+                                        self.sdselimg,
+                                        (50, 420),
+                                        lambda: self.editdesc("Escape before the time runs out."),
+                                        lambda: self.newCFGame(
+                                                keys,
+                                                config,
+                                                screen,
+                                                sounds),
+                                        self.gameconfig,
+                                        sounds)
         else:
             self.sdimg = self.font.render("(File Corrupted)", False,
                                           (100, 100, 100)).convert_alpha()
-        self.sd = menuItem.menuitem(self.sdimg,
-                                    self.sdimg,
-                                    (50, 420),
-                                    lambda: self.editdesc(None),
-                                    lambda: None,
-                                    self.gameconfig,
-                                    sounds)
+            self.sd = menuItem.menuitem(self.sdimg,
+                                        self.sdimg,
+                                        (50, 420),
+                                        lambda: self.editdesc(None),
+                                        lambda: None,
+                                        self.gameconfig,
+                                        sounds)
 
     def makeSMMenu(self, screen, keys, config, sounds):
         self.smimg = self.font.render("Play a Single Map", False,
