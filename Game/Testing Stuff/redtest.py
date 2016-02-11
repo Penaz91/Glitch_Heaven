@@ -23,10 +23,23 @@ realtileani.loadFromList(tiles)
 redsurf = pygame.surface.Surface(size, pygame.SRCALPHA)
 whitesurf = pygame.surface.Surface((200, 200))
 whitesurf.fill((255, 255, 255))
+for x in range(4):
+    redsurf.fill((255, 0, 0, 127))
+    rs = pygame.surfarray.array3d(redsurf)
+    noise_small = numpy.random.random((200, 150)) * 0.2 + 0.4
+    noise_big = noise_small.repeat(4, 0).repeat(4, 1)
+    rs = (rs.astype(noise_big.dtype) * noise_big[:, :, numpy.newaxis]).astype(rs.dtype)
+    redsurf = pygame.surfarray.make_surface(rs).convert_alpha()
+    os = pygame.surfarray.pixels_alpha(redsurf)
+    os[:] = 127
+    del rs
+    del os
+    tiles[x] = redsurf
 linesize = 3
 tilesurf = realtileani.next()
 overlay = None
 oy = 0.
+i=-1
 # v-----------------------------------------------------------------v
 # ^-----------------------------------------------------------------^
 clock = pygame.time.Clock()
@@ -47,17 +60,10 @@ while Truth:
         if event.type == pygame.QUIT:
             Truth = False
     if tm > 0.2:
-        redsurf.fill((255, 0, 0, 127))
-        rs = pygame.surfarray.array3d(redsurf)
-        noise_small = numpy.random.random((200, 150)) * 0.2 + 0.4
-        noise_big = noise_small.repeat(4, 0).repeat(4, 1)
-        rs = (rs.astype(noise_big.dtype) * noise_big[:, :, numpy.newaxis]).astype(rs.dtype)
-        redsurf = pygame.surfarray.make_surface(rs).convert_alpha()
-        os = pygame.surfarray.pixels_alpha(redsurf)
-        os[:] = 127
-        del rs
-        del os
+        i = (i+1)%4
+        todisplay = tiles[i]
         tm = 0.
+    """
     if not overlay:
         putoverlay = random.randint(0,100)
         if putoverlay <= 45:
@@ -70,15 +76,16 @@ while Truth:
         if oy > redsurf.get_rect().height:
             oy=-overlay.get_rect().height
             overlay = None
+    """
     #redsurf.blit(tilesurf, (0,0))
-    redsurf.fill((255,255,255,255), pygame.rect.Rect(redsurf.get_rect().left,
+    todisplay.fill((255,255,255,255), pygame.rect.Rect(redsurf.get_rect().left,
                                                      redsurf.get_rect().bottom - linesize,
                                                      redsurf.get_rect().width,
                                                      linesize))
     #tilesurf = realtileani.next()
     screen.fill((0, 0, 0))
     screen.blit(whitesurf, (100, 100))
-    screen.blit(redsurf, (0, y))
+    screen.blit(todisplay, (0, y))
     pygame.display.update()
 pygame.quit()
 quit()

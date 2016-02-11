@@ -264,6 +264,9 @@ class Game(object):
             mod_logger.debug("Loading Level: "+str(campaign))
             # ^--------------------------------------------------------------^
             self.eraseCurrentLevel()
+            if mode.lower == "cfsingle":
+                self.time == 0
+                self.redsurfrect.y = -600
             self.LoadLevel(campaign[self.campaignIndex], campaignname, mode, screen)
 
     def loadCampaign(self, campaignfile, mode):
