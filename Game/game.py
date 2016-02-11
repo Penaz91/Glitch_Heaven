@@ -239,6 +239,8 @@ class Game(object):
         center = 400 - int(self.title.get_rect().width)/2
         print(center)
         self.titleposition = (center, 578)
+        if mode.lower() == "cfsingle":
+            self.time = 0.
         mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
@@ -264,9 +266,6 @@ class Game(object):
             mod_logger.debug("Loading Level: "+str(campaign))
             # ^--------------------------------------------------------------^
             self.eraseCurrentLevel()
-            if mode.lower == "cfsingle":
-                self.time == 0
-                self.redsurfrect.y = -600
             self.LoadLevel(campaign[self.campaignIndex], campaignname, mode, screen)
 
     def loadCampaign(self, campaignfile, mode):
@@ -417,6 +416,7 @@ class Game(object):
         """
         mod_logger.info("Entering main game")
         self.running = True
+        self.time = 0.
         self.mode = mode
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
@@ -499,7 +499,6 @@ class Game(object):
             self.redsurfrect = self.redsurf.get_rect()
         # ^--------------------------------------------------------------^
         self.fps = 30
-        self.time = 0
         self.deadbodies = pygame.sprite.Group()
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
@@ -515,15 +514,15 @@ class Game(object):
             # v-------------------------------------------------------------------v
             if mode.lower() == "criticalfailure" or mode.lower() == "cfsingle":
                 self.time += dt
-                self.redsurfrect.y = -600 + (self.gsize[1] * self.time) / self.cftime
+                self.redsurfrect.y = -self.gsize[1] + (self.gsize[1] * self.time) / self.cftime
                 self.rcftime = self.cftime - self.time
                 hours = int(self.rcftime // 3600)
                 minutes = int((self.rcftime % 3600) // 60)
                 seconds = ((self.rcftime % 3600) % 60)
-                th = str(hours) if hours > 9 else "0"+str(hours)
-                tm = str(minutes) if minutes > 9 else "0"+str(minutes)
-                ts = "%.3f" % (seconds) if seconds > 9 else "0"+"%.3f" % (seconds)
-                self.timer = makeGlitched("Time Remaining: " + th + ":" + tm + ":" + ts, self.font)
+                th = str(hours) if hours >= 10 else "0"+str(hours)
+                tm = str(minutes) if minutes >= 10 else "0"+str(minutes)
+                ts = "%.3f" % (seconds) if seconds >= 10 else "0"+"%.3f" % (seconds)
+                self.timer = makeGlitched("Time Before Failure: " + th + ":" + tm + ":" + ts, self.font)
                 if self.redsurfrect.y > 0:
                     pygame.mouse.set_visible(True)  # Make the cursor visible
                     self.running = False
