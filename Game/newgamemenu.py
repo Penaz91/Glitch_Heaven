@@ -60,7 +60,7 @@ class NewGameMenu:
     def newCFGame(self, keys, gameconfig, screen, sounds):
         self.running = False
         Game().main(screen, keys,
-                    "criticalfailure",
+                    "cfsingle",
                     pathjoin("data",
                              "campaigns",
                              "main.cmp"),

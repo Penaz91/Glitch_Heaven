@@ -112,7 +112,7 @@ class Game(object):
         """
         return self.currenthelp
 
-    def LoadLevel(self, level, campaignname, screen):
+    def LoadLevel(self, level, campaignname, mode, screen):
         """
         Method to load the defined level
 
@@ -125,12 +125,14 @@ class Game(object):
         """
         # Loads the level configuration and the control keys
         # v--------------------------------------------------------------v
-        mod_logger.info("LoadLevel Routing is loading: " + level)
+        mod_logger.info("LoadLevel Routine is loading: " + level)
         levelconfig = configparser.ConfigParser()
         levelconfig.read(os.path.join("data",
                                       "maps",
                                       campaignname, level+".conf"))
         mod_logger.info("Level configuration loaded")
+        if mode == "cfsingle":
+            self.cftime = int(levelconfig["Level_Info"]["CFTime"])
         self.helpflagActive = False
         self.currenthelp = ""
         self.screen = screen
@@ -240,7 +242,7 @@ class Game(object):
         mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
-    def loadNextLevel(self, campaignname, campaign, screen):
+    def loadNextLevel(self, campaignname, campaign, mode, screen):
         """
         Loads the next level in the current campaign
 
@@ -262,9 +264,9 @@ class Game(object):
             mod_logger.debug("Loading Level: "+str(campaign))
             # ^--------------------------------------------------------------^
             self.eraseCurrentLevel()
-            self.LoadLevel(campaign[self.campaignIndex], campaignname, screen)
+            self.LoadLevel(campaign[self.campaignIndex], campaignname, mode, screen)
 
-    def loadCampaign(self, campaignfile):
+    def loadCampaign(self, campaignfile, mode):
         """
         Loads the levels of the campaign defined in the argument
 
@@ -276,7 +278,8 @@ class Game(object):
                   "r") as campfile:
             cmpf = json.loads(campfile.read())
             cmpn = cmpf["Levels"]
-            self.cftime = cmpf["CFTime"]
+            if mode == "criticalfailure":
+                self.cftime = cmpf["CFTime"]
         return cmpn
         """
             x = campfile.readlines()
@@ -305,6 +308,7 @@ class Game(object):
         and spawning the player.
         """
         mod_logger.info("Starting loadLevelPart2 Routine")
+
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
         self.tilemap.layers.append(self.sprites)
@@ -410,6 +414,7 @@ class Game(object):
         """
         mod_logger.info("Entering main game")
         self.running = True
+        self.mode = mode
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
         self.clock = pygame.time.Clock()
@@ -453,6 +458,7 @@ class Game(object):
                 self.loadGame()
                 self.loadNextLevel(self.campaignname,
                                    self.currentcampaign,
+                                   self.mode,
                                    self.gameviewport)
             except FileNotFoundError:
                 mod_logger.info("No file provided, loading cancelled")
@@ -461,20 +467,22 @@ class Game(object):
             mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
-            self.currentcampaign = self.loadCampaign(self.campaignFile)
+            self.currentcampaign = self.loadCampaign(self.campaignFile, self.mode)
             self.campaignIndex = -1
             self.loadNextLevel(self.campaignname,
                                self.currentcampaign,
+                               self.mode,
                                self.gameviewport)
-        elif mode.lower() == "criticalfailure":
+        elif mode.lower() == "criticalfailure" or mode.lower() == "cfsingle":
             mod_logger.info("Using New Game mode - Critical Failure Modifier")
             self.cftime = 0
             self.campaignFile = cmp
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
-            self.currentcampaign = self.loadCampaign(self.campaignFile)
+            self.currentcampaign = self.loadCampaign(self.campaignFile, self.mode)
             self.campaignIndex = -1
             self.loadNextLevel(self.campaignname,
                                self.currentcampaign,
+                               self.mode,
                                self.gameviewport)
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
                                                   pygame.SRCALPHA)
@@ -490,7 +498,6 @@ class Game(object):
         self.fps = 30
         self.time = 0
         self.deadbodies = pygame.sprite.Group()
-        self.mode = mode
         pygame.init()
         pygame.display.set_caption("Glitch_Heaven")
         if self.running:
@@ -503,7 +510,7 @@ class Game(object):
                 dt = 0.05
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
-            if mode.lower() == "criticalfailure":
+            if mode.lower() == "criticalfailure" or mode.lower() == "cfsingle":
                 self.time += dt
                 self.redsurfrect.y = -600 + (self.gsize[1] * self.time) / self.cftime
                 self.rcftime = self.cftime - self.time
@@ -575,6 +582,7 @@ class Game(object):
                                              "Loading next level")
                             self.loadNextLevel(self.campaignname,
                                                self.currentcampaign,
+                                               self.mode,
                                                self.screen)
                             self.loadLevelPart2(self.keys, sounds)
                     if config.getboolean("Debug", "keydebug"):
@@ -591,6 +599,7 @@ class Game(object):
                             self.campaignIndex -= 1
                             self.loadNextLevel(self.campaignname,
                                                self.currentcampaign,
+                                               self.mode,
                                                self.screen)
                             self.loadLevelPart2(self.keys, sounds)
                 if event.type == pygame.QUIT:
@@ -616,11 +625,11 @@ class Game(object):
                 self.gameviewport.blit(self.overlay,
                                        (-self.tilemap.viewport.x*1.5,
                                         -self.tilemap.viewport.y*1.5))
-            if mode.lower() == "criticalfailure":
+            if mode.lower() in ["criticalfailure", "cfsingle"]:
                 self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
 
             screen.blit(self.gameviewport, (0, 0))
-            if mode.lower() == "criticalfailure":
+            if mode.lower() in ["criticalfailure", "cfsingle"]:
                 screen.blit(self.timer, (50, 50))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
