@@ -9,11 +9,8 @@ import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
 from libs.textglitcher import makeGlitched
-from tkinter import Tk
-from tkinter import filedialog
 from game import Game
-from cfmenu import CFMenu
-module_logger = logging.getLogger("Glitch_Heaven.NewGameMenu")
+module_logger = logging.getLogger("Glitch_Heaven.CFMenu")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
@@ -25,41 +22,23 @@ module_logger.addHandler(fh)
 module_logger.addHandler(ch)
 
 
-class NewGameMenu:
+class CFMenu:
     """ Represents a pause menu window"""
 
     def editdesc(self, string):
         self.desc = makeGlitched(string, self.font)
 
-    def loadcustom(self, keys, gameconfig, screen, sounds):
-        """
-        Loads a custom campaign from a open file dialog
-        """
-        try:
-            Tk().withdraw()
-            formats = [("Glitch_Heaven Campaign", "*.cmp")]
-            self.camp = filedialog.askopenfilename(
-                    filetypes=formats,
-                    initialdir=pathjoin("data",
-                                        "campaigns"))
-            if self.camp:
-                self.running = False
-                Game().main(screen, keys, "newgame",
-                            self.camp, gameconfig, sounds)
-        except FileNotFoundError:
-            module_logger.info("No File selected, Loading of campaign aborted")
-
-    def newGame(self, keys, gameconfig, screen, sounds):
+    def newCFGame(self, keys, gameconfig, screen, sounds):
         self.running = False
         Game().main(screen, keys,
-                    "newgame",
+                    "criticalfailure",
                     pathjoin("data",
                              "campaigns",
                              "main.cmp"),
                     self.gameconfig,
                     sounds)
 
-    def newCFGame(self, keys, gameconfig, screen, sounds):
+    def newCFSGame(self, keys, gameconfig, screen, sounds):
         self.running = False
         Game().main(screen, keys,
                     "cfsingle",
@@ -69,104 +48,37 @@ class NewGameMenu:
                     self.gameconfig,
                     sounds)
 
-    def makeCampaignMenu(self, screen, keys, config, sounds):
-        self.newmainimg = self.font.render("Start Main Campaign", False,
-                                           (255, 255, 255)).convert_alpha()
-        self.selectedmainimg = makeGlitched("Start Main Campaign", self.font)
-        self.newmaingame = menuItem.menuitem(self.newmainimg,
-                                             self.selectedmainimg,
-                                             (50, 180),
-                                             lambda: self.editdesc("Play the Main Game"),
-                                             lambda: self.newGame(
-                                                keys,
-                                                config,
-                                                screen,
-                                                sounds),
-                                             self.gameconfig,
-                                             sounds
-                                             )
-
-    def makeCustomCampaignMenu(self, screen, keys, config, sounds):
-        self.newcustomimg = self.font.render("Start Custom Campaign", False,
-                                             (255, 255, 255)).convert_alpha()
-        self.selectedcustomimg = makeGlitched("Start Custom Campaign",
-                                              self.font)
-        self.newcustomgame = menuItem.menuitem(self.newcustomimg,
-                                               self.selectedcustomimg,
-                                               (50, 240),
-                                               lambda: self.editdesc("Load a custom Campaign"),
-                                               lambda: self.loadcustom(
-                                                   keys,
-                                                   self.gameconfig,
-                                                   screen,
-                                                   sounds),
-                                               self.gameconfig,
-                                               sounds
-                                               )
-
-    def makeSpeedRunMenu(self, screen, keys, config, sounds):
-        self.srimg = self.font.render("SpeedRun Mode", False,
-                                      (100, 100, 100)).convert_alpha()
-        self.sr = menuItem.menuitem(self.srimg,
-                                    self.srimg,
-                                    (50, 300),
-                                    lambda: self.editdesc(None),
-                                    lambda: None,
+    def makeCFMenu(self, screen, keys, config, sounds):
+        self.sdimg = self.font.render("Start Shared Time mode", False,
+                                      (255, 255, 255)).convert_alpha()
+        self.sdselimg = makeGlitched("Start Shared Time mode", self.font)
+        self.sd = menuItem.menuitem(self.sdimg,
+                                    self.sdselimg,
+                                    (50, 180),
+                                    lambda: self.editdesc("All rooms share the same timer."),
+                                    lambda: self.newCFGame(
+                                            keys,
+                                            config,
+                                            screen,
+                                            sounds),
                                     self.gameconfig,
                                     sounds)
 
-    def makeNHMenu(self, screen, keys, config, sounds):
-        if config.getboolean("Unlockables","NHMode"):
-            self.nhimg = self.font.render("Start 'Nintendo Hard' Campaign", False,
-                                          (100, 100, 100)).convert_alpha()
-        else:
-            self.nhimg = self.font.render("(File Corrupted)", False,
-                                          (100, 100, 100)).convert_alpha()
-        self.nh = menuItem.menuitem(self.nhimg,
-                                    self.nhimg,
-                                    (50, 360),
-                                    lambda: self.editdesc(None),
-                                    lambda: None,
-                                    self.gameconfig,
-                                    sounds)
-
-    def makeSDMenu(self, screen, keys, config, sounds):
-        if config.getboolean("Unlockables","CFMode"):
-            self.sdimg = self.font.render("Start 'Critical Failure' Mode", False,
-                                          (255, 255, 255)).convert_alpha()
-            self.sdselimg = makeGlitched("Start 'Critical Failure' Mode", self.font)
-            self.sd = menuItem.menuitem(self.sdimg,
-                                        self.sdselimg,
-                                        (50, 420),
-                                        lambda: self.editdesc("Escape before the time runs out."),
-                                        lambda: CFMenu().main(
-                                                screen,
-                                                keys,
-                                                self.gameconfig,
-                                                sounds),
-                                        self.gameconfig,
-                                        sounds)
-        else:
-            self.sdimg = self.font.render("(File Corrupted)", False,
-                                          (100, 100, 100)).convert_alpha()
-            self.sd = menuItem.menuitem(self.sdimg,
-                                        self.sdimg,
-                                        (50, 420),
-                                        lambda: self.editdesc(None),
-                                        lambda: None,
-                                        self.gameconfig,
-                                        sounds)
-
-    def makeSMMenu(self, screen, keys, config, sounds):
-        self.smimg = self.font.render("Play a Single Map", False,
-                                      (100, 100, 100)).convert_alpha()
-        self.sm = menuItem.menuitem(self.smimg,
-                                    self.smimg,
-                                    (50, 480),
-                                    lambda: self.editdesc(None),
-                                    lambda: None,
-                                    self.gameconfig,
-                                    sounds)
+    def makeCFSMenu(self, screen, keys, config, sounds):
+        self.sdsimg = self.font.render("Start Separated Times mode", False,
+                                      (255, 255, 255)).convert_alpha()
+        self.sdsselimg = makeGlitched("Start Separated Times mode", self.font)
+        self.sds = menuItem.menuitem(self.sdsimg,
+                                     self.sdsselimg,
+                                     (50, 240),
+                                     lambda: self.editdesc("Each room has its completion timer."),
+                                     lambda: self.newCFSGame(
+                                             keys,
+                                             config,
+                                             screen,
+                                             sounds),
+                                     self.gameconfig,
+                                     sounds)
 
     def goToMenu(self):
         """
@@ -226,24 +138,12 @@ class NewGameMenu:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
-        # Main campaign menu element
+        # Insert a sudden death mode button (Shared mode)
         # v------------------------------------------------------------------v
-        self.makeCampaignMenu(screen, keys, config, sounds)
-        # Custom campaign menu element
+        self.makeCFMenu(screen, keys, config, sounds)
+        # Insert a sudden death mode button (Separated mode)
         # v------------------------------------------------------------------v
-        self.makeCustomCampaignMenu(screen, keys, config, sounds)
-        # Insert a speedrun mode button
-        # v------------------------------------------------------------------v
-        self.makeSpeedRunMenu(screen, keys, config, sounds)
-        # Insert a Hard mode button
-        # v------------------------------------------------------------------v
-        self.makeNHMenu(screen, keys, config, sounds)
-        # Insert a sudden death mode button
-        # v------------------------------------------------------------------v
-        self.makeSDMenu(screen, keys, config, sounds)
-        # Insert a single map mode button
-        # v------------------------------------------------------------------v
-        self.makeSMMenu(screen, keys, config, sounds)
+        self.makeCFSMenu(screen, keys, config, sounds)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
@@ -253,13 +153,12 @@ class NewGameMenu:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
-                                          lambda: self.editdesc("Go to the main menu"),
+                                          lambda: self.editdesc("Go to the previous menu"),
                                           lambda: self.goToMenu(),
                                           self.gameconfig,
                                           sounds)
         # ^------------------------------------------------------------------^
-        self.items = [self.newmaingame, self.newcustomgame, self.sr,
-                      self.nh, self.sd, self.sm, self.mainmenu]
+        self.items = [self.sd, self.sds, self.mainmenu]
         self.clock = pygame.time.Clock()
         pygame.mouse.set_visible(True)  # Make the cursor visible
         module_logger.info("Mouse cursor shown")

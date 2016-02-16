@@ -152,6 +152,7 @@ class pauseMenu:
         pygame.mouse.set_visible(True)  # Make the cursor visible
         module_logger.info("Mouse cursor shown")
         while self.running:
+            game.dt = 0
             self.dt = self.clock.tick(30)/1000.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

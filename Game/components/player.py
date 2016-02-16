@@ -744,7 +744,7 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'playerExit'):
-            game.loadNextLevel(game.campaignname, game.currentcampaign, game.screen)
+            game.loadNextLevel(game.campaignname, game.currentcampaign, game.mode, game.screen)
             game.loadLevelPart2(game.keys, self.soundslink)
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
@@ -800,8 +800,6 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(
                 self.rect, "GlitchedAnimation"):
             self.glitched = True
-        self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
-                     dt, game.gravity, self.running, self.glitched)
         # ^--------------------------------------------------------------^
         # Handles The checkpoints
         # v--------------------------------------------------------------v
@@ -821,3 +819,16 @@ class Player(pygame.sprite.Sprite):
         for block in collision:
             block.toggle(self.game)
             block.kill()
+        # ^--------------------------------------------------------------^
+        # Handles the glitchiness in Critical Failure mode
+        # v--------------------------------------------------------------v
+        if game.mode.lower() in ["criticalfailure", "cfsingle"]:
+            redcoll = game.tilemap.pixel_to_screen(self.rect.x, self.rect.y)
+            if redcoll[1] < game.redsurfrect.bottom:
+                self.glitched = True
+            else:
+                self.glitched = False
+        # MUST BE LAST OPERATION
+        # v--------------------------------------------------------------v
+        self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
+                     dt, game.gravity, self.running, self.glitched)

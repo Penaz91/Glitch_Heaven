@@ -8,6 +8,7 @@ import configparser
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
+from os import getcwd as pwd
 if __name__ == "__main__":
     try:
         config = configparser.ConfigParser()
@@ -37,6 +38,7 @@ if __name__ == "__main__":
     logger.addHandler(ch)
     logger.addHandler(fh)
     logger.info("----------Logger initialised----------")
+    logger.debug("Current Working directory is: " + str(pwd()))
     try:
         # Reads the game configuration
         # v-------------------------------------------------------------------v
