@@ -266,7 +266,8 @@ class Game(object):
             mod_logger.debug("Loading Level: "+str(campaign))
             # ^--------------------------------------------------------------^
             self.eraseCurrentLevel()
-            self.LoadLevel(campaign[self.campaignIndex], campaignname, mode, screen)
+            self.LoadLevel(campaign[self.campaignIndex],
+                           campaignname, mode, screen)
 
     def loadCampaign(self, campaignfile, mode):
         """
@@ -493,7 +494,8 @@ class Game(object):
             mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
-            self.currentcampaign = self.loadCampaign(self.campaignFile, self.mode)
+            self.currentcampaign = self.loadCampaign(self.campaignFile,
+                                                     self.mode)
             self.campaignIndex = -1
             self.loadNextLevel(self.campaignname,
                                self.currentcampaign,
@@ -504,7 +506,8 @@ class Game(object):
             self.cftime = 0
             self.campaignFile = cmp
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
-            self.currentcampaign = self.loadCampaign(self.campaignFile, self.mode)
+            self.currentcampaign = self.loadCampaign(self.campaignFile,
+                                                     self.mode)
             self.campaignIndex = -1
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
                                                   pygame.SRCALPHA)
@@ -524,7 +527,7 @@ class Game(object):
         self.fps = 30
         self.deadbodies = pygame.sprite.Group()
         pygame.init()
-        pygame.display.set_caption("Glitch_Heaven")
+        pygame.display.set_caption("Glitch_Heaven - Pre-Pre-Alpha Version")
         if self.running:
             self.loadLevelPart2(self.keys, sounds)
             mod_logger.debug("Glitches Loaded: "+str(self.glitches))
@@ -537,15 +540,18 @@ class Game(object):
             # v-------------------------------------------------------------------v
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 self.time += dt
-                self.redsurfrect.y = -self.gsize[1] + (self.gsize[1] * self.time) / self.cftime
+                self.redsurfrect.y = -self.gsize[1] + \
+                    (self.gsize[1] * self.time) / self.cftime
                 self.rcftime = self.cftime - self.time
                 hours = int(self.rcftime // 3600)
                 minutes = int((self.rcftime % 3600) // 60)
                 seconds = ((self.rcftime % 3600) % 60)
                 th = str(hours) if hours >= 10 else "0"+str(hours)
                 tm = str(minutes) if minutes >= 10 else "0"+str(minutes)
-                ts = "%.3f" % (seconds) if seconds >= 10 else "0"+"%.3f" % (seconds)
-                self.timer = makeGlitched("Time Before Failure: " + th + ":" + tm + ":" + ts, self.font)
+                ts = "%.3f" % (seconds) if seconds >= 10 \
+                     else "0"+"%.3f" % (seconds)
+                self.timer = makeGlitched("Time Before Failure: " +
+                                          th + ":" + tm + ":" + ts, self.font)
                 if self.redsurfrect.y > 0:
                     pygame.mouse.set_visible(True)  # Make the cursor visible
                     self.running = False
@@ -621,12 +627,9 @@ class Game(object):
                     pauseMenu().main(screen, keys, self, self.config, sounds)
                 if event.type == pygame.KEYDOWN and\
                         event.key == self.keys["restart"]:
-                            self.campaignIndex -= 1
-                            self.loadNextLevel(self.campaignname,
-                                               self.currentcampaign,
-                                               self.mode,
-                                               self.screen)
-                            self.loadLevelPart2(self.keys, sounds)
+                            self.sprites.remove(*self.deadbodies)
+                            self.deadbodies.empty()
+                            self.player.respawn(self)
                 if event.type == pygame.QUIT:
                     self.running = False
                 # ^----------------------------------------------------------^
