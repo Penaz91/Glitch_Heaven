@@ -352,10 +352,18 @@ class Game(object):
                                             initialdir="./savegames",
                                             defaultextension=".dat")
         if path:
+            if not (self.mode.lower() in ["criticalfailure", "cfsingle"]):
+                self.cftime = 0
+                self.mode = "newgame"
+                self.time = 0
             shelf = {"currentcampaign": self.currentcampaign,
                      "campaignfile": self.campaignFile,
                      "campaignIndex": self.campaignIndex - 1,
-                     "campaignname": self.campaignname}
+                     "campaignname": self.campaignname,
+                     "cftime": self.cftime,
+                     "time": self.time,
+                     "mode": self.mode}
+            mod_logger.debug("Shelf saved with data: " + str(shelf))
             with open(path, "w") as savefile:
                 string = json.dumps(shelf)
                 savefile.write(string)
@@ -378,6 +386,21 @@ class Game(object):
             self.campaignFile = shelf["campaignfile"]
             self.campaignIndex = shelf["campaignIndex"]
             self.campaignname = shelf["campaignname"]
+            self.mode = shelf["mode"]
+            self.cftime = shelf["cftime"]
+            self.time = shelf["time"]
+        if self.mode.lower() in ["criticalfailure", "cfsingle"]:
+            mod_logger.info("Using Load Game mode - Critical Failure Modifier")
+            self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
+                                                  pygame.SRCALPHA)
+            linesize = 3
+            self.redsurf.fill((255, 0, 0, 50))
+            self.redsurf.fill((255, 255, 255, 255),
+                              pygame.rect.Rect(0,
+                                               self.redsurf.get_rect().bottom - linesize,
+                                               800,
+                                               linesize))
+            self.redsurfrect = self.redsurf.get_rect()
         # Debug Area
         # v--------------------------------------------------------------v
         mod_logger.debug("Loadgame: "+str(self.currentcampaign))
@@ -455,7 +478,7 @@ class Game(object):
         # Defines if a level should be loaded or a
         # new campaign should be started.
         # v--------------------------------------------------------------v
-        if mode.lower() == "load":
+        if self.mode.lower() == "load":
             mod_logger.info("Using Load mode")
             try:
                 self.loadGame()
@@ -466,7 +489,7 @@ class Game(object):
             except FileNotFoundError:
                 mod_logger.info("No file provided, loading cancelled")
                 self.running = False
-        elif mode.lower() == "newgame":
+        elif self.mode.lower() == "newgame":
             mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
@@ -476,17 +499,13 @@ class Game(object):
                                self.currentcampaign,
                                self.mode,
                                self.gameviewport)
-        elif mode.lower() == "criticalfailure" or mode.lower() == "cfsingle":
+        elif self.mode.lower() == "criticalfailure" or mode.lower() == "cfsingle":
             mod_logger.info("Using New Game mode - Critical Failure Modifier")
             self.cftime = 0
             self.campaignFile = cmp
             self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
             self.currentcampaign = self.loadCampaign(self.campaignFile, self.mode)
             self.campaignIndex = -1
-            self.loadNextLevel(self.campaignname,
-                               self.currentcampaign,
-                               self.mode,
-                               self.gameviewport)
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
                                                   pygame.SRCALPHA)
             linesize = 3
@@ -497,6 +516,10 @@ class Game(object):
                                                800,
                                                linesize))
             self.redsurfrect = self.redsurf.get_rect()
+            self.loadNextLevel(self.campaignname,
+                               self.currentcampaign,
+                               self.mode,
+                               self.gameviewport)
         # ^--------------------------------------------------------------^
         self.fps = 30
         self.deadbodies = pygame.sprite.Group()
@@ -512,7 +535,7 @@ class Game(object):
                 dt = 0.05
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
-            if mode.lower() == "criticalfailure" or mode.lower() == "cfsingle":
+            if self.mode.lower() == "criticalfailure" or self.mode.lower() == "cfsingle":
                 self.time += dt
                 self.redsurfrect.y = -self.gsize[1] + (self.gsize[1] * self.time) / self.cftime
                 self.rcftime = self.cftime - self.time
@@ -627,11 +650,11 @@ class Game(object):
                 self.gameviewport.blit(self.overlay,
                                        (-self.tilemap.viewport.x*1.5,
                                         -self.tilemap.viewport.y*1.5))
-            if mode.lower() in ["criticalfailure", "cfsingle"]:
+            if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
 
             screen.blit(self.gameviewport, (0, 0))
-            if mode.lower() in ["criticalfailure", "cfsingle"]:
+            if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 screen.blit(self.timer, (50, 50))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
