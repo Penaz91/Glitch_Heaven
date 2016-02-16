@@ -40,7 +40,8 @@ class NewGameMenu:
             formats = [("Glitch_Heaven Campaign", "*.cmp")]
             self.camp = filedialog.askopenfilename(
                     filetypes=formats,
-                    initialdir="./data/campaigns")
+                    initialdir=pathjoin("data",
+                                        "campaigns"))
             if self.camp:
                 self.running = False
                 Game().main(screen, keys, "newgame",

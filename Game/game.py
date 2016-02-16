@@ -376,7 +376,7 @@ class Game(object):
         Tk().withdraw()
         formats = [("Glitch_Heaven Savegame", "*.dat")]
         path = filedialog.askopenfilename(filetypes=formats,
-                                          initialdir="./savegames")
+                                          initialdir="savegames")
         if not path:
             raise FileNotFoundError
         mod_logger.info("Loading Save from: "+path)
