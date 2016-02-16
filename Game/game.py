@@ -499,7 +499,7 @@ class Game(object):
                                self.currentcampaign,
                                self.mode,
                                self.gameviewport)
-        elif self.mode.lower() == "criticalfailure" or mode.lower() == "cfsingle":
+        elif self.mode.lower() in ["criticalfailure", "cfsingle"]:
             mod_logger.info("Using New Game mode - Critical Failure Modifier")
             self.cftime = 0
             self.campaignFile = cmp
@@ -535,7 +535,7 @@ class Game(object):
                 dt = 0.05
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
-            if self.mode.lower() == "criticalfailure" or self.mode.lower() == "cfsingle":
+            if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 self.time += dt
                 self.redsurfrect.y = -self.gsize[1] + (self.gsize[1] * self.time) / self.cftime
                 self.rcftime = self.cftime - self.time
