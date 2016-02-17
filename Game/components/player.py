@@ -504,24 +504,24 @@ class Player(pygame.sprite.Sprite):
             if block.active:
                 # ENHANCEMENT: Change the collision detection with a
                 # time-comparison of rects, like in Blocker trigger
-                # FIXME: The self.rect.y < block.rect.y doesn't work for Gravity = -1
-                if (self.y_speed * game.gravity > 0) and\
-                        (self.rect.y < block.rect.y):
-                    if block.bouncy:
-                        if game.gravity == 1:
-                            self.rect.bottom = block.rect.top
-                        elif game.gravity == -1:
-                            self.rect.top = block.rect.bottom
-                        self.y_speed = - block.bouncepwr * game.gravity
-                        self.bouncesound.play()
-                    else:
-                        if game.gravity == 1:
-                            self.rect.bottom = block.rect.top
-                        elif game.gravity == -1:
-                            self.rect.top = block.rect.bottom
-                        self.y_speed = block.yspeed
-                        self.resting = True  # Allows jump
-                    self.rect.x += block.xspeed * dt * block.direction
+                if self.y_speed * game.gravity > 0:
+                    if game.gravity == 1 and self.rect.bottom > block.rect.top:
+                        self.rect.bottom = block.rect.top
+                        if block.bouncy:
+                            self.y_speed = - block.bouncepwr
+                            self.bouncesound.play()
+                        else:
+                            self.y_speed = block.yspeed
+                            self.resting = True  # Allows jump
+                    elif game.gravity == -1 and self.rect.top < block.rect.bottom:
+                        self.rect.top = block.rect.bottom
+                        if block.bouncy:
+                            self.y_speed = block.bouncepwr
+                            self.bouncesound.play()
+                        else:
+                            self.y_speed = - block.yspeed
+                            self.resting = True  # Allows jump
+                self.rect.x += block.xspeed * dt * block.direction
                 """if game.gravity == 1:
                     if last.bottom <= block.rect.top and\
                     self.rect.bottom > block.rect.top:
