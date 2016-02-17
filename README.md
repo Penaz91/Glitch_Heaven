@@ -37,12 +37,13 @@ and more challenging.
 - **Speed Glitch:** Gotta go fast!!
 - **Inverted Running:** You run by default, need to press the run button to walk
 - **Inverted Controls:** Do i really have to explain this?
+- **Invincibility Glitch:** you don't die to red floor.
 
 ### Glitches Partially Implemented or that need BuxFixes/Testing:
-- **Invincibility Glitch:** you don't die to obstacles. BUGFIX NEEDED - You die to mobile obstacles, since it's only based on the deadly platform trigger
+- **Invincible to Obstacles Glitch** You don't die to mobile obstacles, meant as fix/addition to the Invincibility glitch. - Needs bugfix for player/obstacle compenetration
 
 ### Glitches Planned:
-- **Invincible to Obstacles Glitch** You don't die to mobile obstacles, meant as fix/addition to the Invincibility glitch.
+- **Movement toggle Glitch ** You can't stop walking, you gotta keep moving!
 
 ### Planned Features
 - Better Particle Engine
