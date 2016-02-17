@@ -504,15 +504,22 @@ class Player(pygame.sprite.Sprite):
             if block.active:
                 # ENHANCEMENT: Change the collision detection with a
                 # time-comparison of rects, like in Blocker trigger
+                # FIXME: The self.rect.y < block.rect.y doesn't work for Gravity = -1
                 if (self.y_speed * game.gravity > 0) and\
                         (self.rect.y < block.rect.y):
                     if block.bouncy:
-                        self.rect.bottom = block.rect.top
+                        if game.gravity == 1:
+                            self.rect.bottom = block.rect.top
+                        elif game.gravity == -1:
+                            self.rect.top = block.rect.bottom
                         self.y_speed = - block.bouncepwr * game.gravity
                         self.bouncesound.play()
                     else:
+                        if game.gravity == 1:
+                            self.rect.bottom = block.rect.top
+                        elif game.gravity == -1:
+                            self.rect.top = block.rect.bottom
                         self.y_speed = block.yspeed
-                        self.rect.bottom = block.rect.top
                         self.resting = True  # Allows jump
                     self.rect.x += block.xspeed * dt * block.direction
                 """if game.gravity == 1:
