@@ -435,11 +435,18 @@ class Player(pygame.sprite.Sprite):
             # TODO: Find some better way to let player keep control
             # TODO: Tie direction and movement in a formula instead of conds
             # v--------------------------------------------------------------v
-            if not self.bounced:
-                if self.direction == 1:
-                    self.x_speed = max(0, self.x_speed-(self.playeraccel*dt))
-                elif self.direction == -1:
-                    self.x_speed = min(0, self.x_speed+(self.playeraccel*dt))
+            if game.glitches["nostop"]:
+                if self.x_speed != 0:
+                    if self.running:
+                        self.x_speed = self.playermaxspeed * self.direction * self.runmultiplier * dt
+                    else:
+                        self.x_speed = self.playermaxspeed * self.direction * dt
+            else:
+                if not self.bounced:
+                    if self.direction == 1:
+                        self.x_speed = max(0, self.x_speed-(self.playeraccel*dt))
+                    elif self.direction == -1:
+                        self.x_speed = min(0, self.x_speed+(self.playeraccel*dt))
             # ^--------------------------------------------------------------^
         self.rect.x += self.x_speed         # Move the player
         if game.glitches["multijump"]:
