@@ -511,7 +511,7 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = - block.bouncepwr * game.gravity
                         self.bouncesound.play()
                     else:
-                        self.y_speed = 0
+                        self.y_speed = block.yspeed
                         self.rect.bottom = block.rect.top
                         self.resting = True  # Allows jump
                     self.rect.x += block.xspeed * dt * block.direction
@@ -623,6 +623,7 @@ class Player(pygame.sprite.Sprite):
                         self.rect.top = cell.bottom
                         if game.glitches["stickyceil"]:
                             self.y_speed = -5/dt
+                        # This has to stay to avoid an unwanted stickyceil effect
                         else:
                             self.y_speed = 0
                 else:
@@ -630,6 +631,7 @@ class Player(pygame.sprite.Sprite):
                     if not key[self.keys["action"]]:
                         if game.glitches["stickyceil"]:
                             self.y_speed = -5/dt
+                        # This has to stay to avoid an unwanted stickyceil effect
                         else:
                             self.y_speed = 0
                 if game.gravity == -1:
