@@ -153,11 +153,13 @@ class Player(pygame.sprite.Sprite):
             self.leftemitter = emitter.Emitter(self.rect.bottomleft,
                                                (0, 255, 84),
                                                (0, 103, 34), -1, -1,
-                                               self.particles)
+                                               self.particles,
+                                               game.tilemap)
             self.rightemitter = emitter.Emitter(self.rect.bottomright,
                                                 (0, 255, 84),
                                                 (0, 103, 34), 1, -1,
-                                                self.particles)
+                                                self.particles,
+                                                game.tilemap)
         self.lastcheckpoint = location
 
     def respawn(self, game):

@@ -13,7 +13,7 @@ class Particle (pygame.sprite.Sprite):
     """ A Particle """
 
     def __init__(self, position, colorstart, colorend,
-                 speedx, speedy, *groups):
+                 speedx, speedy, tilemap, *groups):
         """
         Default constructor
 
@@ -25,15 +25,16 @@ class Particle (pygame.sprite.Sprite):
                     before the particle dies
         - speedx: The horizontal speed of the particle
         - speedy: The Vertical speed of the particle
+        - tilemap: The tilemap the particle reacts to
         - *groups: A collection of the spritegroups to add the particle to
 
         Returns:
         - Nothing
         """
         super(Particle, self).__init__(*groups)
-        self.age = 20
+        self.age = 30
         self.color = colorstart
-        self.colorsteps = self.colorfade(self.color, colorend, 20)
+        self.colorsteps = self.colorfade(self.color, colorend, 30)
         self.image = pygame.surface.Surface((2, 2))
         self.image.fill(self.color)
         self.image.convert_alpha()
@@ -45,10 +46,12 @@ class Particle (pygame.sprite.Sprite):
         # ^------------------------------------------------------^
         self.sx = speedx
         self.sy = speedy
+        self.tilemap = tilemap
 
     def update(self):
         """ Update method, called when the sprites get updated """
         # Decreases the age of the particle (where 0 is a dead particle)
+        last = self.rect.copy()
         self.age -= 1
         # When the particle starts getting old, we start changing
         # color with an upper limitation of 255 and a lower of 0
@@ -79,6 +82,24 @@ class Particle (pygame.sprite.Sprite):
             self.kill()     # When the particle ends its cycle, i kill it
         self.rect.x += self.sx     # |
         self.rect.y += self.sy     # | Setting the new position of the particle
+        for cell in self.tilemap.layers["Triggers"].collide(self.rect, 'blocker'):
+            blockers = cell['blocker']
+            if 'l' in blockers and last.right <= cell.left and\
+                    self.rect.right > cell.left:
+                self.rect.right = cell.left
+                self.sx *= -1
+            if 'r' in blockers and last.left >= cell.right and\
+                    self.rect.left < cell.right:
+                self.rect.left = cell.right
+                self.sx *= -1
+            if 't' in blockers and last.bottom <= cell.top and\
+                    self.rect.bottom > cell.top:
+                self.rect.bottom = cell.top
+                self.sy *= -1
+            if 'b' in blockers and last.top >= cell.bottom and\
+                    self.rect.top < cell.bottom:
+                self.rect.top = cell.bottom
+                self.sy *= -1
 
     def colorfade(self, startcolor, finalcolor, steps):
         """

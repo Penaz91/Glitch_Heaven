@@ -7,7 +7,7 @@ from libs import particle
 class Emitter(object):
     """ Represents a particle emitter"""
 
-    def __init__(self, location, sc, ec, xstr, ystr, sg):
+    def __init__(self, location, sc, ec, xstr, ystr, sg, tm):
         """
         Default constructor
 
@@ -25,17 +25,18 @@ class Emitter(object):
         self.spritegroup = sg
         self.sc = sc
         self.ec = ec
+        self.tm = tm
 
     def emit(self, st):
         """
         Emits the particles
         """
         particle.Particle(self.location, self.sc, self.ec, self.xstr*st,
-                          self.ystr*st, self.spritegroup)
+                          self.ystr*st, self.tm, self.spritegroup)
         particle.Particle(self.location, self.sc, self.ec, st*2*self.xstr,
-                          st*self.ystr, self.spritegroup)
+                          st*self.ystr, self.tm, self.spritegroup)
         particle.Particle(self.location, self.sc, self.ec, self.xstr,
-                          st*2*self.ystr, self.spritegroup)
+                          st*2*self.ystr, self.tm, self.spritegroup)
 
     def move(self, newlocation):
         self.location = newlocation
