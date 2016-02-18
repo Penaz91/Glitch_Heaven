@@ -491,7 +491,7 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = self.jump_speed*2*game.gravity
                         else:
                             self.y_speed = self.jump_speed*game.gravity
-                        game.config.getboolean("Video", "playerparticles"):
+                        if game.config.getboolean("Video", "playerparticles"):
                             self.rightemitter.move(self.rect.bottomright)
                             self.leftemitter.move(self.rect.bottomleft)
                             self.rightemitter.emit(1)
@@ -502,10 +502,11 @@ class Player(pygame.sprite.Sprite):
                 if self.y_speed == 0:
                     self.jumpsound.play()
                 self.y_speed = self.jump_speed*game.gravity*0.8
-                self.rightemitter.move(self.rect.bottomright)
-                self.leftemitter.move(self.rect.bottomleft)
-                self.rightemitter.emit(1)
-                self.leftemitter.emit(1)
+                if game.config.getboolean("Video", "playerparticles"):
+                    self.rightemitter.move(self.rect.bottomright)
+                    self.leftemitter.move(self.rect.bottomleft)
+                    self.rightemitter.emit(1)
+                    self.leftemitter.emit(1)
         else:
             if key[self.keys["jump"]] and self.resting and\
                     not game.glitches["nojump"]:
@@ -519,10 +520,11 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = self.jump_speed*2*game.gravity
                     else:
                         self.y_speed = self.jump_speed*game.gravity
-                    self.rightemitter.move(self.rect.bottomright)
-                    self.leftemitter.move(self.rect.bottomleft)
-                    self.rightemitter.emit(1)
-                    self.leftemitter.emit(1)
+                    if game.config.getboolean("Video", "playerparticles"):
+                        self.rightemitter.move(self.rect.bottomright)
+                        self.leftemitter.move(self.rect.bottomleft)
+                        self.rightemitter.emit(1)
+                        self.leftemitter.emit(1)
                     # ^------------------------------------------------------^
                     self.resting = False    # I jumped, so i'm not on a surface
         if game.glitches["featherfalling"]:
