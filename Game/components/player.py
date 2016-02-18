@@ -491,10 +491,11 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = self.jump_speed*2*game.gravity
                         else:
                             self.y_speed = self.jump_speed*game.gravity
-                        self.rightemitter.move(self.rect.bottomright)
-                        self.leftemitter.move(self.rect.bottomleft)
-                        self.rightemitter.emit(1)
-                        self.leftemitter.emit(1)
+                        game.config.getboolean("Video", "playerparticles"):
+                            self.rightemitter.move(self.rect.bottomright)
+                            self.leftemitter.move(self.rect.bottomleft)
+                            self.rightemitter.emit(1)
+                            self.leftemitter.emit(1)
                     # ^------------------------------------------------------^
         elif game.glitches["hover"]:
             if key[self.keys["jump"]] and not game.glitches["nojump"]:
