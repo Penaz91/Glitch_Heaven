@@ -906,6 +906,27 @@ class Player(pygame.sprite.Sprite):
                 self.glitched = True
             else:
                 self.glitched = False
+        # ^--------------------------------------------------------------^
+        # Handles the player plaform-like behaviour in case the ObsResistant
+        # glitch is active, or its death
+        # v--------------------------------------------------------------v
+    
+        collision = pygame.sprite.spritecollide(self, game.obstacles, False)
+        for block in collision:
+            if game.glitches["obsresistant"]:
+                    #Platform logic here
+                if self.y_speed * game.gravity > 0:
+                    if game.gravity == 1 and self.rect.bottom > block.rect.top:
+                        self.rect.bottom = block.rect.top
+                        self.y_speed = block.yspeed
+                        self.resting = True  # Allows jump
+                    elif game.gravity == -1 and self.rect.top < block.rect.bottom:
+                        self.rect.top = block.rect.bottom
+                        self.y_speed = - block.yspeed
+                        self.resting = True  # Allows jump
+                self.rect.x += block.xspeed * dt * block.direction
+            else:
+                self.respawn(game)
         # MUST BE LAST OPERATION
         # v--------------------------------------------------------------v
         self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
