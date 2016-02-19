@@ -52,6 +52,7 @@ class menu:
                                                 sounds),
                                              self.gameconfig,
                                              sounds)
+        self.activeitems.append(self.newgamemenu)
 
     def makeCreditsMenu(self, screen, keys, config, sounds):
         self.creditsimg = self.font.render("Credits", False,
@@ -69,6 +70,7 @@ class menu:
                                              sounds),
                                          self.gameconfig,
                                          sounds)
+        self.activeitems.append(self.credits)
 
     def makeQuitMenu(self, screen, keys, config, sounds):
         self.exitimg = self.font.render("Quit", False,
@@ -82,6 +84,7 @@ class menu:
                                           pygame.event.Event(pygame.QUIT)),
                                       self.gameconfig,
                                       sounds)
+        self.activeitems.append(self.exit)
 
     def makeLoadMenu(self, screen, keys, config, sounds):
         if not os.listdir(os.path.join("savegames")):
@@ -110,6 +113,7 @@ class menu:
                                                               sounds),
                                           self.gameconfig,
                                           sounds)
+            self.activeitems.append(self.cgam)
         self.update = False
 
     def makeOptionsMenu(self, screen, keys, config, sounds):
@@ -126,6 +130,7 @@ class menu:
                                              sounds),
                                          self.gameconfig,
                                          sounds)
+        self.activeitems.append(self.options)
 
     def main(self, screen, keys, config, sounds):
         """
@@ -139,6 +144,7 @@ class menu:
         pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.desc = None
+        self.activeitems = []
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.gameconfig = config
@@ -167,13 +173,6 @@ class menu:
         # New Game Menu menu element
         # v------------------------------------------------------------------v
         self.makeNewGameMenu(screen, keys, config, sounds)
-        # Credits menu element
-        # v------------------------------------------------------------------v
-        self.makeCreditsMenu(screen, keys, config, sounds)
-        # ^------------------------------------------------------------------^
-        # Quit game menu element
-        # v------------------------------------------------------------------v
-        self.makeQuitMenu(screen, keys, config, sounds)
         # ^------------------------------------------------------------------^
         # If there is a savefile, enable the continue game button
         # v------------------------------------------------------------------v
@@ -182,6 +181,14 @@ class menu:
         # Insert an options button
         # v------------------------------------------------------------------v
         self.makeOptionsMenu(screen, keys, config, sounds)
+        # ^------------------------------------------------------------------^
+        # Credits menu element
+        # v------------------------------------------------------------------v
+        self.makeCreditsMenu(screen, keys, config, sounds)
+        # ^------------------------------------------------------------------^
+        # Quit game menu element
+        # v------------------------------------------------------------------v
+        self.makeQuitMenu(screen, keys, config, sounds)
         # ^------------------------------------------------------------------^
         self.items = [self.newgamemenu, self.cgam, self.options,
                       self.credits, self.exit]
@@ -194,6 +201,12 @@ class menu:
                 self.makeLoadMenu(screen, keys, config, sounds)
                 self.items = [self.newgamemenu, self.cgam, self.options,
                               self.credits, self.exit]
+                if os.listdir(os.path.join("savegames")):
+                    self.activeitems = [self.newgamemenu, self.cgam,
+                                        self.options, self.credits, self.exit]
+                else:
+                    self.activeitems = [self.newgamemenu, self.options,
+                                        self.credits, self.exit]
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     module_logger.info("QUIT signal received, quitting")
@@ -205,33 +218,33 @@ class menu:
                         self.currentItem = 0
                     if event.key == keys["down"]:
                         self.currentItem = ((self.currentItem+1) %
-                                            len(self.items))
+                                            len(self.activeitems))
                     if event.key == keys["up"]:
                         self.currentItem = ((self.currentItem-1) %
-                                            len(self.items))
+                                            len(self.activeitems))
                     if event.key == keys["confirm"]:
-                        self.items[self.currentItem].confirmSound.play()
+                        self.activeitems[self.currentItem].confirmSound.play()
                         self.update = True
-                        self.items[self.currentItem].function()
+                        self.activeitems[self.currentItem].function()
                     if event.key == keys["escape"]:
                         print("esc")
-                    for item in self.items:
+                    for item in self.activeitems:
                         item.makeUnselected()
-                    self.items[self.currentItem].makeSelected()
+                    self.activeitems[self.currentItem].makeSelected()
                 # ^------------------------------------------------------------------^
                 # Mouse handling
                 # v------------------------------------------------------------------v
                 if event.type == pygame.MOUSEMOTION:
                     if self.currentItem == 0:
                         self.currentItem = None
-                    for item in self.items:
+                    for item in self.activeitems:
                         if item.rect.collidepoint(*pygame.mouse.get_pos())\
                                 and not item.selectedStatus:
                             item.makeSelected()
                         else:
                             item.makeUnselected()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    for item in self.items:
+                    for item in self.activeitems:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.confirmSound.play()
                             self.update = True

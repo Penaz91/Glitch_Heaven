@@ -86,6 +86,7 @@ class NewGameMenu:
                                              self.gameconfig,
                                              sounds
                                              )
+        self.activeitems.append(self.newmaingame)
 
     def makeCustomCampaignMenu(self, screen, keys, config, sounds):
         self.newcustomimg = self.font.render("Start Custom Campaign", False,
@@ -105,6 +106,7 @@ class NewGameMenu:
                                                self.gameconfig,
                                                sounds
                                                )
+        self.activeitems.append(self.newcustomgame)
 
     def makeSpeedRunMenu(self, screen, keys, config, sounds):
         self.srimg = self.font.render("SpeedRun Mode", False,
@@ -153,6 +155,7 @@ class NewGameMenu:
                                                 sounds),
                                         self.gameconfig,
                                         sounds)
+            self.activeitems.append(self.sd)
         else:
             self.sdimg = self.font.render("(File Corrupted)", False,
                                           (100, 100, 100)).convert_alpha()
@@ -204,6 +207,7 @@ class NewGameMenu:
         module_logger.info("Opening the Video Settings Menu")
         pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
+        self.activeitems = []
         self.gameconfig = config
         self.desc = None
         # Title animation and properties
@@ -265,6 +269,7 @@ class NewGameMenu:
                                           lambda: self.goToMenu(),
                                           self.gameconfig,
                                           sounds)
+        self.activeitems.append(self.mainmenu)
         # ^------------------------------------------------------------------^
         self.items = [self.newmaingame, self.newcustomgame, self.sr,
                       self.nh, self.sd, self.sm, self.mainmenu]
@@ -283,31 +288,31 @@ class NewGameMenu:
                         self.currentItem = 0
                     if event.key == keys["down"]:
                         self.currentItem = ((self.currentItem+1) %
-                                            len(self.items))
+                                            len(self.activeitems))
                     if event.key == keys["up"]:
                         self.currentItem = ((self.currentItem-1) %
-                                            len(self.items))
+                                            len(self.activeitems))
                     if event.key == keys["confirm"]:
-                        self.items[self.currentItem].confirmSound.play()
-                        self.items[self.currentItem].function()
+                        self.activeitems[self.currentItem].confirmSound.play()
+                        self.activeitems[self.currentItem].function()
                     if event.key == keys["escape"]:
                         self.goToMenu()
-                    for item in self.items:
+                    for item in self.activeitems:
                         item.makeUnselected()
-                    self.items[self.currentItem].makeSelected()
+                    self.activeitems[self.currentItem].makeSelected()
                 # ^----------------------------------------------------------^
                 # Mouse Handling
                 # v----------------------------------------------------------v
                 if event.type == pygame.MOUSEMOTION:
                     if self.currentItem == 0:
                         self.currentItem = None
-                    for item in self.items:
+                    for item in self.activeitems:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.makeSelected()
                         else:
                             item.makeUnselected()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    for item in self.items:
+                    for item in self.activeitems:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.confirmSound.play()
                             item.function()
