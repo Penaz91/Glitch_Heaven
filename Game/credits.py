@@ -94,7 +94,8 @@ class Credits:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),
-                                          lambda: self.editdesc("Go to the main menu"),
+                                          lambda: self.editdesc(
+                                              "Go to the main menu"),
                                           lambda: self.goToMenu(),
                                           self.config,
                                           sounds)
@@ -184,7 +185,7 @@ class Credits:
                 screen.blit(*text)
             screen.blit(self.title, self.titlerect.topleft)
             if self.desc is not None:
-                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
+                screen.blit(self.desc, (750-self.desc.get_rect().width, 300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

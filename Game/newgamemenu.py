@@ -76,7 +76,8 @@ class NewGameMenu:
         self.newmaingame = menuItem.menuitem(self.newmainimg,
                                              self.selectedmainimg,
                                              (50, 180),
-                                             lambda: self.editdesc("Play the Main Game"),
+                                             lambda: self.editdesc(
+                                                 "Play the Main Game"),
                                              lambda: self.newGame(
                                                 keys,
                                                 config,
@@ -94,7 +95,8 @@ class NewGameMenu:
         self.newcustomgame = menuItem.menuitem(self.newcustomimg,
                                                self.selectedcustomimg,
                                                (50, 240),
-                                               lambda: self.editdesc("Load a custom Campaign"),
+                                               lambda: self.editdesc(
+                                                   "Load a custom Campaign"),
                                                lambda: self.loadcustom(
                                                    keys,
                                                    self.gameconfig,
@@ -116,8 +118,9 @@ class NewGameMenu:
                                     sounds)
 
     def makeNHMenu(self, screen, keys, config, sounds):
-        if config.getboolean("Unlockables","NHMode"):
-            self.nhimg = self.font.render("Start 'Nintendo Hard' Campaign", False,
+        if config.getboolean("Unlockables", "NHMode"):
+            self.nhimg = self.font.render("Start the Second Quest",
+                                          False,
                                           (100, 100, 100)).convert_alpha()
         else:
             self.nhimg = self.font.render("(File Corrupted)", False,
@@ -131,14 +134,18 @@ class NewGameMenu:
                                     sounds)
 
     def makeSDMenu(self, screen, keys, config, sounds):
-        if config.getboolean("Unlockables","CFMode"):
-            self.sdimg = self.font.render("Start 'Critical Failure' Mode", False,
+        if config.getboolean("Unlockables", "CFMode"):
+            self.sdimg = self.font.render("Start 'Critical Failure' Mode",
+                                          False,
                                           (255, 255, 255)).convert_alpha()
-            self.sdselimg = makeGlitched("Start 'Critical Failure' Mode", self.font)
+            self.sdselimg = makeGlitched("Start 'Critical Failure' Mode",
+                                         self.font)
             self.sd = menuItem.menuitem(self.sdimg,
                                         self.sdselimg,
                                         (50, 420),
-                                        lambda: self.editdesc("Escape before the time runs out."),
+                                        lambda: self.editdesc(
+                                            "Escape before the time runs out."
+                                            ),
                                         lambda: CFMenu().main(
                                                 screen,
                                                 keys,
@@ -253,7 +260,8 @@ class NewGameMenu:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
-                                          lambda: self.editdesc("Go to the main menu"),
+                                          lambda: self.editdesc(
+                                              "Go to the main menu"),
                                           lambda: self.goToMenu(),
                                           self.gameconfig,
                                           sounds)
@@ -313,7 +321,7 @@ class NewGameMenu:
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             if self.desc is not None:
-                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
+                screen.blit(self.desc, (750-self.desc.get_rect().width, 300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

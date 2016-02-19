@@ -96,7 +96,8 @@ class OptionsMenu:
         self.video = menuItem.menuitem(self.videoimg,
                                        self.vidselimg,
                                        (50, 240),
-                                       lambda: self.editdesc("Disappeal your eyes with Video settings"),
+                                       lambda: self.editdesc(
+                                           "Customize your eye disappeal"),
                                        lambda: VideoSettings().main(
                                            screen, keys, self.config, sounds),
                                        self.config,
@@ -110,7 +111,9 @@ class OptionsMenu:
         self.snd = menuItem.menuitem(self.sndimg,
                                      self.sndselimg,
                                      (50, 320),
-                                     lambda: self.editdesc("Avoid deafening with volume controls"),
+                                     lambda: self.editdesc(
+                                         "Avoid deafening with these controls"
+                                         ),
                                      lambda: AudioSettings().main(
                                          screen, keys, self.config,
                                          sounds),
@@ -125,7 +128,8 @@ class OptionsMenu:
         self.ctrl = menuItem.menuitem(self.ctrlimg,
                                       self.ctrlselimg,
                                       (50, 400),
-                                      lambda: self.editdesc("Edit keyboard/joypad settings"),
+                                      lambda: self.editdesc(
+                                          "Edit keyboard/joypad settings"),
                                       lambda: ControlSettings().main(
                                           screen, keys, self.config, sounds),
                                       self.config,
@@ -139,7 +143,8 @@ class OptionsMenu:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (650, 560),
-                                          lambda: self.editdesc("Go to the main menu"),
+                                          lambda: self.editdesc(
+                                              "Go to the main menu"),
                                           lambda: self.goToMenu(),
                                           self.config,
                                           sounds)
@@ -198,7 +203,7 @@ class OptionsMenu:
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             if self.desc is not None:
-                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
+                screen.blit(self.desc, (750-self.desc.get_rect().width, 300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

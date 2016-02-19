@@ -45,28 +45,31 @@ class ControlSettings:
 
     def makeKeyboardMenu(self, screen, keys, config, sounds):
         self.keybimg = self.font.render("Keyboard Settings", False,
-                                           (255, 255, 255)).convert_alpha()
+                                        (255, 255, 255)).convert_alpha()
         self.keybselimg = makeGlitched("Keyboard Settings", self.font)
         self.keyboard = menuItem.menuitem(self.keybimg,
                                           self.keybselimg,
                                           (50, 240),
-                                          lambda: self.editdesc("Edit Keyboard assignments"),
-                                          lambda: KeyboardSettings().main(screen,
-                                                                        keys,
-                                                                        config,
-                                                                        sounds),
+                                          lambda: self.editdesc(
+                                              "Edit Keyboard assignments"),
+                                          lambda: KeyboardSettings().main(
+                                              screen,
+                                              keys,
+                                              config,
+                                              sounds),
                                           self.gameconfig,
                                           sounds
                                           )
-                                          
+
     def makeJoypadMenu(self, screen, keys, config, sounds):
         self.joyimg = self.font.render("Joypad Settings", False,
-                                           (255, 255, 255)).convert_alpha()
+                                       (255, 255, 255)).convert_alpha()
         self.joyselimg = makeGlitched("Joypad Settings", self.font)
         self.joypad = menuItem.menuitem(self.joyimg,
                                         self.joyselimg,
                                         (50, 380),
-                                        lambda: self.editdesc("Edit Joypad Assignments (To be implemented)"),
+                                        lambda: self.editdesc(
+                                            "Edit Joypad Assignments"),
                                         lambda: None,
                                         self.gameconfig,
                                         sounds
@@ -128,7 +131,8 @@ class ControlSettings:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (320, 560),
-                                          lambda: self.editdesc("Go to the main menu"),
+                                          lambda: self.editdesc(
+                                              "Go to the main menu"),
                                           lambda: self.goToMenu(),
                                           self.config,
                                           sounds)
@@ -185,7 +189,7 @@ class ControlSettings:
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             if self.desc is not None:
-                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
+                screen.blit(self.desc, (750-self.desc.get_rect().width, 300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

@@ -97,6 +97,7 @@ class KeyboardSettings:
                                        self.leftsel,
                                        (self.lefttext.get_rect().width + 70,
                                            180),
+                                       lambda: None,
                                        lambda: self.left.KeySelect(self.font,
                                                                    "left",
                                                                    config,
@@ -119,6 +120,7 @@ class KeyboardSettings:
                                         self.rightsel,
                                         (self.righttext.get_rect().width + 70,
                                             240),
+                                        lambda: None,
                                         lambda: self.right.KeySelect(self.font,
                                                                      "right",
                                                                      config,
@@ -140,6 +142,7 @@ class KeyboardSettings:
                                        self.jumpsel,
                                        (self.jumptext.get_rect().width + 70,
                                            300),
+                                       lambda: None,
                                        lambda: self.jump.KeySelect(self.font,
                                                                    "jump",
                                                                    config,
@@ -162,6 +165,7 @@ class KeyboardSettings:
                                       self.runsel,
                                       (self.runtext.get_rect().width + 70,
                                           360),
+                                      lambda: None,
                                       lambda: self.run.KeySelect(self.font,
                                                                  "run",
                                                                  config,
@@ -183,6 +187,7 @@ class KeyboardSettings:
                                       self.actsel,
                                       (self.acttext.get_rect().width + 70,
                                           420),
+                                      lambda: None,
                                       lambda: self.act.KeySelect(self.font,
                                                                  "action",
                                                                  config,
@@ -193,23 +198,25 @@ class KeyboardSettings:
         # "Restart Key" menu element
         # v------------------------------------------------------------------v
         self.resttext = self.font.render("Restart Level: ",
-                                        False, (255, 255, 255)).convert_alpha()
+                                         False,
+                                         (255, 255, 255)).convert_alpha()
         key = config.get("Controls", "restart")
         keytext = pygame.key.name(int(key))
         self.restimg = self.font.render(keytext.upper(),
-                                       False,
-                                       (255, 255, 255)).convert_alpha()
+                                        False,
+                                        (255, 255, 255)).convert_alpha()
         self.restsel = makeGlitched(keytext.upper(), self.font)
         self.rest = kitem.KeyboardItem(self.restimg,
                                        self.restsel,
-                                      (self.resttext.get_rect().width + 70,
-                                          480),
-                                      lambda: self.rest.KeySelect(self.font,
-                                                                  "restart",
-                                                                  config,
-                                                                  keys),
-                                      self.config,
-                                      sounds)
+                                       (self.resttext.get_rect().width + 70,
+                                        480),
+                                       lambda: None,
+                                       lambda: self.rest.KeySelect(self.font,
+                                                                   "restart",
+                                                                   config,
+                                                                   keys),
+                                       self.config,
+                                       sounds)
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
@@ -219,6 +226,7 @@ class KeyboardSettings:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
+                                          lambda: None,
                                           lambda: self.goToMenu(),
                                           self.config,
                                           sounds)

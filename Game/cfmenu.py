@@ -55,7 +55,8 @@ class CFMenu:
         self.sd = menuItem.menuitem(self.sdimg,
                                     self.sdselimg,
                                     (50, 180),
-                                    lambda: self.editdesc("All rooms share the same timer."),
+                                    lambda: self.editdesc(
+                                        "All rooms share the same timer."),
                                     lambda: self.newCFGame(
                                             keys,
                                             config,
@@ -66,12 +67,13 @@ class CFMenu:
 
     def makeCFSMenu(self, screen, keys, config, sounds):
         self.sdsimg = self.font.render("Start Separated Times mode", False,
-                                      (255, 255, 255)).convert_alpha()
+                                       (255, 255, 255)).convert_alpha()
         self.sdsselimg = makeGlitched("Start Separated Times mode", self.font)
         self.sds = menuItem.menuitem(self.sdsimg,
                                      self.sdsselimg,
                                      (50, 240),
-                                     lambda: self.editdesc("Each room has its completion timer."),
+                                     lambda: self.editdesc(
+                                         "Each room has its timer."),
                                      lambda: self.newCFSGame(
                                              keys,
                                              config,
@@ -153,7 +155,8 @@ class CFMenu:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
-                                          lambda: self.editdesc("Go to the previous menu"),
+                                          lambda: self.editdesc(
+                                              "Go to the previous menu"),
                                           lambda: self.goToMenu(),
                                           self.gameconfig,
                                           sounds)
@@ -212,7 +215,7 @@ class CFMenu:
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             if self.desc is not None:
-                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
+                screen.blit(self.desc, (750-self.desc.get_rect().width, 300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             pygame.display.update()

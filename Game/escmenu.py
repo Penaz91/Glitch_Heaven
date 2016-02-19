@@ -66,7 +66,7 @@ class pauseMenu:
         pygame.display.set_caption("Glitch_Heaven")
         self.screensize = screen.get_size()
         self.config = config
-        self.desc= None
+        self.desc = None
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -102,7 +102,8 @@ class pauseMenu:
         self.resgame = menuItem.menuitem(self.resgameimg,
                                          self.selectedimg,
                                          (50, 240),
-                                         lambda: self.editdesc("Resume the paused Game"),
+                                         lambda: self.editdesc(
+                                             "Resume the paused Game"),
                                          lambda: self.unpause(),
                                          self.config,
                                          sounds)
@@ -115,7 +116,8 @@ class pauseMenu:
         self.savegame = menuItem.menuitem(self.saveimg,
                                           self.saveselected,
                                           (50, 320),
-                                          lambda: self.editdesc("Save for safety"),
+                                          lambda: self.editdesc(
+                                              "Save for safety"),
                                           lambda: game.saveGame(),
                                           self.config,
                                           sounds)
@@ -128,7 +130,8 @@ class pauseMenu:
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (50, 560),
-                                      lambda: self.editdesc("Outta Here, NOW!!"),
+                                      lambda: self.editdesc(
+                                          "Outta Here, NOW!!"),
                                       lambda: pygame.event.post(
                                         pygame.event.Event(pygame.QUIT)),
                                       self.config,
@@ -142,7 +145,8 @@ class pauseMenu:
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 400),
-                                          lambda: self.editdesc("Get back to the main menu"),
+                                          lambda: self.editdesc(
+                                              "Get back to the main menu"),
                                           lambda: self.goToMenu(game),
                                           self.config,
                                           sounds)
@@ -201,7 +205,7 @@ class pauseMenu:
             screen.blit(self.background, (0, 0))
             screen.blit(self.title, self.titlerect.topleft)
             if self.desc is not None:
-                screen.blit(self.desc, (750-self.desc.get_rect().width,300))
+                screen.blit(self.desc, (750-self.desc.get_rect().width, 300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
             screen.blit(self.resgame.image, self.resgame.location)

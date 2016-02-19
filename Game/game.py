@@ -230,7 +230,9 @@ class Game(object):
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
             totrigger = trig['ToggleGlitch']
             tr = CollectibleTrigger(trig.px, trig.py, self, totrigger,
-                                    preloaded_animation=self.preloaded_sprites["collectibleitem"])
+                                    preloaded_animation=self.preloaded_sprites[
+                                        "collectibleitem"
+                                        ])
             self.GlitchTriggers.add(tr)
         self.tilemap.layers.append(self.GlitchTriggers)
         self.title = makeGlitched(
@@ -395,10 +397,11 @@ class Game(object):
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
                                                   pygame.SRCALPHA)
             linesize = 3
+            bot = self.redsurf.get_rect().bottom
             self.redsurf.fill((255, 0, 0, 50))
             self.redsurf.fill((255, 255, 255, 255),
                               pygame.rect.Rect(0,
-                                               self.redsurf.get_rect().bottom - linesize,
+                                               bot - linesize,
                                                800,
                                                linesize))
             self.redsurfrect = self.redsurf.get_rect()
@@ -473,7 +476,8 @@ class Game(object):
                                                          "MobileObstacle")),
                 "collectibleitem": self.preloadFromDir(pathjoin("resources",
                                                                 "sprites",
-                                                                "GlitchTrigger"))
+                                                                "GlitchTrigger"
+                                                                ))
                 }
         # ^-------------------------------------------------------------------^
         # Defines if a level should be loaded or a
@@ -512,10 +516,11 @@ class Game(object):
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
                                                   pygame.SRCALPHA)
             linesize = 3
+            bot = self.redsurf.get_rect().bottom
             self.redsurf.fill((255, 0, 0, 50))
             self.redsurf.fill((255, 255, 255, 255),
                               pygame.rect.Rect(0,
-                                               self.redsurf.get_rect().bottom - linesize,
+                                               bot - linesize,
                                                800,
                                                linesize))
             self.redsurfrect = self.redsurf.get_rect()
@@ -609,8 +614,12 @@ class Game(object):
                         if event.key == pygame.K_s:
                             self.toggleGlitch("speed")
                         if event.key == pygame.K_d:
-                            self.toggleGlitch("obsresistant")
+                            self.toggleGlitch("invertedrun")
                         if event.key == pygame.K_f:
+                            self.toggleGlitch("invertedcontrols")
+                        if event.key == pygame.K_g:
+                            self.toggleGlitch("obsresistant")
+                        if event.key == pygame.K_h:
                             self.toggleGlitch("nostop")
                         if event.key == pygame.K_BACKSPACE:
                             mod_logger.debug("Debug key used,a" +
