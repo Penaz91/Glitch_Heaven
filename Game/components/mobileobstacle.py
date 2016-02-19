@@ -52,7 +52,7 @@ class Obstacle(pygame.sprite.Sprite):
         """
         last = self.rect.copy()
         self.rect.x += self.direction * self.xspeed * 0.033    # |
-        self.rect.y += self.direction * self.yspeed * 0.033    # | Moves obstacle
+        self.rect.y += self.direction * self.yspeed * 0.033    # | Moves obst.
         self.image = self.ani.rand_next(dt)
         # Reverses the obstacle when a "ObsReverse" trigger is touched
         # v-----------------------------------------------------------------v
@@ -60,17 +60,17 @@ class Obstacle(pygame.sprite.Sprite):
                                                             'ObsReverse'):
             if self.vertical:
                 if last.bottom <= cell.top and\
-                    self.rect.bottom > cell.top:
+                        self.rect.bottom > cell.top:
                     self.rect.bottom = cell.top
                 elif last.top >= cell.bottom and\
-                    self.rect.top < cell.bottom:
+                        self.rect.top < cell.bottom:
                     self.rect.top = cell.bottom
             else:
                 if last.left >= cell.right and\
-                    self.rect.left < cell.right:
+                        self.rect.left < cell.right:
                     self.rect.left = cell.right
                 elif last.right <= cell.left and\
-                    self.rect.right > cell.left:
+                        self.rect.right > cell.left:
                     self.rect.right = cell.left
             self.direction *= -1
         # ^------------------------------------------------------------------^
@@ -78,13 +78,14 @@ class Obstacle(pygame.sprite.Sprite):
         # v-----------------------------------------------------------------v
         if self.rect.colliderect(game.player.rect):
             if game.glitches["obsresistant"]:
-                #Platform logic here
                 if game.player.y_speed * game.gravity > 0:
-                    if game.gravity == 1 and game.player.rect.bottom > self.rect.top:
+                    if game.gravity == 1 and\
+                            game.player.rect.bottom > self.rect.top:
                         game.player.rect.bottom = self.rect.top
                         game.player.y_speed = self.yspeed
                         game.player.resting = True  # Allows jump
-                    elif game.gravity == -1 and game.player.rect.top < self.rect.bottom:
+                    elif game.gravity == -1 and\
+                            game.player.rect.top < self.rect.bottom:
                         game.player.rect.top = self.rect.bottom
                         game.player.y_speed = - self.yspeed
                         game.player.resting = True  # Allows jump
