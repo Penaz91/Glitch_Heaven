@@ -610,7 +610,7 @@ class Game(object):
                             self.toggleGlitch("speed")
                         if event.key == pygame.K_d:
                             self.toggleGlitch("obsresistant")
-                        if event.key == pygame.K_d:
+                        if event.key == pygame.K_f:
                             self.toggleGlitch("nostop")
                         if event.key == pygame.K_BACKSPACE:
                             mod_logger.debug("Debug key used,a" +

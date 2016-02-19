@@ -74,22 +74,3 @@ class Obstacle(pygame.sprite.Sprite):
                     self.rect.right = cell.left
             self.direction *= -1
         # ^------------------------------------------------------------------^
-        # If the ObsResistant glitch is active, use glitches as platforms
-        # v-----------------------------------------------------------------v
-        if self.rect.colliderect(game.player.rect):
-            if game.glitches["obsresistant"]:
-                if game.player.y_speed * game.gravity > 0:
-                    if game.gravity == 1 and\
-                            game.player.rect.bottom > self.rect.top:
-                        game.player.rect.bottom = self.rect.top
-                        game.player.y_speed = self.yspeed
-                        game.player.resting = True  # Allows jump
-                    elif game.gravity == -1 and\
-                            game.player.rect.top < self.rect.bottom:
-                        game.player.rect.top = self.rect.bottom
-                        game.player.y_speed = - self.yspeed
-                        game.player.resting = True  # Allows jump
-                game.player.rect.x += self.xspeed * dt * self.direction
-            else:
-                game.player.respawn(game)
-        # ^-----------------------------------------------------------------^
