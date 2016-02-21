@@ -569,7 +569,9 @@ class Game(object):
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
                 if config.getboolean("Debug", "debugmode") and\
-                        pygame.key.get_pressed()[304]:
+                        pygame.key.get_pressed()[304] and\
+                        pygame.key.get_pressed()[306] and\
+                        pygame.key.get_pressed()[308] :
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_1:
                             self.toggleGlitch("wallclimb")
