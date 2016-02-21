@@ -559,7 +559,8 @@ class Player(pygame.sprite.Sprite):
                         else:
                             self.y_speed = - block.yspeed
                             self.resting = True  # Allows jump
-                self.rect.x += block.xspeed * dt * block.direction
+                if block.moving:
+                    self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with scrolling ground
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,

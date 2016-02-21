@@ -51,26 +51,27 @@ class Obstacle(pygame.sprite.Sprite):
         - game: The game instance.
         """
         last = self.rect.copy()
-        self.rect.x += self.direction * self.xspeed * 0.033    # |
-        self.rect.y += self.direction * self.yspeed * 0.033    # | Moves obst.
-        self.image = self.ani.rand_next(dt)
-        # Reverses the obstacle when a "ObsReverse" trigger is touched
-        # v-----------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
-                                                            'ObsReverse'):
-            if self.vertical:
-                if last.bottom <= cell.top and\
-                        self.rect.bottom > cell.top:
-                    self.rect.bottom = cell.top
-                elif last.top >= cell.bottom and\
-                        self.rect.top < cell.bottom:
-                    self.rect.top = cell.bottom
-            else:
-                if last.left >= cell.right and\
-                        self.rect.left < cell.right:
-                    self.rect.left = cell.right
-                elif last.right <= cell.left and\
-                        self.rect.right > cell.left:
-                    self.rect.right = cell.left
-            self.direction *= -1
-        # ^------------------------------------------------------------------^
+        if not game.glitches["timelapse"] or game.player.x_speed != 0:
+            self.rect.x += self.direction * self.xspeed * 0.033    # |
+            self.rect.y += self.direction * self.yspeed * 0.033    # | Moves obst.
+            self.image = self.ani.rand_next(dt)
+            # Reverses the obstacle when a "ObsReverse" trigger is touched
+            # v-----------------------------------------------------------------v
+            for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+                                                                'ObsReverse'):
+                if self.vertical:
+                    if last.bottom <= cell.top and\
+                            self.rect.bottom > cell.top:
+                        self.rect.bottom = cell.top
+                    elif last.top >= cell.bottom and\
+                            self.rect.top < cell.bottom:
+                        self.rect.top = cell.bottom
+                else:
+                    if last.left >= cell.right and\
+                            self.rect.left < cell.right:
+                        self.rect.left = cell.right
+                    elif last.right <= cell.left and\
+                            self.rect.right > cell.left:
+                        self.rect.right = cell.left
+                self.direction *= -1
+            # ^------------------------------------------------------------------^

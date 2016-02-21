@@ -621,6 +621,8 @@ class Game(object):
                             self.toggleGlitch("obsresistant")
                         if event.key == pygame.K_h:
                             self.toggleGlitch("nostop")
+                        if event.key == pygame.K_j:
+                            self.toggleGlitch("timelapse")
                         if event.key == pygame.K_BACKSPACE:
                             mod_logger.debug("Debug key used,a" +
                                              "Loading next level")

@@ -54,6 +54,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
             self.yspeed = 0
             self.xspeed = spd
         self.direction = 1
+        self.moving = False
         game.plats.add(self)
 
     def update(self, dt, game):
@@ -68,27 +69,30 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         - Nothing
         """
         self.dt = dt
-        if self.active:
-            last = self.rect.copy()
-            self.rect.x += self.direction * self.xspeed * dt    # |
-            self.rect.y += self.direction * self.yspeed * dt    # | Moves plat
-            # Reverses the platform when a "PlatReverse" trigger is touched
-            # v-----------------------------------------------------------------v
-            for cell in game.tilemap.layers['Triggers'].collide(self.rect,
-                                                                'PlatReverse'):
-                if self.vertical:
-                    if last.bottom <= cell.top and\
-                        self.rect.bottom > cell.top:
-                        self.rect.bottom = cell.top
-                    elif last.top >= cell.bottom and\
-                        self.rect.top < cell.bottom:
-                        self.rect.top = cell.bottom
-                else:
-                    if last.left >= cell.right and\
-                        self.rect.left < cell.right:
-                        self.rect.left = cell.right
-                    elif last.right <= cell.left and\
-                        self.rect.right > cell.left:
-                        self.rect.right = cell.left
-                self.direction *= -1
-            # ^------------------------------------------------------------------^
+        self.moving = False
+        if not game.glitches["timelapse"] or game.player.x_speed != 0:
+            if self.active:
+                last = self.rect.copy()
+                self.rect.x += self.direction * self.xspeed * dt    # |
+                self.rect.y += self.direction * self.yspeed * dt    # | Moves plat
+                self.moving = True
+                # Reverses the platform when a "PlatReverse" trigger is touched
+                # v-----------------------------------------------------------------v
+                for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+                                                                    'PlatReverse'):
+                    if self.vertical:
+                        if last.bottom <= cell.top and\
+                            self.rect.bottom > cell.top:
+                            self.rect.bottom = cell.top
+                        elif last.top >= cell.bottom and\
+                            self.rect.top < cell.bottom:
+                            self.rect.top = cell.bottom
+                    else:
+                        if last.left >= cell.right and\
+                            self.rect.left < cell.right:
+                            self.rect.left = cell.right
+                        elif last.right <= cell.left and\
+                            self.rect.right > cell.left:
+                            self.rect.right = cell.left
+                    self.direction *= -1
+                # ^------------------------------------------------------------------^

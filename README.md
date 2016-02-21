@@ -42,6 +42,7 @@ and more challenging.
 ### Glitches Partially Implemented or that need BuxFixes/Testing:
 - **Invincible to Obstacles Glitch** You don't die to mobile obstacles, meant as fix/addition to the Invincibility glitch. - Needs thorough testing
 - **Movement toggle Glitch** You can't stop walking, you gotta keep moving! - Needs Bugfix: No particles when walk buttons are not pressed
+- **TimeLapse glitch** Platforms and obstacles move only when you move
 
 ### Glitches Planned:
 None At The moment
