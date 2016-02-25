@@ -38,6 +38,17 @@ class Emitter(object):
         particle.Particle(self.location, self.sc, self.ec, self.xstr,
                           st*2*self.ystr, self.tm, self.spritegroup)
 
+    def vflipemit(self, st):
+        """
+        Emits the particles, flipped vertically
+        """
+        particle.Particle(self.location, self.sc, self.ec, self.xstr*st,
+                          - self.ystr*st, self.tm, self.spritegroup)
+        particle.Particle(self.location, self.sc, self.ec, st*2*self.xstr,
+                          - st*self.ystr, self.tm, self.spritegroup)
+        particle.Particle(self.location, self.sc, self.ec, self.xstr,
+                          - st*2*self.ystr, self.tm, self.spritegroup)
+
     def move(self, newlocation):
         self.location = newlocation
 

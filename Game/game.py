@@ -660,8 +660,9 @@ class Game(object):
             self.gameviewport.blit(self.middle, (-self.tilemap.viewport.x/2,
                                                  -self.tilemap.viewport.y/2))
             self.tilemap.draw(self.gameviewport)
-            self.particlesurf.fill((0, 0, 0, 0))
-            self.player.particles.update()
+            if not self.glitches["timelapse"] or self.player.x_speed != 0:
+                self.particlesurf.fill((0, 0, 0, 0))
+                self.player.particles.update()
             self.player.particles.draw(self.particlesurf)
             self.gameviewport.blit(self.particlesurf,
                                    (-self.tilemap.viewport.x,
