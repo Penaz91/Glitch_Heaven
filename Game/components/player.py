@@ -217,10 +217,9 @@ class Player(pygame.sprite.Sprite):
                                                            "playerparticles"):
                                 if gravity == 1:
                                     self.leftemitter.move(self.rect.bottomleft)
-                                    self.leftemitter.emit(2)
                                 else:
                                     self.leftemitter.move(self.rect.topleft)
-                                    self.leftemitter.vflipemit(2)
+                                self.leftemitter.emit(2, 2*gravity)
                             self.image = self.grunanimation.next(dt)
                         else:
                             # Player is walking rightwards
@@ -229,10 +228,9 @@ class Player(pygame.sprite.Sprite):
                                                            "playerparticles"):
                                 if gravity == 1:
                                     self.leftemitter.move(self.rect.bottomleft)
-                                    self.leftemitter.emit(1)
                                 else:
                                     self.leftemitter.move(self.rect.topleft)
-                                    self.leftemitter.vflipemit(1)
+                                self.leftemitter.emit(1, gravity)
                 elif direction == -1:
                     # Player is pointing left
                     if xspeed == 0:
@@ -253,10 +251,9 @@ class Player(pygame.sprite.Sprite):
                                                            "playerparticles"):
                                 if gravity == 1:
                                     self.rightemitter.move(self.rect.bottomright)
-                                    self.rightemitter.emit(2)
                                 else:
                                     self.rightemitter.move(self.rct.topright)
-                                    self.rightemitter.vflipemit(2)
+                                self.rightemitter.emit(2, 2*gravity)
                         else:
                             # Player is walking leftwards
                             self.image = pygame.transform.flip(
@@ -267,10 +264,9 @@ class Player(pygame.sprite.Sprite):
                                                            "playerparticles"):
                                 if gravity == 1:
                                     self.rightemitter.move(self.rect.bottomright)
-                                    self.rightemitter.emit(1)
                                 else:
                                     self.rightemitter.move(self.rct.topright)
-                                    self.rightemitter.vflipemit(1)
+                                self.rightemitter.emit(1, gravity)
             else:
                 # Player is either jumping or falling
                 if direction == 1:
@@ -312,10 +308,9 @@ class Player(pygame.sprite.Sprite):
                                                            "playerparticles"):
                                 if gravity == 1:
                                     self.leftemitter.move(self.rect.bottomleft)
-                                    self.leftemitter.emit(2)
                                 else:
                                     self.leftemitter.move(self.rect.topleft)
-                                    self.leftemitter.vflipemit(2)
+                                self.leftemitter.emit(2, 2*gravity)
                             # Player is running rightwards
                             self.image = self.runanimation.next(dt)
                         else:
@@ -323,10 +318,9 @@ class Player(pygame.sprite.Sprite):
                                                            "playerparticles"):
                                 if gravity == 1:
                                     self.leftemitter.move(self.rect.bottomleft)
-                                    self.leftemitter.emit(1)
                                 else:
                                     self.leftemitter.move(self.rect.topleft)
-                                    self.leftemitter.vflipemit(1)
+                                self.leftemitter.emit(1, gravity)
                             # Player is walking rightwards
                             self.image = self.walkanimation.next(dt)
                 elif direction == -1:
@@ -350,10 +344,9 @@ class Player(pygame.sprite.Sprite):
                                                            "playerparticles"):
                                 if gravity == 1:
                                     self.rightemitter.move(self.rect.bottomright)
-                                    self.rightemitter.emit(2)
                                 else:
                                     self.rightemitter.move(self.rect.topright)
-                                    self.rightemitter.vflipemit(2)
+                                self.rightemitter.emit(2, 2*gravity)
                             self.image = pygame.transform.flip(
                                          self.runanimation.next(dt),
                                          True,
@@ -364,10 +357,9 @@ class Player(pygame.sprite.Sprite):
                                                            "playerparticles"):
                                 if gravity == 1:
                                     self.rightemitter.move(self.rect.bottomright)
-                                    self.rightemitter.emit(1)
                                 else:
                                     self.rightemitter.move(self.rect.topright)
-                                    self.rightemitter.vflipemit(1)
+                                self.rightemitter.emit(1, gravity)
                             self.image = pygame.transform.flip(
                                          self.walkanimation.next(dt),
                                          True,
@@ -499,13 +491,11 @@ class Player(pygame.sprite.Sprite):
                             if game.gravity == 1:
                                 self.rightemitter.move(self.rect.bottomright)
                                 self.leftemitter.move(self.rect.bottomleft)
-                                self.rightemitter.emit(1)
-                                self.leftemitter.emit(1)
                             else:
                                 self.rightemitter.move(self.rect.topright)
                                 self.leftemitter.move(self.rect.topleft)
-                                self.rightemitter.vflipemit(1)
-                                self.leftemitter.vflipemit(1)
+                            self.rightemitter.emit(1, game.gravity)
+                            self.leftemitter.emit(1, game.gravity)
                     # ^------------------------------------------------------^
         elif game.glitches["hover"]:
             if key[self.keys["jump"]] and not game.glitches["nojump"]:
@@ -516,13 +506,11 @@ class Player(pygame.sprite.Sprite):
                     if game.gravity == 1:
                         self.rightemitter.move(self.rect.bottomright)
                         self.leftemitter.move(self.rect.bottomleft)
-                        self.rightemitter.emit(1)
-                        self.leftemitter.emit(1)
                     else:
                         self.rightemitter.move(self.rect.topright)
                         self.leftemitter.move(self.rect.topleft)
-                        self.rightemitter.vflipemit(1)
-                        self.leftemitter.vflipemit(1)
+                    self.rightemitter.emit(1, game.gravity)
+                    self.leftemitter.emit(1, game.gravity)
         else:
             if key[self.keys["jump"]] and self.resting and\
                     not game.glitches["nojump"]:
@@ -540,13 +528,11 @@ class Player(pygame.sprite.Sprite):
                         if game.gravity == 1:
                             self.rightemitter.move(self.rect.bottomright)
                             self.leftemitter.move(self.rect.bottomleft)
-                            self.rightemitter.emit(1)
-                            self.leftemitter.emit(1)
                         else:
                             self.rightemitter.move(self.rect.topright)
                             self.leftemitter.move(self.rect.topleft)
-                            self.rightemitter.vflipemit(1)
-                            self.leftemitter.vflipemit(1)
+                        self.rightemitter.emit(1, game.gravity)
+                        self.leftemitter.emit(1, game.gravity)
                         # ^------------------------------------------------------^
                     self.resting = False    # I jumped, so i'm not on a surface
         if game.glitches["featherfalling"]:

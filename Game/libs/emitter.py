@@ -27,27 +27,16 @@ class Emitter(object):
         self.ec = ec
         self.tm = tm
 
-    def emit(self, st):
+    def emit(self, xst, yst):
         """
         Emits the particles
         """
-        particle.Particle(self.location, self.sc, self.ec, self.xstr*st,
-                          self.ystr*st, self.tm, self.spritegroup)
-        particle.Particle(self.location, self.sc, self.ec, st*2*self.xstr,
-                          st*self.ystr, self.tm, self.spritegroup)
-        particle.Particle(self.location, self.sc, self.ec, self.xstr,
-                          st*2*self.ystr, self.tm, self.spritegroup)
-
-    def vflipemit(self, st):
-        """
-        Emits the particles, flipped vertically
-        """
-        particle.Particle(self.location, self.sc, self.ec, self.xstr*st,
-                          - self.ystr*st, self.tm, self.spritegroup)
-        particle.Particle(self.location, self.sc, self.ec, st*2*self.xstr,
-                          - st*self.ystr, self.tm, self.spritegroup)
-        particle.Particle(self.location, self.sc, self.ec, self.xstr,
-                          - st*2*self.ystr, self.tm, self.spritegroup)
+        particle.Particle(self.location, self.sc, self.ec, self.xstr*xst,
+                          self.ystr*yst, self.tm, self.spritegroup)
+        particle.Particle(self.location, self.sc, self.ec, xst*2*self.xstr,
+                          yst*self.ystr, self.tm, self.spritegroup)
+        particle.Particle(self.location, self.sc, self.ec, xst*self.xstr,
+                          yst*2*self.ystr, self.tm, self.spritegroup)
 
     def move(self, newlocation):
         self.location = newlocation
