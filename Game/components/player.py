@@ -630,31 +630,7 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.rect,
                                                             'blocker'):
             blockers = cell['blocker']
-            if 'l' in blockers and last.right <= cell.left and\
-                    self.rect.right > cell.left:
-                self.bounced = False
-                self.rect.right = cell.left
-                self.pushing = True
-                if game.glitches["wallclimb"]:
-                    if game.gravity == 1:
-                        self.y_speed = -200
-                    else:
-                        self.y_speed = 200
-            else:
-                self.pushing = False
-            if 'r' in blockers and last.left >= cell.right and\
-                    self.rect.left < cell.right:
-                self.bounced = False
-                self.rect.left = cell.right
-                self.pushing = True
-                if game.glitches["wallclimb"]:
-                    if game.gravity == 1:
-                        self.y_speed = -200
-                    else:
-                        self.y_speed = 200
-            else:
-                if not self.pushing:
-                    self.pushing = False
+            self.pushing = False
             if 't' in blockers and last.bottom <= cell.top and\
                     self.rect.bottom > cell.top:
                 # Framework for clip-on-command glitch
@@ -677,7 +653,7 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = 0
                     if game.gravity == 1:
                         self.resting = True
-            if 'b' in blockers and last.top >= cell.bottom and\
+            elif 'b' in blockers and last.top >= cell.bottom and\
                     self.rect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
                 self.bounced = False
@@ -701,6 +677,28 @@ class Player(pygame.sprite.Sprite):
                             self.y_speed = 0
                 if game.gravity == -1:
                     self.resting = True
+            elif 'l' in blockers and last.right <= cell.left and\
+                    self.rect.right > cell.left:
+                self.bounced = False
+                self.rect.right = cell.left
+                self.pushing = True
+                if game.glitches["wallclimb"]:
+                    if game.gravity == 1:
+                        self.y_speed = -200
+                    else:
+                        self.y_speed = 200
+            #else:
+                #self.pushing = False
+            elif 'r' in blockers and last.left >= cell.right and\
+                    self.rect.left < cell.right:
+                self.bounced = False
+                self.rect.left = cell.right
+                self.pushing = True
+                if game.glitches["wallclimb"]:
+                    if game.gravity == 1:
+                        self.y_speed = -200
+                    else:
+                        self.y_speed = 200
         # ^--------------------------------------------------------------^
         # Test for collision with bouncy platforms and act accordingly
         # v--------------------------------------------------------------v
