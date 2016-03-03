@@ -14,7 +14,6 @@ import pygame
 from components.player import Player
 from libs import tmx
 import os
-import configparser
 from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
@@ -131,7 +130,10 @@ class Game(object):
         levelconfig.read(os.path.join("data",
                                       "maps",
                                       campaignname, level+".conf"))"""
-        with open(os.path.join("data","maps",campaignname, level+".conf")) as f:
+        with open(os.path.join("data",
+                               "maps",
+                               campaignname,
+                               level+".conf")) as f:
             levelconfig = json.loads(f.read())
         mod_logger.info("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
@@ -154,10 +156,6 @@ class Game(object):
                              self.newvalues))"""
         self.glitches = levelconfig["Glitches"]["Standard"]
         mod_logger.debug("Glitches Active: " + str(self.glitches))
-        # Will this stop the automatic Garbage collector from working?
-        # v--------v
-        """del self.tempglitches, self.tempkeys, self.tempvalues, self.newvalues"""
-        # ^--------^
         # ^--------------------------------------------------------------^
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
@@ -332,7 +330,6 @@ class Game(object):
         self.player = Player((start_cell.px, start_cell.py),
                              self.sprites, keys=keys, game=self,
                              sounds=sounds)
-        
         mod_logger.info("Creating Particle Surface")
         self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
                                                     self.tilemap.px_height),
@@ -375,7 +372,8 @@ class Game(object):
                      "campaignname": self.campaignname,
                      "cftime": self.cftime,
                      "time": self.time,
-                     "mode": self.mode}
+                     "mode": self.mode,
+                     "chaos": self.ChaosMode}
             mod_logger.debug("Shelf saved with data: " + str(shelf))
             with open(path, "w") as savefile:
                 string = json.dumps(shelf)
@@ -402,6 +400,7 @@ class Game(object):
             self.mode = shelf["mode"]
             self.cftime = shelf["cftime"]
             self.time = shelf["time"]
+            self.chaos = shelf["chaos"]
         if self.mode.lower() in ["criticalfailure", "cfsingle"]:
             mod_logger.info("Using Load Game mode - Critical Failure Modifier")
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
@@ -437,17 +436,20 @@ class Game(object):
              if os.path.isfile(os.path.join(directory, f))]
         frames = [pygame.image.load(y).convert_alpha() for y in sorted(x)]
         return frames
-        
+
     def newChaosTime(self):
         self.chaosParameters["timer"] = float(random.randint(5, 30))
-        
+
     def loadChaosParameters(self, lvlconf):
-        self.chaosParameters={"glitches": None, "timer": None}
-        self.chaosParameters["glitches"] = [x for x in lvlconf["Glitches"]["ChaosMode"] if lvlconf["Glitches"]["ChaosMode"][x] == True]
+        self.chaosParameters = {"glitches": None, "timer": None}
+        self.chaosParameters["glitches"] = \
+            [x
+             for x in lvlconf["Glitches"]["ChaosMode"]
+             if lvlconf["Glitches"]["ChaosMode"][x]]
         self.newChaosTime()
         mod_logger.debug("Chaos Mode Parameters: " + str(self.chaosParameters))
-    
-    def main(self, screen, keys, mode, cmp, config, sounds):
+
+    def main(self, screen, keys, mode, cmp, config, sounds, chaos):
         """
         Main Game method
 
@@ -484,7 +486,7 @@ class Game(object):
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
-        self.ChaosMode = False
+        self.ChaosMode = chaos
         # Preloading graphics area
         # v-------------------------------------------------------------------v
         self.preloaded_sprites = {
@@ -586,8 +588,9 @@ class Game(object):
             # v-------------------------------------------------------------------v
             if self.ChaosMode:
                 self.chaosParameters["timer"] -= dt
-                if self.chaosParameters["timer"] <=0.:
-                    self.toggleGlitch(random.choice(self.chaosParameters["glitches"]))
+                if self.chaosParameters["timer"] <= 0.:
+                    self.toggleGlitch(random.choice(
+                                      self.chaosParameters["glitches"]))
                     self.newChaosTime()
             # ^-------------------------------------------------------------------^
             for event in pygame.event.get():
@@ -600,7 +603,7 @@ class Game(object):
                 if config.getboolean("Debug", "debugmode") and\
                         pygame.key.get_pressed()[304] and\
                         pygame.key.get_pressed()[306] and\
-                        pygame.key.get_pressed()[308] :
+                        pygame.key.get_pressed()[308]:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_1:
                             self.toggleGlitch("wallClimb")
@@ -681,7 +684,8 @@ class Game(object):
                 # ^----------------------------------------------------------^
                 # Renders the DeathCounter
                 # v-------------------------------------------------------------------v
-                self.dcounttxt = makeGlitched("Deaths: %d" %self.deathCounter, self.font)
+                self.dcounttxt = makeGlitched("Deaths: %d" % self.deathCounter,
+                                              self.font)
                 # ^-------------------------------------------------------------------^
             self.gameviewport.blit(self.bg, (-self.tilemap.viewport.x/6,
                                    -self.tilemap.viewport.y/6))

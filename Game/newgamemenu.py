@@ -45,7 +45,7 @@ class NewGameMenu:
             if self.camp:
                 self.running = False
                 Game().main(screen, keys, "newgame",
-                            self.camp, gameconfig, sounds)
+                            self.camp, gameconfig, sounds, self.chaos)
         except FileNotFoundError:
             module_logger.info("No File selected, Loading of campaign aborted")
 
@@ -57,7 +57,8 @@ class NewGameMenu:
                              "campaigns",
                              "main.cmp"),
                     self.gameconfig,
-                    sounds)
+                    sounds,
+                    self.chaos)
 
     def newCFGame(self, keys, gameconfig, screen, sounds):
         self.running = False
@@ -172,11 +173,41 @@ class NewGameMenu:
                                       (100, 100, 100)).convert_alpha()
         self.sm = menuItem.menuitem(self.smimg,
                                     self.smimg,
-                                    (50, 480),
+                                    (50, 540),
                                     lambda: self.editdesc(None),
                                     lambda: None,
                                     self.gameconfig,
                                     sounds)
+
+    def togglechaos(self):
+        self.chaos = not self.chaos
+
+    def makeChaosButton(self, screen, keys, config, sounds):
+        if config.getboolean("Unlockables", "Chaos"):
+            self.chimg = self.font.render("Toggle Chaos Modifier",
+                                          False,
+                                          (255, 255, 255)).convert_alpha()
+            self.chselimg = makeGlitched("Toggle Chaos Modifier",
+                                         self.font)
+            self.cb = menuItem.menuitem(self.chimg,
+                                        self.chselimg,
+                                        (50, 480),
+                                        lambda: self.editdesc("Chaos Mod: " +
+                                                              str(self.chaos)),
+                                        lambda: self.togglechaos(),
+                                        self.gameconfig,
+                                        sounds)
+            self.activeitems.append(self.cb)
+        else:
+            self.chimg = self.font.render("(File Corrupted)", False,
+                                          (100, 100, 100)).convert_alpha()
+            self.cb = menuItem.menuitem(self.chimg,
+                                        self.chimg,
+                                        (50, 480),
+                                        lambda: self.editdesc(None),
+                                        lambda: None,
+                                        self.gameconfig,
+                                        sounds)
 
     def goToMenu(self):
         """
@@ -210,6 +241,7 @@ class NewGameMenu:
         self.activeitems = []
         self.gameconfig = config
         self.desc = None
+        self.chaos = False
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.titleani = animation.Animation()
@@ -252,6 +284,9 @@ class NewGameMenu:
         # Insert a sudden death mode button
         # v------------------------------------------------------------------v
         self.makeSDMenu(screen, keys, config, sounds)
+        # Insert a chaos modifier button
+        # v------------------------------------------------------------------v
+        self.makeChaosButton(screen, keys, config, sounds)
         # Insert a single map mode button
         # v------------------------------------------------------------------v
         self.makeSMMenu(screen, keys, config, sounds)
@@ -263,7 +298,7 @@ class NewGameMenu:
         self.menusel = makeGlitched("Previous Menu", self.font)
         self.mainmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
-                                          (50, 560),
+                                          (600, 560),
                                           lambda: self.editdesc(
                                               "Go to the main menu"),
                                           lambda: self.goToMenu(),
@@ -272,7 +307,7 @@ class NewGameMenu:
         self.activeitems.append(self.mainmenu)
         # ^------------------------------------------------------------------^
         self.items = [self.newmaingame, self.newcustomgame, self.sr,
-                      self.nh, self.sd, self.sm, self.mainmenu]
+                      self.nh, self.sd, self.sm, self.cb, self.mainmenu]
         self.clock = pygame.time.Clock()
         pygame.mouse.set_visible(True)  # Make the cursor visible
         module_logger.info("Mouse cursor shown")
