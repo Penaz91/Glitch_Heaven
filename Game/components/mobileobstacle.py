@@ -51,7 +51,7 @@ class Obstacle(pygame.sprite.Sprite):
         - game: The game instance.
         """
         last = self.rect.copy()
-        if not game.glitches["timelapse"] or game.player.x_speed != 0:
+        if not game.glitches["timeLapse"] or game.player.x_speed != 0:
             self.rect.x += self.direction * self.xspeed * 0.033    # |
             self.rect.y += self.direction * self.yspeed * 0.033    # | Moves obst.
             self.image = self.ani.rand_next(dt)

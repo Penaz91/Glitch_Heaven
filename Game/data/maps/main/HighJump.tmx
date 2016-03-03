@@ -101,7 +101,7 @@
   </object>
   <object id="21" x="1088" y="704" width="32" height="32">
    <properties>
-    <property name="ToggleGlitch" value="highjump"/>
+    <property name="ToggleGlitch" value="highJump"/>
    </properties>
   </object>
   <object id="22" x="512" y="0" width="704" height="32">

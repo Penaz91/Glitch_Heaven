@@ -416,7 +416,7 @@
   </object>
   <object id="83" x="800" y="1856" width="32" height="32">
    <properties>
-    <property name="ToggleGlitch" value="invertedgravity,featherfalling"/>
+    <property name="ToggleGlitch" value="invertedGravity,featherFalling"/>
    </properties>
   </object>
  </objectgroup>

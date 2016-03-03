@@ -20,6 +20,7 @@ from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
 from components.collectibletrigger import CollectibleTrigger
 import json
+import random
 import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
@@ -126,17 +127,20 @@ class Game(object):
         # Loads the level configuration and the control keys
         # v--------------------------------------------------------------v
         mod_logger.info("LoadLevel Routine is loading: " + level)
-        levelconfig = configparser.ConfigParser()
+        """levelconfig = configparser.ConfigParser()
         levelconfig.read(os.path.join("data",
                                       "maps",
-                                      campaignname, level+".conf"))
+                                      campaignname, level+".conf"))"""
+        with open(os.path.join("data","maps",campaignname, level+".conf")) as f:
+            levelconfig = json.loads(f.read())
         mod_logger.info("Level configuration loaded")
+        self.loadChaosParameters(levelconfig)
         if mode == "cfsingle":
-            self.cftime = int(levelconfig["Level_Info"]["CFTime"])
+            self.cftime = int(levelconfig["Level Info"]["CFTime"])
         self.helpflagActive = False
         self.currenthelp = ""
         self.screen = screen
-        self.tempglitches = dict(levelconfig['Glitches'])
+        """self.tempglitches = dict(levelconfig['Glitches'])
         self.tempkeys = self.tempglitches.keys()
         self.tempvalues = self.tempglitches.values()
         self.newvalues = []
@@ -147,11 +151,12 @@ class Game(object):
             else:
                 self.newvalues.append(False)
         self.glitches = dict(zip(self.tempkeys,
-                             self.newvalues))
+                             self.newvalues))"""
+        self.glitches = levelconfig["Glitches"]["Standard"]
         mod_logger.debug("Glitches Active: " + str(self.glitches))
         # Will this stop the automatic Garbage collector from working?
         # v--------v
-        del self.tempglitches, self.tempkeys, self.tempvalues, self.newvalues
+        """del self.tempglitches, self.tempkeys, self.tempvalues, self.newvalues"""
         # ^--------^
         # ^--------------------------------------------------------------^
         # Loads the level map, triggers, obstacles
@@ -167,24 +172,24 @@ class Game(object):
         self.bg = pygame.image.load(
                   os.path.join("resources",
                                "backgrounds",
-                               levelconfig["Level_Components"]
+                               levelconfig["Level Components"]
                                ["background"])).convert_alpha()
         self.middleback = pygame.image.load(
                           os.path.join("resources",
                                        "backgrounds",
-                                       levelconfig["Level_Components"]
+                                       levelconfig["Level Components"]
                                        ["middle_back1"])).convert_alpha()
         self.middle = pygame.image.load(
                       os.path.join("resources",
                                    "backgrounds",
-                                   levelconfig["Level_Components"]
+                                   levelconfig["Level Components"]
                                    ["middle_back2"])).convert_alpha()
-        if levelconfig["Level_Components"]["overlay"].lower() != "none":
+        if levelconfig["Level Components"]["overlay"] is not None:
             self.hasOverlay = True
             self.overlay = pygame.image.load(
                            os.path.join("resources",
                                         "overlays",
-                                        levelconfig["Level_Components"]
+                                        levelconfig["Level Components"]
                                         ["overlay"])).convert_alpha()
         else:
             self.hasOverlay = False
@@ -236,7 +241,7 @@ class Game(object):
             self.GlitchTriggers.add(tr)
         self.tilemap.layers.append(self.GlitchTriggers)
         self.title = makeGlitched(
-                        str(levelconfig['Level_Info']['Name']),
+                        str(levelconfig['Level Info']['Name']),
                         self.font)
         center = 400 - int(self.title.get_rect().width)/2
         print(center)
@@ -331,7 +336,7 @@ class Game(object):
         self.gravity = 1
         # In case the invertedgravity glitch is up, invert gravity
         # v--------v
-        if self.glitches["invertedgravity"]:
+        if self.glitches["invertedGravity"]:
             self.gravity = -1
         # ^--------^
         if self.glitches["speed"]:
@@ -427,7 +432,16 @@ class Game(object):
              if os.path.isfile(os.path.join(directory, f))]
         frames = [pygame.image.load(y).convert_alpha() for y in sorted(x)]
         return frames
-
+        
+    def newChaosTime(self):
+        self.chaosParameters["timer"] = float(random.randint(5, 30))
+        
+    def loadChaosParameters(self, lvlconf):
+        self.chaosParameters={"glitches": None, "timer": None}
+        self.chaosParameters["glitches"] = [x for x in lvlconf["Glitches"]["ChaosMode"] if lvlconf["Glitches"]["ChaosMode"][x] == True]
+        self.newChaosTime()
+        mod_logger.debug("Chaos Mode Parameters: " + str(self.chaosParameters))
+    
     def main(self, screen, keys, mode, cmp, config, sounds):
         """
         Main Game method
@@ -464,6 +478,7 @@ class Game(object):
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
+        self.ChaosMode = False
         # Preloading graphics area
         # v-------------------------------------------------------------------v
         self.preloaded_sprites = {
@@ -561,6 +576,14 @@ class Game(object):
                     pygame.mouse.set_visible(True)  # Make the cursor visible
                     self.running = False
             # ^-------------------------------------------------------------------^
+            # For Chaos Mode
+            # v-------------------------------------------------------------------v
+            if self.ChaosMode:
+                self.chaosParameters["timer"] -= dt
+                if self.chaosParameters["timer"] <=0.:
+                    self.toggleGlitch(random.choice(self.chaosParameters["glitches"]))
+                    self.newChaosTime()
+            # ^-------------------------------------------------------------------^
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     mod_logger.info("QUIT signal received, quitting")
@@ -574,57 +597,57 @@ class Game(object):
                         pygame.key.get_pressed()[308] :
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_1:
-                            self.toggleGlitch("wallclimb")
+                            self.toggleGlitch("wallClimb")
                         if event.key == pygame.K_2:
-                            self.toggleGlitch("multijump")
+                            self.toggleGlitch("multiJump")
                         if event.key == pygame.K_3:
-                            self.toggleGlitch("highjump")
+                            self.toggleGlitch("highJump")
                         if event.key == pygame.K_4:
-                            self.toggleGlitch("featherfalling")
+                            self.toggleGlitch("featherFalling")
                         if event.key == pygame.K_5:
                             self.toggleGlitch("gravity")
                         if event.key == pygame.K_6:
                             self.toggleGlitch("hover")
                         if event.key == pygame.K_7:
-                            self.toggleGlitch("stickyceil")
+                            self.toggleGlitch("stickyCeil")
                         if event.key == pygame.K_8:
-                            self.toggleGlitch("invertedgravity")
+                            self.toggleGlitch("invertedGravity")
                         if event.key == pygame.K_9:
-                            self.toggleGlitch("permbodies")
+                            self.toggleGlitch("permBodies")
                         if event.key == pygame.K_q:
-                            self.toggleGlitch("solidhelp")
+                            self.toggleGlitch("solidHelp")
                         if event.key == pygame.K_w:
-                            self.toggleGlitch("cliponcommand")
+                            self.toggleGlitch("clipOnCommand")
                         if event.key == pygame.K_e:
-                            self.toggleGlitch("hwrapping")
+                            self.toggleGlitch("hWrapping")
                         if event.key == pygame.K_r:
-                            self.toggleGlitch("vwrapping")
+                            self.toggleGlitch("vWrapping")
                         if event.key == pygame.K_t:
-                            self.toggleGlitch("ledgewalk")
+                            self.toggleGlitch("ledgeWalk")
                         if event.key == pygame.K_y:
                             self.toggleGlitch("ledge")
                         if event.key == pygame.K_u:
-                            self.toggleGlitch("slideinvert")
+                            self.toggleGlitch("slideInvert")
                         if event.key == pygame.K_i:
-                            self.toggleGlitch("noleft")
+                            self.toggleGlitch("noLeft")
                         if event.key == pygame.K_o:
-                            self.toggleGlitch("noright")
+                            self.toggleGlitch("noRight")
                         if event.key == pygame.K_p:
-                            self.toggleGlitch("nojump")
+                            self.toggleGlitch("noJump")
                         if event.key == pygame.K_a:
-                            self.toggleGlitch("stopbounce")
+                            self.toggleGlitch("stopBounce")
                         if event.key == pygame.K_s:
                             self.toggleGlitch("speed")
                         if event.key == pygame.K_d:
-                            self.toggleGlitch("invertedrun")
+                            self.toggleGlitch("invertedRun")
                         if event.key == pygame.K_f:
-                            self.toggleGlitch("invertedcontrols")
+                            self.toggleGlitch("invertedControls")
                         if event.key == pygame.K_g:
-                            self.toggleGlitch("obsresistant")
+                            self.toggleGlitch("obsResistant")
                         if event.key == pygame.K_h:
-                            self.toggleGlitch("nostop")
+                            self.toggleGlitch("noStop")
                         if event.key == pygame.K_j:
-                            self.toggleGlitch("timelapse")
+                            self.toggleGlitch("timeLapse")
                         if event.key == pygame.K_BACKSPACE:
                             mod_logger.debug("Debug key used,a" +
                                              "Loading next level")
@@ -660,7 +683,7 @@ class Game(object):
             self.gameviewport.blit(self.middle, (-self.tilemap.viewport.x/2,
                                                  -self.tilemap.viewport.y/2))
             self.tilemap.draw(self.gameviewport)
-            if not self.glitches["timelapse"] or self.player.x_speed != 0:
+            if not self.glitches["timeLapse"] or self.player.x_speed != 0:
                 self.particlesurf.fill((0, 0, 0, 0))
                 self.player.particles.update()
             self.player.particles.draw(self.particlesurf)

@@ -70,7 +70,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         """
         self.dt = dt
         self.moving = False
-        if not game.glitches["timelapse"] or game.player.x_speed != 0:
+        if not game.glitches["timeLapse"] or game.player.x_speed != 0:
             if self.active:
                 last = self.rect.copy()
                 self.rect.x += self.direction * self.xspeed * dt    # |
