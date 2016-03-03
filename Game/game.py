@@ -242,7 +242,6 @@ class Game(object):
                         str(levelconfig['Level Info']['Name']),
                         self.font)
         center = 400 - int(self.title.get_rect().width)/2
-        print(center)
         self.titleposition = (center, 578)
         if mode.lower() == "cfsingle":
             self.time = 0.
@@ -304,15 +303,12 @@ class Game(object):
         if self.player is not None:
             self.gravity = 1
             self.tilemap = None
-            self.player.active = False
-            self.player.kill()
             self.player.x_speed = 0
             self.player.y_speed = 0
             self.plats.empty()
             self.GlitchTriggers.empty()
             self.sprites.empty()
             self.sprites.add(self.player)
-            self.player = None
 
     def loadLevelPart2(self, keys, sounds):
         """
@@ -327,9 +323,15 @@ class Game(object):
         self.backpos = [0, 0]       # DEPRECATED??
         self.middlepos = [0, 0]     # DEPRECATED??
         mod_logger.info("Positioning Player")
-        self.player = Player((start_cell.px, start_cell.py),
-                             self.sprites, keys=keys, game=self,
-                             sounds=sounds)
+        if self.player is None:
+            self.player = Player((start_cell.px, start_cell.py),
+                                 self.sprites, keys=keys, game=self,
+                                 sounds=sounds)
+        else:
+            self.player.rect.x, self.player.rect.y = start_cell.px,\
+                                                     start_cell.py
+        self.player.lastcheckpoint = start_cell.px, start_cell.py
+        self.sprites.add(self.player)
         mod_logger.info("Creating Particle Surface")
         self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
                                                     self.tilemap.px_height),

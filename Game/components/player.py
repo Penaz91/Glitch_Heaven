@@ -690,8 +690,8 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = -200
                     else:
                         self.y_speed = 200
-            #else:
-                #self.pushing = False
+            # else:
+                # self.pushing = False
             elif 'r' in blockers and last.left >= cell.right and\
                     self.rect.left < cell.right:
                 self.bounced = False
