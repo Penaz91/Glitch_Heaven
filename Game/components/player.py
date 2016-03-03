@@ -61,6 +61,7 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__(*groups)
         self.playermaxspeed = 250
         self.playeraccel = 50
+        self.active = True
         self.glitched = False
         self.soundslink = sounds
         self.jumpsound = sounds["sfx"]["jump"]
@@ -176,28 +177,30 @@ class Player(pygame.sprite.Sprite):
         #       respawn
         # If the permbody glitch is active, will add a body at death position
         # v-----------------------------------------------------v
-        x, y = game.tilemap.pixel_from_screen(self.rect.x,
-                                              self.rect.y)
-        mod_logger.info("Player respawned, position of death: (" +
-                        str(x) + "," + str(y) + ")")
-        if game.glitches["permBodies"]:
-            body = DeadBody(x, y, game.sprites, game=game)
-            game.deadbodies.add(body)
-        if game.glitches["invertedGravity"]:
-            game.gravity = -1
-        else:
-            game.gravity = 1
-        self.deathsound.play()
-        # ^-----------------------------------------------------^
-        # self.kill()     # Kills the player sprite
-        # Does a complete respawn of the player
-        # v-----------------------------------------------------v
-        # game.player = Player((start_cell.px, start_cell.py),
-        #                     game.sprites, keys=self.keys, game=self.game)
-        game.player.rect.x, game.player.rect.y = self.lastcheckpoint
-        game.player.y_speed = 0
-        game.player.x_speed = 0
-        # ^-----------------------------------------------------^
+        if self.active:
+            x, y = game.tilemap.pixel_from_screen(self.rect.x,
+                                                  self.rect.y)
+            mod_logger.info("Player respawned, position of death: (" +
+                            str(x) + "," + str(y) + ")")
+            if game.glitches["permBodies"]:
+                body = DeadBody(x, y, game.sprites, game=game)
+                game.deadbodies.add(body)
+            if game.glitches["invertedGravity"]:
+                game.gravity = -1
+            else:
+                game.gravity = 1
+            self.deathsound.play()
+            # ^-----------------------------------------------------^
+            # self.kill()     # Kills the player sprite
+            # Does a complete respawn of the player
+            # v-----------------------------------------------------v
+            # game.player = Player((start_cell.px, start_cell.py),
+            #                     game.sprites, keys=self.keys, game=self.game)
+            game.player.rect.x, game.player.rect.y = self.lastcheckpoint
+            game.player.y_speed = 0
+            game.player.x_speed = 0
+            # ^-----------------------------------------------------^
+            game.deathCounter += 1
 
     def animate(self, yspeed, xspeed, resting,
                 direction, dt, gravity, running, pushing, glitched):

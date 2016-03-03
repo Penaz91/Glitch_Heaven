@@ -87,7 +87,9 @@ class menu:
         self.activeitems.append(self.exit)
 
     def makeLoadMenu(self, screen, keys, config, sounds):
+        module_logger.debug("Checking Savegames Directory: " + str(os.path.join("savegames")))
         if not os.listdir(os.path.join("savegames")):
+            module_logger.debug("No SaveFiles Found.")
             self.cont = self.font.render("Load Saved Game", False,
                                          (100, 100, 100)).convert_alpha()
             self.cgam = menuItem.menuitem(self.cont,
@@ -98,6 +100,7 @@ class menu:
                                           self.gameconfig,
                                           sounds)
         else:
+            module_logger.debug("SaveFiles Found, enabling load menu item.")
             self.cont = self.font.render("Load Saved Game", False,
                                          (255, 255, 255)).convert_alpha()
             self.contsel = makeGlitched("Load Saved Game", self.font)

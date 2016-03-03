@@ -306,10 +306,14 @@ class Game(object):
         if self.player is not None:
             self.gravity = 1
             self.tilemap = None
+            self.player.active = False
             self.player.kill()
+            self.player.x_speed = 0
+            self.player.y_speed = 0
             self.plats.empty()
             self.GlitchTriggers.empty()
             self.sprites.empty()
+            self.sprites.add(self.player)
             self.player = None
 
     def loadLevelPart2(self, keys, sounds):
@@ -328,6 +332,7 @@ class Game(object):
         self.player = Player((start_cell.px, start_cell.py),
                              self.sprites, keys=keys, game=self,
                              sounds=sounds)
+        
         mod_logger.info("Creating Particle Surface")
         self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
                                                     self.tilemap.px_height),
@@ -458,6 +463,7 @@ class Game(object):
         mod_logger.info("Entering main game")
         self.running = True
         self.time = 0.
+        self.deathCounter = 0
         self.mode = mode
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
@@ -673,6 +679,10 @@ class Game(object):
                 if event.type == pygame.QUIT:
                     self.running = False
                 # ^----------------------------------------------------------^
+                # Renders the DeathCounter
+                # v-------------------------------------------------------------------v
+                self.dcounttxt = makeGlitched("Deaths: %d" %self.deathCounter, self.font)
+                # ^-------------------------------------------------------------------^
             self.gameviewport.blit(self.bg, (-self.tilemap.viewport.x/6,
                                    -self.tilemap.viewport.y/6))
             self.gameviewport.blit(self.middleback,
@@ -702,4 +712,5 @@ class Game(object):
                 screen.blit(self.timer, (50, 50))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
+            screen.blit(self.dcounttxt, (50, 50))
             pygame.display.update()
