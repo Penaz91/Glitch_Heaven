@@ -715,7 +715,7 @@ class Game(object):
 
             screen.blit(self.gameviewport, (0, 0))
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
-                screen.blit(self.timer, (50, 50))
+                screen.blit(self.timer, (50, 70))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
             screen.blit(self.dcounttxt, (50, 50))

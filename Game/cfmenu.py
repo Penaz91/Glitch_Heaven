@@ -36,7 +36,8 @@ class CFMenu:
                              "campaigns",
                              "main.cmp"),
                     self.gameconfig,
-                    sounds)
+                    sounds,
+                    False)
 
     def newCFSGame(self, keys, gameconfig, screen, sounds):
         self.running = False
@@ -46,7 +47,8 @@ class CFMenu:
                              "campaigns",
                              "main.cmp"),
                     self.gameconfig,
-                    sounds)
+                    sounds,
+                    False)
 
     def makeCFMenu(self, screen, keys, config, sounds):
         self.sdimg = self.font.render("Start Shared Time mode", False,
