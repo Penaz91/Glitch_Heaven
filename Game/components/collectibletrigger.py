@@ -24,7 +24,8 @@ class CollectibleTrigger(pygame.sprite.Sprite):
         """
         super(CollectibleTrigger, self).__init__()
         self.triggers = trigger[0].split(",")
-        self.ani = TAni([1, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25])
+        """self.ani = TAni([1, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25])"""
+        self.ani = TAni([1.]+ [0.25]*7)
         self.preloaded_animation = preloaded_animation
         self.ani.loadFromList(preloaded_animation)
         self.image = self.ani.first()

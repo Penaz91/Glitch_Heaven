@@ -152,10 +152,12 @@ class menu:
         # Title animation and properties
         # v------------------------------------------------------------------v
         self.gameconfig = config
-        self.titletimings = [2., 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
+        """self.titletimings = [2., 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
                              0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
                              0.12, 0.12, 0.12, 0.12, 2., 0.12, 0.12,
-                             0.12, 0.12]
+                             0.12, 0.12]"""
+        self.titletimings = [0.12]*24
+        self.titletimings[0], self.titletimings[19] = 2., 2.
         self.titleani = timedanimation.TimedAnimation(self.titletimings)
         self.titleani.loadFromDir(
                 os.path.join("resources", "UI", "AnimatedTitle"))
@@ -174,6 +176,8 @@ class menu:
                           os.path.join("resources",
                                        "UI",
                                        "back.png")).convert_alpha()
+        self.dbtxt = makeGlitched("Debug Mode Active, Keydebug Active: {0}".format(
+                                    config["Debug"]["keydebug"]), self.font)
         # New Game Menu menu element
         # v------------------------------------------------------------------v
         self.makeNewGameMenu(screen, keys, config, sounds)
@@ -266,4 +270,6 @@ class menu:
                 screen.blit(self.desc, (750-self.desc.get_rect().width, 300))
             for item in self.items:
                 screen.blit(item.image, item.rect.topleft)
+            if config["Debug"]["Debugmode"]:
+                screen.blit(self.dbtxt, (50, 560))
             pygame.display.update()

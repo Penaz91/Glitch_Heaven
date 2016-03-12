@@ -122,10 +122,6 @@ class Game(object):
         # Loads the level configuration and the control keys
         # v--------------------------------------------------------------v
         mod_logger.info("LoadLevel Routine is loading: " + level)
-        """levelconfig = configparser.ConfigParser()
-        levelconfig.read(os.path.join("data",
-                                      "maps",
-                                      campaignname, level+".conf"))"""
         with open(os.path.join("data",
                                "maps",
                                campaignname,
@@ -287,7 +283,6 @@ class Game(object):
         and spawning the player.
         """
         mod_logger.info("Starting loadLevelPart2 Routine")
-
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
         self.tilemap.layers.append(self.sprites)
@@ -327,8 +322,6 @@ class Game(object):
         """
         Saves the game level/campaign in a shelf file.
         """
-        # TODO: If custom campaign support will be added
-        #       add support for multiple savefiles.
         Tk().withdraw()
         formats = [("Glitch_Heaven Savegame", "*.dat")]
         path = filedialog.asksaveasfilename(filetypes=formats,
@@ -535,8 +528,7 @@ class Game(object):
         """Game Loop"""
         while self.running:
             dt = self.clock.tick(self.fps)/1000.
-            if dt > 0.05:
-                dt = 0.05
+            dt = min(0.05, dt)
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
@@ -638,9 +630,9 @@ class Game(object):
                                                self.mode,
                                                self.screen)
                             self.loadLevelPart2(self.keys, sounds)
-                    if config.getboolean("Debug", "keydebug"):
-                        mod_logger.debug("A key was pressed: {0}"
-                                         .format(pygame.key.name(event.key)))
+                if config.getboolean("Debug", "keydebug") and event.type == pygame.KEYDOWN:
+                    mod_logger.debug("A key was pressed: {0}"
+                                     .format(pygame.key.name(event.key)))
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v

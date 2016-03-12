@@ -67,14 +67,16 @@ class Player(pygame.sprite.Sprite):
         self.jumpsound = sounds["sfx"]["jump"]
         self.deathsound = sounds["sfx"]["death"]
         self.bouncesound = sounds["sfx"]["bounce"]
-        self.idleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
-                                                      0.25, 0.25])
+        """self.idleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
+                                                      0.25, 0.25])"""
+        self.idleani = timedanimation.TimedAnimation([0.25]*5)
         self.idleani.loadFromDir(os.path.join("resources",
                                               "sprites",
                                               "Player",
                                               "Idle"))
-        self.gidleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
-                                                      0.25, 0.25])
+        """self.gidleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
+                                                      0.25, 0.25])"""
+        self.gidleani = timedanimation.TimedAnimation([0.25]*5)
         self.gidleani.loadFromDir(os.path.join("resources",
                                                "sprites",
                                                "Glitched_Player",
@@ -111,32 +113,36 @@ class Player(pygame.sprite.Sprite):
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
-        self.walkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06,
+        """self.walkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06,
                                                             0.06, 0.06, 0.06,
                                                             0.06, 0.06, 0.06,
-                                                            0.06])
+                                                            0.06])"""
+        self.walkanimation = timedanimation.TimedAnimation([0.06]*10)
         self.walkanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
                                                     "Player",
                                                     "Walking"))
-        self.runanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04,
+        """self.runanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04,
                                                            0.04, 0.04, 0.04,
-                                                           0.04, 0.04])
+                                                           0.04, 0.04])"""
+        self.runanimation = timedanimation.TimedAnimation([0.04]*8)
         self.runanimation.loadFromDir(os.path.join("resources",
                                                    "sprites",
                                                    "Player",
                                                    "Running"))
-        self.gwalkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06,
+        """self.gwalkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06,
                                                             0.06, 0.06, 0.06,
                                                             0.06, 0.06, 0.06,
-                                                            0.06])
+                                                            0.06])"""
+        self.gwalkanimation = timedanimation.TimedAnimation([0.06]*10)
         self.gwalkanimation.loadFromDir(os.path.join("resources",
                                                      "sprites",
                                                      "Glitched_Player",
                                                      "Walking"))
-        self.grunanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04,
+        """self.grunanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04,
                                                            0.04, 0.04, 0.04,
-                                                           0.04, 0.04])
+                                                           0.04, 0.04])"""
+        self.grunanimation = timedanimation.TimedAnimation([0.04]*8)
         self.grunanimation.loadFromDir(os.path.join("resources",
                                                     "sprites",
                                                     "Glitched_Player",
