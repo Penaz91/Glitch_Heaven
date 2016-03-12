@@ -3,10 +3,6 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
 import random
-# TODO AREA:
-# -----------------------------------------------
-# Make particles interact with the environment
-# -----------------------------------------------
 
 
 class Particle (pygame.sprite.Sprite):
@@ -82,7 +78,8 @@ class Particle (pygame.sprite.Sprite):
             self.kill()     # When the particle ends its cycle, i kill it
         self.rect.x += self.sx     # |
         self.rect.y += self.sy     # | Setting the new position of the particle
-        for cell in self.tilemap.layers["Triggers"].collide(self.rect, 'blocker'):
+        for cell in self.tilemap.layers["Triggers"].collide(self.rect,
+                                                            'blocker'):
             blockers = cell['blocker']
             if 'l' in blockers and last.right <= cell.left and\
                     self.rect.right > cell.left:

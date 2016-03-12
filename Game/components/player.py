@@ -191,11 +191,8 @@ class Player(pygame.sprite.Sprite):
                 game.gravity = 1
             self.deathsound.play()
             # ^-----------------------------------------------------^
-            # self.kill()     # Kills the player sprite
             # Does a complete respawn of the player
             # v-----------------------------------------------------v
-            # game.player = Player((start_cell.px, start_cell.py),
-            #                     game.sprites, keys=self.keys, game=self.game)
             game.player.rect.x, game.player.rect.y = self.lastcheckpoint
             game.player.y_speed = 0
             game.player.x_speed = 0
@@ -253,7 +250,8 @@ class Player(pygame.sprite.Sprite):
                             if self.game.config.getboolean("Video",
                                                            "playerparticles"):
                                 if gravity == 1:
-                                    self.rightemitter.move(self.rect.bottomright)
+                                    self.rightemitter.move(
+                                            self.rect.bottomright)
                                 else:
                                     self.rightemitter.move(self.rct.topright)
                                 self.rightemitter.emit(2, 2*gravity)
@@ -266,7 +264,8 @@ class Player(pygame.sprite.Sprite):
                             if self.game.config.getboolean("Video",
                                                            "playerparticles"):
                                 if gravity == 1:
-                                    self.rightemitter.move(self.rect.bottomright)
+                                    self.rightemitter.move(
+                                            self.rect.bottomright)
                                 else:
                                     self.rightemitter.move(self.rct.topright)
                                 self.rightemitter.emit(1, gravity)
@@ -346,7 +345,8 @@ class Player(pygame.sprite.Sprite):
                             if self.game.config.getboolean("Video",
                                                            "playerparticles"):
                                 if gravity == 1:
-                                    self.rightemitter.move(self.rect.bottomright)
+                                    self.rightemitter.move(
+                                            self.rect.bottomright)
                                 else:
                                     self.rightemitter.move(self.rect.topright)
                                 self.rightemitter.emit(2, 2*gravity)
@@ -359,7 +359,8 @@ class Player(pygame.sprite.Sprite):
                             if self.game.config.getboolean("Video",
                                                            "playerparticles"):
                                 if gravity == 1:
-                                    self.rightemitter.move(self.rect.bottomright)
+                                    self.rightemitter.move(
+                                            self.rect.bottomright)
                                 else:
                                     self.rightemitter.move(self.rect.topright)
                                 self.rightemitter.emit(1, gravity)
@@ -623,10 +624,6 @@ class Player(pygame.sprite.Sprite):
                     self.rect.top = block.rect.bottom
                 self.resting = True
                 self.y_speed = 0
-            # elif self.y_speed * game.gravity < 0:
-            #    self.rect.top = block.rect.bottom
-            #    self.resting = False
-            #    self.y_speed = 0
         # ^--------------------------------------------------------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v

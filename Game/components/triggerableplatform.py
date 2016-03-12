@@ -82,17 +82,17 @@ class TriggerablePlatform(pygame.sprite.Sprite):
                                                                     'PlatReverse'):
                     if self.vertical:
                         if last.bottom <= cell.top and\
-                            self.rect.bottom > cell.top:
+                                self.rect.bottom > cell.top:
                             self.rect.bottom = cell.top
                         elif last.top >= cell.bottom and\
-                            self.rect.top < cell.bottom:
+                                self.rect.top < cell.bottom:
                             self.rect.top = cell.bottom
                     else:
                         if last.left >= cell.right and\
-                            self.rect.left < cell.right:
+                                self.rect.left < cell.right:
                             self.rect.left = cell.right
                         elif last.right <= cell.left and\
-                            self.rect.right > cell.left:
+                                self.rect.right > cell.left:
                             self.rect.right = cell.left
                     self.direction *= -1
                 # ^------------------------------------------------------------------^

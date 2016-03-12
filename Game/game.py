@@ -75,7 +75,6 @@ class Game(object):
     def getHelpFlag(self):
         """
         Getter method for helpflagactive
-        MIGHT NEED DEPRECATION
 
         Returns:
         - self.helpflagActive
@@ -85,7 +84,6 @@ class Game(object):
     def setHelpFlag(self, flag):
         """
         Setter method for helpflagactive
-        MIGHT NEED DEPRECATION
 
         Keyword Arguments:
         - flag: The flag to set
@@ -95,7 +93,6 @@ class Game(object):
     def setHelpText(self, txt):
         """
         Setter Method for currenthelp
-        MIGHT NEED DEPRECATION
 
         Keyword Arguments:
         - txt: The text to set
@@ -105,7 +102,6 @@ class Game(object):
     def getHelpText(self):
         """
         Getter Method for currenthelp
-        MIGHT NEED DEPRECATION
 
         Returns:
         - self.currenthelp
@@ -142,18 +138,6 @@ class Game(object):
         self.helpflagActive = False
         self.currenthelp = ""
         self.screen = screen
-        """self.tempglitches = dict(levelconfig['Glitches'])
-        self.tempkeys = self.tempglitches.keys()
-        self.tempvalues = self.tempglitches.values()
-        self.newvalues = []
-        mod_logger.debug("Zipping new glitches")
-        for value in self.tempvalues:
-            if value.lower() in ["true", "1", "on", "yes"]:
-                self.newvalues.append(True)
-            else:
-                self.newvalues.append(False)
-        self.glitches = dict(zip(self.tempkeys,
-                             self.newvalues))"""
         self.glitches = levelconfig["Glitches"]["Standard"]
         mod_logger.debug("Glitches Active: " + str(self.glitches))
         # ^--------------------------------------------------------------^
@@ -208,17 +192,10 @@ class Game(object):
             size = int(platform['PlatSize'])
             spd = int(platform['PlatSpeed'])
             """if "v" in plat:
-                TriggerablePlatform(platform.px, platform.py, True, 100,
-                                    False, platform['id'], self.plats,
-                                    game=self)
-            else:
-                TriggerablePlatform(platform.px, platform.py, False, 100,
-                                    False, platform['id'], self.plats,
-                                    game=self)"""
-            if "v" in plat:
                 vertical = True
             else:
-                vertical = False
+                vertical = False"""
+            vertical = "v" in plat
             if "bouncyplat" in platform:
                 bouncy = True
                 bouncepwr = int(platform['bouncyplat'])
@@ -288,12 +265,6 @@ class Game(object):
             if mode == "criticalfailure":
                 self.cftime = cmpf["CFTime"]
         return cmpn
-        """
-            x = campfile.readlines()
-            y = []
-            for element in x:
-                y.append(element.strip())   # Strips levelname from "\n" chars
-            return y"""
 
     def eraseCurrentLevel(self):
         """
