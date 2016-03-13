@@ -638,7 +638,7 @@ class Game(object):
                 # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN and\
                         event.key == keys["escape"]:
-                    pauseMenu().main(screen, keys, self, self.config, sounds)
+                    pauseMenu(screen, keys, self, self.config, sounds).mainLoop()
                 if event.type == pygame.KEYDOWN and\
                         event.key == self.keys["restart"]:
                             self.sprites.remove(*self.deadbodies)
