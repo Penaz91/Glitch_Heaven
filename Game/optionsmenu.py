@@ -115,9 +115,9 @@ class OptionsMenu:
                                      lambda: self.editdesc(
                                          "Avoid deafening with these controls"
                                          ),
-                                     lambda: AudioSettings().main(
+                                     lambda: AudioSettings(
                                          screen, keys, self.config,
-                                         sounds),
+                                         sounds).mainLoop(),
                                      self.config,
                                      sounds)
         # ^------------------------------------------------------------------^

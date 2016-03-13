@@ -1,200 +1,80 @@
 # Audio Settings Component
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
-import pygame
-import os
-from components.UI import menuItem, meter
-from libs import animation, timedanimation
-import logging
-from logging import handlers as loghandler
-from os.path import join as pathjoin
+from components.UI.menu import menu
+from components.UI import menuItem
 from libs.textglitcher import makeGlitched
-module_logger = logging.getLogger("Glitch_Heaven.AudioSettings")
-fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
-                                         "midnight", 1)
-ch = logging.StreamHandler()
-formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
-                              ' %(levelname)s --- %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
-module_logger.addHandler(fh)
-module_logger.addHandler(ch)
+from components.UI import meter
+import pygame
 
 
-class AudioSettings:
-    """ Represents a pause menu window"""
+class AudioSettings(menu):
 
-    def goToMenu(self, sounds, config):
-        """
-        Kills the current game and menu instance, and returns
-        To the main menu, which is already running in BG.
+    def __init__(self, screen, keys, config, sounds):
+        self.logSectionName = "Glitch_Heaven.AudioSettings"
+        super().__init__(screen, keys, config, sounds)
 
-        Keyword Arguments:
-        - game: The game instance
-
-        Returns:
-        - Nothing
-        """
-        for sound in sounds["menu"]:
-            sounds["menu"][sound].set_volume((
-                config.getfloat("Sound",
-                                "menuvolume"))/100)
-        for sound in sounds["sfx"]:
-            sounds["sfx"][sound].set_volume((config.getfloat("Sound",
-                                                             "sfxvolume"))/100)
-        for sound in sounds["music"]:
-            sounds["music"][sound].set_volume(
-                    (config.getfloat("Sound",
-                                     "musicvolume"))/100)
-        self.running = False
-        module_logger.info("Returning to previous menu")
-
-    def main(self, screen, keys, config, sounds):
-        """
-        The main method to show and make the menu work
-
-        Keyword Arguments:
-        - Screen: the Screen surface to make the menu on
-        - Keys: The list of control keys to use
-        - game: The game instance.
-
-        Returns:
-        - Nothing
-        """
-        module_logger.info("Entering Audio Settings Menu")
-        pygame.display.set_caption("Glitch_Heaven")
-        self.screensize = screen.get_size()
-        self.config = config
-        # Title animation and properties
-        # v------------------------------------------------------------------v
-        self.titleani = animation.Animation()
-        self.titleani.loadFromDir(
-                os.path.join("resources", "UI", "AnimatedTitle"))
-        self.titletimings = [2., 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
-                             0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
-                             0.12, 0.12, 0.12, 0.12, 2., 0.12, 0.12,
-                             0.12, 0.12]
-        self.titleani = timedanimation.TimedAnimation(self.titletimings)
-        self.titleani.loadFromDir(
-                os.path.join("resources", "UI", "AnimatedTitle"))
-        self.title = self.titleani.first()
-        self.titlesize = self.title.get_size()
-        self.titlerect = self.title.get_rect()
-        self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
-        self.titlerect.y = 32
-        # ^------------------------------------------------------------------^
-
-        self.font = pygame.font.Font(os.path.join(
-                            "resources", "fonts",
-                            "TranscendsGames.otf"), 24)
-        self.running = True
-        self.currentItem = None
-        self.background = pygame.image.load(
-                          os.path.join("resources",
-                                       "UI",
-                                       "back.png")).convert_alpha()
+    def makeMeters(self):
         self.menumeter = meter.Meter((320, 250), (200, 10),
                                      self.config, "menuvolume",
-                                     sounds)
+                                     self.sounds)
         self.menuwriting = self.font.render("Menu Volume: ", False,
                                             (255, 255, 255)).convert_alpha()
         self.sfxmeter = meter.Meter((320, 330), (200, 10),
                                     self.config, "sfxvolume",
-                                    sounds)
+                                    self.sounds)
         self.sfxwriting = self.font.render("SFX Volume: ", False,
                                            (255, 255, 255)).convert_alpha()
         self.musicmeter = meter.Meter((320, 410), (200, 10),
                                       self.config, "musicvolume",
-                                      sounds)
+                                      self.sounds)
         self.musicwriting = self.font.render("Music Volume: ", False,
                                              (255, 255, 255)).convert_alpha()
-        # ^------------------------------------------------------------------^
-        # "Previous Menu" menu element
-        # v------------------------------------------------------------------v
+        self.meters = [self.menumeter, self.sfxmeter, self.musicmeter]
+
+    def makePreviousMenuItem(self):
         self.menu = self.font.render("Apply and go back",
                                      False, (255, 255, 255)).convert_alpha()
         self.menusel = makeGlitched("Apply and go back", self.font)
-        self.mainmenu = menuItem.menuitem(self.menu,
+        self.prevmenu = menuItem.menuitem(self.menu,
                                           self.menusel,
                                           (50, 560),
                                           lambda: None,
-                                          lambda: self.goToMenu(sounds,
-                                                                config),
+                                          lambda: self.goToMenu(),
                                           self.config,
-                                          sounds)
-        # ^------------------------------------------------------------------^
-        self.items = [self.mainmenu]
-        self.clock = pygame.time.Clock()
-        pygame.mouse.set_visible(True)  # Make the cursor visible
-        module_logger.info("Mouse cursor shown")
-        while self.running:
-            self.dt = self.clock.tick(30)/1000.
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    break
-                # Keyboard Handling
-                # v----------------------------------------------------------v
-                if event.type == pygame.KEYDOWN:
-                    if self.currentItem is None:
-                        self.currentItem = 0
-                    if event.key == keys["down"]:
-                        self.currentItem = ((self.currentItem+1) %
-                                            len(self.items))
-                    if event.key == keys["up"]:
-                        self.currentItem = ((self.currentItem-1) %
-                                            len(self.items))
-                    if event.key == keys["confirm"]:
-                        self.items[self.currentItem].confirmSound.play()
-                        self.items[self.currentItem].function()
-                    if event.key == keys["escape"]:
-                        self.goToMenu(sounds, self.config)
-                    for item in self.items:
-                        item.makeUnselected()
-                    self.items[self.currentItem].makeSelected()
-                # ^----------------------------------------------------------^
-                # Mouse Handling
-                # v----------------------------------------------------------v
-                if event.type == pygame.MOUSEMOTION:
-                    if self.currentItem == 0:
-                        self.currentItem = None
-                    for item in self.items:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos()):
-                            item.makeSelected()
-                        else:
-                            item.makeUnselected()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    mousepos = pygame.mouse.get_pos()
-                    for item in self.items:
-                        if item.rect.collidepoint(*mousepos):
-                            item.confirmSound.play()
-                            item.function()
-                    if self.menumeter.rect.collidepoint(*mousepos):
-                        self.amount = self.menumeter.set_quantity(mousepos)
-                        module_logger.debug("Menu volume set at: " +
-                                            str(self.amount) + "%")
-                    if self.sfxmeter.rect.collidepoint(*mousepos):
-                        self.amount = self.sfxmeter.set_quantity(mousepos)
-                        module_logger.debug("Sfx volume set at: " +
-                                            str(self.amount) + "%")
-                    if self.musicmeter.rect.collidepoint(*mousepos):
-                        self.amount = self.musicmeter.set_quantity(mousepos)
-                        module_logger.debug("Music volume set at: " +
-                                            str(self.amount) + "%")
-                if event.type == pygame.QUIT:
-                    quit()
-                # ^----------------------------------------------------------^
-            # Animates The title
-            # v----------------------------------------------------------v
-            self.title = self.titleani.next(self.dt)
-            # ^----------------------------------------------------------^
-            screen.blit(self.background, (0, 0))
-            screen.blit(self.title, self.titlerect.topleft)
-            screen.blit(self.menuwriting, (190, 240))
-            screen.blit(self.sfxwriting, (190, 320))
-            screen.blit(self.musicwriting, (190, 400))
-            for item in self.items:
-                screen.blit(item.image, item.rect.topleft)
-            self.menumeter.draw(screen)
-            self.sfxmeter.draw(screen)
-            self.musicmeter.draw(screen)
-            pygame.display.update()
+                                          self.sounds)
+        self.activeItems.append(self.prevmenu)
+        self.items.append(self.prevmenu)
+
+    def makeMenuItems(self):
+        self.makePreviousMenuItem()
+        self.makeMeters()
+
+    def doAdditionalMouseHandling(self):
+        mousepos = pygame.mouse.get_pos()
+        for item in self.meters:
+            if item.rect.collidepoint(*mousepos):
+                self.amount = item.set_quantity(mousepos)
+                self.modlogger.debug("Meter set to: {0}"
+                                     .format(str(self.amount)))
+
+    def doAdditionalBlits(self):
+        for item in self.meters:
+            item.draw(self.screen)
+        self.screen.blit(self.menuwriting, (190, 240))
+        self.screen.blit(self.sfxwriting, (190, 320))
+        self.screen.blit(self.musicwriting, (190, 400))
+
+    def doAdditionalClosingOperations(self):
+        for sound in self.sounds["menu"]:
+            self.sounds["menu"][sound].set_volume((
+                self.config.getfloat("Sound",
+                                     "menuvolume"))/100)
+        for sound in self.sounds["sfx"]:
+            self.sounds["sfx"][sound].set_volume(
+                    (self.config.getfloat("Sound",
+                                          "sfxvolume"))/100)
+        for sound in self.sounds["music"]:
+            self.sounds["music"][sound].set_volume(
+                    (self.config.getfloat("Sound",
+                                          "musicvolume"))/100)
