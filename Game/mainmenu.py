@@ -63,11 +63,11 @@ class menu:
                                          (50, 360),
                                          lambda: self.editdesc(
                                              "Look at Names"),
-                                         lambda: Credits().main(
+                                         lambda: Credits(
                                              screen,
                                              keys,
                                              self.gameconfig,
-                                             sounds),
+                                             sounds).mainLoop(),
                                          self.gameconfig,
                                          sounds)
         self.activeitems.append(self.credits)
