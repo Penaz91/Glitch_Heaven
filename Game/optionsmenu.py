@@ -98,8 +98,9 @@ class OptionsMenu:
                                        (50, 240),
                                        lambda: self.editdesc(
                                            "Customize your eye disappeal"),
-                                       lambda: VideoSettings().main(
-                                           screen, keys, self.config, sounds),
+                                       lambda: VideoSettings(
+                                           screen, keys, self.config, sounds
+                                           ).mainLoop(),
                                        self.config,
                                        sounds)
         # ^------------------------------------------------------------------^
