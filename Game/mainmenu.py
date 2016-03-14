@@ -129,9 +129,9 @@ class menu:
                                          (50, 300),
                                          lambda: self.editdesc(
                                              "Fiddle With Options"),
-                                         lambda: OptionsMenu().main(
+                                         lambda: OptionsMenu(
                                              screen, keys, self.gameconfig,
-                                             sounds),
+                                             sounds).mainLoop(),
                                          self.gameconfig,
                                          sounds)
         self.activeitems.append(self.options)
