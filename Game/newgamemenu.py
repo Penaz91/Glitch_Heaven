@@ -149,11 +149,11 @@ class NewGameMenu:
                                         lambda: self.editdesc(
                                             "Escape before the time runs out."
                                             ),
-                                        lambda: CFMenu().main(
+                                        lambda: CFMenu(
                                                 screen,
                                                 keys,
                                                 self.gameconfig,
-                                                sounds),
+                                                sounds).mainLoop(),
                                         self.gameconfig,
                                         sounds)
             self.activeitems.append(self.sd)
