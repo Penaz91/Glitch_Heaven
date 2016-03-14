@@ -3,7 +3,7 @@
 # Part of the Glitch_Heaven Project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
-from mainmenu import menu
+from mainmenu import mainMenu
 import configparser
 import logging
 from logging import handlers as loghandler
@@ -120,7 +120,7 @@ if __name__ == "__main__":
         logger.info("Setting up the Screen")
         screen = pygame.display.set_mode(screensize, flags)
         logger.info("Opening the menu")
-        menu().main(screen, keys, config, sounds)
+        mainMenu(screen, keys, config, sounds).mainLoop()
         logger.info("Quitting")
         pygame.quit()
         quit()
