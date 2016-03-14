@@ -1,94 +1,28 @@
 # Keyboard Settings Component
 # Part of the Glitch_Heaven project
 # Copyright 2015 Penaz <penazarea@altervista.org>
-import pygame
-import os
-from components.UI import menuItem
-from libs import animation, timedanimation
-import logging
-from logging import handlers as loghandler
-from os.path import join as pathjoin
-from libs.textglitcher import makeGlitched
+from components.UI.menu import menu
 from components.UI import keyboarditem as kitem
-module_logger = logging.getLogger("Glitch_Heaven.KeyboardSettings")
-fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
-                                         "midnight", 1)
-ch = logging.StreamHandler()
-formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
-                              ' %(levelname)s --- %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
-module_logger.addHandler(fh)
-module_logger.addHandler(ch)
+from components.UI import menuItem
+from libs.textglitcher import makeGlitched
+import pygame
 
 
-class KeyboardSettings:
-    """ Represents a pause menu window"""
+class KeyboardSettings(menu):
 
-    def goToMenu(self):
-        """
-        Kills the current game and menu instance, and returns
-        To the main menu, which is already running in BG.
+    def __init__(self, screen, keys, config, sounds):
+        self.writings = []
+        self.logSectionName = "Glitch_Heaven.KeyboardSettings"
+        super().__init__(screen, keys, config, sounds)
 
-        Keyword Arguments:
-        - game: The game instance
-
-        Returns:
-        - Nothing
-        """
-        module_logger.info("Going to the previous menu")
-        self.running = False
-
-    def main(self, screen, keys, config, sounds):
-        """
-        The main method to show and make the menu work
-
-        Keyword Arguments:
-        - Screen: the Screen surface to make the menu on
-        - Keys: The list of control keys to use
-        - game: The game instance.
-
-        Returns:
-        - Nothing
-        """
-        module_logger.info("Opening the Keyboard Settings Menu")
-        pygame.display.set_caption("Glitch_Heaven")
-        self.screensize = screen.get_size()
-        self.config = config
-        # Title animation and properties
-        # v------------------------------------------------------------------v
-        self.titleani = animation.Animation()
-        self.titleani.loadFromDir(
-                os.path.join("resources", "UI", "AnimatedTitle"))
-        self.titletimings = [2., 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
-                             0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
-                             0.12, 0.12, 0.12, 0.12, 2., 0.12, 0.12,
-                             0.12, 0.12]
-        self.titleani = timedanimation.TimedAnimation(self.titletimings)
-        self.titleani.loadFromDir(
-                os.path.join("resources", "UI", "AnimatedTitle"))
-        self.title = self.titleani.first()
-        self.titlesize = self.title.get_size()
-        self.titlerect = self.title.get_rect()
-        self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
-        self.titlerect.y = 32
-        # ^------------------------------------------------------------------^
-        self.font = pygame.font.Font(os.path.join(
-                            "resources", "fonts",
-                            "TranscendsGames.otf"), 24)
-        self.running = True
-        self.currentItem = None
-        self.background = pygame.image.load(
-                          os.path.join("resources",
-                                       "UI",
-                                       "back.png")).convert_alpha()
+    def makeLeftKeyItem(self):
         # ^------------------------------------------------------------------^
         # "Left Key" menu element
         # v------------------------------------------------------------------v
         self.lefttext = self.font.render("Move Left: ",
                                          False,
                                          (255, 255, 255)).convert_alpha()
-        key = config.get("Controls", "left")
+        key = self.config.get("Controls", "left")
         keytext = pygame.key.name(int(key))
         self.leftimg = self.font.render(keytext.upper(),
                                         False, (255, 255, 255)).convert_alpha()
@@ -100,17 +34,22 @@ class KeyboardSettings:
                                        lambda: None,
                                        lambda: self.left.KeySelect(self.font,
                                                                    "left",
-                                                                   config,
-                                                                   keys),
+                                                                   self.config,
+                                                                   self.keys),
                                        self.config,
-                                       sounds)
+                                       self.sounds)
+        self.activeItems.append(self.left)
+        self.items.append(self.left)
+        self.writings.append((self.lefttext, (50, 180)))
+
+    def makeRightKeyItem(self):
         # ^------------------------------------------------------------------^
         # "Right Key" menu element
         # v------------------------------------------------------------------v
         self.righttext = self.font.render("Move Right: ",
                                           False,
                                           (255, 255, 255)).convert_alpha()
-        key = config.get("Controls", "right")
+        key = self.config.get("Controls", "right")
         keytext = pygame.key.name(int(key))
         self.rightimg = self.font.render(keytext.upper(),
                                          False,
@@ -121,19 +60,25 @@ class KeyboardSettings:
                                         (self.righttext.get_rect().width + 70,
                                             240),
                                         lambda: None,
-                                        lambda: self.right.KeySelect(self.font,
-                                                                     "right",
-                                                                     config,
-                                                                     keys),
+                                        lambda: self.right.KeySelect(
+                                            self.font,
+                                            "right",
+                                            self.config,
+                                            self.keys),
                                         self.config,
-                                        sounds)
+                                        self.sounds)
+        self.activeItems.append(self.right)
+        self.items.append(self.right)
+        self.writings.append((self.righttext, (50, 240)))
+
+    def makeJumpKeyItem(self):
         # ^------------------------------------------------------------------^
         # "Jump Key" menu element
         # v------------------------------------------------------------------v
         self.jumptext = self.font.render("Jump: ",
                                          False,
                                          (255, 255, 255)).convert_alpha()
-        key = config.get("Controls", "jump")
+        key = self.config.get("Controls", "jump")
         keytext = pygame.key.name(int(key))
         self.jumpimg = self.font.render(keytext.upper(),
                                         False, (255, 255, 255)).convert_alpha()
@@ -145,17 +90,22 @@ class KeyboardSettings:
                                        lambda: None,
                                        lambda: self.jump.KeySelect(self.font,
                                                                    "jump",
-                                                                   config,
-                                                                   keys),
+                                                                   self.config,
+                                                                   self.keys),
                                        self.config,
-                                       sounds)
+                                       self.sounds)
+        self.activeItems.append(self.jump)
+        self.items.append(self.jump)
+        self.writings.append((self.jumptext, (50, 300)))
+
+    def makeRunKeyItem(self):
         # ^------------------------------------------------------------------^
         # "Run Key" menu element
         # v------------------------------------------------------------------v
         self.runtext = self.font.render("Run: ",
                                         False,
                                         (255, 255, 255)).convert_alpha()
-        key = config.get("Controls", "run")
+        key = self.config.get("Controls", "run")
         keytext = pygame.key.name(int(key))
         self.runimg = self.font.render(keytext.upper(),
                                        False,
@@ -168,16 +118,21 @@ class KeyboardSettings:
                                       lambda: None,
                                       lambda: self.run.KeySelect(self.font,
                                                                  "run",
-                                                                 config,
-                                                                 keys),
+                                                                 self.config,
+                                                                 self.keys),
                                       self.config,
-                                      sounds)
+                                      self.sounds)
+        self.activeItems.append(self.run)
+        self.items.append(self.run)
+        self.writings.append((self.runtext, (50, 360)))
+
+    def makeActionKeyItem(self):
         # ^------------------------------------------------------------------^
         # "Action Key" menu element
         # v------------------------------------------------------------------v
         self.acttext = self.font.render("Action/Interact: ",
                                         False, (255, 255, 255)).convert_alpha()
-        key = config.get("Controls", "action")
+        key = self.config.get("Controls", "action")
         keytext = pygame.key.name(int(key))
         self.actimg = self.font.render(keytext.upper(),
                                        False,
@@ -190,17 +145,22 @@ class KeyboardSettings:
                                       lambda: None,
                                       lambda: self.act.KeySelect(self.font,
                                                                  "action",
-                                                                 config,
-                                                                 keys),
+                                                                 self.config,
+                                                                 self.keys),
                                       self.config,
-                                      sounds)
+                                      self.sounds)
+        self.activeItems.append(self.act)
+        self.items.append(self.act)
+        self.writings.append((self.acttext, (50, 420)))
+
+    def makeRestartKeyItem(self):
         # ^------------------------------------------------------------------^
         # "Restart Key" menu element
         # v------------------------------------------------------------------v
         self.resttext = self.font.render("Restart Level: ",
                                          False,
                                          (255, 255, 255)).convert_alpha()
-        key = config.get("Controls", "restart")
+        key = self.config.get("Controls", "restart")
         keytext = pygame.key.name(int(key))
         self.restimg = self.font.render(keytext.upper(),
                                         False,
@@ -213,10 +173,15 @@ class KeyboardSettings:
                                        lambda: None,
                                        lambda: self.rest.KeySelect(self.font,
                                                                    "restart",
-                                                                   config,
-                                                                   keys),
+                                                                   self.config,
+                                                                   self.keys),
                                        self.config,
-                                       sounds)
+                                       self.sounds)
+        self.activeItems.append(self.rest)
+        self.items.append(self.rest)
+        self.writings.append((self.resttext, (50, 480)))
+
+    def makeMainMenuItem(self):
         # ^------------------------------------------------------------------^
         # "Main Menu" menu element
         # v------------------------------------------------------------------v
@@ -229,68 +194,20 @@ class KeyboardSettings:
                                           lambda: None,
                                           lambda: self.goToMenu(),
                                           self.config,
-                                          sounds)
+                                          self.sounds)
+        self.items.append(self.mainmenu)
+        self.activeItems.append(self.mainmenu)
         # ^------------------------------------------------------------------^
-        self.items = [self.left, self.right, self.jump,
-                      self.run, self.act, self.rest, self.mainmenu]
-        self.clock = pygame.time.Clock()
-        pygame.mouse.set_visible(True)  # Make the cursor visible
-        module_logger.info("Mouse cursor shown")
-        while self.running:
-            self.dt = self.clock.tick(30)/1000.
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    quit()
-                # Keyboard Handling
-                # v----------------------------------------------------------v
-                if event.type == pygame.KEYDOWN:
-                    if self.currentItem is None:
-                        self.currentItem = 0
-                    if event.key == keys["down"]:
-                        self.currentItem = ((self.currentItem+1) %
-                                            len(self.items))
-                    if event.key == keys["up"]:
-                        self.currentItem = ((self.currentItem-1) %
-                                            len(self.items))
-                    if event.key == keys["confirm"]:
-                        self.items[self.currentItem].confirmSound.play()
-                        self.items[self.currentItem].function()
-                    if event.key == keys["escape"]:
-                        self.goToMenu()
-                    for item in self.items:
-                        item.makeUnselected()
-                    self.items[self.currentItem].makeSelected()
-                # ^----------------------------------------------------------^
-                # Mouse Handling
-                # v----------------------------------------------------------v
-                if event.type == pygame.MOUSEMOTION:
-                    if self.currentItem == 0:
-                        self.currentItem = None
-                    for item in self.items:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos()):
-                            item.makeSelected()
-                        else:
-                            item.makeUnselected()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    for item in self.items:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos()):
-                            item.confirmSound.play()
-                            item.function()
-                if event.type == pygame.QUIT:
-                    quit()
-                # ^----------------------------------------------------------^
-            # Animates The title
-            # v----------------------------------------------------------v
-            self.title = self.titleani.next(self.dt)
-            # ^----------------------------------------------------------^
-            screen.blit(self.background, (0, 0))
-            screen.blit(self.title, self.titlerect.topleft)
-            screen.blit(self.lefttext, (50, 180))
-            screen.blit(self.righttext, (50, 240))
-            screen.blit(self.jumptext, (50, 300))
-            screen.blit(self.runtext, (50, 360))
-            screen.blit(self.acttext, (50, 420))
-            screen.blit(self.resttext, (50, 480))
-            for item in self.items:
-                screen.blit(item.image, item.rect.topleft)
-            pygame.display.update()
+
+    def makeMenuItems(self):
+        self.makeLeftKeyItem()
+        self.makeRightKeyItem()
+        self.makeJumpKeyItem()
+        self.makeRunKeyItem()
+        self.makeActionKeyItem()
+        self.makeRestartKeyItem()
+        self.makeMainMenuItem()
+
+    def doAdditionalBlits(self):
+        for item in self.writings:
+            self.screen.blit(*item)

@@ -52,11 +52,11 @@ class ControlSettings:
                                           (50, 240),
                                           lambda: self.editdesc(
                                               "Edit Keyboard assignments"),
-                                          lambda: KeyboardSettings().main(
+                                          lambda: KeyboardSettings(
                                               screen,
                                               keys,
                                               config,
-                                              sounds),
+                                              sounds).mainLoop(),
                                           self.gameconfig,
                                           sounds
                                           )
