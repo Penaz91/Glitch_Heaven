@@ -45,11 +45,11 @@ class menu:
                                              lambda: self.editdesc(
                                                  "Start a new game,in any mode"
                                                  ),
-                                             lambda: NewGameMenu().main(
+                                             lambda: NewGameMenu(
                                                 screen,
                                                 keys,
                                                 self.gameconfig,
-                                                sounds),
+                                                sounds).mainLoop(),
                                              self.gameconfig,
                                              sounds)
         self.activeitems.append(self.newgamemenu)

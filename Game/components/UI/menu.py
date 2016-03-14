@@ -101,10 +101,10 @@ class menu(object):
                         self.currentItem = 0
                     if event.key == self.keys["down"]:
                         self.currentItem = ((self.currentItem + 1) %
-                                            len(self.items))
+                                            len(self.activeItems))
                     if event.key == self.keys["up"]:
                         self.currentItem = ((self.currentItem - 1) %
-                                            len(self.items))
+                                            len(self.activeItems))
                     if event.key == self.keys["confirm"]:
                         self.activeItems[self.currentItem].confirmSound.play()
                         self.activeItems[self.currentItem].function()
