@@ -27,7 +27,6 @@ class menu(object):
         self.modlogger.addHandler(ch)
 
         self.running = True
-        self.desc = False
         self.currentItem = None
         self.keys = keys
         self.config = config
@@ -58,6 +57,7 @@ class menu(object):
         self.titlerect.y = 32
         self.items = []
         self.activeItems = []
+        self.desc = None
 
     def doAdditionalClosingOperations(self):
         pass
@@ -132,6 +132,9 @@ class menu(object):
             self.title = self.titleani.next(self.dt)
             self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.title, (self.titlerect.topleft))
+            if self.desc is not None:
+                self.screen.blit(self.desc, (750 - self.desc.get_rect().width,
+                                 300))
             for item in self.items:
                 self.screen.blit(item.image, item.rect.topleft)
             self.doAdditionalBlits()

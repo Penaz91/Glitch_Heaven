@@ -131,8 +131,9 @@ class OptionsMenu:
                                       (50, 400),
                                       lambda: self.editdesc(
                                           "Edit keyboard/joypad settings"),
-                                      lambda: ControlSettings().main(
-                                          screen, keys, self.config, sounds),
+                                      lambda: ControlSettings(
+                                          screen, keys, self.config, sounds
+                                          ).mainLoop(),
                                       self.config,
                                       sounds)
         # ^------------------------------------------------------------------^
