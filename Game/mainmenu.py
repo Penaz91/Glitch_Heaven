@@ -5,271 +5,157 @@ import pygame
 from game import Game
 import os
 from components.UI import menuItem
-from libs import timedanimation
 from optionsmenu import OptionsMenu
 from newgamemenu import NewGameMenu
-import logging
-from logging import handlers as loghandler
-from os.path import join as pathjoin
 from credits import Credits
 from libs.textglitcher import makeGlitched
-module_logger = logging.getLogger("Glitch_Heaven.MainMenu")
-fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
-                                         "midnight", 1)
-ch = logging.StreamHandler()
-formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
-                              ' %(levelname)s --- %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
-module_logger.addHandler(fh)
-module_logger.addHandler(ch)
-# TODO AREA:
-# ---------------
-# Tie Menu graphic to resolution
-# ---------------
+from components.UI.menu import menu
 
 
-class menu:
+class mainMenu(menu):
     """ Represents the main Game menu """
 
-    def editdesc(self, string):
-        self.desc = makeGlitched(string, self.font)
+    def __init__(self, screen, keys, config, sounds):
+        self.logSectionName = "Glitch_Heaven.mainMenu"
+        super().__init__(screen, keys, config, sounds)
+        self.dbtxt = makeGlitched(
+                "Debug Mode Active, Keydebug Active: {0}".format(
+                    config["Debug"]["keydebug"]), self.font)
 
-    def makeNewGameMenu(self, screen, keys, config, sounds):
+    def makeNewGameMenu(self):
         self.newgameimg = self.font.render("Start A New Game", False,
                                            (255, 255, 255)).convert_alpha()
         self.selectedgameimg = makeGlitched("Start A New Game", self.font)
         self.newgamemenu = menuItem.menuitem(self.newgameimg,
                                              self.selectedgameimg,
                                              (50, 180),
-                                             lambda: self.editdesc(
+                                             lambda: self.editDesc(
                                                  "Start a new game,in any mode"
                                                  ),
-                                             lambda: NewGameMenu().main(
-                                                screen,
-                                                keys,
-                                                self.gameconfig,
-                                                sounds),
-                                             self.gameconfig,
-                                             sounds)
-        self.activeitems.append(self.newgamemenu)
+                                             lambda: NewGameMenu(
+                                                self.screen,
+                                                self.keys,
+                                                self.config,
+                                                self.sounds).mainLoop(),
+                                             self.config,
+                                             self.sounds)
+        self.activeItems.append(self.newgamemenu)
+        self.items.append(self.newgamemenu)
 
-    def makeCreditsMenu(self, screen, keys, config, sounds):
+    def makeCreditsMenu(self):
         self.creditsimg = self.font.render("Credits", False,
                                            (255, 255, 255)).convert_alpha()
         self.selectedcreditsimg = makeGlitched("Credits", self.font)
         self.credits = menuItem.menuitem(self.creditsimg,
                                          self.selectedcreditsimg,
                                          (50, 360),
-                                         lambda: self.editdesc(
+                                         lambda: self.editDesc(
                                              "Look at Names"),
-                                         lambda: Credits().main(
-                                             screen,
-                                             keys,
-                                             self.gameconfig,
-                                             sounds),
-                                         self.gameconfig,
-                                         sounds)
-        self.activeitems.append(self.credits)
+                                         lambda: Credits(
+                                             self.screen,
+                                             self.keys,
+                                             self.config,
+                                             self.sounds).mainLoop(),
+                                         self.config,
+                                         self.sounds)
+        self.activeItems.append(self.credits)
+        self.items.append(self.credits)
 
-    def makeQuitMenu(self, screen, keys, config, sounds):
+    def makeQuitMenu(self):
         self.exitimg = self.font.render("Quit", False,
                                         (255, 255, 255)).convert_alpha()
         self.exitselected = makeGlitched("Quit", self.font)
         self.exit = menuItem.menuitem(self.exitimg,
                                       self.exitselected,
                                       (700, 560),
-                                      lambda: self.editdesc("Quit the Game"),
+                                      lambda: self.editDesc("Quit the Game"),
                                       lambda: pygame.event.post(
                                           pygame.event.Event(pygame.QUIT)),
-                                      self.gameconfig,
-                                      sounds)
-        self.activeitems.append(self.exit)
+                                      self.config,
+                                      self.sounds)
+        self.activeItems.append(self.exit)
+        self.items.append(self.exit)
 
-    def makeLoadMenu(self, screen, keys, config, sounds):
-        module_logger.debug("Checking Savegames Directory: " + str(
+    def makeLoadMenu(self):
+        self.modlogger.debug("Checking Savegames Directory: " + str(
             os.path.join("savegames")))
         if not os.listdir(os.path.join("savegames")):
-            module_logger.debug("No SaveFiles Found.")
+            self.modlogger.debug("No SaveFiles Found.")
             self.cont = self.font.render("Load Saved Game", False,
                                          (100, 100, 100)).convert_alpha()
             self.cgam = menuItem.menuitem(self.cont,
                                           self.cont,
                                           (50, 240),
-                                          lambda: self.editdesc(None),
+                                          lambda: self.editDesc(None),
                                           lambda: None,
-                                          self.gameconfig,
-                                          sounds)
+                                          self.config,
+                                          self.sounds)
         else:
-            module_logger.debug("SaveFiles Found, enabling load menu item.")
+            self.modlogger.debug("SaveFiles Found, enabling load menu item.")
             self.cont = self.font.render("Load Saved Game", False,
                                          (255, 255, 255)).convert_alpha()
             self.contsel = makeGlitched("Load Saved Game", self.font)
             self.cgam = menuItem.menuitem(self.cont,
                                           self.contsel,
                                           (50, 240),
-                                          lambda: self.editdesc(
+                                          lambda: self.editDesc(
                                               "Load a previously saved Game"),
-                                          lambda: Game().main(screen, keys,
+                                          lambda: Game().main(self.screen,
+                                                              self.keys,
                                                               "load",
                                                               None,
-                                                              self.gameconfig,
-                                                              sounds),
-                                          self.gameconfig,
-                                          sounds)
-            self.activeitems.append(self.cgam)
+                                                              self.config,
+                                                              self.sounds),
+                                          self.config,
+                                          self.sounds)
+            self.activeItems.append(self.cgam)
+        self.items.append(self.cgam)
         self.update = False
 
-    def makeOptionsMenu(self, screen, keys, config, sounds):
+    def makeOptionsMenu(self):
         self.optimg = self.font.render("Options", False,
                                        (255, 255, 255)).convert_alpha()
         self.optsel = makeGlitched("Options", self.font)
         self.options = menuItem.menuitem(self.optimg,
                                          self.optsel,
                                          (50, 300),
-                                         lambda: self.editdesc(
+                                         lambda: self.editDesc(
                                              "Fiddle With Options"),
-                                         lambda: OptionsMenu().main(
-                                             screen, keys, self.gameconfig,
-                                             sounds),
-                                         self.gameconfig,
-                                         sounds)
-        self.activeitems.append(self.options)
+                                         lambda: OptionsMenu(
+                                             self.screen, self.keys,
+                                             self.config,
+                                             self.sounds).mainLoop(),
+                                         self.config,
+                                         self.sounds)
+        self.activeItems.append(self.options)
+        self.items.append(self.options)
 
-    def main(self, screen, keys, config, sounds):
-        """
-        Main menu method
-
-        Keyword Arguments:
-        - screen: The surface to draw the menu to.
-        - keys: The control keys collection used
-        """
-        module_logger.info("Entering Main Menu")
-        pygame.display.set_caption("Glitch_Heaven")
-        self.screensize = screen.get_size()
-        self.desc = None
-        self.activeitems = []
-        # Title animation and properties
-        # v------------------------------------------------------------------v
-        self.gameconfig = config
-        """self.titletimings = [2., 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
-                             0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12,
-                             0.12, 0.12, 0.12, 0.12, 2., 0.12, 0.12,
-                             0.12, 0.12]"""
-        self.titletimings = [0.12]*24
-        self.titletimings[0], self.titletimings[19] = 2., 2.
-        self.titleani = timedanimation.TimedAnimation(self.titletimings)
-        self.titleani.loadFromDir(
-                os.path.join("resources", "UI", "AnimatedTitle"))
-        self.title = self.titleani.first()
-        self.titlesize = self.title.get_size()
-        self.titlerect = self.title.get_rect()
-        self.titlerect.x = self.screensize[0]/2 - self.titlesize[0] / 2
-        self.titlerect.y = 32
-        # ^------------------------------------------------------------------^
-        self.font = pygame.font.Font(os.path.join(
-                            "resources", "fonts",
-                            "TranscendsGames.otf"), 24)
-        self.running = True
-        self.currentItem = None
-        self.background = pygame.image.load(
-                          os.path.join("resources",
-                                       "UI",
-                                       "back.png")).convert_alpha()
-        self.dbtxt = makeGlitched("Debug Mode Active, Keydebug Active: {0}".format(
-                                    config["Debug"]["keydebug"]), self.font)
+    def makeMenuItems(self):
         # New Game Menu menu element
         # v------------------------------------------------------------------v
-        self.makeNewGameMenu(screen, keys, config, sounds)
+        self.makeNewGameMenu()
         # ^------------------------------------------------------------------^
         # If there is a savefile, enable the continue game button
         # v------------------------------------------------------------------v
-        self.makeLoadMenu(screen, keys, config, sounds)
+        self.makeLoadMenu()
         # ^------------------------------------------------------------------^
         # Insert an options button
         # v------------------------------------------------------------------v
-        self.makeOptionsMenu(screen, keys, config, sounds)
+        self.makeOptionsMenu()
         # ^------------------------------------------------------------------^
         # Credits menu element
         # v------------------------------------------------------------------v
-        self.makeCreditsMenu(screen, keys, config, sounds)
+        self.makeCreditsMenu()
         # ^------------------------------------------------------------------^
         # Quit game menu element
         # v------------------------------------------------------------------v
-        self.makeQuitMenu(screen, keys, config, sounds)
+        self.makeQuitMenu()
         # ^------------------------------------------------------------------^
-        self.items = [self.newgamemenu, self.cgam, self.options,
-                      self.credits, self.exit]
-        self.clock = pygame.time.Clock()
-        pygame.mouse.set_visible(True)  # Make the cursor visible
-        module_logger.info("Mouse cursor shown")
-        while self.running:
-            self.dt = self.clock.tick(30)/1000.
-            if self.update:
-                self.makeLoadMenu(screen, keys, config, sounds)
-                self.items = [self.newgamemenu, self.cgam, self.options,
-                              self.credits, self.exit]
-                if os.listdir(os.path.join("savegames")):
-                    self.activeitems = [self.newgamemenu, self.cgam,
-                                        self.options, self.credits, self.exit]
-                else:
-                    self.activeitems = [self.newgamemenu, self.options,
-                                        self.credits, self.exit]
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    module_logger.info("QUIT signal received, quitting")
-                    self.running = False
-                # Keyboard handling
-                # v------------------------------------------------------------------v
-                if event.type == pygame.KEYDOWN:
-                    if self.currentItem is None:
-                        self.currentItem = 0
-                    if event.key == keys["down"]:
-                        self.currentItem = ((self.currentItem+1) %
-                                            len(self.activeitems))
-                    if event.key == keys["up"]:
-                        self.currentItem = ((self.currentItem-1) %
-                                            len(self.activeitems))
-                    if event.key == keys["confirm"]:
-                        self.activeitems[self.currentItem].confirmSound.play()
-                        self.update = True
-                        self.activeitems[self.currentItem].function()
-                    if event.key == keys["escape"]:
-                        print("esc")
-                    for item in self.activeitems:
-                        item.makeUnselected()
-                    self.activeitems[self.currentItem].makeSelected()
-                # ^------------------------------------------------------------------^
-                # Mouse handling
-                # v------------------------------------------------------------------v
-                if event.type == pygame.MOUSEMOTION:
-                    if self.currentItem == 0:
-                        self.currentItem = None
-                    for item in self.activeitems:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos())\
-                                and not item.selectedStatus:
-                            item.makeSelected()
-                        else:
-                            item.makeUnselected()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    for item in self.activeitems:
-                        if item.rect.collidepoint(*pygame.mouse.get_pos()):
-                            item.confirmSound.play()
-                            self.update = True
-                            item.function()
-                if event.type == pygame.QUIT:
-                    quit()
-                # ^------------------------------------------------------------------^
-            # Animates The title
-            # v----------------------------------------------------------v
-            self.title = self.titleani.next(self.dt)
-            # ^----------------------------------------------------------^
-            screen.blit(self.background, (0, 0))
-            screen.blit(self.title, self.titlerect.topleft)
-            if self.desc is not None:
-                screen.blit(self.desc, (750-self.desc.get_rect().width, 300))
-            for item in self.items:
-                screen.blit(item.image, item.rect.topleft)
-            if config["Debug"]["Debugmode"]:
-                screen.blit(self.dbtxt, (50, 560))
-            pygame.display.update()
+
+    def doAdditionalBlits(self):
+        if self.config["Debug"]["Debugmode"]:
+            self.screen.blit(self.dbtxt, (50, 560))
+
+    def doMoreLoopOperations(self):
+        if self.update:
+            self.makeMenuItems()
