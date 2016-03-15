@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="45">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="20" height="20">
@@ -124,9 +124,9 @@
     <property name="blocker" value="b"/>
    </properties>
   </object>
-  <object id="24" x="224" y="384" width="32" height="32">
+  <object id="24" x="192" y="384" width="64" height="32">
    <properties>
-    <property name="blocker" value="t"/>
+    <property name="blocker" value="tlr"/>
    </properties>
   </object>
   <object id="25" x="320" y="384" width="32" height="32">
@@ -184,7 +184,7 @@
     <property name="blocker" value="lr"/>
    </properties>
   </object>
-  <object id="37" x="192" y="384" width="32" height="64">
+  <object id="37" x="192" y="416" width="32" height="32">
    <properties>
     <property name="blocker" value="tlr"/>
    </properties>

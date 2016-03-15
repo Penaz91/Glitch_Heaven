@@ -57,7 +57,7 @@ class Game(object):
             self.gravity *= -1
             mod_logger.debug("Gravity has been inverted")
         else:
-            truth = self.glitches.get(glitch)
+            """truth = self.glitches.get(glitch)
             if truth:
                 mod_logger.debug("The {0} glitch has been disabled"
                                  .format(glitch))
@@ -65,8 +65,14 @@ class Game(object):
                 mod_logger.debug("The {0} glitch has been enabled"
                                  .format(glitch))
             truth = not truth
+            """
+            self.glitches[glitch] = not self.glitches[glitch]
+            mod_logger.debug("{0} Glitch has been set to {1}".format(
+                glitch,
+                self.glitches[glitch]))
+            """
             mydict = {glitch: truth}
-            self.glitches.update(mydict)
+            self.glitches.update(mydict)"""
         if self.glitches["speed"]:
             self.player.toggleDoubleSpeed()
         else:
@@ -630,7 +636,8 @@ class Game(object):
                                                self.mode,
                                                self.screen)
                             self.loadLevelPart2(self.keys, sounds)
-                if config.getboolean("Debug", "keydebug") and event.type == pygame.KEYDOWN:
+                if config.getboolean("Debug", "keydebug") and\
+                        event.type == pygame.KEYDOWN:
                     mod_logger.debug("A key was pressed: {0}"
                                      .format(pygame.key.name(event.key)))
                 # ^----------------------------------------------------------^
@@ -638,7 +645,8 @@ class Game(object):
                 # v----------------------------------------------------------v
                 if event.type == pygame.KEYDOWN and\
                         event.key == keys["escape"]:
-                    pauseMenu(screen, keys, self, self.config, sounds).mainLoop()
+                    pauseMenu(screen, keys, self,
+                              self.config, sounds).mainLoop()
                 if event.type == pygame.KEYDOWN and\
                         event.key == self.keys["restart"]:
                             self.sprites.remove(*self.deadbodies)

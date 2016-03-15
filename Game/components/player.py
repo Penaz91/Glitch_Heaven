@@ -179,8 +179,6 @@ class Player(pygame.sprite.Sprite):
         Returns:
         - Nothing
         """
-        # TODO: Avoid a bug that adds an instance of player to every
-        #       respawn
         # If the permbody glitch is active, will add a body at death position
         # v-----------------------------------------------------v
         if self.active:
@@ -509,7 +507,8 @@ class Player(pygame.sprite.Sprite):
                     # ^------------------------------------------------------^
         elif game.glitches["hover"]:
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
-                if self.y_speed == 0:
+                # if self.y_speed == 0:
+                if self.resting:
                     self.jumpsound.play()
                 self.y_speed = self.jump_speed*game.gravity*0.8
                 if game.config.getboolean("Video", "playerparticles"):
