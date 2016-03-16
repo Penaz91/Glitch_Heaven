@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="80" tilewidth="32" tileheight="32" nextobjectid="129">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="80" tilewidth="32" tileheight="32" nextobjectid="131">
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Tile Layer 1" width="100" height="80">
   <data encoding="base64" compression="zlib">
-   eJztnDtPwzAURq0KwcZ7RDxGJH4NZQd24P+P1EOkKHJz48S5+eyeI30LVW9iH9l54PoqhPBQIFczU+LYrST2x3Uow2XId1Hq2K0Q+xAfOuBDC3xogQ8t8KEFPrTAhxat+zhfuX5pWvdxt3L90uBDC3xogQ8t8KEFPrTAhxb40AIfWuBDiyU+7g/Z9ZLrossukYuZ5zRE2cdN4m85Pkr1/xJPY3lNJNZ5M9J9P/VZV8eqMSVT2jDm4/2QfS9br72Yu15jjTUxY1FZX6KINV/NueateT0seT1XpFYf+wbykWhfrT5aJF7/rLbhwxel8fE44XxP3cdtKHOf1k/unNqnVR/dvXqptnk9V7bqo6NUP5b2EZ+tU+MHH751InHsvhz5rEUf/fcKzFdaKI6PMfCxXp3h+78p6fs4W3bKm5Nqf63zVc49ck0wX2mBDy1i+76O5DujzpbzVUtzF+NDC3xoUauPJf/zUaZWH62CDy3woQU+tMCHFvjQAh9ajPXjZzj+LmUYrz46ZR9b1LHAx/Q6vxn5m3kcfPjWscCHbx0LfPjWscCHbx0LfPjWscCHbx0LfPjWsWjdx9h6hn6stQ34KAPjQ4utffyEvOd6fPjWscCHbx0LfPjWscCHbx0LfPjWsWjdx3OhOvjQAh9a4EMLfCyj9G8ha/Ex5zekNSbuS8J6htMDH1rgQwt8aIEPLYY+niZ+b8rec5BPt3/gcJ/kpfssk/R+2Vaii3/Hs5qL
+   eJztnLtOAzEQRa0IQUd4lYhHicSnUBF6oAf+vyQuLFkr7469Ozt7PblHug0hs7GP7H3E8T6EcK+Q/cxoHNtLYn9cBR0uQ7sLrWN7IfYhfeBAH1jQBxb0gQV9YEEfWNAHFt59nK9cXxvvPm5Xrq8NfWBBH1jQBxb0gQV9YEEfWNAHFvSBBX1gscTH3TG7LK0uUnaFXMz8TEOQfVwX/tbiQ6v/l3iaykshsc6rkPT+0mupjlSjJjVtmPLxfswhy9ZrL+au11hjTcxUUNaXICLNV3POeWueDzXP59a8VfxPrz4ODvJRaF+vPjwSz39S2+jDFqTx8VDxeU/dx03QuU7L0zqn5nj1ka7VtdpmdV/p1UdCqx+1fcR769L4oQ/bOpE4dp9HXvPoI3+uwPkKC6TxUXP/Sh/r1Rk+/6tJ7uNs2UfenFL7e52vWq6RewJpvqqB85VtHQnvPmL7vkby3VBny/nK09zF8YEFfWDRq48l3/kg06sPr9AHFvSBBX1gQR9Y0AcW9IHFVD9+hvFnKcNY9dEp+9iijgR91Nf5bcjfzOPQh20dCfqwrSNBH7Z1JOjDto4EfdjWkaAP2zoS9GFbR8K7j6n1DHmktQ30oQPHBxZb+/gJbff19GFbR4I+bOtI0IdtHQn6sK0jQR+2dSS8+3hSqkMfWNAHFvSBBX0sQ/u3kL34mPMb0h4T9yXheobTgz6woA8s6AML+sBi6OOx8n01e8+RdtL+gcN9kpfus8yU98uWEl38A/A0myM=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -637,6 +637,16 @@
     <property name="PlatSpeed" value="100"/>
     <property name="Platform" value="v"/>
     <property name="id" value="1"/>
+   </properties>
+  </object>
+  <object id="129" x="1472" y="768" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
+   </properties>
+  </object>
+  <object id="130" x="2880" y="1056" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
    </properties>
   </object>
  </objectgroup>
