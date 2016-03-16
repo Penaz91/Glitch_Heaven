@@ -55,6 +55,7 @@ class Game(object):
         """
         if glitch.lower() == "invertedgravity":
             self.gravity *= -1
+            self.glitches["invertedGravity"] = not self.glitches["invertedGravity"]
             mod_logger.debug("Gravity has been inverted")
         else:
             """truth = self.glitches.get(glitch)
