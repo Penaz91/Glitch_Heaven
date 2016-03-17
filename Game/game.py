@@ -346,7 +346,7 @@ class Game(object):
                      "cftime": self.cftime,
                      "time": self.time,
                      "mode": self.mode,
-                     "chaos": self.ChaosMode}
+                     "modifiers": self.modifiers}
             mod_logger.debug("Shelf saved with data: " + str(shelf))
             with open(path, "w") as savefile:
                 string = json.dumps(shelf)
@@ -373,7 +373,7 @@ class Game(object):
             self.mode = shelf["mode"]
             self.cftime = shelf["cftime"]
             self.time = shelf["time"]
-            self.chaos = shelf["chaos"]
+            self.modifiers = shelf["modifiers"]
         if self.mode.lower() in ["criticalfailure", "cfsingle"]:
             mod_logger.info("Using Load Game mode - Critical Failure Modifier")
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
@@ -422,7 +422,7 @@ class Game(object):
         self.newChaosTime()
         mod_logger.debug("Chaos Mode Parameters: " + str(self.chaosParameters))
 
-    def main(self, screen, keys, mode, cmp, config, sounds, chaos):
+    def main(self, screen, keys, mode, cmp, config, sounds, modifiers):
         """
         Main Game method
 
@@ -459,7 +459,8 @@ class Game(object):
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
-        self.ChaosMode = chaos
+        self.modifiers = modifiers
+        mod_logger.debug("Current Active Modifiers: " + str(self.modifiers))
         # Preloading graphics area
         # v-------------------------------------------------------------------v
         self.preloaded_sprites = {
@@ -558,7 +559,7 @@ class Game(object):
             # ^-------------------------------------------------------------------^
             # For Chaos Mode
             # v-------------------------------------------------------------------v
-            if self.ChaosMode:
+            if self.modifiers["chaos"]:
                 self.chaosParameters["timer"] -= dt
                 if self.chaosParameters["timer"] <= 0.:
                     self.toggleGlitch(random.choice(
@@ -684,7 +685,8 @@ class Game(object):
                                         -self.tilemap.viewport.y*1.5))
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
-
+            if self.modifiers["vflip"] or self.modifiers["hflip"]:
+                self.gameviewport = pygame.transform.flip(self.gameviewport, self.modifiers["hflip"], self.modifiers["vflip"])
             screen.blit(self.gameviewport, (0, 0))
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 screen.blit(self.timer, (50, 70))

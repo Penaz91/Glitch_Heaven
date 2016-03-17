@@ -11,8 +11,9 @@ from components.UI.menu import menu
 class CFMenu(menu):
     """ Represents a pause menu window"""
 
-    def __init__(self, screen, keys, config, sounds):
+    def __init__(self, screen, keys, config, sounds, modifiers):
         self.logSectionName = "Glitch_Heaven.CFMenu"
+        self.modifiers = modifiers
         super().__init__(screen, keys, config, sounds)
 
     def newCFGame(self):
@@ -24,7 +25,7 @@ class CFMenu(menu):
                              "main.cmp"),
                     self.config,
                     self.sounds,
-                    False)
+                    self.modifiers)
 
     def newCFSGame(self):
         self.running = False
@@ -35,7 +36,7 @@ class CFMenu(menu):
                              "main.cmp"),
                     self.config,
                     self.sounds,
-                    False)
+                    self.modifiers)
 
     def makeCFMenu(self):
         self.sdimg = self.font.render("Start Shared Time mode", False,
