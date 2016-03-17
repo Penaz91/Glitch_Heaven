@@ -79,9 +79,25 @@ class modMenu(menu):
                                            self.sounds)
             self.activeItems.append(self.hflip)
             self.items.append(self.hflip)
+            
+    def makeMWToggle(self):
+            self.mwimg = self.font.render("MoonWalk Mode",
+                                             False, (255, 255, 255)).convert_alpha()
+            self.mwsel = makeGlitched("MoonWalk Mode", self.font)
+            self.mw = menuItem.menuitem(self.mwimg,
+                                        self.mwsel,
+                                        (50, 360),
+                                        lambda: self.editDesc("Current Status: {0}".format(
+                                             self.modifiers["moonwalk"])),
+                                        lambda: self.toggleModifier("moonwalk"),
+                                        self.config,
+                                        self.sounds)
+            self.activeItems.append(self.mw)
+            self.items.append(self.mw)
 
     def makeMenuItems(self):
         self.makeChaosToggle()
         self.makeVFlipToggle()
         self.makeHFlipToggle()
+        self.makeMWToggle()
         self.makeMainMenuItem()

@@ -17,7 +17,7 @@ class NewGameMenu(menu):
 
     def __init__(self, screen, keys, config, sounds):
         self.logSectionName = "Glitch_Heaven.NewGameMenu"
-        self.modifiers = {"chaos": False, "vflip": False, "hflip": False}
+        self.modifiers = {"chaos": False, "vflip": False, "hflip": False, "moonwalk": False}
         super().__init__(screen, keys, config, sounds)
 
     def loadcustom(self):
