@@ -168,6 +168,8 @@ class Player(pygame.sprite.Sprite):
                                                 self.particles,
                                                 game.tilemap)
         self.lastcheckpoint = location
+        self.collisionrect = pygame.rect.Rect((0, 0), (20, 32))
+        self.collisionrect.midbottom = self.rect.midbottom
 
     def respawn(self, game):
         """
@@ -414,7 +416,11 @@ class Player(pygame.sprite.Sprite):
         Returns:
         - Nothing
         """
-        last = self.rect.copy()     # Copy last position for collision compare
+        if game.gravity == 1:
+            self.collisionrect.midbottom = self.rect.midbottom
+        else:
+            self.collisionrect.midtop = self.rect.midtop
+        last = self.collisionrect.copy()  # Copy last position for compare
         key = pygame.key.get_pressed()
         if game.glitches["invertedRun"]:
             self.running = not bool(key[self.keys["run"]])
@@ -479,6 +485,10 @@ class Player(pygame.sprite.Sprite):
                                            self.x_speed+(self.playeraccel*dt))
             # ^--------------------------------------------------------------^
         self.rect.x += self.x_speed         # Move the player
+        if game.gravity == 1:
+            self.collisionrect.midbottom = self.rect.midbottom
+        else:
+            self.collisionrect.midtop = self.rect.midtop
         if game.glitches["multiJump"]:
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
                 if self.y_speed*game.gravity >= 0:
@@ -573,6 +583,11 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y += self.y_speed * dt   # Move the player vertically
         else:
             self.rect.y += self.y_speed * dt    # Move the player vertically
+        if game.gravity == 1:
+            self.collisionrect.midbottom = self.rect.midbottom
+        else:
+            self.collisionrect.midtop = self.rect.midtop
+
         # This avoids the ability to jump in air after leaving a platform
         # + ledgejump glitch framework
         # v--------------v
@@ -610,13 +625,18 @@ class Player(pygame.sprite.Sprite):
                     self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with scrolling ground
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+        for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'slide'):
-            slide = int(cell['slide'])
-            if game.glitches["slideInvert"]:
-                if key[self.keys["action"]]:
-                    slide *= -1
-            self.rect.x += slide * dt
+            top = last.bottom <= cell.top and\
+                  self.collisionrect.bottom > cell.top
+            bottom = last.top >= cell.bottom and\
+                self.collisionrect.top < cell.bottom
+            if top or bottom:
+                slide = int(cell['slide'])
+                if game.glitches["slideInvert"]:
+                    if key[self.keys["action"]]:
+                        slide *= -1
+                self.rect.x += slide * dt
         # ^--------------------------------------------------------------^
         # Test for collision with deadbody platforms and act accordingly
         # v--------------------------------------------------------------v
@@ -634,12 +654,12 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+        for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'blocker'):
             blockers = cell['blocker']
             self.pushing = False
             if 't' in blockers and last.bottom <= cell.top and\
-                    self.rect.bottom > cell.top:
+                    self.collisionrect.bottom > cell.top:
                 # Framework for clip-on-command glitch
                 self.bounced = False
                 if game.glitches["clipOnCommand"]:
@@ -661,7 +681,7 @@ class Player(pygame.sprite.Sprite):
                     if game.gravity == 1:
                         self.resting = True
             elif 'b' in blockers and last.top >= cell.bottom and\
-                    self.rect.top < cell.bottom:
+                    self.collisionrect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
                 self.bounced = False
                 if game.glitches["clipOnCommand"]:
@@ -685,7 +705,7 @@ class Player(pygame.sprite.Sprite):
                 if game.gravity == -1:
                     self.resting = True
             elif 'l' in blockers and last.right <= cell.left and\
-                    self.rect.right > cell.left:
+                    self.collisionrect.right > cell.left:
                 self.bounced = False
                 self.rect.right = cell.left
                 self.pushing = True
@@ -697,7 +717,7 @@ class Player(pygame.sprite.Sprite):
             # else:
                 # self.pushing = False
             elif 'r' in blockers and last.left >= cell.right and\
-                    self.rect.left < cell.right:
+                    self.collisionrect.left < cell.right:
                 self.bounced = False
                 self.rect.left = cell.right
                 self.pushing = True
@@ -709,12 +729,12 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Test for collision with bouncy platforms and act accordingly
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers["Triggers"].collide(self.rect,
+        for cell in game.tilemap.layers["Triggers"].collide(self.collisionrect,
                                                             'bouncy'):
             bouncy = cell["bouncy"]
             power = int(cell["power"])
             if 't' in bouncy and last.bottom <= cell.top and\
-                    self.rect.bottom > cell.top:
+                    self.collisionrect.bottom > cell.top:
                 self.rect.bottom = cell.top
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
@@ -724,7 +744,7 @@ class Player(pygame.sprite.Sprite):
                     elif game.gravity == -1:
                         self.y_speed = power*game.gravity
             if 'b' in bouncy and last.top >= cell.bottom and\
-                    self.rect.top < cell.bottom:
+                    self.collisionrect.top < cell.bottom:
                 self.rect.top = cell.bottom
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
@@ -734,7 +754,7 @@ class Player(pygame.sprite.Sprite):
                     elif game.gravity == -1:
                         self.y_speed = - power*game.gravity
             if 'l' in bouncy and last.right <= cell.left and\
-                    self.rect.right > cell.left:
+                    self.collisionrect.right > cell.left:
                 self.rect.right = cell.left
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
@@ -746,7 +766,7 @@ class Player(pygame.sprite.Sprite):
                     else:
                         self.y_speed = game.gravity*power
             if 'r' in bouncy and last.left >= cell.right and\
-                    self.rect.left < cell.right:
+                    self.collisionrect.left < cell.right:
                 self.rect.left = cell.right
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
@@ -760,25 +780,25 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Test for collisions with deadly ground and act accordingly
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers["Triggers"].collide(self.rect,
+        for cell in game.tilemap.layers["Triggers"].collide(self.collisionrect,
                                                             'deadly'):
             deadly = cell["deadly"]
             # FIXME: Can cross dead bodies horizontally
             # FIX: Bodies will be pretty thin, so i think i can ignore this
             if 't' in deadly and last.bottom <= cell.top and\
-                    self.rect.bottom > cell.top:
+                    self.collisionrect.bottom > cell.top:
                 self.rect.bottom = cell.top
                 self.respawn(game)
             if 'b' in deadly and last.top >= cell.bottom and\
-                    self.rect.top < cell.bottom:
+                    self.collisionrect.top < cell.bottom:
                 self.rect.top = cell.bottom
                 self.respawn(game)
             if 'l' in deadly and last.right <= cell.left and\
-                    self.rect.right > cell.left:
+                    self.collisionrect.right > cell.left:
                 self.rect.right = cell.left
                 self.respawn(game)
             if 'r' in deadly and last.left >= cell.right and\
-                    self.rect.left < cell.right:
+                    self.collisionrect.left < cell.right:
                 self.rect.left = cell.right
                 self.respawn(game)
         # ^--------------------------------------------------------------^
@@ -800,7 +820,7 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Test collision with help triggers and act accordingly
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+        for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'Help'):
             helptext = cell['Help']
             if helptext != game.getHelpText():
@@ -814,7 +834,7 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Test collision with exit trigger and act accordingly
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+        for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'playerExit'):
             game.loadNextLevel(game.campaignname, game.currentcampaign,
                                game.mode, game.screen)
@@ -842,7 +862,7 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Handles the triggering of mobile platforms
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+        for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             "button"):
             if key[self.keys["action"]]:
                 butt = cell['button']
@@ -855,7 +875,7 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Handles the triggering of teleporters
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(self.rect,
+        for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             "TpIn"):
             if key[self.keys["action"]]:
                 tpin = cell['TpIn']
@@ -877,7 +897,7 @@ class Player(pygame.sprite.Sprite):
         # Handles The checkpoints
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(
-                self.rect, 'CheckPoint'):
+                self.collisionrect, 'CheckPoint'):
                 chk = cell['CheckPoint']
                 if chk == 1:
                     self.lastcheckpoint = (self.rect.x, self.rect.y)
@@ -906,7 +926,9 @@ class Player(pygame.sprite.Sprite):
         # glitch is active, or its death
         # v--------------------------------------------------------------v
         collision = pygame.sprite.spritecollide(self, game.obstacles, False)
-        for block in collision:
+        secondpass = [block for block in collision
+                      if block.rect.colliderect(self.collisionrect)]
+        for block in secondpass:
             if game.glitches["obsResistant"]:
                 if self.y_speed * game.gravity > 0:
                     if game.gravity == 1 and self.rect.bottom > block.rect.top:
