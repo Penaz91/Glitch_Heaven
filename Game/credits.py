@@ -40,7 +40,7 @@ class Credits(menu):
                                    False,
                                    (255, 255, 255))).convert_alpha(),
                  (50, 150)),
-                (makeGlitched("Dexter561 and ScansPlays", self.font),
+                (makeGlitched("Dexter561, ScansPlays and AstralGemini", self.font),
                     (50, 170)),
                 ((self.font.render("--- Special Thanks ---",
                                    False,
