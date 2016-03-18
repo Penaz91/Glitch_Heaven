@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
         self.playeraccel = 100
 
     def untoggleDoubleSpeed(self):
-        self.playermaxspeed = 200
+        self.playermaxspeed = 250
         self.playeraccel = 50
 
     def __init__(self, location, *groups, keys, game, sounds):
@@ -204,7 +204,7 @@ class Player(pygame.sprite.Sprite):
             game.deathCounter += 1
 
     def animate(self, yspeed, xspeed, resting,
-                direction, dt, gravity, running, pushing, glitched):
+                direction, dt, gravity, running, pushing, glitched, game):
         if glitched:
             if resting:
                 # Player is on the ground
@@ -397,9 +397,11 @@ class Player(pygame.sprite.Sprite):
                                      True,
                                      False)
         if gravity == -1:
-            oldimg = self.image
             self.image = pygame.transform.flip(
-                         oldimg, False, True)
+                         self.image, False, True)
+        if game.modifiers["moonwalk"]:
+            self.image = pygame.transform.flip(
+                         self.image, True, False)
 
     def update(self, dt, game):
         """
@@ -923,4 +925,4 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
                      dt, game.gravity, self.running,
-                     self.pushing, self.glitched)
+                     self.pushing, self.glitched, game)

@@ -9,6 +9,7 @@ from tkinter import filedialog
 from game import Game
 from cfmenu import CFMenu
 from components.UI.menu import menu
+from modmenu import modMenu
 
 
 class NewGameMenu(menu):
@@ -16,7 +17,7 @@ class NewGameMenu(menu):
 
     def __init__(self, screen, keys, config, sounds):
         self.logSectionName = "Glitch_Heaven.NewGameMenu"
-        self.chaos = False
+        self.modifiers = {"chaos": False, "vflip": False, "hflip": False, "moonwalk": False}
         super().__init__(screen, keys, config, sounds)
 
     def loadcustom(self):
@@ -47,9 +48,9 @@ class NewGameMenu(menu):
                              "main.cmp"),
                     self.config,
                     sounds,
-                    self.chaos)
+                    self.modifiers)
 
-    def newCFGame(self, keys, gameconfig, screen, sounds):
+    """def newCFGame(self, keys, gameconfig, screen, sounds):
         self.running = False
         Game().main(screen, keys,
                     "cfsingle",
@@ -57,7 +58,7 @@ class NewGameMenu(menu):
                              "campaigns",
                              "main.cmp"),
                     self.config,
-                    sounds)
+                    sounds)"""
 
     def makeCampaignMenu(self):
         self.newmainimg = self.font.render("Start Main Campaign", False,
@@ -146,7 +147,8 @@ class NewGameMenu(menu):
                                                 self.screen,
                                                 self.keys,
                                                 self.config,
-                                                self.sounds).mainLoop(),
+                                                self.sounds,
+                                                self.modifiers).mainLoop(),
                                         self.config,
                                         self.sounds)
             self.activeItems.append(self.sd)
@@ -174,22 +176,22 @@ class NewGameMenu(menu):
                                     self.sounds)
         self.items.append(self.sm)
 
-    def togglechaos(self):
-        self.chaos = not self.chaos
-
-    def makeChaosButton(self):
-        if self.config.getboolean("Unlockables", "Chaos"):
-            self.chimg = self.font.render("Toggle Chaos Modifier",
+    def makeModifierMenuItem(self):
+        if self.config.getboolean("Unlockables", "modifiers"):
+            self.chimg = self.font.render("Modifiers Menu",
                                           False,
                                           (255, 255, 255)).convert_alpha()
-            self.chselimg = makeGlitched("Toggle Chaos Modifier",
+            self.chselimg = makeGlitched("Modifiers Menu",
                                          self.font)
             self.cb = menuItem.menuitem(self.chimg,
                                         self.chselimg,
                                         (50, 480),
-                                        lambda: self.editDesc("Chaos Mod: " +
-                                                              str(self.chaos)),
-                                        lambda: self.togglechaos(),
+                                        lambda: self.editDesc("Access the mods menu"),
+                                        lambda: modMenu(self.screen,
+                                                        self.keys,
+                                                        self.config,
+                                                        self.sounds,
+                                                        self.modifiers).mainLoop(),
                                         self.config,
                                         self.sounds)
             self.activeItems.append(self.cb)
@@ -239,9 +241,9 @@ class NewGameMenu(menu):
         # Insert a sudden death mode button
         # v------------------------------------------------------------------v
         self.makeSDMenu()
-        # Insert a chaos modifier button
+        # Insert a modifiermenu button
         # v------------------------------------------------------------------v
-        self.makeChaosButton()
+        self.makeModifierMenuItem()
         # Insert a single map mode button
         # v------------------------------------------------------------------v
         self.makeSMMenu()
