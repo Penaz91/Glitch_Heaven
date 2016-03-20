@@ -34,8 +34,7 @@ class Animation(object):
         # Returns the frame number in a circular fashion
         # v-----     0 -> ... -> n-1 -> n -> 0   -----v
         self.currentframe = (self.currentframe+1) % len(self.frames)
-        toret = self.frames[self.currentframe]
-        return toret
+        return self.frames[self.currentframe]
 
     def loadFromDir(self, directory):
         """

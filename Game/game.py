@@ -55,7 +55,8 @@ class Game(object):
         """
         if glitch.lower() == "invertedgravity":
             self.gravity *= -1
-            self.glitches["invertedGravity"] = not self.glitches["invertedGravity"]
+            self.glitches["invertedGravity"] = \
+                not self.glitches["invertedGravity"]
             mod_logger.debug("Gravity has been inverted")
         else:
             """truth = self.glitches.get(glitch)
@@ -686,7 +687,10 @@ class Game(object):
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
             if self.modifiers["vflip"] or self.modifiers["hflip"]:
-                self.gameviewport = pygame.transform.flip(self.gameviewport, self.modifiers["hflip"], self.modifiers["vflip"])
+                self.gameviewport = pygame.transform.flip(
+                        self.gameviewport,
+                        self.modifiers["hflip"],
+                        self.modifiers["vflip"])
             screen.blit(self.gameviewport, (0, 0))
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 screen.blit(self.timer, (50, 70))
