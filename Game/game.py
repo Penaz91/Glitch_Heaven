@@ -663,11 +663,12 @@ class Game(object):
                 self.dcounttxt = makeGlitched("Deaths: %d" % self.deathCounter,
                                               self.font)
                 # ^-------------------------------------------------------------------^
-            self.gameviewport.blit(self.bg, (-self.tilemap.viewport.x/6,
-                                   -self.tilemap.viewport.y/6))
-            self.gameviewport.blit(self.middleback,
-                                   (-self.tilemap.viewport.x/4,
-                                    -self.tilemap.viewport.y/4))
+            self.backpos = (min(-self.tilemap.viewport.x/6, 0),
+                            min(-self.tilemap.viewport.y / 6, 0))
+            self.middlepos = (min(-self.tilemap.viewport.x/4, 0),
+                              min(-self.tilemap.viewport.y / 4, 0))
+            self.gameviewport.blit(self.bg, self.backpos)
+            self.gameviewport.blit(self.middleback, self.middlepos)
             self.tilemap.update(dt, self)
             self.helptxts.update(dt, self)
             self.gameviewport.blit(self.middle, (-self.tilemap.viewport.x/2,

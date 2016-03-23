@@ -841,7 +841,7 @@ class Player(pygame.sprite.Sprite):
             game.loadLevelPart2(game.keys, self.soundslink)
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
-        game.backpos[0] = -game.tilemap.view_x      # Moves background?
+        # game.backpos[0] = -game.tilemap.view_x      # Moves background?
         # Wraps player movement if the glitch is active
         # v--------------------------------------------------------------v
         if game.glitches["hWrapping"]:
