@@ -6,7 +6,7 @@ while 1:
         if event.type == pygame.QUIT:
             break
         if event.type == pygame.KEYDOWN:
-            print(pygame.key.get_mods())
+            mods = pygame.key.get_mods()
             print(event.key, "=", pygame.key.name(event.key))
 pygame.quit()
 quit()

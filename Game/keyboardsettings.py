@@ -23,7 +23,7 @@ class KeyboardSettings(menu):
                                          False,
                                          (255, 255, 255)).convert_alpha()
         key = self.config.get("Controls", "left")
-        keytext = pygame.key.name(int(key))
+        keytext = str(pygame.key.name(int(key)))
         self.leftimg = self.font.render(keytext.upper(),
                                         False, (255, 255, 255)).convert_alpha()
         self.leftsel = makeGlitched(keytext.upper(), self.font)
@@ -50,7 +50,7 @@ class KeyboardSettings(menu):
                                           False,
                                           (255, 255, 255)).convert_alpha()
         key = self.config.get("Controls", "right")
-        keytext = pygame.key.name(int(key))
+        keytext = str(pygame.key.name(int(key)))
         self.rightimg = self.font.render(keytext.upper(),
                                          False,
                                          (255, 255, 255)).convert_alpha()
@@ -79,7 +79,7 @@ class KeyboardSettings(menu):
                                          False,
                                          (255, 255, 255)).convert_alpha()
         key = self.config.get("Controls", "jump")
-        keytext = pygame.key.name(int(key))
+        keytext = str(pygame.key.name(int(key)))
         self.jumpimg = self.font.render(keytext.upper(),
                                         False, (255, 255, 255)).convert_alpha()
         self.jumpsel = makeGlitched(keytext.upper(), self.font)
@@ -106,7 +106,7 @@ class KeyboardSettings(menu):
                                         False,
                                         (255, 255, 255)).convert_alpha()
         key = self.config.get("Controls", "run")
-        keytext = pygame.key.name(int(key))
+        keytext = str(pygame.key.name(int(key)))
         self.runimg = self.font.render(keytext.upper(),
                                        False,
                                        (255, 255, 255)).convert_alpha()
@@ -133,7 +133,7 @@ class KeyboardSettings(menu):
         self.acttext = self.font.render("Action/Interact: ",
                                         False, (255, 255, 255)).convert_alpha()
         key = self.config.get("Controls", "action")
-        keytext = pygame.key.name(int(key))
+        keytext = str(pygame.key.name(int(key)))
         self.actimg = self.font.render(keytext.upper(),
                                        False,
                                        (255, 255, 255)).convert_alpha()
@@ -161,7 +161,7 @@ class KeyboardSettings(menu):
                                          False,
                                          (255, 255, 255)).convert_alpha()
         key = self.config.get("Controls", "restart")
-        keytext = pygame.key.name(int(key))
+        keytext = str(pygame.key.name(int(key)))
         self.restimg = self.font.render(keytext.upper(),
                                         False,
                                         (255, 255, 255)).convert_alpha()
