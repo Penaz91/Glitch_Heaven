@@ -10,6 +10,11 @@
 # - If custom campaign/level support will be added
 #   add support for multiple savefiles.
 # ------------------------------------------------
+# NOTES AREA:
+# - If using pygame_sdl2, the modifiers bit mask changes, this will give
+#   issues in the usage of the debug keys
+# ------------------------------------------------
+
 import pygame
 from components.player import Player
 from libs import tmx
@@ -575,9 +580,7 @@ class Game(object):
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
                 if config.getboolean("Debug", "debugmode") and\
-                        pygame.key.get_pressed()[304] and\
-                        pygame.key.get_pressed()[306] and\
-                        pygame.key.get_pressed()[308]:
+                        pygame.key.get_mods() == 4417:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_1:
                             self.toggleGlitch("wallClimb")
