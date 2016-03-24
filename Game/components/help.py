@@ -28,7 +28,7 @@ class Help(MobilePlatform):
                                                   "TranscendsGames.otf"),
                                      24)
         self.img = self.font.render(Text, True, (255, 0, 0),
-                                    None)
+                                    None).convert_alpha()
         self.size = self.img.get_rect()
         self.x = centerx - (self.size.width/2)
         self.y = lowy - (self.size.height*game.gravity)

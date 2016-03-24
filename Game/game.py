@@ -10,6 +10,11 @@
 # - If custom campaign/level support will be added
 #   add support for multiple savefiles.
 # ------------------------------------------------
+# NOTES AREA:
+# - If using pygame_sdl2, the modifiers bit mask changes, this will give
+#   issues in the usage of the debug keys
+# ------------------------------------------------
+
 import pygame
 from components.player import Player
 from libs import tmx
@@ -55,7 +60,8 @@ class Game(object):
         """
         if glitch.lower() == "invertedgravity":
             self.gravity *= -1
-            self.glitches["invertedGravity"] = not self.glitches["invertedGravity"]
+            self.glitches["invertedGravity"] = \
+                not self.glitches["invertedGravity"]
             mod_logger.debug("Gravity has been inverted")
         else:
             """truth = self.glitches.get(glitch)
@@ -574,9 +580,7 @@ class Game(object):
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
                 if config.getboolean("Debug", "debugmode") and\
-                        pygame.key.get_pressed()[304] and\
-                        pygame.key.get_pressed()[306] and\
-                        pygame.key.get_pressed()[308]:
+                        pygame.key.get_mods() == 4417:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_1:
                             self.toggleGlitch("wallClimb")
@@ -662,11 +666,12 @@ class Game(object):
                 self.dcounttxt = makeGlitched("Deaths: %d" % self.deathCounter,
                                               self.font)
                 # ^-------------------------------------------------------------------^
-            self.gameviewport.blit(self.bg, (-self.tilemap.viewport.x/6,
-                                   -self.tilemap.viewport.y/6))
-            self.gameviewport.blit(self.middleback,
-                                   (-self.tilemap.viewport.x/4,
-                                    -self.tilemap.viewport.y/4))
+            self.backpos = (min(-self.tilemap.viewport.x/6, 0),
+                            min(-self.tilemap.viewport.y / 6, 0))
+            self.middlepos = (min(-self.tilemap.viewport.x/4, 0),
+                              min(-self.tilemap.viewport.y / 4, 0))
+            self.gameviewport.blit(self.bg, self.backpos)
+            self.gameviewport.blit(self.middleback, self.middlepos)
             self.tilemap.update(dt, self)
             self.helptxts.update(dt, self)
             self.gameviewport.blit(self.middle, (-self.tilemap.viewport.x/2,
@@ -686,7 +691,10 @@ class Game(object):
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
             if self.modifiers["vflip"] or self.modifiers["hflip"]:
-                self.gameviewport = pygame.transform.flip(self.gameviewport, self.modifiers["hflip"], self.modifiers["vflip"])
+                self.gameviewport = pygame.transform.flip(
+                        self.gameviewport,
+                        self.modifiers["hflip"],
+                        self.modifiers["vflip"])
             screen.blit(self.gameviewport, (0, 0))
             if self.mode.lower() in ["criticalfailure", "cfsingle"]:
                 screen.blit(self.timer, (50, 70))

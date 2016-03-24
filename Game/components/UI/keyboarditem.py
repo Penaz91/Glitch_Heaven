@@ -29,10 +29,10 @@ class KeyboardItem (menuitem):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     self.unselected = font.render(
-                            (pygame.key.name(event.key)).upper(),
+                            (str(pygame.key.name(event.key))).upper(),
                             False, (255, 255, 255)).convert_alpha()
                     self.selected = makeGlitched(
-                            (pygame.key.name(event.key)).upper(), font)
+                            (str(pygame.key.name(event.key))).upper(), font)
                     config.set("Controls", str(key), str(event.key))
                     with open("game.conf", "w") as conf:
                         config.write(conf)
