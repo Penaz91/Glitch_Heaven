@@ -601,10 +601,9 @@ class Player(pygame.sprite.Sprite):
         collision = pygame.sprite.spritecollide(self, game.plats, False)
         for block in collision:
             if block.active:
-                # ENHANCEMENT: Change the collision detection with a
-                # time-comparison of rects, like in Blocker trigger
-                if self.y_speed * game.gravity > 0:
-                    if game.gravity == 1 and self.rect.bottom > block.rect.top:
+                if game.gravity == 1:
+                    if last.bottom <= block.last.top and\
+                            self.collisionrect.bottom > block.rect.top:
                         self.rect.bottom = block.rect.top
                         if block.bouncy:
                             self.y_speed = - block.bouncepwr
@@ -612,8 +611,9 @@ class Player(pygame.sprite.Sprite):
                         else:
                             self.y_speed = block.yspeed
                             self.resting = True  # Allows jump
-                    elif game.gravity == -1 and\
-                            self.rect.top < block.rect.bottom:
+                else:
+                    if last.top >= block.last.bottom and\
+                           self.collisionrect.top < block.rect.bottom:
                         self.rect.top = block.rect.bottom
                         if block.bouncy:
                             self.y_speed = block.bouncepwr
