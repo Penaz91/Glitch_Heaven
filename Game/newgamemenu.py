@@ -17,7 +17,8 @@ class NewGameMenu(menu):
 
     def __init__(self, screen, keys, config, sounds):
         self.logSectionName = "Glitch_Heaven.NewGameMenu"
-        self.modifiers = {"chaos": False, "vflip": False, "hflip": False, "moonwalk": False}
+        self.modifiers = {"chaos": False, "vflip": False,
+                          "hflip": False, "moonwalk": False}
         super().__init__(screen, keys, config, sounds)
 
     def loadcustom(self):
@@ -34,7 +35,7 @@ class NewGameMenu(menu):
             if self.camp:
                 self.running = False
                 Game().main(self.screen, self.keys, "newgame",
-                            self.camp, self.config, self.sounds, self.chaos)
+                            self.camp, self.config, self.sounds, self.modifiers)
         except FileNotFoundError:
             self.modlogger.info("No File selected, "
                                 "Loading of campaign aborted")
@@ -90,11 +91,7 @@ class NewGameMenu(menu):
                                                (50, 240),
                                                lambda: self.editDesc(
                                                    "Load a custom Campaign"),
-                                               lambda: self.loadcustom(
-                                                   self.keys,
-                                                   self.config,
-                                                   self.screen,
-                                                   self.sounds),
+                                               lambda: self.loadcustom(),
                                                self.config,
                                                self.sounds
                                                )
@@ -191,7 +188,8 @@ class NewGameMenu(menu):
                                                         self.keys,
                                                         self.config,
                                                         self.sounds,
-                                                        self.modifiers).mainLoop(),
+                                                        self.modifiers
+                                                        ).mainLoop(),
                                         self.config,
                                         self.sounds)
             self.activeItems.append(self.cb)

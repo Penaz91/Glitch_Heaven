@@ -105,7 +105,8 @@ class mainMenu(menu):
                                                               "load",
                                                               None,
                                                               self.config,
-                                                              self.sounds),
+                                                              self.sounds,
+                                                              None),
                                           self.config,
                                           self.sounds)
             self.activeItems.append(self.cgam)
