@@ -17,7 +17,7 @@ import pygame
 import os
 from components.deadbody import DeadBody
 from components.help import Help
-from libs import timedanimation
+from libs.spritesheetanimation import SpritesheetAnimation as SpriteAni
 from libs import emitter
 import logging
 from logging import handlers as loghandler
@@ -67,22 +67,18 @@ class Player(pygame.sprite.Sprite):
         self.jumpsound = sounds["sfx"]["jump"]
         self.deathsound = sounds["sfx"]["death"]
         self.bouncesound = sounds["sfx"]["bounce"]
-        """self.idleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
-                                                      0.25, 0.25])"""
-        self.idleani = timedanimation.TimedAnimation([0.25]*5)
-        self.idleani.loadFromDir(os.path.join("resources",
+        self.idleani = SpriteAni(0.25,
+                                 os.path.join("resources",
                                               "sprites",
                                               "Player",
-                                              "Idle"))
-        """self.gidleani = timedanimation.TimedAnimation([0.25, 0.25, 0.25,
-                                                      0.25, 0.25])"""
-        self.gidleani = timedanimation.TimedAnimation([0.25]*5)
-        self.gidleani.loadFromDir(os.path.join("resources",
+                                              "Idle.png"))
+        self.gidleani = SpriteAni(0.25,
+                                  os.path.join("resources",
                                                "sprites",
                                                "Glitched_Player",
-                                               "Idle"))
+                                               "Idle.png"))
 
-        self.image = self.idleani.first()
+        self.image = self.idleani.currentframe
         self.rect = pygame.rect.Rect(location, self.image.get_size())
         self.rect.x = location[0]
         self.rect.y = location[1]
@@ -113,40 +109,26 @@ class Player(pygame.sprite.Sprite):
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
-        """self.walkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06,
-                                                            0.06, 0.06, 0.06,
-                                                            0.06, 0.06, 0.06,
-                                                            0.06])"""
-        self.walkanimation = timedanimation.TimedAnimation([0.06]*10)
-        self.walkanimation.loadFromDir(os.path.join("resources",
+        self.walkanimation = SpriteAni(0.06,
+                                       os.path.join("resources",
                                                     "sprites",
                                                     "Player",
-                                                    "Walking"))
-        """self.runanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04,
-                                                           0.04, 0.04, 0.04,
-                                                           0.04, 0.04])"""
-        self.runanimation = timedanimation.TimedAnimation([0.04]*8)
-        self.runanimation.loadFromDir(os.path.join("resources",
+                                                    "Walking.png"))
+        self.runanimation = SpriteAni(0.04,
+                                      os.path.join("resources",
                                                    "sprites",
                                                    "Player",
-                                                   "Running"))
-        """self.gwalkanimation = timedanimation.TimedAnimation([0.06, 0.06, 0.06,
-                                                            0.06, 0.06, 0.06,
-                                                            0.06, 0.06, 0.06,
-                                                            0.06])"""
-        self.gwalkanimation = timedanimation.TimedAnimation([0.06]*10)
-        self.gwalkanimation.loadFromDir(os.path.join("resources",
+                                                   "Running.png"))
+        self.gwalkanimation = SpriteAni(0.06,
+                                        os.path.join("resources",
                                                      "sprites",
                                                      "Glitched_Player",
-                                                     "Walking"))
-        """self.grunanimation = timedanimation.TimedAnimation([0.04, 0.04, 0.04,
-                                                           0.04, 0.04, 0.04,
-                                                           0.04, 0.04])"""
-        self.grunanimation = timedanimation.TimedAnimation([0.04]*8)
-        self.grunanimation.loadFromDir(os.path.join("resources",
+                                                     "Walking.png"))
+        self.grunanimation = SpriteAni(0.04,
+                                       os.path.join("resources",
                                                     "sprites",
                                                     "Glitched_Player",
-                                                    "Running"))
+                                                    "Running.png"))
         self.pushimg = pygame.image.load(
                 os.path.join("resources",
                              "sprites",

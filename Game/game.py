@@ -64,22 +64,10 @@ class Game(object):
                 not self.glitches["invertedGravity"]
             mod_logger.debug("Gravity has been inverted")
         else:
-            """truth = self.glitches.get(glitch)
-            if truth:
-                mod_logger.debug("The {0} glitch has been disabled"
-                                 .format(glitch))
-            else:
-                mod_logger.debug("The {0} glitch has been enabled"
-                                 .format(glitch))
-            truth = not truth
-            """
             self.glitches[glitch] = not self.glitches[glitch]
             mod_logger.debug("{0} Glitch has been set to {1}".format(
                 glitch,
                 self.glitches[glitch]))
-            """
-            mydict = {glitch: truth}
-            self.glitches.update(mydict)"""
         if self.glitches["speed"]:
             self.player.toggleDoubleSpeed()
         else:
@@ -200,10 +188,6 @@ class Game(object):
             plat = platform['Platform']
             size = int(platform['PlatSize'])
             spd = int(platform['PlatSpeed'])
-            """if "v" in plat:
-                vertical = True
-            else:
-                vertical = False"""
             vertical = "v" in plat
             if "bouncyplat" in platform:
                 bouncy = True
