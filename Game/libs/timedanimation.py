@@ -1,51 +1,43 @@
 # Timed Animation/Frame Generator Library
 # Part of the Glitch_Heaven Project
 # Copyright 2015 Penaz <penazarea@altervista.org>
-from libs.animation import Animation
-import random
+import pygame
+from itertools import cycle
+import os
+from os.path import join as pjoin
 
 
-class TimedAnimation(Animation):
-    def __init__(self, frametimings):
-        super(Animation, self).__init__()
-        self.frames = []
-        self.currentframe = -1
-        self.timings = frametimings
-        self.currenttime = 0
-
-    """ Next() remaps itself at runtime to save on comparisons"""
+class TimedAnimation(object):
+    def __init__(self, timings, framespath):
+        x =[(os.path.join(framespath, f))
+               for f in os.listdir(framespath)
+                  if os.path.isfile(os.path.join(framespath, f))]
+        self.frames = cycle([pygame.image.load(y).convert_alpha() for y in sorted(x)])
+        self.timings = cycle(timings)
+        self.currenttiming = next(self.timings)
+        self.currentframe = next(self.frames)
+        self.index = 0
+        self.dt = 0;
+        
     def next(self, dt):
-        self.next = self.next_post
-        return self.first()
-
-    def next_post(self, dt):
-        self.currenttime += dt
-        if self.currenttime >= self.timings[self.currentframe]:
-            self.currentframe = (self.currentframe+1) % len(self.frames)
-            self.currenttime = 0
-        return self.frames[self.currentframe]
-
-    """ Like Next(), rand_next() remaps itself at runtime
-    to save on comparisons """
-    def rand_next(self, dt):
-        self.frame = self.first()
-        self.rand_next = self.rand_next_post
-        return self.frame
-
-    def rand_next_post(self, dt):
-        """
-        This method returns the next frame in the animation,
-        in a ring array fashion if the timing is passed
-
-        Returns:
-        - Next frame from the frame list
-        """
-        self.currenttime += dt
-        if self.currenttime >= self.timings[self.currentframe]:
-            self.currenttime = 0
-            self.frame = random.choice(self.frames)
-        return self.frame
-
-    def first(self):
-        self.currentframe = 0
-        return self.frames[0]
+        self.dt += dt
+        if self.dt >= self.currenttiming[0]:
+            self.currentframe = next(self.frames)
+            self.dt = 0
+            self.index += 1
+            if self.index == self.currenttiming[1]:
+                self.currenttiming = next(self.timings)
+                self.index = 0
+        return self.currentframe
+        
+"""if __name__ == "__main__":
+    pygame.init()
+    screen = pygame.display.set_mode((640,480))
+    clock = pygame.time.Clock()
+    ani = TimedAnimation([(1, 1), (0.2, 18), (1, 1), (0.2, 4)],
+                         pjoin("AnimatedTitle"))
+    while 1:
+        screen.fill((0, 0, 0))
+        dt = clock.tick(30) / 1000.
+        screen.blit(ani.next(dt), (10, 10))
+        pygame.display.update()"""

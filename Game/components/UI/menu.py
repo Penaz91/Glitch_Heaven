@@ -44,13 +44,17 @@ class menu(object):
         self.font = pygame.font.Font(pathjoin("resources",
                                               "fonts",
                                               "TranscendsGames.otf"), 24)
-        self.titleTimings = [0.12]*24
+        """self.titleTimings = [0.12]*24
         self.titleTimings[0], self.titleTimings[19] = 2., 2.
         self.titleani = TimedAnimation(self.titleTimings)
         self.titleani.loadFromDir(pathjoin("resources",
                                            "UI",
-                                           "AnimatedTitle"))
-        self.title = self.titleani.first()
+                                           "AnimatedTitle"))"""
+        self.titleani = TimedAnimation([(2., 1), (0.12, 18), (2., 1), (0.12, 4)],
+                                       pathjoin("resources",
+                                                "UI",
+                                                "AnimatedTitle"))
+        self.title = self.titleani.next(0)
         self.titlesize = self.title.get_size()
         self.titlerect = self.title.get_rect()
         self.titlerect.x = self.screensize[0] / 2 - self.titlesize[0] / 2
