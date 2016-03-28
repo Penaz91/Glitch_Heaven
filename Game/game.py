@@ -459,13 +459,13 @@ class Game(object):
                                                         "tiles",
                                                         "Plats.png")
                                                ).convert_alpha(),
-                "glitches": self.preloadFromDir(pathjoin("resources",
-                                                         "sprites",
-                                                         "MobileObstacle")),
-                "collectibleitem": self.preloadFromDir(pathjoin("resources",
-                                                                "sprites",
-                                                                "GlitchTrigger"
-                                                                ))
+                "glitches": pathjoin("resources",
+                                     "sprites",
+                                     "MobileObstacle.png"),
+                "collectibleitem": pathjoin("resources",
+                                            "sprites",
+                                            "GlitchTrigger.png"
+                                                                )
                 }
         # ^-------------------------------------------------------------------^
         # Defines if a level should be loaded or a
@@ -564,8 +564,11 @@ class Game(object):
                     quit()
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
+                mods = pygame.key.get_mods()
                 if config.getboolean("Debug", "debugmode") and\
-                        pygame.key.get_mods() == 4417:
+                        mods & pygame.KMOD_LSHIFT and\
+                        mods & pygame.KMOD_LCTRL and\
+                        mods & pygame.KMOD_LALT:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_1:
                             self.toggleGlitch("wallClimb")

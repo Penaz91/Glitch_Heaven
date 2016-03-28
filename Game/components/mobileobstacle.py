@@ -2,7 +2,7 @@
 # Part of the Glitch_Heaven Project
 # Copyright 2015 Penaz <penazarea@altervista.org>
 import pygame
-from libs import timedanimation
+from libs.spritesheetanimation import SpritesheetAnimation
 
 
 class Obstacle(pygame.sprite.Sprite):
@@ -23,14 +23,16 @@ class Obstacle(pygame.sprite.Sprite):
         - Nothing
         """
         super(Obstacle, self).__init__(*groups)
-        self.ani = timedanimation.TimedAnimation([0.5, 0.5, 0.5, 0.5,
+        """self.ani = timedanimation.TimedAnimation([0.5, 0.5, 0.5, 0.5,
                                                  0.5, 0.5, 0.5, 0.5,
                                                  0.5, 0.5, 0.5, 0.5,
                                                  0.5, 0.5, 0.5, 0.5,
                                                  0.5, 0.5, 0.5, 0.5])
         self.preloaded_ani = preloaded_ani
         self.ani.loadFromList(preloaded_ani)
-        self.image = self.ani.first()
+        self.image = self.ani.first()"""
+        self.ani = SpritesheetAnimation(0.5, preloaded_ani)
+        self.image = self.ani.next(0)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = location
         if vertical:
