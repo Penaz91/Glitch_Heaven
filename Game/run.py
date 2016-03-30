@@ -74,8 +74,12 @@ if __name__ == "__main__":
         # ^-------------------------------------------------------------------^
         logger.info("Pre-initialising Mixer")
         pygame.mixer.pre_init(48000, 16, 2, 4096)
-        logger.info("Initialising Pygame")
-        pygame.init()
+        logger.info("Initialising Display")
+        pygame.display.init()
+        logger.info("Initialising Fonts")
+        pygame.font.init()
+        logger.info("Initialising Joystick")
+        pygame.joystick.init()
         logger.info("Initialising Mixer")
         pygame.mixer.init()
         # Sound Loading
@@ -91,7 +95,10 @@ if __name__ == "__main__":
                                                          "death.wav")),
                     "bounce": pygame.mixer.Sound(pathjoin("resources",
                                                           "sounds",
-                                                          "bounce.wav"))
+                                                          "bounce.wav")),
+                    "static": pygame.mixer.Sound(pathjoin("resources",
+                                                          "sounds",
+                                                          "static.wav"))
                     },
                 "menu": {
                     "test": pygame.mixer.Sound(pathjoin("resources",

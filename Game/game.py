@@ -41,6 +41,7 @@ ch.setFormatter(formatter)
 fh.setFormatter(formatter)
 mod_logger.addHandler(fh)
 mod_logger.addHandler(ch)
+_garbletimer_ = 0.1
 
 
 class Game(object):
@@ -72,6 +73,8 @@ class Game(object):
             self.player.toggleDoubleSpeed()
         else:
             self.player.untoggleDoubleSpeed()
+        self.garble = True
+        self.sounds["sfx"]["static"].play()
 
     def getHelpFlag(self):
         """
@@ -283,8 +286,9 @@ class Game(object):
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
         self.tilemap.layers.append(self.sprites)
-        self.backpos = [0, 0]       # DEPRECATED??
-        self.middlepos = [0, 0]     # DEPRECATED??
+        self.backpos = [0, 0]
+        self.middlepos = [0, 0]
+        self.middlebackpos = [0, 0]
         mod_logger.info("Positioning Player")
         if self.player is None:
             self.player = Player((start_cell.px, start_cell.py),
@@ -429,6 +433,7 @@ class Game(object):
         mod_logger.info("Entering main game")
         self.running = True
         self.time = 0.
+        self.sounds = sounds
         self.deathCounter = 0
         self.mode = mode
         self.gsize = (800, 576)
@@ -518,8 +523,12 @@ class Game(object):
                                self.gameviewport)
         # ^--------------------------------------------------------------^
         self.fps = 30
+        self.garble = False
+        self.garbletimer = _garbletimer_
         self.deadbodies = pygame.sprite.Group()
-        pygame.init()
+        self.screengarble = pygame.image.load(pathjoin("resources",
+                                                       "backgrounds",
+                                                       "screengarble.png")).convert_alpha()
         pygame.display.set_caption("Glitch_Heaven - Pre-Pre-Alpha Version")
         if self.running:
             self.loadLevelPart2(self.keys, sounds)
@@ -622,6 +631,8 @@ class Game(object):
                             self.toggleGlitch("noStop")
                         if event.key == pygame.K_j:
                             self.toggleGlitch("timeLapse")
+                        if event.key == pygame.K_RETURN:
+                            self.garble = True
                         if event.key == pygame.K_BACKSPACE:
                             mod_logger.debug("Debug key used,a" +
                                              "Loading next level")
@@ -656,14 +667,15 @@ class Game(object):
                 # ^-------------------------------------------------------------------^
             self.backpos = (min(-self.tilemap.viewport.x/6, 0),
                             min(-self.tilemap.viewport.y / 6, 0))
-            self.middlepos = (min(-self.tilemap.viewport.x/4, 0),
-                              min(-self.tilemap.viewport.y / 4, 0))
+            self.middlebackpos = (min(-self.tilemap.viewport.x/4, 0),
+                                  min(-self.tilemap.viewport.y / 4, 0))
+            self.middlepos = (min(-self.tilemap.viewport.x/2, 0),
+                              min(-self.tilemap.viewport.y / 2, 0))
             self.gameviewport.blit(self.bg, self.backpos)
-            self.gameviewport.blit(self.middleback, self.middlepos)
+            self.gameviewport.blit(self.middleback, self.middlebackpos)
             self.tilemap.update(dt, self)
             self.helptxts.update(dt, self)
-            self.gameviewport.blit(self.middle, (-self.tilemap.viewport.x/2,
-                                                 -self.tilemap.viewport.y/2))
+            self.gameviewport.blit(self.middle, self.middlepos)
             self.tilemap.draw(self.gameviewport)
             if not self.glitches["timeLapse"] or self.player.x_speed != 0:
                 self.particlesurf.fill((0, 0, 0, 0))
@@ -689,4 +701,10 @@ class Game(object):
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
             screen.blit(self.dcounttxt, (50, 50))
+            if self.garble:
+                screen.blit(self.screengarble, (0, 0))
+                self.garbletimer -= dt
+                if self.garbletimer <= 0:
+                    self.garble=False
+                    self.garbletimer = _garbletimer_
             pygame.display.update()
