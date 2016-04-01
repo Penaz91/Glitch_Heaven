@@ -137,3 +137,4 @@ if __name__ == "__main__":
     except:
         logger.critical("There has been an exception, printing traceback",
                         exc_info=True)
+        quit()

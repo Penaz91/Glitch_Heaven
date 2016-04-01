@@ -14,7 +14,7 @@
 # - Separate and compact animation routines
 # ------------------------------------------------
 import pygame
-import os
+from os.path import join as pjoin
 from components.deadbody import DeadBody
 from components.help import Help
 from libs.spritesheetanimation import SpritesheetAnimation as SpriteAni
@@ -22,7 +22,7 @@ from libs import emitter
 import logging
 from logging import handlers as loghandler
 mod_logger = logging.getLogger("Glitch_Heaven.PlayerEntity")
-fh = loghandler.TimedRotatingFileHandler(os.path.join("logs", "Game.log"),
+fh = loghandler.TimedRotatingFileHandler(pjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
@@ -36,7 +36,7 @@ mod_logger.addHandler(ch)
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
     size = (32, 32)     # Might be removed in future+taken from img
-    runmultiplier = 2
+    _runpower_ = 2
 
     def toggleDoubleSpeed(self):
         self.playermaxspeed = 350
@@ -45,6 +45,63 @@ class Player(pygame.sprite.Sprite):
     def untoggleDoubleSpeed(self):
         self.playermaxspeed = 250
         self.playeraccel = 50
+
+    def loadSprites(self):
+        self.idleani = SpriteAni(0.25,
+                                 pjoin("resources",
+                                       "sprites",
+                                       "Player",
+                                       "Idle.png"))
+        self.gidleani = SpriteAni(0.25,
+                                  pjoin("resources",
+                                        "sprites",
+                                        "Glitched_Player",
+                                        "Idle.png"))
+        self.fallingsprite = pygame.image.load(
+                pjoin("resources",
+                      "sprites",
+                      "Player",
+                      "jump_fall.png")).convert_alpha()
+        self.jumpsprite = pygame.image.load(
+                pjoin("resources",
+                      "sprites",
+                      "Player",
+                      "jump_rise.png")).convert_alpha()
+        self.gfallingsprite = pygame.image.load(
+                pjoin("resources",
+                      "sprites",
+                      "Glitched_Player",
+                      "jump_fall.png")).convert_alpha()
+        self.gjumpsprite = pygame.image.load(
+                pjoin("resources",
+                      "sprites",
+                      "Glitched_Player",
+                      "jump_rise.png")).convert_alpha()
+        self.walkanimation = SpriteAni(0.06,
+                                       pjoin("resources",
+                                             "sprites",
+                                             "Player",
+                                             "Walking.png"))
+        self.runanimation = SpriteAni(0.04,
+                                      pjoin("resources",
+                                            "sprites",
+                                            "Player",
+                                            "Running.png"))
+        self.gwalkanimation = SpriteAni(0.06,
+                                        pjoin("resources",
+                                              "sprites",
+                                              "Glitched_Player",
+                                              "Walking.png"))
+        self.grunanimation = SpriteAni(0.04,
+                                       pjoin("resources",
+                                             "sprites",
+                                             "Glitched_Player",
+                                             "Running.png"))
+        self.pushimg = pygame.image.load(
+                pjoin("resources",
+                      "sprites",
+                      "Player",
+                      "Pushing.png")).convert_alpha()
 
     def __init__(self, location, *groups, keys, game, sounds):
         """
@@ -61,79 +118,23 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__(*groups)
         self.playermaxspeed = 250
         self.playeraccel = 50
-        self.active = True
+        self.runmultiplier = self._runpower_
+        # self.active = True
         self.glitched = False
         self.soundslink = sounds
         self.jumpsound = sounds["sfx"]["jump"]
         self.deathsound = sounds["sfx"]["death"]
         self.bouncesound = sounds["sfx"]["bounce"]
-        self.idleani = SpriteAni(0.25,
-                                 os.path.join("resources",
-                                              "sprites",
-                                              "Player",
-                                              "Idle.png"))
-        self.gidleani = SpriteAni(0.25,
-                                  os.path.join("resources",
-                                               "sprites",
-                                               "Glitched_Player",
-                                               "Idle.png"))
-
+        self.loadSprites()
         self.image = self.idleani.currentframe
         self.rect = pygame.rect.Rect(location, self.image.get_size())
-        self.rect.x = location[0]
-        self.rect.y = location[1]
+        self.rect.x, self.rect.y = location
         self.resting = False
-        self.y_speed = 0
-        self.x_speed = 0
+        self.x_speed, self.y_speed = 0, 0
         self.jump_speed = -650
-        self.fallingsprite = pygame.image.load(
-                os.path.join("resources",
-                             "sprites",
-                             "Player",
-                             "jump_fall.png")).convert_alpha()
-        self.jumpsprite = pygame.image.load(
-                os.path.join("resources",
-                             "sprites",
-                             "Player",
-                             "jump_rise.png")).convert_alpha()
-        self.gfallingsprite = pygame.image.load(
-                os.path.join("resources",
-                             "sprites",
-                             "Glitched_Player",
-                             "jump_fall.png")).convert_alpha()
-        self.gjumpsprite = pygame.image.load(
-                os.path.join("resources",
-                             "sprites",
-                             "Glitched_Player",
-                             "jump_rise.png")).convert_alpha()
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
-        self.walkanimation = SpriteAni(0.06,
-                                       os.path.join("resources",
-                                                    "sprites",
-                                                    "Player",
-                                                    "Walking.png"))
-        self.runanimation = SpriteAni(0.04,
-                                      os.path.join("resources",
-                                                   "sprites",
-                                                   "Player",
-                                                   "Running.png"))
-        self.gwalkanimation = SpriteAni(0.06,
-                                        os.path.join("resources",
-                                                     "sprites",
-                                                     "Glitched_Player",
-                                                     "Walking.png"))
-        self.grunanimation = SpriteAni(0.04,
-                                       os.path.join("resources",
-                                                    "sprites",
-                                                    "Glitched_Player",
-                                                    "Running.png"))
-        self.pushimg = pygame.image.load(
-                os.path.join("resources",
-                             "sprites",
-                             "Player",
-                             "Pushing.png")).convert_alpha()
         self.particles = pygame.sprite.Group()
         self.game = game
         self.running = False
@@ -165,27 +166,26 @@ class Player(pygame.sprite.Sprite):
         """
         # If the permbody glitch is active, will add a body at death position
         # v-----------------------------------------------------v
-        if self.active:
-            x, y = game.tilemap.pixel_from_screen(self.rect.x,
-                                                  self.rect.y)
-            mod_logger.info("Player respawned, position of death: (" +
-                            str(x) + "," + str(y) + ")")
-            if game.glitches["permBodies"]:
-                body = DeadBody(x, y, game.sprites, game=game)
-                game.deadbodies.add(body)
-            if game.glitches["invertedGravity"]:
-                game.gravity = -1
-            else:
-                game.gravity = 1
-            self.deathsound.play()
-            # ^-----------------------------------------------------^
-            # Does a complete respawn of the player
-            # v-----------------------------------------------------v
-            game.player.rect.x, game.player.rect.y = self.lastcheckpoint
-            game.player.y_speed = 0
-            game.player.x_speed = 0
-            # ^-----------------------------------------------------^
-            game.deathCounter += 1
+        # if self.active:
+        x, y = game.tilemap.pixel_from_screen(self.rect.x,
+                                              self.rect.y)
+        mod_logger.info("Player respawned, position of death: (" +
+                        str(x) + "," + str(y) + ")")
+        if game.glitches["permBodies"]:
+            body = DeadBody(x, y, game.sprites, game=game)
+            game.deadbodies.add(body)
+        if game.glitches["invertedGravity"]:
+            game.gravity = -1
+        else:
+            game.gravity = 1
+        self.deathsound.play()
+        # ^-----------------------------------------------------^
+        # Does a complete respawn of the player
+        # v-----------------------------------------------------v
+        game.player.rect.x, game.player.rect.y = self.lastcheckpoint
+        game.player.x_speed, game.player.y_speed = 0, 0
+        # ^-----------------------------------------------------^
+        game.deathCounter += 1
 
     def animate(self, yspeed, xspeed, resting,
                 direction, dt, gravity, running, pushing, glitched, game):
