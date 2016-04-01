@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+# Mobile Platform Component
+# Part of the Glitch_Heaven Project
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
+
 import pygame
 
 

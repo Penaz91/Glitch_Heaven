@@ -1,6 +1,6 @@
 # Player component
 # Part of the Glitch_Heaven Project
-# Copyright 2015 Penaz <penazarea@altervista.org>
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
 #
 # ------------------------------------------------
 # TODO AREA

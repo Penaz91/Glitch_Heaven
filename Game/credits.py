@@ -1,6 +1,6 @@
 # Credits Screen Component
 # Part of the Glitch_Heaven project
-# Copyright 2015 Penaz <penazarea@altervista.org>
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI.menu import menu
 from components.UI import menuItem
 from libs.textglitcher import makeGlitched
@@ -40,7 +40,8 @@ class Credits(menu):
                                    False,
                                    (255, 255, 255))).convert_alpha(),
                  (50, 150)),
-                (makeGlitched("Dexter561, ScansPlays and AstralGemini", self.font),
+                (makeGlitched("Dexter561, ScansPlays and AstralGemini",
+                              self.font),
                     (50, 170)),
                 ((self.font.render("--- Special Thanks ---",
                                    False,

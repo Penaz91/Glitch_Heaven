@@ -1,6 +1,6 @@
 # Game Component
 # Part of the Glitch_Heaven Project
-# Copyright 2015 Penaz <penazarea@altervista.org>
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
 #
 # ------------------------------------------------
 # TODO Area
@@ -470,7 +470,7 @@ class Game(object):
                 "collectibleitem": pathjoin("resources",
                                             "sprites",
                                             "GlitchTrigger.png"
-                                                                )
+                                            )
                 }
         # ^-------------------------------------------------------------------^
         # Defines if a level should be loaded or a
@@ -528,7 +528,8 @@ class Game(object):
         self.deadbodies = pygame.sprite.Group()
         self.screengarble = pygame.image.load(pathjoin("resources",
                                                        "backgrounds",
-                                                       "screengarble.png")).convert_alpha()
+                                                       "screengarble.png")
+                                              ).convert_alpha()
         pygame.display.set_caption("Glitch_Heaven - Pre-Pre-Alpha Version")
         if self.running:
             self.loadLevelPart2(self.keys, sounds)
@@ -705,6 +706,6 @@ class Game(object):
                 screen.blit(self.screengarble, (0, 0))
                 self.garbletimer -= dt
                 if self.garbletimer <= 0:
-                    self.garble=False
+                    self.garble = False
                     self.garbletimer = _garbletimer_
             pygame.display.update()

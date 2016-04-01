@@ -1,6 +1,6 @@
 # Options Menu Component
 # Part of the Glitch_Heaven project
-# Copyright 2015 Penaz <penazarea@altervista.org>
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI import menuItem
 from videosettings import VideoSettings
 from audiosettings import AudioSettings

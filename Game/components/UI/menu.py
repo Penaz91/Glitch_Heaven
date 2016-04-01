@@ -1,9 +1,8 @@
 # Generic Menu Component
 # Part of the Glitch_Heaven Project
-# Copyright 2015 Penaz <penazarea@altervista.org>
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
 import pygame
 from os.path import join as pathjoin
-# from components.UI import menuItem
 import logging
 from logging import handlers as loghandler
 from libs.textglitcher import makeGlitched
@@ -50,7 +49,8 @@ class menu(object):
         self.titleani.loadFromDir(pathjoin("resources",
                                            "UI",
                                            "AnimatedTitle"))"""
-        self.titleani = TimedAnimation([(2., 1), (0.12, 18), (2., 1), (0.12, 4)],
+        self.titleani = TimedAnimation([(2., 1), (0.12, 18),
+                                        (2., 1), (0.12, 4)],
                                        pathjoin("resources",
                                                 "UI",
                                                 "AnimatedTitle"))

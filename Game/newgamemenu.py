@@ -1,6 +1,6 @@
 # New Game Menu Component
 # Part of the Glitch_Heaven project
-# Copyright 2015 Penaz <penazarea@altervista.org>
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI import menuItem
 from os.path import join as pathjoin
 from libs.textglitcher import makeGlitched
@@ -35,7 +35,8 @@ class NewGameMenu(menu):
             if self.camp:
                 self.running = False
                 Game().main(self.screen, self.keys, "newgame",
-                            self.camp, self.config, self.sounds, self.modifiers)
+                            self.camp, self.config, self.sounds,
+                            self.modifiers)
         except FileNotFoundError:
             self.modlogger.info("No File selected, "
                                 "Loading of campaign aborted")
@@ -183,7 +184,8 @@ class NewGameMenu(menu):
             self.cb = menuItem.menuitem(self.chimg,
                                         self.chselimg,
                                         (50, 480),
-                                        lambda: self.editDesc("Access the mods menu"),
+                                        lambda: self.editDesc(
+                                            "Access the mods menu"),
                                         lambda: modMenu(self.screen,
                                                         self.keys,
                                                         self.config,

@@ -1,15 +1,15 @@
 # Keyboard Item Settings Component
 # Part of the Glitch_Heaven project
-# Copyright 2015 Penaz <penazarea@altervista.org>
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI.menuItem import menuitem
 from libs.textglitcher import makeGlitched
+from os.path import join as pjoin
 import pygame
 import logging
-import os
 from logging import handlers as loghandler
 
 mod_logger = logging.getLogger("Glitch_Heaven.KeyboardItem")
-fh = loghandler.TimedRotatingFileHandler(os.path.join("logs", "Game.log"),
+fh = loghandler.TimedRotatingFileHandler(pjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'

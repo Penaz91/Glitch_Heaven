@@ -1,6 +1,6 @@
 # Constant-timing Spritesheet Animation Library
 # Part of the Glitch_Heaven Project
-# Copyright 2015 Penaz <penazarea@altervista.org>
+# Copyright 2015-2016 Penaz <penazarea@altervista.org>
 import pygame
 from itertools import cycle
 from random import choice as RChoice
@@ -27,7 +27,7 @@ class SpritesheetAnimation(object):
             self.time = 0
             self.currentframe = next(self.frames)
         return self.currentframe
-        
+
     def rand_next(self, dt):
         self.time += dt
         if self.time >= self.frametime:

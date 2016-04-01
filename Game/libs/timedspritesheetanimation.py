@@ -3,8 +3,7 @@
 # Copyright 2015 Penaz <penazarea@altervista.org>
 from libs.spritesheetanimation import SpritesheetAnimation
 from itertools import cycle
-import pygame
-from os.path import join as pathj
+
 
 class TimedSpritesheetAnimation(SpritesheetAnimation):
     def __init__(self, frametime, spritesheetpath, squaresize=32):
@@ -12,7 +11,7 @@ class TimedSpritesheetAnimation(SpritesheetAnimation):
         self.frametime = cycle(frametime)
         self.currenttiming = next(self.frametime)
         self.index = 0
-        
+
     def next(self, dt):
         self.time += dt
         if self.time >= self.currenttiming[0]:
@@ -23,7 +22,7 @@ class TimedSpritesheetAnimation(SpritesheetAnimation):
                 self.currenttiming = next(self.frametime)
                 self.index = 0
         return self.currentframe
-        
+
 """#------TESTING AREA----------
 if __name__ == "__main__":
     pygame.init()
