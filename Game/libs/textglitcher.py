@@ -28,10 +28,10 @@ def makeGlitched(text, font):
 def makeMoreGlitched(text, chanceperc):
     chance = random.randint(0, 100)
     txt = text
-    symlist = ["@", "#", "!", "%"]
+    d = list(txt)
+    symlist = ["@", "#", "!", "%", "&", ")", "(", "^"]
     if chance <= chanceperc:
         rnd = random.randint(1, len(text)//2)
-        d = list(txt)
         for i in range(rnd):
             rnd2 = random.randint(0, len(text)-1)
             d[rnd2] = random.choice(symlist)

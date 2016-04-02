@@ -28,7 +28,7 @@ import logging
 from logging import handlers as loghandler
 from os.path import join as pathjoin
 from tkinter import filedialog
-from libs.textglitcher import makeGlitched
+from libs.textglitcher import makeGlitched, makeMoreGlitched
 from tkinter import Tk
 mod_logger = logging.getLogger("Glitch_Heaven.Game")
 fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
@@ -222,9 +222,16 @@ class Game(object):
                                         ])
             self.GlitchTriggers.add(tr)
         self.tilemap.layers.append(self.GlitchTriggers)
-        self.title = makeGlitched(
-                        str(levelconfig['Level Info']['Name']),
-                        self.font)
+        if self.mode in ["criticalfailure", "cfsingle"]:
+            self.title = makeGlitched(
+                            makeMoreGlitched(
+                                str(levelconfig['Level Info']['Name']),
+                                50),
+                            self.font)
+        else:
+            self.title = makeGlitched(
+                            str(levelconfig['Level Info']['Name']),
+                            self.font)
         center = 400 - int(self.title.get_rect().width)/2
         self.titleposition = (center, 578)
         if mode.lower() == "cfsingle":
