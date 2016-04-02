@@ -567,6 +567,7 @@ class Player(pygame.sprite.Sprite):
                     if key[self.keys["action"]]:
                         slide *= -1
                 self.rect.x += slide * dt
+                self.collisionrect.midbottom = self.rect.midbottom
         # ^--------------------------------------------------------------^
         # Test for collision with deadbody platforms and act accordingly
         # v--------------------------------------------------------------v

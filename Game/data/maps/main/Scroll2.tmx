@@ -5,13 +5,13 @@
  </tileset>
  <layer name="Tile Layer 1" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJzlWD0LwjAQPRwdrE4ugouLq9CK4OYkuHRX/0D//64HDYRw19zlo7Xx4FHSfPWV93JJKgDYEbgxOAjA9dWMoRmv+mIN848ayuOxmfJDIgN5oLYWBJYMjgJwfRFXa/63cDwftj0Prd+GytTTru8sHk+iTQhWUJ4/csUj8/gYHI870F5wPUKV3WcoNP7g8ofRLaVvzXsuh7ltqgT4BX+cIM7nHI8xNJ0ycL1qQK5T7XvOI5p8I8k7TY8Lg9C8kqOeyjv2PpHjcYb5BK67c+Dh8+sQD4TRX2v1sbXp81SuehdGV76zi63NGmQ5IYWvNOuuVj8vZfsxAtfdEnmg9n1a1PDmzhche6oW+HB5uOsyhQ7kgV4K1bxm3hBdaWIsDZbEw7e/ijk3SP6ROevEzGXyh88ToZB4SeLJf7mHc+8Z9lN9SGSUcl+CPFBbKX2eC757hg+OfmRD
+   eJztWLEKwjAQPRwdrE4ugouLq9CK4OYkuHRXf6D/v9uDBkK4a+6SpjXVB4/Spkn7ynu5pAUA7AjeGB4E5PpqxtCMV7RcQ/4oYX46NlO+SCRQB3prQXDJ8Cgg1xd5tZ7/Fo7n47bToc1b3zl1tNsbS8eTuCeE/5zL8Ug8PoLTcQc6C25GqHP3GEpNPjhfGd9S/tZc52oY5e9YfkM+TpAm52N4ekisWlYg96n2OpcRTb2R1J2q44VhaF1J0U7VHXudyOk4Qz7AeTcHHb689ulAGv/VVh/bm75MpWp3aXzl27vY3ixBVhOGyJVm3tX656W8fwzgvDtHHeh9nxc1urn9RciaqgYerg53XqbYgByYpVDPa54b4isNxvLgnHT41lcx+wbJNzJ7nZhnmfrhy0QoJVmSZPJX/sOhr2wd+6leJBKujlyBOtBbQ+Y8FX3/GT6hQmRE
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
   <object id="1" x="1152" y="352" width="32" height="32">
    <properties>
-    <property name="ToggleGlitch" value="noleft,noright"/>
+    <property name="ToggleGlitch" value="noLeft,noRight"/>
    </properties>
   </object>
   <object id="2" x="32" y="928" width="1312" height="32">
@@ -77,7 +77,7 @@
     <property name="blocker" value="l"/>
    </properties>
   </object>
-  <object id="14" x="1056" y="544" width="512" height="32">
+  <object id="14" x="1056" y="544" width="544" height="32">
    <properties>
     <property name="blocker" value="b"/>
     <property name="slide" value="-300"/>
@@ -280,7 +280,7 @@
     <property name="slide" value="300"/>
    </properties>
   </object>
-  <object id="53" x="1248" y="512" width="320" height="32">
+  <object id="53" x="1248" y="512" width="352" height="32">
    <properties>
     <property name="blocker" value="t"/>
     <property name="slide" value="300"/>
@@ -517,7 +517,7 @@
   </object>
   <object id="96" x="1440" y="384" width="128" height="64">
    <properties>
-    <property name="deadly" value="rbt"/>
+    <property name="deadly" value="lbt"/>
    </properties>
   </object>
   <object id="97" x="1568" y="448" width="32" height="64">

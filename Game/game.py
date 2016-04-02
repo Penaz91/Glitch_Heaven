@@ -15,7 +15,9 @@
 import pygame
 from components.player import Player
 from libs import tmx
-import os
+from os.path import join as pjoin
+from os.path import isfile, splitext, basename
+from os import listdir
 from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
@@ -135,10 +137,10 @@ class Game(object):
         # v--------------------------------------------------------------v
         mod_logger.info("LoadLevel Routine is loading: %(level)s"
                         % locals())
-        with open(os.path.join("data",
-                               "maps",
-                               campaignname,
-                               level+".conf")) as f:
+        with open(pjoin("data",
+                        "maps",
+                        campaignname,
+                        level+".conf")) as f:
             levelconfig = json.loads(f.read())
         mod_logger.info("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
@@ -153,35 +155,35 @@ class Game(object):
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
         mod_logger.info("Loading Tilemap")
-        self.tilemap = tmx.load(os.path.join("data",
-                                             "maps",
-                                             campaignname,
-                                             level+".tmx"),
+        self.tilemap = tmx.load(pjoin("data",
+                                      "maps",
+                                      campaignname,
+                                      level+".tmx"),
                                 screen.get_size())
         mod_logger.info("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
         self.bg = pygame.image.load(
-                  os.path.join("resources",
-                               "backgrounds",
-                               levelconfig["Level Components"]
-                               ["background"])).convert_alpha()
+                  pjoin("resources",
+                        "backgrounds",
+                        levelconfig["Level Components"]
+                        ["background"])).convert_alpha()
         self.middleback = pygame.image.load(
-                          os.path.join("resources",
-                                       "backgrounds",
-                                       levelconfig["Level Components"]
-                                       ["middle_back1"])).convert_alpha()
+                          pjoin("resources",
+                                "backgrounds",
+                                levelconfig["Level Components"]
+                                ["middle_back1"])).convert_alpha()
         self.middle = pygame.image.load(
-                      os.path.join("resources",
-                                   "backgrounds",
-                                   levelconfig["Level Components"]
-                                   ["middle_back2"])).convert_alpha()
+                      pjoin("resources",
+                            "backgrounds",
+                            levelconfig["Level Components"]
+                            ["middle_back2"])).convert_alpha()
         if levelconfig["Level Components"]["overlay"] is not None:
             self.hasOverlay = True
             self.overlay = pygame.image.load(
-                           os.path.join("resources",
-                                        "overlays",
-                                        levelconfig["Level Components"]
-                                        ["overlay"])).convert_alpha()
+                           pjoin("resources",
+                                 "overlays",
+                                 levelconfig["Level Components"]
+                                 ["overlay"])).convert_alpha()
         else:
             self.hasOverlay = False
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
@@ -408,9 +410,9 @@ class Game(object):
         Returns:
         - Nothing
         """
-        x = [(os.path.join(directory, f))
-             for f in os.listdir(directory)
-             if os.path.isfile(os.path.join(directory, f))]
+        x = [(pjoin(directory, f))
+             for f in listdir(directory)
+             if isfile(pjoin(directory, f))]
         frames = [pygame.image.load(y).convert_alpha() for y in sorted(x)]
         return frames
 
@@ -449,11 +451,11 @@ class Game(object):
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
         self.clock = pygame.time.Clock()
-        self.titleholder = pygame.image.load(os.path.join(
+        self.titleholder = pygame.image.load(pjoin(
                                              "resources",
                                              "UI",
                                              "TitleHolder.png"))
-        self.font = pygame.font.Font(os.path.join(
+        self.font = pygame.font.Font(pjoin(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 20)
         self.title = None
@@ -501,7 +503,7 @@ class Game(object):
         elif self.mode.lower() == "newgame":
             mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
-            self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
+            self.campaignname = splitext(basename(cmp))[0]
             self.currentcampaign = self.loadCampaign(self.campaignFile,
                                                      self.mode)
             self.campaignIndex = -1
@@ -513,7 +515,7 @@ class Game(object):
             mod_logger.info("Using New Game mode - Critical Failure Modifier")
             self.cftime = 0
             self.campaignFile = cmp
-            self.campaignname = os.path.splitext(os.path.basename(cmp))[0]
+            self.campaignname = splitext(basename(cmp))[0]
             self.currentcampaign = self.loadCampaign(self.campaignFile,
                                                      self.mode)
             self.campaignIndex = -1
