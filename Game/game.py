@@ -6,9 +6,6 @@
 # TODO Area
 # - Add a game HUD
 # - Add Joypad support
-# - Make the program not crash when the end of the campaign is reached.
-# - If custom campaign/level support will be added
-#   add support for multiple savefiles.
 # ------------------------------------------------
 # NOTES AREA:
 # - If using pygame_sdl2, the modifiers bit mask changes, this will give
@@ -130,7 +127,7 @@ class Game(object):
         """
         # Loads the level configuration and the control keys
         # v--------------------------------------------------------------v
-        mod_logger.info("LoadLevel Routine is loading: " + level)
+        mod_logger.info("LoadLevel Routine is loading: %(level)s" %locals())
         with open(os.path.join("data",
                                "maps",
                                campaignname,
@@ -144,7 +141,7 @@ class Game(object):
         self.currenthelp = ""
         self.screen = screen
         self.glitches = levelconfig["Glitches"]["Standard"]
-        mod_logger.debug("Glitches Active: " + str(self.glitches))
+        mod_logger.debug("Glitches Active: {0}".format(self.glitches))
         # ^--------------------------------------------------------------^
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
@@ -237,9 +234,9 @@ class Game(object):
         Returns:
         - Nothing
         """
-        mod_logger.debug("Campaign index: " + str(self.campaignIndex + 1))
-        mod_logger.debug("Length of campaign: " + str(len(campaign)))
         self.campaignIndex += 1
+        mod_logger.debug("Campaign index: {0}".format(str(self.campaignIndex)))
+        mod_logger.debug("Length of campaign: {0}".format(len(campaign)))
         if (self.campaignIndex) >= len(campaign):
             self.running = False
         else:
@@ -258,7 +255,7 @@ class Game(object):
         Keyword Arguments:
         - campaignFile: The file (Without extension) defining the campaign
         """
-        mod_logger.info("Loading campaign"+str(campaignfile))
+        mod_logger.info("Loading campaign {0}".format(campaignfile))
         with open(campaignfile,
                   "r") as campfile:
             cmpf = json.loads(campfile.read())
@@ -350,7 +347,7 @@ class Game(object):
                      "time": self.time,
                      "mode": self.mode,
                      "modifiers": self.modifiers}
-            mod_logger.debug("Shelf saved with data: " + str(shelf))
+            mod_logger.debug("Shelf saved with data: %(shelf)s" %locals())
             with open(path, "w") as savefile:
                 string = json.dumps(shelf)
                 savefile.write(string)
@@ -366,7 +363,7 @@ class Game(object):
                                           multiple=False)
         if not path:
             raise FileNotFoundError
-        mod_logger.info("Loading Save from: "+path)
+        mod_logger.info("Loading Save from: %(path)s" %locals())
         with open(path, "r") as savefile:
             string = savefile.read()
             shelf = json.loads(string)
@@ -393,8 +390,8 @@ class Game(object):
             self.redsurfrect = self.redsurf.get_rect()
         # Debug Area
         # v--------------------------------------------------------------v
-        mod_logger.debug("Loadgame: "+str(self.currentcampaign))
-        mod_logger.debug("Campaign Index: "+str(self.campaignIndex))
+        mod_logger.debug("Loadgame: {0}".format(self.currentcampaign))
+        mod_logger.debug("Campaign Index: {0}".format(self.campaignIndex))
         # ^--------------------------------------------------------------^
 
     def preloadFromDir(self, directory):
@@ -424,7 +421,7 @@ class Game(object):
              for x in lvlconf["Glitches"]["ChaosMode"]
              if lvlconf["Glitches"]["ChaosMode"][x]]
         self.newChaosTime()
-        mod_logger.debug("Chaos Mode Parameters: " + str(self.chaosParameters))
+        mod_logger.debug("Chaos Mode Parameters: {0}".format(self.chaosParameters))
 
     def main(self, screen, keys, mode, cmp, config, sounds, modifiers):
         """
@@ -465,7 +462,7 @@ class Game(object):
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
         self.modifiers = modifiers
-        mod_logger.debug("Current Active Modifiers: " + str(self.modifiers))
+        mod_logger.debug("Current Active Modifiers: {0}".format(self.modifiers))
         # Preloading graphics area
         # v-------------------------------------------------------------------v
         self.preloaded_sprites = {
@@ -542,7 +539,7 @@ class Game(object):
         pygame.display.set_caption("Glitch_Heaven - Pre-Pre-Alpha Version")
         if self.running:
             self.loadLevelPart2(self.keys, sounds)
-            mod_logger.debug("Glitches Loaded: "+str(self.glitches))
+            mod_logger.debug("Glitches Loaded: {0}".format(self.glitches))
         """Game Loop"""
         while self.running:
             dt = self.clock.tick(self.fps)/1000.

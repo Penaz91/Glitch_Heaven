@@ -38,6 +38,8 @@ class Player(pygame.sprite.Sprite):
     size = (32, 32)     # Might be removed in future+taken from img
     _runpower_ = 2
     _jump_speed_ = -650
+    _initialParticleColor_ = (0, 255, 84)
+    _finalParticleColor_ = (0, 103, 34)
 
     def toggleDoubleSpeed(self):
         self.playermaxspeed = 350
@@ -110,6 +112,21 @@ class Player(pygame.sprite.Sprite):
                       "Player",
                       "Pushing.png")).convert_alpha()
 
+    def setupEmitters(self):
+        if self.game.config.getboolean("Video", "playerparticles"):
+            self.leftemitter = emitter.Emitter(self.rect.bottomleft,
+                                               self._initialParticleColor_,
+                                               self._finalParticleColor_,
+                                               -1, -1,
+                                               self.particles,
+                                               self.game.tilemap)
+            self.rightemitter = emitter.Emitter(self.rect.bottomright,
+                                                self._initialParticleColor_,
+                                                self._finalParticleColor_,
+                                                1, -1,
+                                                self.particles,
+                                                self.game.tilemap)
+
     def __init__(self, location, *groups, keys, game, sounds):
         """
         Default Constructor
@@ -146,17 +163,7 @@ class Player(pygame.sprite.Sprite):
         self.game = game
         self.running = False
         self.pushing = False
-        if game.config.getboolean("Video", "playerparticles"):
-            self.leftemitter = emitter.Emitter(self.rect.bottomleft,
-                                               (0, 255, 84),
-                                               (0, 103, 34), -1, -1,
-                                               self.particles,
-                                               game.tilemap)
-            self.rightemitter = emitter.Emitter(self.rect.bottomright,
-                                                (0, 255, 84),
-                                                (0, 103, 34), 1, -1,
-                                                self.particles,
-                                                game.tilemap)
+        self.setupEmitters()
         self.lastcheckpoint = location
         self.collisionrect = pygame.rect.Rect((0, 0), (20, 32))
         self.collisionrect.midbottom = self.rect.midbottom
@@ -176,8 +183,7 @@ class Player(pygame.sprite.Sprite):
         # if self.active:
         x, y = game.tilemap.pixel_from_screen(self.rect.x,
                                               self.rect.y)
-        mod_logger.info("Player respawned, position of death: (" +
-                        str(x) + "," + str(y) + ")")
+        mod_logger.info("Player respawned, position of death: (%(x)s, %(y)s)" %locals())
         if game.glitches["permBodies"]:
             body = DeadBody(x, y, game.sprites, game=game)
             game.deadbodies.add(body)
@@ -871,8 +877,7 @@ class Player(pygame.sprite.Sprite):
                                                             "button"):
             if key[self.keys["action"]]:
                 butt = cell['button']
-                mod_logger.info("Player pressed the button with ID: " +
-                                str(butt))
+                mod_logger.info("Player pressed the button with ID: %(butt)s" %locals())
                 for plat in game.plats:
                     if plat.id == butt:
                         plat.active = True
@@ -884,8 +889,7 @@ class Player(pygame.sprite.Sprite):
                                                             "TpIn"):
             if key[self.keys["action"]]:
                 tpin = cell['TpIn']
-                mod_logger.info("Player entered the TP with ID: " +
-                                str(tpin))
+                mod_logger.info("Player entered the TP with ID: %(tpin)s" %locals())
                 for out in game.tilemap.layers['Triggers'].find("TpOut"):
                     tpout = out['TpOut']
                     if tpout == tpin:
