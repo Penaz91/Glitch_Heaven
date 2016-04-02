@@ -11,13 +11,12 @@
 # - If using pygame_sdl2, the modifiers bit mask changes, this will give
 #   issues in the usage of the debug keys
 # ------------------------------------------------
-
 import pygame
 from components.player import Player
+from datetime import timedelta
 from libs import tmx
 from os.path import join as pjoin
-from os.path import isfile, splitext, basename
-from os import listdir
+from os.path import splitext, basename
 from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
@@ -41,6 +40,33 @@ fh.setFormatter(formatter)
 mod_logger.addHandler(fh)
 mod_logger.addHandler(ch)
 _garbletimer_ = 0.1
+_debugkeys_ = {
+        pygame.K_1: "wallClimb",
+        pygame.K_2: "multiJump",
+        pygame.K_3: "highJump",
+        pygame.K_4: "featherFalling",
+        pygame.K_5: "gravity",
+        pygame.K_6: "hover",
+        pygame.K_7: "stickyCeil",
+        pygame.K_8: "invertedGravity",
+        pygame.K_9: "permBodies",
+        pygame.K_q: "solidHelp",
+        pygame.K_w: "clipOnCommand",
+        pygame.K_e: "hWrapping",
+        pygame.K_r: "vWrapping",
+        pygame.K_t: "ledgeWalk",
+        pygame.K_y: "ledgeJump",
+        pygame.K_u: "slideInvert",
+        pygame.K_i: "noLeft",
+        pygame.K_o: "noRight",
+        pygame.K_p: "noJump",
+        pygame.K_a: "stopBounce",
+        pygame.K_s: "speed",
+        pygame.K_d: "invertedRun",
+        pygame.K_f: "invertedControls",
+        pygame.K_g: "obsResistant",
+        pygame.K_h: "noStop",
+        pygame.K_j: "timeLapse"}
 
 
 class Game(object):
@@ -189,29 +215,28 @@ class Game(object):
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
             obs = obstacle['Obstacle']
             speed = obstacle['ObsSpeed']
-            if "v" in obs:
+            """if "v" in obs:
                 Obstacle((obstacle.px, obstacle.py), True, speed, None,
                          self.obstacles,
                          preloaded_ani=self.preloaded_sprites["glitches"])
-            else:
-                Obstacle((obstacle.px, obstacle.py), False, speed, None,
-                         self.obstacles,
-                         preloaded_ani=self.preloaded_sprites["glitches"])
+            else:"""
+            Obstacle((obstacle.px, obstacle.py), ("v" in obs), speed, None,
+                     self.obstacles,
+                     preloaded_ani=self.preloaded_sprites["glitches"])
         self.tilemap.layers.append(self.obstacles)
         for platform in self.tilemap.layers['Triggers'].find('Platform'):
             plat = platform['Platform']
             size = int(platform['PlatSize'])
             spd = int(platform['PlatSpeed'])
-            vertical = "v" in plat
             if "bouncyplat" in platform:
                 bouncy = True
                 bouncepwr = int(platform['bouncyplat'])
             else:
                 bouncy = False
                 bouncepwr = 0
-            TriggerablePlatform(platform.px, platform.py, vertical, bouncepwr,
-                                spd, size, False, platform['id'], self.plats,
-                                game=self, bouncy=bouncy,
+            TriggerablePlatform(platform.px, platform.py, ("v" in plat),
+                                bouncepwr, spd, size, False, platform['id'],
+                                self.plats, game=self, bouncy=bouncy,
                                 image=self.preloaded_sprites["platforms"])
         self.tilemap.layers.append(self.plats)
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
@@ -308,13 +333,13 @@ class Game(object):
         self.middlepos = [0, 0]
         self.middlebackpos = [0, 0]
         mod_logger.info("Positioning Player")
-        if self.player is None:
+        if self.player is not None:
+            self.player.rect.x, self.player.rect.y = start_cell.px,\
+                                                     start_cell.py
+        else:
             self.player = Player((start_cell.px, start_cell.py),
                                  self.sprites, keys=keys, game=self,
                                  sounds=sounds)
-        else:
-            self.player.rect.x, self.player.rect.y = start_cell.px,\
-                                                     start_cell.py
         self.player.lastcheckpoint = start_cell.px, start_cell.py
         self.sprites.add(self.player)
         mod_logger.info("Creating Particle Surface")
@@ -405,23 +430,6 @@ class Game(object):
         mod_logger.debug("Loadgame: {0}".format(self.currentcampaign))
         mod_logger.debug("Campaign Index: {0}".format(self.campaignIndex))
         # ^--------------------------------------------------------------^
-
-    def preloadFromDir(self, directory):
-        """
-        Loads the frames from a given directory using List generators,
-        frames are sorted by name
-
-        Keyword Arguments:
-        - directory: The Directory to load the frames from
-
-        Returns:
-        - Nothing
-        """
-        x = [(pjoin(directory, f))
-             for f in listdir(directory)
-             if isfile(pjoin(directory, f))]
-        frames = [pygame.image.load(y).convert_alpha() for y in sorted(x)]
-        return frames
 
     def newChaosTime(self):
         self.chaosParameters["timer"] = float(random.randint(5, 30))
@@ -565,15 +573,16 @@ class Game(object):
                 self.redsurfrect.y = -self.gsize[1] + \
                     (self.gsize[1] * self.time) / self.cftime
                 self.rcftime = self.cftime - self.time
-                hours = int(self.rcftime // 3600)
+                """hours = int(self.rcftime // 3600)
                 minutes = int((self.rcftime % 3600) // 60)
                 seconds = ((self.rcftime % 3600) % 60)
                 th = str(hours) if hours >= 10 else "0"+str(hours)
                 tm = str(minutes) if minutes >= 10 else "0"+str(minutes)
                 ts = "%.3f" % (seconds) if seconds >= 10 \
-                     else "0"+"%.3f" % (seconds)
-                self.timer = makeGlitched("Time Before Failure: " +
-                                          th + ":" + tm + ":" + ts, self.font)
+                     else "0"+"%.3f" % (seconds)"""
+                self.timer = makeGlitched("Time Before Failure: {0}".format(
+                    str(timedelta(seconds=self.rcftime))),
+                                          self.font)
                 if self.redsurfrect.y > 0:
                     pygame.mouse.set_visible(True)  # Make the cursor visible
                     self.running = False
@@ -600,58 +609,9 @@ class Game(object):
                         mods & pygame.KMOD_LCTRL and\
                         mods & pygame.KMOD_LALT:
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_1:
-                            self.toggleGlitch("wallClimb", True)
-                        if event.key == pygame.K_2:
-                            self.toggleGlitch("multiJump", True)
-                        if event.key == pygame.K_3:
-                            self.toggleGlitch("highJump", True)
-                        if event.key == pygame.K_4:
-                            self.toggleGlitch("featherFalling", True)
-                        if event.key == pygame.K_5:
-                            self.toggleGlitch("gravity", True)
-                        if event.key == pygame.K_6:
-                            self.toggleGlitch("hover", True)
-                        if event.key == pygame.K_7:
-                            self.toggleGlitch("stickyCeil", True)
-                        if event.key == pygame.K_8:
-                            self.toggleGlitch("invertedGravity", True)
-                        if event.key == pygame.K_9:
-                            self.toggleGlitch("permBodies", True)
-                        if event.key == pygame.K_q:
-                            self.toggleGlitch("solidHelp", True)
-                        if event.key == pygame.K_w:
-                            self.toggleGlitch("clipOnCommand", True)
-                        if event.key == pygame.K_e:
-                            self.toggleGlitch("hWrapping", True)
-                        if event.key == pygame.K_r:
-                            self.toggleGlitch("vWrapping", True)
-                        if event.key == pygame.K_t:
-                            self.toggleGlitch("ledgeWalk", True)
-                        if event.key == pygame.K_y:
-                            self.toggleGlitch("ledge", True)
-                        if event.key == pygame.K_u:
-                            self.toggleGlitch("slideInvert", True)
-                        if event.key == pygame.K_i:
-                            self.toggleGlitch("noLeft", True)
-                        if event.key == pygame.K_o:
-                            self.toggleGlitch("noRight", True)
-                        if event.key == pygame.K_p:
-                            self.toggleGlitch("noJump", True)
-                        if event.key == pygame.K_a:
-                            self.toggleGlitch("stopBounce", True)
-                        if event.key == pygame.K_s:
-                            self.toggleGlitch("speed", True)
-                        if event.key == pygame.K_d:
-                            self.toggleGlitch("invertedRun", True)
-                        if event.key == pygame.K_f:
-                            self.toggleGlitch("invertedControls", True)
-                        if event.key == pygame.K_g:
-                            self.toggleGlitch("obsResistant", True)
-                        if event.key == pygame.K_h:
-                            self.toggleGlitch("noStop", True)
-                        if event.key == pygame.K_j:
-                            self.toggleGlitch("timeLapse", True)
+                        if event.key in _debugkeys_:
+                            self.toggleGlitch(_debugkeys_[event.key],
+                                              True)
                         if event.key == pygame.K_RETURN:
                             self.garble = True
                         if event.key == pygame.K_BACKSPACE:
