@@ -37,6 +37,7 @@ class Player(pygame.sprite.Sprite):
     """ Class representing the player """
     size = (32, 32)     # Might be removed in future+taken from img
     _runpower_ = 2
+    _jump_speed_ = -650
 
     def toggleDoubleSpeed(self):
         self.playermaxspeed = 350
@@ -45,6 +46,12 @@ class Player(pygame.sprite.Sprite):
     def untoggleDoubleSpeed(self):
         self.playermaxspeed = 250
         self.playeraccel = 50
+        
+    def toggleHighJump(self):
+        self.jumpMultiplier = 2
+        
+    def untoggleHighJump(self):
+        self.jumpMultiplier = 1
 
     def loadSprites(self):
         self.idleani = SpriteAni(0.25,
@@ -118,9 +125,10 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__(*groups)
         self.playermaxspeed = 250
         self.playeraccel = 50
-        self.runmultiplier = self._runpower_
+        self.runmultiplier = 1
         # self.active = True
         self.glitched = False
+        self.jumpMultiplier = 1
         self.soundslink = sounds
         self.jumpsound = sounds["sfx"]["jump"]
         self.deathsound = sounds["sfx"]["death"]
@@ -131,7 +139,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.x, self.rect.y = location
         self.resting = False
         self.x_speed, self.y_speed = 0, 0
-        self.jump_speed = -650
         self.direction = 1      # 1=Right, -1=Left
         self.bounced = False    # Used to ignore input when bounced
         self.keys = keys
@@ -185,7 +192,8 @@ class Player(pygame.sprite.Sprite):
         game.player.rect.x, game.player.rect.y = self.lastcheckpoint
         game.player.x_speed, game.player.y_speed = 0, 0
         # ^-----------------------------------------------------^
-        game.deathCounter += 1
+        if not game.glitches["permBodies"]:
+            game.deathCounter += 1
 
     def animate(self, yspeed, xspeed, resting,
                 direction, dt, gravity, running, pushing, glitched, game):
@@ -386,6 +394,16 @@ class Player(pygame.sprite.Sprite):
         if game.modifiers["moonwalk"]:
             self.image = pygame.transform.flip(
                          self.image, True, False)
+    
+    def emitJumpParticles(self):
+        if self.game.gravity == 1:
+            self.rightemitter.move(self.rect.bottomright)
+            self.leftemitter.move(self.rect.bottomleft)
+        else:
+            self.rightemitter.move(self.rect.topright)
+            self.leftemitter.move(self.rect.topleft)
+        self.rightemitter.emit(1, self.game.gravity)
+        self.leftemitter.emit(1, self.game.gravity)
 
     def update(self, dt, game):
         """
@@ -404,16 +422,26 @@ class Player(pygame.sprite.Sprite):
             self.collisionrect.midtop = self.rect.midtop
         last = self.collisionrect.copy()  # Copy last position for compare
         key = pygame.key.get_pressed()
+        # Check if run button is pressed (With eventual Invertedrun glitch)
+        # v--------------------------------------------------------------v
         if game.glitches["invertedRun"]:
             self.running = not bool(key[self.keys["run"]])
         else:
             self.running = bool(key[self.keys["run"]])
+        # ^--------------------------------------------------------------^
+        if self.running:
+            self.runmultiplier = self._runpower_
+        else:
+            self.runmultiplier = 1
+        # Check if Lerft/Right buttons are pressed (W/ eventual Invertedcontrols glitch)
+        # v--------------------------------------------------------------v
         if game.glitches["invertedControls"]:
             self.left = key[self.keys["right"]]
             self.right = key[self.keys["left"]]
         else:
             self.left = key[self.keys["left"]]
             self.right = key[self.keys["right"]]
+        # ^--------------------------------------------------------------^
         if self.left and not game.glitches["noLeft"]:
             self.direction = -1     # Mainly for different bounce mechanics
             if not self.bounced:        # Not bounced away -> control in air
@@ -421,28 +449,28 @@ class Player(pygame.sprite.Sprite):
                 # This might lead to a change of speed in air
                 # Do i want this?
                 # v--------------------------------------------------------v
-                if self.running:
-                    self.x_speed = max(-self.playermaxspeed * dt *
-                                       self.runmultiplier,
-                                       self.x_speed-self.playeraccel*dt *
-                                       self.runmultiplier)  # Use running speed
+                #if self.running:
+                self.x_speed = max(-self.playermaxspeed * dt *
+                                   self.runmultiplier,
+                                   self.x_speed-self.playeraccel*dt *
+                                   self.runmultiplier)  # Use running/walking speed
                 # ^--------------------------------------------------------^
-                else:
-                    self.x_speed = max(-self.playermaxspeed * dt,
-                                       self.x_speed -
-                                       self.playeraccel*dt)  # Use walk speed
+                # else:
+                #    self.x_speed = max(-self.playermaxspeed * dt,
+                #                       self.x_speed -
+                #                       self.playeraccel*dt)  # Use walk speed
         elif self.right and not game.glitches["noRight"]:
             if not self.bounced:
                 self.direction = 1  # Used mainly for bouncy mechanics
-                if self.running:
-                    self.x_speed = min(self.playermaxspeed * dt *
-                                       self.runmultiplier,
-                                       self.x_speed+self.playeraccel * dt *
-                                       self.runmultiplier)  # Use run speed
-                else:
-                    self.x_speed = min(self.playermaxspeed*dt,
-                                       self.x_speed +
-                                       self.playeraccel*dt)  # Walk Speed
+                #if self.running:
+                self.x_speed = min(self.playermaxspeed * dt *
+                                   self.runmultiplier,
+                                   self.x_speed+self.playeraccel * dt *
+                                   self.runmultiplier)  # Use run speed
+                # else:
+                #    self.x_speed = min(self.playermaxspeed*dt,
+                #                       self.x_speed +
+                #                       self.playeraccel*dt)  # Walk Speed
         else:
             # Gives the player some control over the fall if they're not
             # bounced away from a spring
@@ -451,12 +479,12 @@ class Player(pygame.sprite.Sprite):
             # v--------------------------------------------------------------v
             if game.glitches["noStop"]:
                 if self.x_speed != 0:
-                    if self.running:
-                        self.x_speed = self.playermaxspeed *\
-                                self.direction * self.runmultiplier * dt
-                    else:
-                        self.x_speed = self.playermaxspeed *\
-                                self.direction * dt
+                    # if self.running:
+                    self.x_speed = self.playermaxspeed *\
+                            self.direction * self.runmultiplier * dt
+                    # else:
+                    #    self.x_speed = self.playermaxspeed *\
+                    #            self.direction * dt
             else:
                 if not self.bounced:
                     if self.direction == 1:
@@ -481,39 +509,28 @@ class Player(pygame.sprite.Sprite):
                     # If the high jump glitch is active, jumps twice as high
                     # This happens while the multijump glitch is active
                     # v------------------------------------------------------v
-                    # TODO ?: tie highjump glitch to jump_speed so i can make
+                    # DONE ?: tie highjump glitch to jump_speed so i can make
                     #         1 comparison per level loaded
-                    if self.y_speed*game.gravity > -(self.jump_speed/2) or\
+                    if self.y_speed*game.gravity > -(self._jump_speed_/2) or\
                             self.resting:
-                        if game.glitches["highJump"]:
-                            self.y_speed = self.jump_speed*2*game.gravity
-                        else:
-                            self.y_speed = self.jump_speed*game.gravity
+                        # DONE: Use formula instead of comparisons
+                        # v--------------------------------------------------------------v
+                        # if game.glitches["highJump"]:
+                        self.y_speed = self._jump_speed_*self.jumpMultiplier*game.gravity
+                        # else:
+                        #    self.y_speed = self._jump_speed_*game.gravity
+                        # ^--------------------------------------------------------------^
                         if game.config.getboolean("Video", "playerparticles"):
-                            if game.gravity == 1:
-                                self.rightemitter.move(self.rect.bottomright)
-                                self.leftemitter.move(self.rect.bottomleft)
-                            else:
-                                self.rightemitter.move(self.rect.topright)
-                                self.leftemitter.move(self.rect.topleft)
-                            self.rightemitter.emit(1, game.gravity)
-                            self.leftemitter.emit(1, game.gravity)
+                            self.emitJumpParticles()
                     # ^------------------------------------------------------^
         elif game.glitches["hover"]:
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
                 # if self.y_speed == 0:
                 if self.resting:
                     self.jumpsound.play()
-                self.y_speed = self.jump_speed*game.gravity*0.8
+                self.y_speed = self._jump_speed_*game.gravity*0.8
                 if game.config.getboolean("Video", "playerparticles"):
-                    if game.gravity == 1:
-                        self.rightemitter.move(self.rect.bottomright)
-                        self.leftemitter.move(self.rect.bottomleft)
-                    else:
-                        self.rightemitter.move(self.rect.topright)
-                        self.leftemitter.move(self.rect.topleft)
-                    self.rightemitter.emit(1, game.gravity)
-                    self.leftemitter.emit(1, game.gravity)
+                    self.emitJumpParticles()
         else:
             if key[self.keys["jump"]] and self.resting and\
                     not game.glitches["noJump"]:
@@ -523,43 +540,39 @@ class Player(pygame.sprite.Sprite):
                 else:
                     # If the high jump glitch is active, jumps twice as high
                     # v------------------------------------------------------v
-                    if game.glitches["highJump"]:
-                        self.y_speed = self.jump_speed*2*game.gravity
-                    else:
-                        self.y_speed = self.jump_speed*game.gravity
+                    # DONE: Use formula instead of comparisons
+                    # v--------------------------------------------------------------v
+                    # if game.glitches["highJump"]:
+                    self.y_speed = self._jump_speed_*self.jumpMultiplier*game.gravity
+                    # else:
+                    #    self.y_speed = self._jump_speed_*game.gravity
+                    # ^--------------------------------------------------------------^
                     if game.config.getboolean("Video", "playerparticles"):
-                        if game.gravity == 1:
-                            self.rightemitter.move(self.rect.bottomright)
-                            self.leftemitter.move(self.rect.bottomleft)
-                        else:
-                            self.rightemitter.move(self.rect.topright)
-                            self.leftemitter.move(self.rect.topleft)
-                        self.rightemitter.emit(1, game.gravity)
-                        self.leftemitter.emit(1, game.gravity)
+                        self.emitJumpParticles()
                         # ^------------------------------------------------------^
                     self.resting = False    # I jumped, so i'm not on a surface
         if game.glitches["featherFalling"]:
-            if game.glitches["ledgeJump"]:
-                if game.gravity == 1:
-                    self.y_speed = (min(350, self.y_speed+35))
-                elif game.gravity == -1:
-                    self.y_speed = max(-350, self.y_speed-35)
-            else:
-                if game.gravity == 1:
-                    self.y_speed = (min(350, self.y_speed+35))
-                elif game.gravity == -1:
-                    self.y_speed = max(-350, self.y_speed-35)
+            # if game.glitches["ledgeJump"]:
+            if game.gravity == 1:
+                self.y_speed = (min(350, self.y_speed+35))
+            elif game.gravity == -1:
+                self.y_speed = max(-350, self.y_speed-35)
+            # else:
+            #    if game.gravity == 1:
+            #        self.y_speed = (min(350, self.y_speed+35))
+            #    elif game.gravity == -1:
+            #        self.y_speed = max(-350, self.y_speed-35)
         else:
-            if game.glitches["ledgeJump"]:
-                if game.gravity == 1:
-                    self.y_speed = (min(600, self.y_speed+60))
-                elif game.gravity == -1:
-                    self.y_speed = max(-600, self.y_speed-60)
-            else:
-                if game.gravity == 1:
-                    self.y_speed = (min(600, self.y_speed+60))
-                elif game.gravity == -1:
-                    self.y_speed = max(-600, self.y_speed-60)
+            # if game.glitches["ledgeJump"]:
+            if game.gravity == 1:
+                self.y_speed = (min(600, self.y_speed+60))
+            elif game.gravity == -1:
+                self.y_speed = max(-600, self.y_speed-60)
+            # else:
+            #    if game.gravity == 1:
+            #        self.y_speed = (min(600, self.y_speed+60))
+            #    elif game.gravity == -1:
+            #        self.y_speed = max(-600, self.y_speed-60)
         if game.glitches['ledgeWalk']:
             if not self.resting:
                 self.rect.y += self.y_speed * dt   # Move the player vertically
@@ -624,7 +637,19 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         collision = pygame.sprite.spritecollide(self, game.deadbodies, False)
         for block in collision:
-            if self.y_speed == 0:
+            if game.gravity == 1:
+                if last.bottom <= block.rect.top and\
+                    self.collisionrect.bottom > block.rect.top:
+                        self.rect.bottom = block.rect.top
+                        self.resting = True
+                        self.y_speed = 0
+            else:
+                if last.top >= block.rect.bottom and\
+                    self.collisionrect.top < block.rect.bottom:
+                        self.rect.top = block.rect.bottom
+                        self.resting = True
+                        self.y_speed = 0
+            """if self.y_speed == 0:
                 self.resting = True
             elif self.y_speed * game.gravity > 0:
                 if game.gravity == 1:
@@ -632,7 +657,7 @@ class Player(pygame.sprite.Sprite):
                 else:
                     self.rect.top = block.rect.bottom
                 self.resting = True
-                self.y_speed = 0
+                self.y_speed = 0"""
         # ^--------------------------------------------------------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
@@ -823,7 +848,6 @@ class Player(pygame.sprite.Sprite):
             game.loadLevelPart2(game.keys, self.soundslink)
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
-        # game.backpos[0] = -game.tilemap.view_x      # Moves background?
         # Wraps player movement if the glitch is active
         # v--------------------------------------------------------------v
         if game.glitches["hWrapping"]:
@@ -831,10 +855,9 @@ class Player(pygame.sprite.Sprite):
             # v-----------------------------v
             if self.rect.x < 0:
                 self.rect.x = game.tilemap.px_width - self.rect.width
-                self.rect.y -= 3
             elif self.rect.x > game.tilemap.px_width:
                 self.rect.x = 0
-                self.rect.y -= 3
+            self.rect.y -= 3 * game.gravity
             # ^-----------------------------^
         if game.glitches["vWrapping"]:
             self.rect.y = self.rect.y % game.tilemap.px_height

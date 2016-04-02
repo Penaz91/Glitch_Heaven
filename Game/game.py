@@ -47,7 +47,7 @@ _garbletimer_ = 0.1
 class Game(object):
     """ The Main Game """
 
-    def toggleGlitch(self, glitch):
+    def toggleGlitch(self, glitch, garble):
         """
         Debug method for toggling glitches
 
@@ -73,8 +73,13 @@ class Game(object):
             self.player.toggleDoubleSpeed()
         else:
             self.player.untoggleDoubleSpeed()
-        self.garble = True
-        self.sounds["sfx"]["static"].play()
+        if self.glitches["highJump"]:
+            self.player.toggleHighJump()
+        else:
+            self.player.untoggleHighJump()
+        if garble:
+            self.garble = True
+            self.sounds["sfx"]["static"].play()
 
     def getHelpFlag(self):
         """
@@ -314,6 +319,10 @@ class Game(object):
             self.player.toggleDoubleSpeed()
         else:
             self.player.untoggleDoubleSpeed()
+        if self.glitches["highJump"]:
+            self.player.toggleHighJump()
+        else:
+            self.player.untoggleHighJump()
         mod_logger.info("Loading of the level completed" +
                         " successfully, ready to play")
         pygame.mouse.set_visible(False)
@@ -564,7 +573,7 @@ class Game(object):
                 self.chaosParameters["timer"] -= dt
                 if self.chaosParameters["timer"] <= 0.:
                     self.toggleGlitch(random.choice(
-                                      self.chaosParameters["glitches"]))
+                                      self.chaosParameters["glitches"]), True)
                     self.newChaosTime()
             # ^-------------------------------------------------------------------^
             for event in pygame.event.get():
@@ -581,57 +590,57 @@ class Game(object):
                         mods & pygame.KMOD_LALT:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_1:
-                            self.toggleGlitch("wallClimb")
+                            self.toggleGlitch("wallClimb", True)
                         if event.key == pygame.K_2:
-                            self.toggleGlitch("multiJump")
+                            self.toggleGlitch("multiJump", True)
                         if event.key == pygame.K_3:
-                            self.toggleGlitch("highJump")
+                            self.toggleGlitch("highJump", True)
                         if event.key == pygame.K_4:
-                            self.toggleGlitch("featherFalling")
+                            self.toggleGlitch("featherFalling", True)
                         if event.key == pygame.K_5:
-                            self.toggleGlitch("gravity")
+                            self.toggleGlitch("gravity", True)
                         if event.key == pygame.K_6:
-                            self.toggleGlitch("hover")
+                            self.toggleGlitch("hover", True)
                         if event.key == pygame.K_7:
-                            self.toggleGlitch("stickyCeil")
+                            self.toggleGlitch("stickyCeil", True)
                         if event.key == pygame.K_8:
-                            self.toggleGlitch("invertedGravity")
+                            self.toggleGlitch("invertedGravity", True)
                         if event.key == pygame.K_9:
-                            self.toggleGlitch("permBodies")
+                            self.toggleGlitch("permBodies", True)
                         if event.key == pygame.K_q:
-                            self.toggleGlitch("solidHelp")
+                            self.toggleGlitch("solidHelp", True)
                         if event.key == pygame.K_w:
-                            self.toggleGlitch("clipOnCommand")
+                            self.toggleGlitch("clipOnCommand", True)
                         if event.key == pygame.K_e:
-                            self.toggleGlitch("hWrapping")
+                            self.toggleGlitch("hWrapping", True)
                         if event.key == pygame.K_r:
-                            self.toggleGlitch("vWrapping")
+                            self.toggleGlitch("vWrapping", True)
                         if event.key == pygame.K_t:
-                            self.toggleGlitch("ledgeWalk")
+                            self.toggleGlitch("ledgeWalk", True)
                         if event.key == pygame.K_y:
-                            self.toggleGlitch("ledge")
+                            self.toggleGlitch("ledge", True)
                         if event.key == pygame.K_u:
-                            self.toggleGlitch("slideInvert")
+                            self.toggleGlitch("slideInvert", True)
                         if event.key == pygame.K_i:
-                            self.toggleGlitch("noLeft")
+                            self.toggleGlitch("noLeft", True)
                         if event.key == pygame.K_o:
-                            self.toggleGlitch("noRight")
+                            self.toggleGlitch("noRight", True)
                         if event.key == pygame.K_p:
-                            self.toggleGlitch("noJump")
+                            self.toggleGlitch("noJump", True)
                         if event.key == pygame.K_a:
-                            self.toggleGlitch("stopBounce")
+                            self.toggleGlitch("stopBounce", True)
                         if event.key == pygame.K_s:
-                            self.toggleGlitch("speed")
+                            self.toggleGlitch("speed", True)
                         if event.key == pygame.K_d:
-                            self.toggleGlitch("invertedRun")
+                            self.toggleGlitch("invertedRun", True)
                         if event.key == pygame.K_f:
-                            self.toggleGlitch("invertedControls")
+                            self.toggleGlitch("invertedControls", True)
                         if event.key == pygame.K_g:
-                            self.toggleGlitch("obsResistant")
+                            self.toggleGlitch("obsResistant", True)
                         if event.key == pygame.K_h:
-                            self.toggleGlitch("noStop")
+                            self.toggleGlitch("noStop", True)
                         if event.key == pygame.K_j:
-                            self.toggleGlitch("timeLapse")
+                            self.toggleGlitch("timeLapse", True)
                         if event.key == pygame.K_RETURN:
                             self.garble = True
                         if event.key == pygame.K_BACKSPACE:

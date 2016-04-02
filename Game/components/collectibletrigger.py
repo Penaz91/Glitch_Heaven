@@ -38,4 +38,4 @@ class CollectibleTrigger(pygame.sprite.Sprite):
 
     def toggle(self, game):
         for glitch in self.triggers:
-            game.toggleGlitch(glitch)
+            game.toggleGlitch(glitch, True)
