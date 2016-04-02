@@ -44,6 +44,18 @@ _garbletimer_ = 0.1
 class Game(object):
     """ The Main Game """
 
+    def toggleHighJump(self):
+        if self.glitches["highJump"]:
+            self.player.toggleHighJump()
+        else:
+            self.player.untoggleHighJump()
+
+    def toggleDoubleSpeed(self):
+        if self.glitches["speed"]:
+            self.player.toggleDoubleSpeed()
+        else:
+            self.player.untoggleDoubleSpeed()
+
     def toggleGlitch(self, glitch, garble):
         """
         Debug method for toggling glitches
@@ -66,14 +78,8 @@ class Game(object):
             mod_logger.debug("{0} Glitch has been set to {1}".format(
                 glitch,
                 self.glitches[glitch]))
-        if self.glitches["speed"]:
-            self.player.toggleDoubleSpeed()
-        else:
-            self.player.untoggleDoubleSpeed()
-        if self.glitches["highJump"]:
-            self.player.toggleHighJump()
-        else:
-            self.player.untoggleHighJump()
+        self.toggleHighJump()
+        self.toggleDoubleSpeed()
         if garble:
             self.garble = True
             self.sounds["sfx"]["static"].play()
@@ -127,7 +133,8 @@ class Game(object):
         """
         # Loads the level configuration and the control keys
         # v--------------------------------------------------------------v
-        mod_logger.info("LoadLevel Routine is loading: %(level)s" %locals())
+        mod_logger.info("LoadLevel Routine is loading: %(level)s"
+                        % locals())
         with open(os.path.join("data",
                                "maps",
                                campaignname,
@@ -312,14 +319,8 @@ class Game(object):
         if self.glitches["invertedGravity"]:
             self.gravity = -1
         # ^--------^
-        if self.glitches["speed"]:
-            self.player.toggleDoubleSpeed()
-        else:
-            self.player.untoggleDoubleSpeed()
-        if self.glitches["highJump"]:
-            self.player.toggleHighJump()
-        else:
-            self.player.untoggleHighJump()
+        self.toggleHighJump()
+        self.toggleDoubleSpeed()
         mod_logger.info("Loading of the level completed" +
                         " successfully, ready to play")
         pygame.mouse.set_visible(False)
@@ -347,7 +348,8 @@ class Game(object):
                      "time": self.time,
                      "mode": self.mode,
                      "modifiers": self.modifiers}
-            mod_logger.debug("Shelf saved with data: %(shelf)s" %locals())
+            mod_logger.debug("Shelf saved with data: %(shelf)s"
+                             % locals())
             with open(path, "w") as savefile:
                 string = json.dumps(shelf)
                 savefile.write(string)
@@ -363,7 +365,8 @@ class Game(object):
                                           multiple=False)
         if not path:
             raise FileNotFoundError
-        mod_logger.info("Loading Save from: %(path)s" %locals())
+        mod_logger.info("Loading Save from: %(path)s"
+                        % locals())
         with open(path, "r") as savefile:
             string = savefile.read()
             shelf = json.loads(string)
@@ -421,7 +424,8 @@ class Game(object):
              for x in lvlconf["Glitches"]["ChaosMode"]
              if lvlconf["Glitches"]["ChaosMode"][x]]
         self.newChaosTime()
-        mod_logger.debug("Chaos Mode Parameters: {0}".format(self.chaosParameters))
+        mod_logger.debug("Chaos Mode Parameters: {0}".format(
+            self.chaosParameters))
 
     def main(self, screen, keys, mode, cmp, config, sounds, modifiers):
         """
@@ -462,7 +466,8 @@ class Game(object):
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
         self.modifiers = modifiers
-        mod_logger.debug("Current Active Modifiers: {0}".format(self.modifiers))
+        mod_logger.debug("Current Active Modifiers: {0}".format(
+            self.modifiers))
         # Preloading graphics area
         # v-------------------------------------------------------------------v
         self.preloaded_sprites = {
