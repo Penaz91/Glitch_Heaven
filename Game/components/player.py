@@ -8,10 +8,8 @@
 #   and right movement.
 # - Reduce boilerplate concerning the emission of particles
 # - Tie player size to the size of the sprite
-# - Find a reason for the code at row 262
 # - Tie bouncing mechanics directly to direction via formula,
 #   instead of using conditionals, to save CPU power.
-# - Separate and compact animation routines
 # ------------------------------------------------
 import pygame
 from os.path import join as pjoin
@@ -35,7 +33,6 @@ mod_logger.addHandler(ch)
 
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
-    size = (32, 32)     # Might be removed in future+taken from img
     _runpower_ = 2
     _jump_speed_ = -650
     _initialParticleColor_ = (0, 255, 84)
@@ -127,6 +124,20 @@ class Player(pygame.sprite.Sprite):
                                                 self.particles,
                                                 self.game.tilemap)
 
+    def emit_Right(self):
+        if self.game.gravity == 1:
+            self.rightemitter.move(self.rect.bottomright)
+        else:
+            self.rightemitter.move(self.rect.topright)
+        self.rightemitter.emit(self.runmultiplier, self.runmultiplier*self.game.gravity)
+
+    def emit_Left(self):
+        if self.game.gravity == 1:
+            self.leftemitter.move(self.rect.bottomleft)
+        else:
+            self.leftemitter.move(self.rect.topleft)
+        self.leftemitter.emit(self.runmultiplier, self.runmultiplier*self.game.gravity)
+
     def __init__(self, location, *groups, keys, game, sounds):
         """
         Default Constructor
@@ -143,7 +154,6 @@ class Player(pygame.sprite.Sprite):
         self.playermaxspeed = 250
         self.playeraccel = 50
         self.runmultiplier = 1
-        # self.active = True
         self.glitched = False
         self.jumpMultiplier = 1
         self.soundslink = sounds
@@ -213,26 +223,15 @@ class Player(pygame.sprite.Sprite):
                         self.image = self.gidleani.next(dt)
                     else:
                         # Player is moving right
+                        if self.game.config.getboolean("Video",
+                                                       "playerparticles"):
+                            self.emit_Left()
                         if running:
                             # Player is running rightwards
-                            if self.game.config.getboolean("Video",
-                                                           "playerparticles"):
-                                if gravity == 1:
-                                    self.leftemitter.move(self.rect.bottomleft)
-                                else:
-                                    self.leftemitter.move(self.rect.topleft)
-                                self.leftemitter.emit(2, 2*gravity)
                             self.image = self.grunanimation.next(dt)
                         else:
                             # Player is walking rightwards
                             self.image = self.gwalkanimation.next(dt)
-                            if self.game.config.getboolean("Video",
-                                                           "playerparticles"):
-                                if gravity == 1:
-                                    self.leftemitter.move(self.rect.bottomleft)
-                                else:
-                                    self.leftemitter.move(self.rect.topleft)
-                                self.leftemitter.emit(1, gravity)
                 elif direction == -1:
                     # Player is pointing left
                     if xspeed == 0:
@@ -243,34 +242,21 @@ class Player(pygame.sprite.Sprite):
                                     False)
                     else:
                         # Player is moving left
+                        if self.game.config.getboolean("Video",
+                                                       "playerparticles"):
+                            self.emit_Right()
                         if running:
                             # Player is running leftwards
                             self.image = pygame.transform.flip(
                                          self.grunanimation.next(dt),
                                          True,
                                          False)
-                            if self.game.config.getboolean("Video",
-                                                           "playerparticles"):
-                                if gravity == 1:
-                                    self.rightemitter.move(
-                                            self.rect.bottomright)
-                                else:
-                                    self.rightemitter.move(self.rct.topright)
-                                self.rightemitter.emit(2, 2*gravity)
                         else:
                             # Player is walking leftwards
                             self.image = pygame.transform.flip(
                                          self.gwalkanimation.next(dt),
                                          True,
                                          False)
-                            if self.game.config.getboolean("Video",
-                                                           "playerparticles"):
-                                if gravity == 1:
-                                    self.rightemitter.move(
-                                            self.rect.bottomright)
-                                else:
-                                    self.rightemitter.move(self.rct.topright)
-                                self.rightemitter.emit(1, gravity)
             else:
                 # Player is either jumping or falling
                 if direction == 1:
@@ -305,26 +291,16 @@ class Player(pygame.sprite.Sprite):
                         self.image = self.idleani.next(dt)
                     else:
                         # Player is moving right
+                        if self.game.config.getboolean("Video",
+                                                       "playerparticles"):
+                            if not pushing:
+                                self.emit_Left()
                         if pushing:
                             self.image = self.pushimg
                         elif running:
-                            if self.game.config.getboolean("Video",
-                                                           "playerparticles"):
-                                if gravity == 1:
-                                    self.leftemitter.move(self.rect.bottomleft)
-                                else:
-                                    self.leftemitter.move(self.rect.topleft)
-                                self.leftemitter.emit(2, 2*gravity)
                             # Player is running rightwards
                             self.image = self.runanimation.next(dt)
                         else:
-                            if self.game.config.getboolean("Video",
-                                                           "playerparticles"):
-                                if gravity == 1:
-                                    self.leftemitter.move(self.rect.bottomleft)
-                                else:
-                                    self.leftemitter.move(self.rect.topleft)
-                                self.leftemitter.emit(1, gravity)
                             # Player is walking rightwards
                             self.image = self.walkanimation.next(dt)
                 elif direction == -1:
@@ -337,6 +313,10 @@ class Player(pygame.sprite.Sprite):
                                     False)
                     else:
                         # Player is moving left
+                        if self.game.config.getboolean("Video",
+                                                       "playerparticles"):
+                            if not pushing:
+                                self.emit_Right()
                         if pushing:
                             self.image = pygame.transform.flip(
                                          self.pushimg,
@@ -344,28 +324,12 @@ class Player(pygame.sprite.Sprite):
                                          False)
                         elif running:
                             # Player is running leftwards
-                            if self.game.config.getboolean("Video",
-                                                           "playerparticles"):
-                                if gravity == 1:
-                                    self.rightemitter.move(
-                                            self.rect.bottomright)
-                                else:
-                                    self.rightemitter.move(self.rect.topright)
-                                self.rightemitter.emit(2, 2*gravity)
                             self.image = pygame.transform.flip(
                                          self.runanimation.next(dt),
                                          True,
                                          False)
                         else:
                             # Player is walking leftwards
-                            if self.game.config.getboolean("Video",
-                                                           "playerparticles"):
-                                if gravity == 1:
-                                    self.rightemitter.move(
-                                            self.rect.bottomright)
-                                else:
-                                    self.rightemitter.move(self.rect.topright)
-                                self.rightemitter.emit(1, gravity)
                             self.image = pygame.transform.flip(
                                          self.walkanimation.next(dt),
                                          True,
@@ -455,28 +419,18 @@ class Player(pygame.sprite.Sprite):
                 # This might lead to a change of speed in air
                 # Do i want this?
                 # v--------------------------------------------------------v
-                #if self.running:
                 self.x_speed = max(-self.playermaxspeed * dt *
                                    self.runmultiplier,
                                    self.x_speed-self.playeraccel*dt *
                                    self.runmultiplier)  # Use running/walking speed
                 # ^--------------------------------------------------------^
-                # else:
-                #    self.x_speed = max(-self.playermaxspeed * dt,
-                #                       self.x_speed -
-                #                       self.playeraccel*dt)  # Use walk speed
         elif self.right and not game.glitches["noRight"]:
             if not self.bounced:
                 self.direction = 1  # Used mainly for bouncy mechanics
-                #if self.running:
                 self.x_speed = min(self.playermaxspeed * dt *
                                    self.runmultiplier,
                                    self.x_speed+self.playeraccel * dt *
-                                   self.runmultiplier)  # Use run speed
-                # else:
-                #    self.x_speed = min(self.playermaxspeed*dt,
-                #                       self.x_speed +
-                #                       self.playeraccel*dt)  # Walk Speed
+                                   self.runmultiplier)  # Use run/walk speed
         else:
             # Gives the player some control over the fall if they're not
             # bounced away from a spring
@@ -485,12 +439,8 @@ class Player(pygame.sprite.Sprite):
             # v--------------------------------------------------------------v
             if game.glitches["noStop"]:
                 if self.x_speed != 0:
-                    # if self.running:
                     self.x_speed = self.playermaxspeed *\
                             self.direction * self.runmultiplier * dt
-                    # else:
-                    #    self.x_speed = self.playermaxspeed *\
-                    #            self.direction * dt
             else:
                 if not self.bounced:
                     if self.direction == 1:
@@ -515,17 +465,9 @@ class Player(pygame.sprite.Sprite):
                     # If the high jump glitch is active, jumps twice as high
                     # This happens while the multijump glitch is active
                     # v------------------------------------------------------v
-                    # DONE ?: tie highjump glitch to jump_speed so i can make
-                    #         1 comparison per level loaded
                     if self.y_speed*game.gravity > -(self._jump_speed_/2) or\
                             self.resting:
-                        # DONE: Use formula instead of comparisons
-                        # v--------------------------------------------------------------v
-                        # if game.glitches["highJump"]:
                         self.y_speed = self._jump_speed_*self.jumpMultiplier*game.gravity
-                        # else:
-                        #    self.y_speed = self._jump_speed_*game.gravity
-                        # ^--------------------------------------------------------------^
                         if game.config.getboolean("Video", "playerparticles"):
                             self.emitJumpParticles()
                     # ^------------------------------------------------------^
@@ -546,39 +488,21 @@ class Player(pygame.sprite.Sprite):
                 else:
                     # If the high jump glitch is active, jumps twice as high
                     # v------------------------------------------------------v
-                    # DONE: Use formula instead of comparisons
-                    # v--------------------------------------------------------------v
-                    # if game.glitches["highJump"]:
                     self.y_speed = self._jump_speed_*self.jumpMultiplier*game.gravity
-                    # else:
-                    #    self.y_speed = self._jump_speed_*game.gravity
-                    # ^--------------------------------------------------------------^
                     if game.config.getboolean("Video", "playerparticles"):
                         self.emitJumpParticles()
                         # ^------------------------------------------------------^
                     self.resting = False    # I jumped, so i'm not on a surface
         if game.glitches["featherFalling"]:
-            # if game.glitches["ledgeJump"]:
             if game.gravity == 1:
                 self.y_speed = (min(350, self.y_speed+35))
             elif game.gravity == -1:
                 self.y_speed = max(-350, self.y_speed-35)
-            # else:
-            #    if game.gravity == 1:
-            #        self.y_speed = (min(350, self.y_speed+35))
-            #    elif game.gravity == -1:
-            #        self.y_speed = max(-350, self.y_speed-35)
         else:
-            # if game.glitches["ledgeJump"]:
             if game.gravity == 1:
                 self.y_speed = (min(600, self.y_speed+60))
             elif game.gravity == -1:
                 self.y_speed = max(-600, self.y_speed-60)
-            # else:
-            #    if game.gravity == 1:
-            #        self.y_speed = (min(600, self.y_speed+60))
-            #    elif game.gravity == -1:
-            #        self.y_speed = max(-600, self.y_speed-60)
         if game.glitches['ledgeWalk']:
             if not self.resting:
                 self.rect.y += self.y_speed * dt   # Move the player vertically
@@ -655,15 +579,6 @@ class Player(pygame.sprite.Sprite):
                         self.rect.top = block.rect.bottom
                         self.resting = True
                         self.y_speed = 0
-            """if self.y_speed == 0:
-                self.resting = True
-            elif self.y_speed * game.gravity > 0:
-                if game.gravity == 1:
-                    self.rect.bottom = block.rect.top
-                else:
-                    self.rect.top = block.rect.bottom
-                self.resting = True
-                self.y_speed = 0"""
         # ^--------------------------------------------------------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
@@ -727,8 +642,6 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = -200
                     else:
                         self.y_speed = 200
-            # else:
-                # self.pushing = False
             elif 'r' in blockers and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
                 self.bounced = False
@@ -796,8 +709,6 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers["Triggers"].collide(self.collisionrect,
                                                             'deadly'):
             deadly = cell["deadly"]
-            # FIXME: Can cross dead bodies horizontally
-            # FIX: Bodies will be pretty thin, so i think i can ignore this
             if 't' in deadly and last.bottom <= cell.top and\
                     self.collisionrect.bottom > cell.top:
                 self.rect.bottom = cell.top
