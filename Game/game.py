@@ -563,13 +563,6 @@ class Game(object):
                 self.redsurfrect.y = -self.gsize[1] + \
                     (self.gsize[1] * self.time) / self.cftime
                 self.rcftime = self.cftime - self.time
-                """hours = int(self.rcftime // 3600)
-                minutes = int((self.rcftime % 3600) // 60)
-                seconds = ((self.rcftime % 3600) % 60)
-                th = str(hours) if hours >= 10 else "0"+str(hours)
-                tm = str(minutes) if minutes >= 10 else "0"+str(minutes)
-                ts = "%.3f" % (seconds) if seconds >= 10 \
-                     else "0"+"%.3f" % (seconds)"""
                 self.timer = makeGlitched("Time Before Failure: {0}".format(
                     str(timedelta(seconds=self.rcftime))),
                                           self.font)
