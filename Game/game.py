@@ -65,18 +65,6 @@ class Game(object):
         else:
             falseFunction()
 
-    """def toggleHighJump(self):
-        if self.glitches["highJump"]:
-            self.player.toggleHighJump()
-        else:
-            self.player.untoggleHighJump()
-
-    def toggleDoubleSpeed(self):
-        if self.glitches["speed"]:
-            self.player.toggleDoubleSpeed()
-        else:
-            self.player.untoggleDoubleSpeed()"""
-
     def checkGravity(self):
             self.gravity *= -1
 
