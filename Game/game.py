@@ -59,7 +59,13 @@ _debugkeys_ = {
 class Game(object):
     """ The Main Game """
 
-    def toggleHighJump(self):
+    def customGlitchToggle(self, glitchname, trueFunction, falseFunction):
+        if self.glitches[glitchname]:
+            trueFunction()
+        else:
+            falseFunction()
+
+    """def toggleHighJump(self):
         if self.glitches["highJump"]:
             self.player.toggleHighJump()
         else:
@@ -69,7 +75,10 @@ class Game(object):
         if self.glitches["speed"]:
             self.player.toggleDoubleSpeed()
         else:
-            self.player.untoggleDoubleSpeed()
+            self.player.untoggleDoubleSpeed()"""
+
+    def checkGravity(self):
+            self.gravity *= -1
 
     def toggleGlitch(self, glitch, garble):
         """
@@ -83,18 +92,17 @@ class Game(object):
         Retuns:
         - Nothing
         """
-        if glitch.lower() == "invertedgravity":
-            self.gravity *= -1
-            self.glitches["invertedGravity"] = \
-                not self.glitches["invertedGravity"]
-            mod_logger.debug("Gravity has been inverted")
-        else:
-            self.glitches[glitch] = not self.glitches[glitch]
-            mod_logger.debug("{0} Glitch has been set to {1}".format(
-                glitch,
-                self.glitches[glitch]))
-        self.toggleHighJump()
-        self.toggleDoubleSpeed()
+        self.glitches[glitch] = not self.glitches[glitch]
+        mod_logger.debug("{0} Glitch has been set to {1}".format(
+            glitch,
+            self.glitches[glitch]))
+        """self.toggleHighJump()
+        self.toggleDoubleSpeed()"""
+        pl = self.player
+        self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
+        self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
+        if glitch == "invertedGravity":
+            self.checkGravity()
         if garble:
             self.garble = True
             self.sounds["sfx"]["static"].play()
@@ -340,8 +348,9 @@ class Game(object):
         if self.glitches["invertedGravity"]:
             self.gravity = -1
         # ^--------^
-        self.toggleHighJump()
-        self.toggleDoubleSpeed()
+        pl = self.player
+        self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
+        self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
         mod_logger.info("Loading of the level completed" +
                         " successfully, ready to play")
         pygame.mouse.set_visible(False)

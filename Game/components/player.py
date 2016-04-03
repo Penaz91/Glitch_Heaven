@@ -38,18 +38,18 @@ class Player(pygame.sprite.Sprite):
     _initialParticleColor_ = (0, 255, 84)
     _finalParticleColor_ = (0, 103, 34)
 
-    def toggleDoubleSpeed(self):
+    def DoubleSpeedOn(self):
         self.playermaxspeed = 350
         self.playeraccel = 100
 
-    def untoggleDoubleSpeed(self):
+    def DoubleSpeedOff(self):
         self.playermaxspeed = 250
         self.playeraccel = 50
 
-    def toggleHighJump(self):
+    def HiJumpOn(self):
         self.jumpMultiplier = 2
 
-    def untoggleHighJump(self):
+    def HiJumpOff(self):
         self.jumpMultiplier = 1
 
     def loadSprites(self):
