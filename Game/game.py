@@ -198,11 +198,6 @@ class Game(object):
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
             obs = obstacle['Obstacle']
             speed = obstacle['ObsSpeed']
-            """if "v" in obs:
-                Obstacle((obstacle.px, obstacle.py), True, speed, None,
-                         self.obstacles,
-                         preloaded_ani=self.preloaded_sprites["glitches"])
-            else:"""
             Obstacle((obstacle.px, obstacle.py), ("v" in obs), speed, None,
                      self.obstacles,
                      preloaded_ani=self.preloaded_sprites["glitches"])
