@@ -171,28 +171,35 @@ class Game(object):
                                 screen.get_size())
         mod_logger.info("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
-        self.bg = pygame.image.load(
-                  pjoin("resources",
-                        "backgrounds",
-                        levelconfig["Level Components"]
-                        ["background"])).convert_alpha()
-        self.middleback = pygame.image.load(
-                          pjoin("resources",
-                                "backgrounds",
-                                levelconfig["Level Components"]
-                                ["middle_back1"])).convert_alpha()
-        self.middle = pygame.image.load(
-                      pjoin("resources",
-                            "backgrounds",
+        # Small optimisation in case the same background is loaded
+        # v------------------------------v
+        self.oldbgpath = self.bgpath
+        self.oldmbackpath = self.mbackpath
+        self.oldmiddlepath = self.middlepath
+        self.oldoverpath = self.overpath
+        self.bgpath = pjoin("resources", "backgrounds",
                             levelconfig["Level Components"]
-                            ["middle_back2"])).convert_alpha()
+                            ["background"])
+        self.mbackpath = pjoin("resources", "backgrounds",
+                               levelconfig["Level Components"]
+                               ["middle_back1"])
+        self.middlepath = pjoin("resources", "backgrounds",
+                                levelconfig["Level Components"]
+                                ["middle_back2"])
+        if self.bgpath != self.oldbgpath:
+            self.bg = pygame.image.load(self.bgpath).convert_alpha()
+        if self.mbackpath != self.oldmbackpath:
+            self.middleback = pygame.image.load(self.mbackpath
+                                                ).convert_alpha()
+        if self.middlepath != self.oldmiddlepath:
+            self.middle = pygame.image.load(self.middlepath).convert_alpha()
         if levelconfig["Level Components"]["overlay"] is not None:
             self.hasOverlay = True
-            self.overlay = pygame.image.load(
-                           pjoin("resources",
-                                 "overlays",
-                                 levelconfig["Level Components"]
-                                 ["overlay"])).convert_alpha()
+            self.overpath = pjoin("resources", "overlays",
+                                  levelconfig["Level Components"]
+                                  ["overlay"])
+            if self.overpath != self.oldoverpath:
+                self.overlay = pygame.image.load(self.overpath).convert_alpha()
         else:
             self.hasOverlay = False
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
@@ -442,6 +449,10 @@ class Game(object):
         self.sounds = sounds
         self.deathCounter = 0
         self.mode = mode
+        self.bgpath = None
+        self.mbackpath = None
+        self.middlepath = None
+        self.overpath = None
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
         self.clock = pygame.time.Clock()
