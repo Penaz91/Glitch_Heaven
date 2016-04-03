@@ -6,7 +6,7 @@ import pygame
 from mainmenu import mainMenu
 import configparser
 import logging
-from logging import handlers as loghandler
+from logging.handlers import TimedRotatingFileHandler
 from os.path import join as pathjoin
 from os import getcwd as pwd
 if __name__ == "__main__":
@@ -16,8 +16,8 @@ if __name__ == "__main__":
     except IOError:
         print("There has been an error while loading the " +
               "configuration file. Exiting")
-    fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
-                                             "midnight", 1)
+    fh = TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                                  "midnight", 1)
     loglist = {"DEBUG": 10,
                "INFO": 20,
                "WARNING": 30,

@@ -18,9 +18,9 @@ from components.help import Help
 from libs.spritesheetanimation import SpritesheetAnimation as SpriteAni
 from libs import emitter
 import logging
-from logging import handlers as loghandler
+# from logging import handlers as loghandler
 mod_logger = logging.getLogger("Glitch_Heaven.PlayerEntity")
-fh = loghandler.TimedRotatingFileHandler(pjoin("logs", "Game.log"),
+"""fh = loghandler.TimedRotatingFileHandler(pjoin("logs", "Game.log"),
                                          "midnight", 1)
 ch = logging.StreamHandler()
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
@@ -28,7 +28,7 @@ formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
 ch.setFormatter(formatter)
 fh.setFormatter(formatter)
 mod_logger.addHandler(fh)
-mod_logger.addHandler(ch)
+mod_logger.addHandler(ch)"""
 
 
 class Player(pygame.sprite.Sprite):

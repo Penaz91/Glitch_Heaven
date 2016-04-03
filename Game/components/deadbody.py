@@ -4,7 +4,7 @@
 
 import pygame
 from components.mobileplatform import MobilePlatform
-import os
+from os.path import join as pjoin
 
 
 class DeadBody(MobilePlatform):
@@ -27,9 +27,9 @@ class DeadBody(MobilePlatform):
         - Nothing
         """
         self.img = pygame.image.load(
-                    os.path.join("resources",
-                                 "sprites",
-                                 "player.png")).convert_alpha()
+                    pjoin("resources",
+                          "sprites",
+                          "player.png")).convert_alpha()
         MobilePlatform.__init__(self, x, y, *groups, game=game,
                                 surface=self.img)
 

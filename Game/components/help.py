@@ -1,10 +1,9 @@
 # Help sign component
 # Part of the Glitch_Heaven Project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
-
+from os.path import join as pjoin
 import pygame
 from components.mobileplatform import MobilePlatform
-import os
 
 
 class Help(MobilePlatform):
@@ -26,9 +25,9 @@ class Help(MobilePlatform):
         Returns:
         - Nothing
         """
-        self.font = pygame.font.Font(os.path.join("resources",
-                                                  "fonts",
-                                                  "TranscendsGames.otf"),
+        self.font = pygame.font.Font(pjoin("resources",
+                                           "fonts",
+                                           "TranscendsGames.otf"),
                                      24)
         self.img = self.font.render(Text, True, (255, 0, 0),
                                     None).convert_alpha()

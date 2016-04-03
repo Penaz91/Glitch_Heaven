@@ -22,23 +22,23 @@ from escmenu import pauseMenu
 from components.triggerableplatform import TriggerablePlatform
 from components.collectibletrigger import CollectibleTrigger
 import json
-import random
+from random import randint, choice
 import logging
-from logging import handlers as loghandler
+# from logging.handlers import TimedRotatingFileHandler
 from os.path import join as pathjoin
 from tkinter import filedialog
 from libs.textglitcher import makeGlitched, makeMoreGlitched
 from tkinter import Tk
 mod_logger = logging.getLogger("Glitch_Heaven.Game")
-fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
-                                         "midnight", 1)
+"""fh = TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
+                              "midnight", 1)
 ch = logging.StreamHandler()
 formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
                               ' %(levelname)s --- %(message)s')
 ch.setFormatter(formatter)
 fh.setFormatter(formatter)
 mod_logger.addHandler(fh)
-mod_logger.addHandler(ch)
+mod_logger.addHandler(ch)"""
 _garbletimer_ = 0.1
 _debugkeys_ = {
         pygame.K_1: "wallClimb", pygame.K_2: "multiJump",
@@ -418,7 +418,7 @@ class Game(object):
         # ^--------------------------------------------------------------^
 
     def newChaosTime(self):
-        self.chaosParameters["timer"] = float(random.randint(5, 30))
+        self.chaosParameters["timer"] = float(randint(5, 30))
 
     def loadChaosParameters(self, lvlconf):
         self.chaosParameters = {"glitches": None, "timer": None}
@@ -575,7 +575,7 @@ class Game(object):
             if self.modifiers["chaos"]:
                 self.chaosParameters["timer"] -= dt
                 if self.chaosParameters["timer"] <= 0.:
-                    self.toggleGlitch(random.choice(
+                    self.toggleGlitch(choice(
                                       self.chaosParameters["glitches"]), True)
                     self.newChaosTime()
             # ^-------------------------------------------------------------------^
