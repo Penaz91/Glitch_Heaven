@@ -4,7 +4,6 @@
 import pygame
 from itertools import cycle
 from random import choice as RChoice
-# from os.path import join as pathj
 
 
 class SpritesheetAnimation(object):
@@ -34,18 +33,3 @@ class SpritesheetAnimation(object):
             self.time = 0
             self.currentframe = RChoice(self.framesframework)
         return self.currentframe
-
-"""
-------TESTING AREA----------
-if __name__ == "__main__":
-    pygame.init()
-    screen = pygame.display.set_mode((640, 480))
-    ani = SpritesheetAnimation(0.25,
-                               pathj("Sprites.png"))
-    clock = pygame.time.Clock()
-    while 1:
-        dt = clock.tick(30) / 1000.
-        screen.fill((0, 0, 0))
-        screen.blit(ani.next(dt), (32, 32))
-        pygame.display.update()
-"""

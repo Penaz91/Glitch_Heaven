@@ -37,7 +37,8 @@ class KeyboardSettings(menu):
                                                                    self.config,
                                                                    self.keys),
                                        self.config,
-                                       self.sounds)
+                                       self.sounds,
+                                       self.modlogger)
         self.activeItems.append(self.left)
         self.items.append(self.left)
         self.writings.append((self.lefttext, (50, 180)))
@@ -66,7 +67,8 @@ class KeyboardSettings(menu):
                                             self.config,
                                             self.keys),
                                         self.config,
-                                        self.sounds)
+                                        self.sounds,
+                                        self.modlogger)
         self.activeItems.append(self.right)
         self.items.append(self.right)
         self.writings.append((self.righttext, (50, 240)))
@@ -93,7 +95,8 @@ class KeyboardSettings(menu):
                                                                    self.config,
                                                                    self.keys),
                                        self.config,
-                                       self.sounds)
+                                       self.sounds,
+                                       self.modlogger)
         self.activeItems.append(self.jump)
         self.items.append(self.jump)
         self.writings.append((self.jumptext, (50, 300)))
@@ -121,7 +124,8 @@ class KeyboardSettings(menu):
                                                                  self.config,
                                                                  self.keys),
                                       self.config,
-                                      self.sounds)
+                                      self.sounds,
+                                      self.modlogger)
         self.activeItems.append(self.run)
         self.items.append(self.run)
         self.writings.append((self.runtext, (50, 360)))
@@ -148,7 +152,8 @@ class KeyboardSettings(menu):
                                                                  self.config,
                                                                  self.keys),
                                       self.config,
-                                      self.sounds)
+                                      self.sounds,
+                                      self.modlogger)
         self.activeItems.append(self.act)
         self.items.append(self.act)
         self.writings.append((self.acttext, (50, 420)))
@@ -176,7 +181,8 @@ class KeyboardSettings(menu):
                                                                    self.config,
                                                                    self.keys),
                                        self.config,
-                                       self.sounds)
+                                       self.sounds,
+                                       self.modlogger)
         self.activeItems.append(self.rest)
         self.items.append(self.rest)
         self.writings.append((self.resttext, (50, 480)))

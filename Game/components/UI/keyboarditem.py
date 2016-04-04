@@ -3,28 +3,21 @@
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI.menuItem import menuitem
 from libs.textglitcher import makeGlitched
-from os.path import join as pjoin
 import pygame
-import logging
-from logging import handlers as loghandler
-
-mod_logger = logging.getLogger("Glitch_Heaven.KeyboardItem")
-fh = loghandler.TimedRotatingFileHandler(pjoin("logs", "Game.log"),
-                                         "midnight", 1)
-ch = logging.StreamHandler()
-formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
-                              ' %(levelname)s --- %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
-mod_logger.addHandler(fh)
-mod_logger.addHandler(ch)
 
 
 class KeyboardItem (menuitem):
 
+    def __init__(self, unselected, selected,
+                 location, onhover, function, config, sounds, log):
+        self.mod_logger = log.getChild("keyboardItem")
+        super().__init__(unselected, selected,
+                         location, onhover, function, config, sounds)
+
     def KeySelect(self, font, key, config, keys):
         truth = True
-        mod_logger.debug("Entering the keychange event loop , Key is %s" % key)
+        self.mod_logger.debug("Entering the keychange \
+                event loop , Key is %s" % key)
         while truth:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -38,5 +31,5 @@ class KeyboardItem (menuitem):
                         config.write(conf)
                     keys[key] = event.key
                     truth = False
-                    mod_logger.debug("Key Changed to %s"
-                                     % pygame.key.name(event.key))
+                    self.mod_logger.debug("Key Changed to %s"
+                                          % pygame.key.name(event.key))

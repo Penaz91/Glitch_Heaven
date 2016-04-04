@@ -31,15 +31,3 @@ class TimedAnimation(object):
                 self.currenttiming = next(self.timings)
                 self.index = 0
         return self.currentframe
-
-"""if __name__ == "__main__":
-    pygame.init()
-    screen = pygame.display.set_mode((640,480))
-    clock = pygame.time.Clock()
-    ani = TimedAnimation([(1, 1), (0.2, 18), (1, 1), (0.2, 4)],
-                         pjoin("AnimatedTitle"))
-    while 1:
-        screen.fill((0, 0, 0))
-        dt = clock.tick(30) / 1000.
-        screen.blit(ani.next(dt), (10, 10))
-        pygame.display.update()"""

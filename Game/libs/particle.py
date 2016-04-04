@@ -115,34 +115,3 @@ class Particle (pygame.sprite.Sprite):
         stepG = (finalcolor[1]-startcolor[1])/steps
         stepB = (finalcolor[2]-startcolor[2])/steps
         return (stepR, stepG, stepB)
-
-# Testing Area, used to test the particle system
-"""
-pygame.init()
-screen = pygame.display.set_mode((640, 480))
-group = pygame.sprite.Group()
-clock = pygame.time.Clock()
-player = pygame.Surface((32, 32))
-player.fill((255, 255, 255))
-x = 320
-y = 240
-while 1:
-    clock.tick(60)
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                x -= 5
-                Particle((x+32, y+32), (255, 0, 0), (0, 255, 0), 1, -1, group)
-                Particle((x+32, y+32), (255, 0, 0), (0, 255, 0), 1, -2, group)
-                Particle((x+32, y+32), (255, 0, 0), (0, 255, 0), 2, -1, group)
-            if event.key == pygame.K_RIGHT:
-                x += 5
-                Particle((x, y+32), (255, 0, 0), (0, 255, 0), -1, -1, group)
-                Particle((x, y+32), (255, 0, 0), (0, 255, 0), -1, -2, group)
-                Particle((x, y+32), (255, 0, 0), (0, 255, 0), -2, -1, group)
-    screen.fill((0, 0, 0))
-    screen.blit(player, (x, y))
-    group.draw(screen)
-    group.update()
-    pygame.display.flip()
-"""

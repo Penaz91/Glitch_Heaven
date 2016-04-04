@@ -22,17 +22,3 @@ class TimedSpritesheetAnimation(SpritesheetAnimation):
                 self.currenttiming = next(self.frametime)
                 self.index = 0
         return self.currentframe
-
-"""#------TESTING AREA----------
-if __name__ == "__main__":
-    pygame.init()
-    screen = pygame.display.set_mode((640, 480))
-    ani = TimedSpritesheetAnimation([(1, 1), (0.25, 7)],
-                               pathj("Sprites.png"))
-    clock = pygame.time.Clock()
-    while 1:
-        dt = clock.tick(30) / 1000.
-        screen.fill((0, 0, 0))
-        screen.blit(ani.next(dt), (32, 32))
-        pygame.display.update()
-"""
