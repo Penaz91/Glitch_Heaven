@@ -8,10 +8,10 @@ from components.UI import menuItem
 
 class modMenu(menu):
 
-    def __init__(self, screen, keys, config, sounds, modifiers):
-        self.logSectionName = "Glitch_Heaven.ModifiersMenu"
+    def __init__(self, screen, keys, config, sounds, modifiers, log):
+        self.logSectionName = "modifiersMenu"
         self.modifiers = modifiers
-        super().__init__(screen, keys, config, sounds)
+        super().__init__(screen, keys, config, sounds, log)
 
     def toggleModifier(self, mod):
         self.modifiers[mod] = not self.modifiers[mod]

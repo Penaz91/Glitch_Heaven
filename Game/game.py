@@ -23,22 +23,10 @@ from components.triggerableplatform import TriggerablePlatform
 from components.collectibletrigger import CollectibleTrigger
 import json
 from random import randint, choice
-import logging
-# from logging.handlers import TimedRotatingFileHandler
 from os.path import join as pathjoin
 from tkinter import filedialog
 from libs.textglitcher import makeGlitched, makeMoreGlitched
 from tkinter import Tk
-mod_logger = logging.getLogger("Glitch_Heaven.Game")
-"""fh = TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
-                              "midnight", 1)
-ch = logging.StreamHandler()
-formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
-                              ' %(levelname)s --- %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
-mod_logger.addHandler(fh)
-mod_logger.addHandler(ch)"""
 _garbletimer_ = 0.1
 _debugkeys_ = {
         pygame.K_1: "wallClimb", pygame.K_2: "multiJump",
@@ -81,7 +69,7 @@ class Game(object):
         - Nothing
         """
         self.glitches[glitch] = not self.glitches[glitch]
-        mod_logger.debug("{0} Glitch has been set to {1}".format(
+        self.mod_logger.debug("{0} Glitch has been set to {1}".format(
             glitch,
             self.glitches[glitch]))
         """self.toggleHighJump()
@@ -144,14 +132,14 @@ class Game(object):
         """
         # Loads the level configuration and the control keys
         # v--------------------------------------------------------------v
-        mod_logger.info("LoadLevel Routine is loading: %(level)s"
-                        % locals())
+        self.mod_logger.info("LoadLevel Routine is loading: %(level)s"
+                             % locals())
         with open(pjoin("data",
                         "maps",
                         campaignname,
                         level+".conf")) as f:
             levelconfig = json.loads(f.read())
-        mod_logger.info("Level configuration loaded")
+        self.mod_logger.info("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
         if mode == "cfsingle":
             self.cftime = int(levelconfig["Level Info"]["CFTime"])
@@ -159,17 +147,17 @@ class Game(object):
         self.currenthelp = ""
         self.screen = screen
         self.glitches = levelconfig["Glitches"]["Standard"]
-        mod_logger.debug("Glitches Active: {0}".format(self.glitches))
+        self.mod_logger.debug("Glitches Active: {0}".format(self.glitches))
         # ^--------------------------------------------------------------^
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
-        mod_logger.info("Loading Tilemap")
+        self.mod_logger.info("Loading Tilemap")
         self.tilemap = tmx.load(pjoin("data",
                                       "maps",
                                       campaignname,
                                       level+".tmx"),
                                 screen.get_size())
-        mod_logger.info("Tilemap Loaded, building map")
+        self.mod_logger.info("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
         # Small optimisation in case the same background is loaded
         # v------------------------------v
@@ -246,7 +234,7 @@ class Game(object):
         self.titleposition = (center, 578)
         if mode.lower() == "cfsingle":
             self.time = 0.
-        mod_logger.info("Map Loaded and built Successfully")
+        self.mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
     def loadNextLevel(self, campaignname, campaign, mode, screen):
@@ -261,14 +249,15 @@ class Game(object):
         - Nothing
         """
         self.campaignIndex += 1
-        mod_logger.debug("Campaign index: {0}".format(str(self.campaignIndex)))
-        mod_logger.debug("Length of campaign: {0}".format(len(campaign)))
+        self.mod_logger.debug("Campaign index: {0}"
+                              .format(str(self.campaignIndex)))
+        self.mod_logger.debug("Length of campaign: {0}".format(len(campaign)))
         if (self.campaignIndex) >= len(campaign):
             self.running = False
         else:
             # Debug Area
             # v--------------------------------------------------------------v
-            mod_logger.debug("Loading Level: "+str(campaign))
+            self.mod_logger.debug("Loading Level: "+str(campaign))
             # ^--------------------------------------------------------------^
             self.eraseCurrentLevel()
             self.LoadLevel(campaign[self.campaignIndex],
@@ -281,7 +270,7 @@ class Game(object):
         Keyword Arguments:
         - campaignFile: The file (Without extension) defining the campaign
         """
-        mod_logger.info("Loading campaign {0}".format(campaignfile))
+        self.mod_logger.info("Loading campaign {0}".format(campaignfile))
         with open(campaignfile,
                   "r") as campfile:
             cmpf = json.loads(campfile.read())
@@ -310,24 +299,24 @@ class Game(object):
         Terminates the level loading by defining the sprite layer,
         and spawning the player.
         """
-        mod_logger.info("Starting loadLevelPart2 Routine")
+        self.mod_logger.info("Starting loadLevelPart2 Routine")
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
         self.tilemap.layers.append(self.sprites)
         self.backpos = [0, 0]
         self.middlepos = [0, 0]
         self.middlebackpos = [0, 0]
-        mod_logger.info("Positioning Player")
+        self.mod_logger.info("Positioning Player")
         if self.player is not None:
             self.player.rect.x, self.player.rect.y = start_cell.px,\
                                                      start_cell.py
         else:
             self.player = Player((start_cell.px, start_cell.py),
                                  self.sprites, keys=keys, game=self,
-                                 sounds=sounds)
+                                 sounds=sounds,log=self.mainLogger)
         self.player.lastcheckpoint = start_cell.px, start_cell.py
         self.sprites.add(self.player)
-        mod_logger.info("Creating Particle Surface")
+        self.mod_logger.info("Creating Particle Surface")
         self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
                                                     self.tilemap.px_height),
                                                    pygame.SRCALPHA,
@@ -341,10 +330,10 @@ class Game(object):
         pl = self.player
         self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
-        mod_logger.info("Loading of the level completed" +
-                        " successfully, ready to play")
+        self.mod_logger.info("Loading of the level completed" +
+                             " successfully, ready to play")
         pygame.mouse.set_visible(False)
-        mod_logger.info("Mouse cursor hidden")
+        self.mod_logger.info("Mouse cursor hidden")
 
     def saveGame(self):
         """
@@ -368,8 +357,8 @@ class Game(object):
                      "time": self.time,
                      "mode": self.mode,
                      "modifiers": self.modifiers}
-            mod_logger.debug("Shelf saved with data: %(shelf)s"
-                             % locals())
+            self.mod_logger.debug("Shelf saved with data: %(shelf)s"
+                                  % locals())
             with open(path, "w") as savefile:
                 string = json.dumps(shelf)
                 savefile.write(string)
@@ -385,8 +374,8 @@ class Game(object):
                                           multiple=False)
         if not path:
             raise FileNotFoundError
-        mod_logger.info("Loading Save from: %(path)s"
-                        % locals())
+        self.mod_logger.info("Loading Save from: %(path)s"
+                             % locals())
         with open(path, "r") as savefile:
             string = savefile.read()
             shelf = json.loads(string)
@@ -399,7 +388,8 @@ class Game(object):
             self.time = shelf["time"]
             self.modifiers = shelf["modifiers"]
         if self.mode.lower() in ["criticalfailure", "cfsingle"]:
-            mod_logger.info("Using Load Game mode - Critical Failure Modifier")
+            self.mod_logger.info("Using Load Game mode -\
+                    Critical Failure Modifier")
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
                                                   pygame.SRCALPHA)
             linesize = 3
@@ -413,8 +403,8 @@ class Game(object):
             self.redsurfrect = self.redsurf.get_rect()
         # Debug Area
         # v--------------------------------------------------------------v
-        mod_logger.debug("Loadgame: {0}".format(self.currentcampaign))
-        mod_logger.debug("Campaign Index: {0}".format(self.campaignIndex))
+        self.mod_logger.debug("Loadgame: {0}".format(self.currentcampaign))
+        self.mod_logger.debug("Campaign Index: {0}".format(self.campaignIndex))
         # ^--------------------------------------------------------------^
 
     def newChaosTime(self):
@@ -427,10 +417,10 @@ class Game(object):
              for x in lvlconf["Glitches"]["ChaosMode"]
              if lvlconf["Glitches"]["ChaosMode"][x]]
         self.newChaosTime()
-        mod_logger.debug("Chaos Mode Parameters: {0}".format(
+        self.mod_logger.debug("Chaos Mode Parameters: {0}".format(
             self.chaosParameters))
 
-    def main(self, screen, keys, mode, cmp, config, sounds, modifiers):
+    def main(self, screen, keys, mode, cmp, config, sounds, modifiers, log):
         """
         Main Game method
 
@@ -443,7 +433,9 @@ class Game(object):
         Returns:
         - Nothing
         """
-        mod_logger.info("Entering main game")
+        self.mainLogger = log
+        self.mod_logger = log.getChild("game")
+        self.mod_logger.info("Entering main game")
         self.running = True
         self.time = 0.
         self.sounds = sounds
@@ -473,7 +465,7 @@ class Game(object):
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
         self.modifiers = modifiers
-        mod_logger.debug("Current Active Modifiers: {0}".format(
+        self.mod_logger.debug("Current Active Modifiers: {0}".format(
             self.modifiers))
         # Preloading graphics area
         # v-------------------------------------------------------------------v
@@ -495,7 +487,7 @@ class Game(object):
         # new campaign should be started.
         # v--------------------------------------------------------------v
         if self.mode.lower() == "load":
-            mod_logger.info("Using Load mode")
+            self.mod_logger.info("Using Load mode")
             try:
                 self.loadGame()
                 self.loadNextLevel(self.campaignname,
@@ -503,10 +495,10 @@ class Game(object):
                                    self.mode,
                                    self.gameviewport)
             except FileNotFoundError:
-                mod_logger.info("No file provided, loading cancelled")
+                self.mod_logger.info("No file provided, loading cancelled")
                 self.running = False
         elif self.mode.lower() == "newgame":
-            mod_logger.info("Using New Game mode")
+            self.mod_logger.info("Using New Game mode")
             self.campaignFile = cmp
             self.campaignname = splitext(basename(cmp))[0]
             self.currentcampaign = self.loadCampaign(self.campaignFile,
@@ -517,7 +509,8 @@ class Game(object):
                                self.mode,
                                self.gameviewport)
         elif self.mode.lower() in ["criticalfailure", "cfsingle"]:
-            mod_logger.info("Using New Game mode - Critical Failure Modifier")
+            self.mod_logger.info("Using New Game mode - \
+                    Critical Failure Modifier")
             self.cftime = 0
             self.campaignFile = cmp
             self.campaignname = splitext(basename(cmp))[0]
@@ -551,7 +544,7 @@ class Game(object):
         pygame.display.set_caption("Glitch_Heaven - Pre-Pre-Alpha Version")
         if self.running:
             self.loadLevelPart2(self.keys, sounds)
-            mod_logger.debug("Glitches Loaded: {0}".format(self.glitches))
+            self.mod_logger.debug("Glitches Loaded: {0}".format(self.glitches))
         """Game Loop"""
         while self.running:
             dt = self.clock.tick(self.fps)/1000.
@@ -581,7 +574,7 @@ class Game(object):
             # ^-------------------------------------------------------------------^
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    mod_logger.info("QUIT signal received, quitting")
+                    self.mod_logger.info("QUIT signal received, quitting")
                     pygame.quit()
                     quit()
                 # Debug Area - Glitch Toggles
@@ -598,8 +591,8 @@ class Game(object):
                         if event.key == pygame.K_RETURN:
                             self.garble = True
                         if event.key == pygame.K_BACKSPACE:
-                            mod_logger.debug("Debug key used,a" +
-                                             "Loading next level")
+                            self.mod_logger.debug("Debug key used,a" +
+                                                  "Loading next level")
                             self.loadNextLevel(self.campaignname,
                                                self.currentcampaign,
                                                self.mode,
@@ -607,8 +600,8 @@ class Game(object):
                             self.loadLevelPart2(self.keys, sounds)
                 if config.getboolean("Debug", "keydebug") and\
                         event.type == pygame.KEYDOWN:
-                    mod_logger.debug("A key was pressed: {0}"
-                                     .format(pygame.key.name(event.key)))
+                    self.mod_logger.debug("A key was pressed: {0}"
+                                          .format(pygame.key.name(event.key)))
                 # ^----------------------------------------------------------^
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v

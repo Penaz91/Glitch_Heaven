@@ -18,24 +18,19 @@ if __name__ == "__main__":
               "configuration file. Exiting")
     fh = TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
                                   "midnight", 1)
-    loglist = {"DEBUG": 10,
-               "INFO": 20,
-               "WARNING": 30,
-               "ERROR": 40,
-               "CRITICAL": 50}
+    loglist = {"DEBUG": logging.DEBUG,
+               "INFO": logging.INFO,
+               "WARNING": logging.WARNING,
+               "ERROR": logging.ERROR,
+               "CRITICAL": logging.CRITICAL}
     logkey = loglist[config["Debug"]["loggerlevel"]]
-    logging.basicConfig(level=logkey,
-                        format='[%(asctime)s] (%(name)s) -'
-                        ' %(levelname)s --- %(message)s')
     logging.info("-----------------Initialising logging-----------------")
-    logger = logging.getLogger("Glitch_Heaven.Bootstrapper")
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.ERROR)
+    logger = logging.getLogger("Glitch_Heaven")
+    logger.setLevel(logkey)
+    fh.setLevel(logkey)
     formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
                                   ' %(levelname)s --- %(message)s')
-    ch.setFormatter(formatter)
     fh.setFormatter(formatter)
-    logger.addHandler(ch)
     logger.addHandler(fh)
     logger.info("----------Logger initialised----------")
     logger.debug("Current Working directory is: " + str(pwd()))
@@ -54,7 +49,7 @@ if __name__ == "__main__":
         flags = None
         # Reads the control keys
         # v-------------------------------v
-        logger.info("Zipping key dictionary")
+        logger.info("Loading key dictionary")
         keys = dict(config["Controls"])
         for key in keys:
             keys[key] = int(keys[key])
@@ -127,7 +122,7 @@ if __name__ == "__main__":
         logger.info("Setting up the Screen")
         screen = pygame.display.set_mode(screensize, flags)
         logger.info("Opening the menu")
-        mainMenu(screen, keys, config, sounds).mainLoop()
+        mainMenu(screen, keys, config, sounds, logger).mainLoop()
         logger.info("Quitting")
         pygame.quit()
         quit()

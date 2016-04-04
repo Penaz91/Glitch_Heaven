@@ -10,9 +10,9 @@ from components.UI.menu import menu
 class ControlSettings(menu):
     """ Represents a pause menu window"""
 
-    def __init__(self, screen, keys, config, sounds):
-        self.logSectionName = "Glitch_Heaven.ControlSettings"
-        super().__init__(screen, keys, config, sounds)
+    def __init__(self, screen, keys, config, sounds, log):
+        self.logSectionName = "controlSettings"
+        super().__init__(screen, keys, config, sounds, log)
 
     def makeKeyboardMenu(self):
         self.keybimg = self.font.render("Keyboard Settings", False,

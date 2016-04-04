@@ -9,10 +9,10 @@ import pygame
 
 class pauseMenu(menu):
 
-    def __init__(self, screen, keys, game, config, sounds):
+    def __init__(self, screen, keys, game, config, sounds, log):
         self.game = game
-        self.logSectionName = "Glitch_Heaven.pauseMenu"
-        super().__init__(screen, keys, config, sounds)
+        self.logSectionName = "pauseMenu"
+        super().__init__(screen, keys, config, sounds, log)
 
     def doAdditionalClosingOperations(self):
         self.game.running = False

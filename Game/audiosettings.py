@@ -10,24 +10,24 @@ import pygame
 
 class AudioSettings(menu):
 
-    def __init__(self, screen, keys, config, sounds):
-        self.logSectionName = "Glitch_Heaven.AudioSettings"
-        super().__init__(screen, keys, config, sounds)
+    def __init__(self, screen, keys, config, sounds, log):
+        self.logSectionName = "audioSettings"
+        super().__init__(screen, keys, config, sounds, log)
 
     def makeMeters(self):
         self.menumeter = meter.Meter((320, 250), (200, 10),
                                      self.config, "menuvolume",
-                                     self.sounds)
+                                     self.sounds, self.mod_logger)
         self.menuwriting = self.font.render("Menu Volume: ", False,
                                             (255, 255, 255)).convert_alpha()
         self.sfxmeter = meter.Meter((320, 330), (200, 10),
                                     self.config, "sfxvolume",
-                                    self.sounds)
+                                    self.sounds, self.mod_logger)
         self.sfxwriting = self.font.render("SFX Volume: ", False,
                                            (255, 255, 255)).convert_alpha()
         self.musicmeter = meter.Meter((320, 410), (200, 10),
                                       self.config, "musicvolume",
-                                      self.sounds)
+                                      self.sounds, self.mod_logger)
         self.musicwriting = self.font.render("Music Volume: ", False,
                                              (255, 255, 255)).convert_alpha()
         self.meters = [self.menumeter, self.sfxmeter, self.musicmeter]

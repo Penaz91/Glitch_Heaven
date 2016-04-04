@@ -3,28 +3,15 @@
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 import pygame
 from os.path import join as pathjoin
-import logging
-# from logging import handlers as loghandler
 from libs.textglitcher import makeGlitched
 from libs.timedanimation import TimedAnimation
 
 
 class menu(object):
 
-    def __init__(self, screen, keys, config, sounds):
-        self.modlogger = logging.getLogger(self.logSectionName)
-        """fh = loghandler.TimedRotatingFileHandler(pathjoin("logs",
-                                                          "Game.log"),
-                                                 "midnight",
-                                                 1)
-        ch = logging.StreamHandler()
-        formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
-                                      ' %(levelname)s --- %(message)s')
-        ch.setFormatter(formatter)
-        fh.setFormatter(formatter)
-        self.modlogger.addHandler(fh)
-        self.modlogger.addHandler(ch)
-        """
+    def __init__(self, screen, keys, config, sounds, log):
+        self.mainLogger = log
+        self.modlogger = log.getChild(self.logSectionName)
         self.running = True
         self.currentItem = None
         self.keys = keys

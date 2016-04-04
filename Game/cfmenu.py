@@ -11,10 +11,10 @@ from components.UI.menu import menu
 class CFMenu(menu):
     """ Represents a pause menu window"""
 
-    def __init__(self, screen, keys, config, sounds, modifiers):
-        self.logSectionName = "Glitch_Heaven.CFMenu"
+    def __init__(self, screen, keys, config, sounds, modifiers, log):
+        self.logSectionName = "CFMenu"
         self.modifiers = modifiers
-        super().__init__(screen, keys, config, sounds)
+        super().__init__(screen, keys, config, sounds, log)
 
     def newCFGame(self):
         self.running = False
@@ -25,7 +25,8 @@ class CFMenu(menu):
                              "main.cmp"),
                     self.config,
                     self.sounds,
-                    self.modifiers)
+                    self.modifiers,
+                    self.mainLogger)
 
     def newCFSGame(self):
         self.running = False
@@ -36,7 +37,8 @@ class CFMenu(menu):
                              "main.cmp"),
                     self.config,
                     self.sounds,
-                    self.modifiers)
+                    self.modifiers,
+                    self.mainLogger)
 
     def makeCFMenu(self):
         self.sdimg = self.font.render("Start Shared Time mode", False,
@@ -49,7 +51,8 @@ class CFMenu(menu):
                                         "All rooms share the same timer."),
                                     lambda: self.newCFGame(),
                                     self.config,
-                                    self.sounds)
+                                    self.sounds,
+                                    self.mainLogger)
         self.items.append(self.sd)
         self.activeItems.append(self.sd)
 
@@ -64,7 +67,8 @@ class CFMenu(menu):
                                          "Each room has its timer."),
                                      lambda: self.newCFSGame(),
                                      self.config,
-                                     self.sounds)
+                                     self.sounds,
+                                     self.mainLogger)
         self.items.append(self.sds)
         self.activeItems.append(self.sds)
 

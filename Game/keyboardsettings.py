@@ -10,10 +10,10 @@ import pygame
 
 class KeyboardSettings(menu):
 
-    def __init__(self, screen, keys, config, sounds):
+    def __init__(self, screen, keys, config, sounds, log):
         self.writings = []
-        self.logSectionName = "Glitch_Heaven.KeyboardSettings"
-        super().__init__(screen, keys, config, sounds)
+        self.logSectionName = "keyboardSettings"
+        super().__init__(screen, keys, config, sounds, log)
 
     def makeLeftKeyItem(self):
         # ^------------------------------------------------------------------^

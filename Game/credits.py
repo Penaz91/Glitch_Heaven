@@ -8,10 +8,10 @@ from libs.textglitcher import makeGlitched
 
 class Credits(menu):
 
-    def __init__(self, screen, keys, config, sounds):
+    def __init__(self, screen, keys, config, sounds, log):
         self.texts = []
-        self.logSectionName = "Glitch_Heaven.CreditsMenu"
-        super(Credits, self).__init__(screen, keys, config, sounds)
+        self.logSectionName = "creditsMenu"
+        super(Credits, self).__init__(screen, keys, config, sounds, log)
 
     def makeMainMenuItem(self):
         self.menu = self.font.render("Main Menu",

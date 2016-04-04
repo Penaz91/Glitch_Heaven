@@ -17,18 +17,6 @@ from components.deadbody import DeadBody
 from components.help import Help
 from libs.spritesheetanimation import SpritesheetAnimation as SpriteAni
 from libs import emitter
-import logging
-# from logging import handlers as loghandler
-mod_logger = logging.getLogger("Glitch_Heaven.PlayerEntity")
-"""fh = loghandler.TimedRotatingFileHandler(pjoin("logs", "Game.log"),
-                                         "midnight", 1)
-ch = logging.StreamHandler()
-formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
-                              ' %(levelname)s --- %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
-mod_logger.addHandler(fh)
-mod_logger.addHandler(ch)"""
 
 
 class Player(pygame.sprite.Sprite):
@@ -140,7 +128,7 @@ class Player(pygame.sprite.Sprite):
         self.leftemitter.emit(self.runmultiplier,
                               self.runmultiplier*self.game.gravity)
 
-    def __init__(self, location, *groups, keys, game, sounds):
+    def __init__(self, location, *groups, keys, game, sounds, log):
         """
         Default Constructor
 
@@ -153,6 +141,7 @@ class Player(pygame.sprite.Sprite):
         - Nothing
         """
         super(Player, self).__init__(*groups)
+        self.mod_logger = log.getChild("playerEntity")
         self.playermaxspeed = 250
         self.playeraccel = 50
         self.runmultiplier = 1
@@ -195,8 +184,8 @@ class Player(pygame.sprite.Sprite):
         # if self.active:
         x, y = game.tilemap.pixel_from_screen(self.rect.x,
                                               self.rect.y)
-        mod_logger.info("Player respawned, position of death: (%(x)s, %(y)s)"
-                        % locals())
+        self.mod_logger.info("Player respawned, death coords: (%(x)s, %(y)s)"
+                             % locals())
         if game.glitches["permBodies"]:
             body = DeadBody(x, y, game.sprites, game=game)
             game.deadbodies.add(body)
@@ -795,8 +784,8 @@ class Player(pygame.sprite.Sprite):
                                                             "button"):
             if key[self.keys["action"]]:
                 butt = cell['button']
-                mod_logger.info("Player pressed the button with ID: %(butt)s"
-                                % locals())
+                self.mod_logger.info("Player pressed the button \
+                        with ID: %(butt)s" % locals())
                 for plat in game.plats:
                     if plat.id == butt:
                         plat.active = True
@@ -808,8 +797,8 @@ class Player(pygame.sprite.Sprite):
                                                             "TpIn"):
             if key[self.keys["action"]]:
                 tpin = cell['TpIn']
-                mod_logger.info("Player entered the TP with ID: %(tpin)s"
-                                % locals())
+                self.mod_logger.info("Player entered the TP with ID: %(tpin)s"
+                                     % locals())
                 for out in game.tilemap.layers['Triggers'].find("TpOut"):
                     tpout = out['TpOut']
                     if tpout == tpin:
@@ -831,7 +820,7 @@ class Player(pygame.sprite.Sprite):
                 if chk == 1:
                     self.lastcheckpoint = (self.rect.x, self.rect.y)
                     cell['CheckPoint'] = 0
-                    mod_logger.info("Checkpoint Saved")
+                    self.mod_logger.info("Checkpoint Saved")
         # ^--------------------------------------------------------------^
         # Handles The Glitch Triggers
         # v--------------------------------------------------------------v

@@ -15,9 +15,9 @@ from components.UI.menu import menu
 class mainMenu(menu):
     """ Represents the main Game menu """
 
-    def __init__(self, screen, keys, config, sounds):
-        self.logSectionName = "Glitch_Heaven.mainMenu"
-        super().__init__(screen, keys, config, sounds)
+    def __init__(self, screen, keys, config, sounds, log):
+        self.logSectionName = "mainMenu"
+        super().__init__(screen, keys, config, sounds, log)
         self.dbtxt = makeGlitched(
                 "Debug Mode Active, Keydebug Active: {0}".format(
                     config["Debug"]["keydebug"]), self.font)
@@ -36,7 +36,8 @@ class mainMenu(menu):
                                                 self.screen,
                                                 self.keys,
                                                 self.config,
-                                                self.sounds).mainLoop(),
+                                                self.sounds,
+                                                self.mainLogger).mainLoop(),
                                              self.config,
                                              self.sounds)
         self.activeItems.append(self.newgamemenu)
@@ -55,7 +56,8 @@ class mainMenu(menu):
                                              self.screen,
                                              self.keys,
                                              self.config,
-                                             self.sounds).mainLoop(),
+                                             self.sounds,
+                                             self.mainLogger).mainLoop(),
                                          self.config,
                                          self.sounds)
         self.activeItems.append(self.credits)
@@ -106,7 +108,8 @@ class mainMenu(menu):
                                                               None,
                                                               self.config,
                                                               self.sounds,
-                                                              None),
+                                                              None,
+                                                              self.mainLogger),
                                           self.config,
                                           self.sounds)
             self.activeItems.append(self.cgam)
@@ -125,7 +128,8 @@ class mainMenu(menu):
                                          lambda: OptionsMenu(
                                              self.screen, self.keys,
                                              self.config,
-                                             self.sounds).mainLoop(),
+                                             self.sounds,
+                                             self.mainLogger).mainLoop(),
                                          self.config,
                                          self.sounds)
         self.activeItems.append(self.options)

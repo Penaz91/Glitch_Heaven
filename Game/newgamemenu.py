@@ -15,11 +15,11 @@ from modmenu import modMenu
 class NewGameMenu(menu):
     """ Represents a pause menu window"""
 
-    def __init__(self, screen, keys, config, sounds):
-        self.logSectionName = "Glitch_Heaven.NewGameMenu"
+    def __init__(self, screen, keys, config, sounds, log):
+        self.logSectionName = "newGameMenu"
         self.modifiers = {"chaos": False, "vflip": False,
                           "hflip": False, "moonwalk": False}
-        super().__init__(screen, keys, config, sounds)
+        super().__init__(screen, keys, config, sounds, log)
 
     def loadcustom(self):
         """
@@ -36,7 +36,7 @@ class NewGameMenu(menu):
                 self.running = False
                 Game().main(self.screen, self.keys, "newgame",
                             self.camp, self.config, self.sounds,
-                            self.modifiers)
+                            self.modifiers, self.mainLogger)
         except FileNotFoundError:
             self.modlogger.info("No File selected, "
                                 "Loading of campaign aborted")
