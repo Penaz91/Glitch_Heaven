@@ -12,9 +12,9 @@ from components.UI.menu import menu
 class OptionsMenu (menu):
     """ Represents a pause menu window"""
 
-    def __init__(self, screen, keys, config, sounds):
-        self.logSectionName = "Glitch_Heaven.OptionsMenu"
-        super().__init__(screen, keys, config, sounds)
+    def __init__(self, screen, keys, config, sounds, log):
+        self.logSectionName = "optionsMenu"
+        super().__init__(screen, keys, config, sounds, log)
 
     def makeVideoSettingsMenuItem(self):
         # Video Settings menu element
@@ -31,7 +31,8 @@ class OptionsMenu (menu):
                                            self.screen,
                                            self.keys,
                                            self.config,
-                                           self.sounds
+                                           self.sounds,
+                                           self.mainLogger,
                                            ).mainLoop(),
                                        self.config,
                                        self.sounds)
@@ -55,7 +56,8 @@ class OptionsMenu (menu):
                                          self.screen,
                                          self.keys,
                                          self.config,
-                                         self.sounds).mainLoop(),
+                                         self.sounds,
+                                         self.mainLogger).mainLoop(),
                                      self.config,
                                      self.sounds)
         self.items.append(self.snd)
@@ -76,7 +78,8 @@ class OptionsMenu (menu):
                                       lambda: ControlSettings(
                                           self.screen,
                                           self.keys, self.config,
-                                          self.sounds
+                                          self.sounds,
+                                          self.mainLogger
                                           ).mainLoop(),
                                       self.config,
                                       self.sounds)

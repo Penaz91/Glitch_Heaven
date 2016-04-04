@@ -50,17 +50,8 @@ class NewGameMenu(menu):
                              "main.cmp"),
                     self.config,
                     sounds,
-                    self.modifiers)
-
-    """def newCFGame(self, keys, gameconfig, screen, sounds):
-        self.running = False
-        Game().main(screen, keys,
-                    "cfsingle",
-                    pathjoin("data",
-                             "campaigns",
-                             "main.cmp"),
-                    self.config,
-                    sounds)"""
+                    self.modifiers,
+                    self.mainLogger)
 
     def makeCampaignMenu(self):
         self.newmainimg = self.font.render("Start Main Campaign", False,
@@ -75,7 +66,8 @@ class NewGameMenu(menu):
                                                 self.keys,
                                                 self.config,
                                                 self.screen,
-                                                self.sounds),
+                                                self.sounds
+                                                ),
                                              self.config,
                                              self.sounds
                                              )
@@ -146,7 +138,8 @@ class NewGameMenu(menu):
                                                 self.keys,
                                                 self.config,
                                                 self.sounds,
-                                                self.modifiers).mainLoop(),
+                                                self.modifiers,
+                                                self.mainLogger).mainLoop(),
                                         self.config,
                                         self.sounds)
             self.activeItems.append(self.sd)
@@ -190,7 +183,8 @@ class NewGameMenu(menu):
                                                         self.keys,
                                                         self.config,
                                                         self.sounds,
-                                                        self.modifiers
+                                                        self.modifiers,
+                                                        self.mainLogger
                                                         ).mainLoop(),
                                         self.config,
                                         self.sounds)

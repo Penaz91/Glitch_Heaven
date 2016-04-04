@@ -51,8 +51,8 @@ class CFMenu(menu):
                                         "All rooms share the same timer."),
                                     lambda: self.newCFGame(),
                                     self.config,
-                                    self.sounds,
-                                    self.mainLogger)
+                                    self.sounds
+                                    )
         self.items.append(self.sd)
         self.activeItems.append(self.sd)
 
@@ -67,8 +67,8 @@ class CFMenu(menu):
                                          "Each room has its timer."),
                                      lambda: self.newCFSGame(),
                                      self.config,
-                                     self.sounds,
-                                     self.mainLogger)
+                                     self.sounds
+                                     )
         self.items.append(self.sds)
         self.activeItems.append(self.sds)
 

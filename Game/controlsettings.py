@@ -27,7 +27,8 @@ class ControlSettings(menu):
                                               self.screen,
                                               self.keys,
                                               self.config,
-                                              self.sounds).mainLoop(),
+                                              self.sounds,
+                                              self.mainLogger).mainLoop(),
                                           self.config,
                                           self.sounds
                                           )

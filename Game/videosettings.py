@@ -8,9 +8,9 @@ from libs.textglitcher import makeGlitched
 
 class VideoSettings(menu):
 
-    def __init__(self, screen, keys, config, sounds):
-        self.logSectionName = "Glitch_Heaven.VideoSettings"
-        super().__init__(screen, keys, config, sounds)
+    def __init__(self, screen, keys, config, sounds, log):
+        self.logSectionName = "videoSettings"
+        super().__init__(screen, keys, config, sounds, log)
 
     def makeMainMenuItem(self):
         self.menu = self.font.render("Main Menu",

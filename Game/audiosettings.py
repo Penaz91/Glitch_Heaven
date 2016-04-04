@@ -17,17 +17,17 @@ class AudioSettings(menu):
     def makeMeters(self):
         self.menumeter = meter.Meter((320, 250), (200, 10),
                                      self.config, "menuvolume",
-                                     self.sounds, self.mod_logger)
+                                     self.sounds, self.modlogger)
         self.menuwriting = self.font.render("Menu Volume: ", False,
                                             (255, 255, 255)).convert_alpha()
         self.sfxmeter = meter.Meter((320, 330), (200, 10),
                                     self.config, "sfxvolume",
-                                    self.sounds, self.mod_logger)
+                                    self.sounds, self.modlogger)
         self.sfxwriting = self.font.render("SFX Volume: ", False,
                                            (255, 255, 255)).convert_alpha()
         self.musicmeter = meter.Meter((320, 410), (200, 10),
                                       self.config, "musicvolume",
-                                      self.sounds, self.mod_logger)
+                                      self.sounds, self.modlogger)
         self.musicwriting = self.font.render("Music Volume: ", False,
                                              (255, 255, 255)).convert_alpha()
         self.meters = [self.menumeter, self.sfxmeter, self.musicmeter]

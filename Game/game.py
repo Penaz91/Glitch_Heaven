@@ -313,7 +313,7 @@ class Game(object):
         else:
             self.player = Player((start_cell.px, start_cell.py),
                                  self.sprites, keys=keys, game=self,
-                                 sounds=sounds,log=self.mainLogger)
+                                 sounds=sounds, log=self.mainLogger)
         self.player.lastcheckpoint = start_cell.px, start_cell.py
         self.sprites.add(self.player)
         self.mod_logger.info("Creating Particle Surface")
@@ -608,7 +608,7 @@ class Game(object):
                 if event.type == pygame.KEYDOWN and\
                         event.key == keys["escape"]:
                     pauseMenu(screen, keys, self,
-                              self.config, sounds).mainLoop()
+                              self.config, sounds, self.mainLogger).mainLoop()
                 if event.type == pygame.KEYDOWN and\
                         event.key == self.keys["restart"]:
                             self.sprites.remove(*self.deadbodies)

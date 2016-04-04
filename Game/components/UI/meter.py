@@ -24,7 +24,7 @@ class Meter(object):
     """
     # TODO: Add a way to make the slider really work when you keep the
     #       mouse button pressed
-    def __init__(self, location, size, config, what, sounds):
+    def __init__(self, location, size, config, what, sounds, log):
         """
         Constructor
 
