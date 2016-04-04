@@ -2,20 +2,6 @@
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org
 import pygame
-from os.path import join as pathjoin
-import logging
-from logging import handlers as loghandler
-module_logger = logging.getLogger("Glitch_Heaven.AudioSettings.Meter")
-fh = loghandler.TimedRotatingFileHandler(pathjoin("logs", "Game.log"),
-                                         "midnight", 1)
-ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
-formatter = logging.Formatter('[%(asctime)s] (%(name)s) -'
-                              ' %(levelname)s --- %(message)s')
-ch.setFormatter(formatter)
-fh.setFormatter(formatter)
-module_logger.addHandler(fh)
-module_logger.addHandler(ch)
 
 
 class Meter(object):
@@ -69,8 +55,8 @@ class Meter(object):
             self.config.write(conf)
         self.testsound.set_volume(x/(self.rect.width))
         self.testsound.play()
-        module_logger.debug(self.what + " Volume set at " +
-                            str(x/(self.rect.width)))
+        self.module_logger.debug(self.what + " Volume set at " +
+                                 str(x/(self.rect.width)))
         return (x/(self.rect.width))*100
 
     def draw_from_x(self, x):
