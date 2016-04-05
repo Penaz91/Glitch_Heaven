@@ -72,8 +72,6 @@ class Game(object):
         self.mod_logger.debug("{0} Glitch has been set to {1}".format(
             glitch,
             self.glitches[glitch]))
-        """self.toggleHighJump()
-        self.toggleDoubleSpeed()"""
         pl = self.player
         self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
@@ -139,7 +137,7 @@ class Game(object):
                         campaignname,
                         level+".conf")) as f:
             levelconfig = json.loads(f.read())
-        self.mod_logger.info("Level configuration loaded")
+        self.mod_logger.debug("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
         if mode == "cfsingle":
             self.cftime = int(levelconfig["Level Info"]["CFTime"])
@@ -151,16 +149,17 @@ class Game(object):
         # ^--------------------------------------------------------------^
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
-        self.mod_logger.info("Loading Tilemap")
+        self.mod_logger.debug("Loading Tilemap")
         self.tilemap = tmx.load(pjoin("data",
                                       "maps",
                                       campaignname,
                                       level+".tmx"),
                                 screen.get_size())
-        self.mod_logger.info("Tilemap Loaded, building map")
+        self.mod_logger.debug("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
         # Small optimisation in case the same background is loaded
         # v------------------------------v
+        self.mod_logger.debug("Loading Backgrounds")
         self.oldbgpath = self.bgpath
         self.oldmbackpath = self.mbackpath
         self.oldmiddlepath = self.middlepath
@@ -284,15 +283,19 @@ class Game(object):
         Erases the whole level, tilemap, kills the player and
         prepares for a new load
         """
-        if self.player is not None:
-            self.gravity = 1
-            self.tilemap = None
-            self.player.x_speed = 0
-            self.player.y_speed = 0
-            self.plats.empty()
-            self.GlitchTriggers.empty()
-            self.sprites.empty()
-            self.sprites.add(self.player)
+        # At first call, does nothing (Player still has to be created)
+        # Self-remaps at runtime to the stage deleting function
+        self.eraseCurrentLevel = self.eraseCurrentLevel_Post
+
+    def eraseCurrentLevel_Post(self):
+        self.gravity = 1
+        self.tilemap = None
+        self.player.x_speed = 0
+        self.player.y_speed = 0
+        self.plats.empty()
+        self.GlitchTriggers.empty()
+        self.sprites.empty()
+        self.sprites.add(self.player)
 
     def loadLevelPart2(self, keys, sounds):
         """
@@ -306,7 +309,7 @@ class Game(object):
         self.backpos = [0, 0]
         self.middlepos = [0, 0]
         self.middlebackpos = [0, 0]
-        self.mod_logger.info("Positioning Player")
+        self.mod_logger.debug("Positioning Player")
         if self.player is not None:
             self.player.rect.x, self.player.rect.y = start_cell.px,\
                                                      start_cell.py
@@ -316,7 +319,7 @@ class Game(object):
                                  sounds=sounds, log=self.mainLogger)
         self.player.lastcheckpoint = start_cell.px, start_cell.py
         self.sprites.add(self.player)
-        self.mod_logger.info("Creating Particle Surface")
+        self.mod_logger.debug("Creating Particle Surface")
         self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
                                                     self.tilemap.px_height),
                                                    pygame.SRCALPHA,
@@ -333,7 +336,7 @@ class Game(object):
         self.mod_logger.info("Loading of the level completed" +
                              " successfully, ready to play")
         pygame.mouse.set_visible(False)
-        self.mod_logger.info("Mouse cursor hidden")
+        self.mod_logger.debug("Mouse cursor hidden")
 
     def saveGame(self):
         """
@@ -362,6 +365,8 @@ class Game(object):
             with open(path, "w") as savefile:
                 string = json.dumps(shelf)
                 savefile.write(string)
+                self.mod_logger.info("Game saved on the file: \
+                        %(savefile)s" % locals())
 
     def loadGame(self):
         """
@@ -388,7 +393,7 @@ class Game(object):
             self.time = shelf["time"]
             self.modifiers = shelf["modifiers"]
         if self.mode.lower() in ["criticalfailure", "cfsingle"]:
-            self.mod_logger.info("Using Load Game mode -\
+            self.mod_logger.debug("Using Load Game mode -\
                     Critical Failure Modifier")
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
                                                   pygame.SRCALPHA)
@@ -487,7 +492,7 @@ class Game(object):
         # new campaign should be started.
         # v--------------------------------------------------------------v
         if self.mode.lower() == "load":
-            self.mod_logger.info("Using Load mode")
+            self.mod_logger.debug("Using Load mode")
             try:
                 self.loadGame()
                 self.loadNextLevel(self.campaignname,
@@ -498,7 +503,7 @@ class Game(object):
                 self.mod_logger.info("No file provided, loading cancelled")
                 self.running = False
         elif self.mode.lower() == "newgame":
-            self.mod_logger.info("Using New Game mode")
+            self.mod_logger.debug("Using New Game mode")
             self.campaignFile = cmp
             self.campaignname = splitext(basename(cmp))[0]
             self.currentcampaign = self.loadCampaign(self.campaignFile,
@@ -509,7 +514,7 @@ class Game(object):
                                self.mode,
                                self.gameviewport)
         elif self.mode.lower() in ["criticalfailure", "cfsingle"]:
-            self.mod_logger.info("Using New Game mode - \
+            self.mod_logger.debug("Using New Game mode - \
                     Critical Failure Modifier")
             self.cftime = 0
             self.campaignFile = cmp
@@ -591,7 +596,7 @@ class Game(object):
                         if event.key == pygame.K_RETURN:
                             self.garble = True
                         if event.key == pygame.K_BACKSPACE:
-                            self.mod_logger.debug("Debug key used,a" +
+                            self.mod_logger.debug("Debug key used, " +
                                                   "Loading next level")
                             self.loadNextLevel(self.campaignname,
                                                self.currentcampaign,
