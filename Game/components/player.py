@@ -587,7 +587,7 @@ class Player(pygame.sprite.Sprite):
                 self.bounced = False
                 if game.glitches["clipOnCommand"]:
                     if not key[self.keys["action"]]:
-                        self.rect.bottom = cell.top
+                        self.collisionrect.bottom = cell.top
                         if game.glitches["stickyCeil"]:
                             self.y_speed = 3/dt
                         else:
@@ -595,7 +595,7 @@ class Player(pygame.sprite.Sprite):
                         if game.gravity == 1:
                             self.resting = True
                 else:
-                    self.rect.bottom = cell.top
+                    self.collisionrect.bottom = cell.top
                     if not key[self.keys["action"]]:
                         if game.glitches["stickyCeil"]:
                             self.y_speed = 3/dt
@@ -609,7 +609,7 @@ class Player(pygame.sprite.Sprite):
                 self.bounced = False
                 if game.glitches["clipOnCommand"]:
                     if not key[self.keys["action"]]:
-                        self.rect.top = cell.bottom
+                        self.collisionrect.top = cell.bottom
                         if game.glitches["stickyCeil"]:
                             self.y_speed = -5/dt
                         # This has to stay to avoid an unwanted
@@ -617,7 +617,7 @@ class Player(pygame.sprite.Sprite):
                         else:
                             self.y_speed = 0
                 else:
-                    self.rect.top = cell.bottom
+                    self.collisionrect.top = cell.bottom
                     if not key[self.keys["action"]]:
                         if game.glitches["stickyCeil"]:
                             self.y_speed = -5/dt
@@ -630,7 +630,7 @@ class Player(pygame.sprite.Sprite):
             elif 'l' in blockers and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
                 self.bounced = False
-                self.rect.right = cell.left
+                self.collisionrect.right = cell.left
                 self.pushing = True
                 if game.glitches["wallClimb"]:
                     if game.gravity == 1:
@@ -640,13 +640,15 @@ class Player(pygame.sprite.Sprite):
             elif 'r' in blockers and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
                 self.bounced = False
-                self.rect.left = cell.right
+                self.collisionrect.left = cell.right
                 self.pushing = True
                 if game.glitches["wallClimb"]:
                     if game.gravity == 1:
                         self.y_speed = -200
                     else:
                         self.y_speed = 200
+
+            self.rect.midbottom = self.collisionrect.midbottom
         # ^--------------------------------------------------------------^
         # Test for collision with bouncy platforms and act accordingly
         # v--------------------------------------------------------------v
