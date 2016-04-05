@@ -4,7 +4,7 @@
 from components.UI import menuItem
 from videosettings import VideoSettings
 from audiosettings import AudioSettings
-from controlsettings import ControlSettings
+from keyboardsettings import KeyboardSettings
 from libs.textglitcher import makeGlitched
 from components.UI.menu import menu
 
@@ -67,20 +67,20 @@ class OptionsMenu (menu):
         # ^------------------------------------------------------------------^
         # Controls/Controllers menu element
         # v------------------------------------------------------------------v
-        self.ctrlimg = self.font.render("Control Settings",
+        self.ctrlimg = self.font.render("Keyboard Settings",
                                         False, (255, 255, 255)).convert_alpha()
-        self.ctrlselimg = makeGlitched("Control Settings", self.font)
+        self.ctrlselimg = makeGlitched("Keyboard Settings", self.font)
         self.ctrl = menuItem.menuitem(self.ctrlimg,
                                       self.ctrlselimg,
                                       (50, 400),
                                       lambda: self.editDesc(
-                                          "Edit keyboard/joypad settings"),
-                                      lambda: ControlSettings(
-                                          self.screen,
-                                          self.keys, self.config,
-                                          self.sounds,
-                                          self.mainLogger
-                                          ).mainLoop(),
+                                              "Edit Keyboard assignments"),
+                                      lambda: KeyboardSettings(
+                                              self.screen,
+                                              self.keys,
+                                              self.config,
+                                              self.sounds,
+                                              self.mainLogger).mainLoop(),
                                       self.config,
                                       self.sounds)
         self.items.append(self.ctrl)
