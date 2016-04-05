@@ -290,8 +290,7 @@ class Game(object):
     def eraseCurrentLevel_Post(self):
         self.gravity = 1
         self.tilemap = None
-        self.player.x_speed = 0
-        self.player.y_speed = 0
+        self.player.x_speed, self.player.y_speed = 0, 0
         self.plats.empty()
         self.GlitchTriggers.empty()
         self.sprites.empty()
@@ -306,9 +305,7 @@ class Game(object):
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
         self.tilemap.layers.append(self.sprites)
-        self.backpos = [0, 0]
-        self.middlepos = [0, 0]
-        self.middlebackpos = [0, 0]
+        self.backpos, self.middlepos, self.middlebackpos = 3*[[0, 0]]
         self.mod_logger.debug("Positioning Player")
         if self.player is not None:
             self.player.rect.x, self.player.rect.y = start_cell.px,\
@@ -349,9 +346,8 @@ class Game(object):
                                             defaultextension=".dat")
         if path:
             if not (self.mode.lower() in ["criticalfailure", "cfsingle"]):
-                self.cftime = 0
+                self.cftime, self.time = 0, 0
                 self.mode = "newgame"
-                self.time = 0
             shelf = {"currentcampaign": self.currentcampaign,
                      "campaignfile": self.campaignFile,
                      "campaignIndex": self.campaignIndex - 1,
@@ -446,10 +442,7 @@ class Game(object):
         self.sounds = sounds
         self.deathCounter = 0
         self.mode = mode
-        self.bgpath = None
-        self.mbackpath = None
-        self.middlepath = None
-        self.overpath = None
+        self.bgpath, self.mbackpath, self.middlepath, self.overpath = 4 * [None]
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
         self.clock = pygame.time.Clock()
@@ -460,10 +453,8 @@ class Game(object):
         self.font = pygame.font.Font(pjoin(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 20)
-        self.title = None
-        self.titleposition = None
+        self.title, self.titleposition, self.player = 3 * [None]
         self.screen = screen
-        self.player = None
         self.keys = keys
         self.config = config
         self.helptxts = pygame.sprite.Group()
