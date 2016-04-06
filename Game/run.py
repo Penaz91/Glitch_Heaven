@@ -73,8 +73,6 @@ if __name__ == "__main__":
         pygame.display.init()
         logger.info("Initialising Fonts")
         pygame.font.init()
-        logger.info("Initialising Joystick")
-        pygame.joystick.init()
         logger.info("Initialising Mixer")
         pygame.mixer.init()
         # Sound Loading
