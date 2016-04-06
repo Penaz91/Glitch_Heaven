@@ -382,7 +382,7 @@ class Game(object):
             self.redsurfrect = self.redsurf.get_rect()
 
     def newChaosTime(self):
-        self.chaosParameters["timer"] = float(randint(5, 30))
+        self.chaosParameters["timer"] = float(randint(5, 20))
 
     def loadChaosParameters(self, lvlconf):
         self.chaosParameters = {"glitches": None, "timer": None}
