@@ -96,6 +96,39 @@ class Player(pygame.sprite.Sprite):
                       "sprites",
                       "Player",
                       "Pushing.png")).convert_alpha()
+        self.bounced = SpriteAni(0.04,
+                                 pjoin("resources",
+                                       "sprites",
+                                       "Player",
+                                       "Bounced.png"))
+        self.gpushimg = pygame.image.load(
+                pjoin("resources",
+                      "sprites",
+                      "Glitched_Player",
+                      "Pushing.png")).convert_alpha()
+        self.gbounced = SpriteAni(0.04,
+                                 pjoin("resources",
+                                       "sprites",
+                                       "Glitched_Player",
+                                       "Bounced.png"))
+        self.normalSprite = {
+            "idle": self.idleani,
+            "walk": self.walkanimation,
+            "run": self.runanimation,
+            "bounced": self.bounced,
+            "jump_rise": self.jumpsprite,
+            "jump_fall": self.fallingsprite,
+            "push": self.pushimg
+        }
+        self.glitchedSprite = {
+            "idle": self.gidleani,
+            "walk": self.gwalkanimation,
+            "run": self.grunanimation,
+            "bounced": self.gbounced,
+            "jump_rise": self.gjumpsprite,
+            "jump_fall": self.gfallingsprite,
+            "push": self.gpushimg
+        }
 
     def setupEmitters(self):
         if self.game.config.getboolean("Video", "playerparticles"):
@@ -203,159 +236,46 @@ class Player(pygame.sprite.Sprite):
         if not game.glitches["permBodies"]:
             game.deathCounter += 1
 
-    def animate(self, yspeed, xspeed, resting,
+    def animate(self, yspeed, xspeed, resting, bounced,
                 direction, dt, gravity, running, pushing, glitched, game):
+        spriteList = None
         if glitched:
-            if resting:
-                # Player is on the ground
-                if direction == 1:
-                    # Player is pointing right
-                    if xspeed == 0:
-                        # Player is idle, pointing right
-                        self.image = self.gidleani.next(dt)
-                    else:
-                        # Player is moving right
-                        if self.game.config.getboolean("Video",
-                                                       "playerparticles"):
-                            self.emit_Left()
-                        if running:
-                            # Player is running rightwards
-                            self.image = self.grunanimation.next(dt)
-                        else:
-                            # Player is walking rightwards
-                            self.image = self.gwalkanimation.next(dt)
-                elif direction == -1:
-                    # Player is pointing left
-                    if xspeed == 0:
-                        # Player is idle, pointing left
-                        self.image = pygame.transform.flip(
-                                    self.gidleani.next(dt),
-                                    True,
-                                    False)
-                    else:
-                        # Player is moving left
-                        if self.game.config.getboolean("Video",
-                                                       "playerparticles"):
-                            self.emit_Right()
-                        if running:
-                            # Player is running leftwards
-                            self.image = pygame.transform.flip(
-                                         self.grunanimation.next(dt),
-                                         True,
-                                         False)
-                        else:
-                            # Player is walking leftwards
-                            self.image = pygame.transform.flip(
-                                         self.gwalkanimation.next(dt),
-                                         True,
-                                         False)
-            else:
-                # Player is either jumping or falling
-                if direction == 1:
-                    # Player is pointing right
-                    if yspeed * gravity > 0:
-                        # Player is falling
-                        self.image = self.gfallingsprite
-                    elif yspeed * gravity < 0:
-                        # Player is jumping
-                        self.image = self.gjumpsprite
-                elif direction == -1:
-                    # Player is pointing left
-                    if yspeed * gravity > 0:
-                        # Player is falling
-                        self.image = pygame.transform.flip(
-                                     self.gfallingsprite,
-                                     True,
-                                     False)
-                    elif yspeed * gravity < 0:
-                        # Player is jumping
-                        self.image = pygame.transform.flip(
-                                     self.gjumpsprite,
-                                     True,
-                                     False)
+            spriteList = self.glitchedSprite
         else:
-            if resting:
-                # Player is on the ground
-                if direction == 1:
-                    # Player is pointing right
-                    if xspeed == 0:
-                        # Player is idle, pointing right
-                        self.image = self.idleani.next(dt)
-                    else:
-                        # Player is moving right
-                        if self.game.config.getboolean("Video",
-                                                       "playerparticles"):
-                            if not pushing:
-                                self.emit_Left()
-                        if pushing:
-                            self.image = self.pushimg
-                        elif running:
-                            # Player is running rightwards
-                            self.image = self.runanimation.next(dt)
-                        else:
-                            # Player is walking rightwards
-                            self.image = self.walkanimation.next(dt)
-                elif direction == -1:
-                    # Player is pointing left
-                    if xspeed == 0:
-                        # Player is idle, pointing left
-                        self.image = pygame.transform.flip(
-                                    self.idleani.next(dt),
-                                    True,
-                                    False)
-                    else:
-                        # Player is moving left
-                        if self.game.config.getboolean("Video",
-                                                       "playerparticles"):
-                            if not pushing:
-                                self.emit_Right()
-                        if pushing:
-                            self.image = pygame.transform.flip(
-                                         self.pushimg,
-                                         True,
-                                         False)
-                        elif running:
-                            # Player is running leftwards
-                            self.image = pygame.transform.flip(
-                                         self.runanimation.next(dt),
-                                         True,
-                                         False)
-                        else:
-                            # Player is walking leftwards
-                            self.image = pygame.transform.flip(
-                                         self.walkanimation.next(dt),
-                                         True,
-                                         False)
+            spriteList = self.normalSprite
+        if resting:
+            # IDLE - Walk - Run code
+            if xspeed == 0:
+                # Player is idle
+                self.image = spriteList["idle"].next(dt)
             else:
-                # Player is either jumping or falling
-                if direction == 1:
-                    # Player is pointing right
-                    if yspeed * gravity > 0:
-                        # Player is falling
-                        self.image = self.fallingsprite
-                    elif yspeed * gravity < 0:
-                        # Player is jumping
-                        self.image = self.jumpsprite
-                elif direction == -1:
-                    # Player is pointing left
-                    if yspeed * gravity > 0:
-                        # Player is falling
-                        self.image = pygame.transform.flip(
-                                     self.fallingsprite,
-                                     True,
-                                     False)
-                    elif yspeed * gravity < 0:
-                        # Player is jumping
-                        self.image = pygame.transform.flip(
-                                     self.jumpsprite,
-                                     True,
-                                     False)
-        if gravity == -1:
-            self.image = pygame.transform.flip(
-                         self.image, False, True)
+                if pushing:
+                    self.image = spriteList["push"]
+                elif running:
+                    self.image = spriteList["run"].next(dt)
+                else:
+                    self.image = spriteList["walk"].next(dt)
+        elif bounced:
+            # Bounced Animation
+            self.image = spriteList["bounced"].next(dt)
+        else:
+            # Jump - Fall Animation
+            if yspeed * gravity > 0:
+                self.image = spriteList["jump_fall"]
+            elif yspeed * gravity < 0:
+                self.image = spriteList["jump_rise"]
+        # Image Flipping
+        self.image = pygame.transform.flip(self.image, (direction == -1), (gravity == -1))
         if game.modifiers["moonwalk"]:
             self.image = pygame.transform.flip(
                          self.image, True, False)
+        # Particle emission
+        if self.game.config.getboolean("Video", "playerparticles"):
+            if(xspeed != 0 and resting) and not pushing:
+                if direction == 1:
+                    self.emit_Left()
+                else:
+                    self.emit_Right()
 
     def emitJumpParticles(self):
         if self.game.gravity == 1:
@@ -865,6 +785,6 @@ class Player(pygame.sprite.Sprite):
                 self.respawn(game)
         # MUST BE LAST OPERATION
         # v--------------------------------------------------------------v
-        self.animate(self.y_speed, self.x_speed, self.resting, self.direction,
-                     dt, game.gravity, self.running,
+        self.animate(self.y_speed, self.x_speed, self.resting, self.bounced,
+                     self.direction, dt, game.gravity, self.running,
                      self.pushing, self.glitched, game)
