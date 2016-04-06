@@ -192,7 +192,7 @@
   </object>
   <object id="40" x="320" y="192" width="32" height="32">
    <properties>
-    <property name="playerExit" value=""/>
+    <property name="playerExit" value="HighJump"/>
    </properties>
   </object>
  </objectgroup>

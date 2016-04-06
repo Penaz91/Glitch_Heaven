@@ -86,7 +86,7 @@
   </object>
   <object id="52" x="1408" y="1088" width="32" height="32">
    <properties>
-    <property name="playerExit" value=""/>
+    <property name="playerExit" value="TestComplete"/>
    </properties>
   </object>
  </objectgroup>

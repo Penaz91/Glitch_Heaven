@@ -16,7 +16,7 @@
   </object>
   <object id="2" x="800" y="3360" width="32" height="32">
    <properties>
-    <property name="playerExit" value=""/>
+    <property name="playerExit" value="LedgeJump"/>
    </properties>
   </object>
   <object id="3" x="0" y="3392" width="480" height="32">

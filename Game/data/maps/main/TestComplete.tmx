@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="87">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="88">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmL8KwkAMxkMXN6u1oyiOgoOLKK6Ci07q4Bv4/m9ggwRDubumvT+9K/3gg4KS5nfp5dLmALAM4E3la82Fo9h55RmkrymMHDGJOCZ9J9JBc3ZNHGfNfx+gZywrPwV+2aesvDeP28SBKjT5bTzkx2Vap/q9JRwhhHW3WadYOGxFHL6fEd8aWt8l1Z/TVPpxUz2wV6XAInmuFiESsZSEQ3V+xFajrvucs+0V9nWO6zTUfuVTqjPbtmY4u2SQ/nvUCX4MI0ccGjn+4vt2q3CI3ttXPW7s+u0gHn03CslB9csUtq1dH+cgruGFWfruczf8hhxYk9jmJS7J+Ukcx7CpOdcQOHA2oZ6VMscB4uaQ9uhYOVT72jQfc46Uv/sQRyjROrueXVxxrBzEsBHNJiZJcvS1zrZqu89G+dHaY2zTjOdKqjm6yR+D28bCGXXHXHaIgf4CbC01dw==
+   eJztmM8KwjAMxoMXb/6ZHkXxKHjwIopXwYue1IM+ge//Bi5IMIy2q0ubtbIPPhgoWX7N2mQbAsBMwcvSp4qLQLGHpUeQvwbQcaQk4ui3nUgDjdk1cRws/72CnXFa+ubhuzxl47153DoOVGHJbxkhPy7XOlXv7cOhIay7ZJ1S4ZCKOGI/I7FlO3ef2okIVeWoPqe5nMd1fRDPqhxYfPr5RCMRoXw4TP0jtRo1na8428bgWH3cpn+bEzVk6tnSmuHs0oP836P28GHoONJQx/EV37crgzXO3rbqcWbXjwDx6LuRJgfVr2ewtHZt9EFcwyOz77vPxfEbcmBNUpuXuHz6J3HsdFMLrn/gwNmEzqycObaQNofvGZ0qh2lfu+ZjzpHzdx/i0BKtc+jZJRTHPEAMiWg2ccknx1jrLNWv+6xTHC0ixnbNeKFkmqPr/HL411g4o66Zpw1ioN+LoTXQ
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -189,7 +189,7 @@
   </object>
   <object id="48" x="1472" y="128" width="32" height="32">
    <properties>
-    <property name="playerExit" value=""/>
+    <property name="playerExit" value="help"/>
    </properties>
   </object>
   <object id="50" x="224" y="1120" width="32" height="32">
@@ -336,6 +336,11 @@
   <object id="84" x="928" y="512" width="32" height="32">
    <properties>
     <property name="ToggleGlitch" value="invertedGravity"/>
+   </properties>
+  </object>
+  <object id="87" x="160" y="320" width="32" height="32">
+   <properties>
+    <property name="playerExit" value="GlitchedFinal"/>
    </properties>
   </object>
  </objectgroup>

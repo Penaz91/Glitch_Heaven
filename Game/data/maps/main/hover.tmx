@@ -1091,7 +1091,7 @@
   </object>
   <object id="221" x="5632" y="544" width="32" height="32">
    <properties>
-    <property name="playerExit" value=""/>
+    <property name="playerExit" value="GlitchedFinal"/>
    </properties>
   </object>
   <object id="222" x="3072" y="1120" width="32" height="32">
