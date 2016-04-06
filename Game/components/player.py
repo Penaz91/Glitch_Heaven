@@ -107,10 +107,10 @@ class Player(pygame.sprite.Sprite):
                       "Glitched_Player",
                       "Pushing.png")).convert_alpha()
         self.gbounced = SpriteAni(0.04,
-                                 pjoin("resources",
-                                       "sprites",
-                                       "Glitched_Player",
-                                       "Bounced.png"))
+                                  pjoin("resources",
+                                        "sprites",
+                                        "Glitched_Player",
+                                        "Bounced.png"))
         self.normalSprite = {
             "idle": self.idleani,
             "walk": self.walkanimation,
@@ -265,7 +265,8 @@ class Player(pygame.sprite.Sprite):
             elif yspeed * gravity < 0:
                 self.image = spriteList["jump_rise"]
         # Image Flipping
-        self.image = pygame.transform.flip(self.image, (direction == -1), (gravity == -1))
+        self.image = pygame.transform.flip(self.image, (direction == -1),
+                                           (gravity == -1))
         if game.modifiers["moonwalk"]:
             self.image = pygame.transform.flip(
                          self.image, True, False)
@@ -677,8 +678,10 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'playerExit'):
-            game.loadNextLevel(game.campaignname, game.currentcampaign,
-                               game.mode, game.screen)
+            # game.loadNextLevel(game.campaignname, game.currentcampaign,
+            #                   game.mode, game.screen)
+            level = cell["playerExit"]
+            game.LoadLevel(level, game.campaignname, game.mode, game.screen)
             game.loadLevelPart2(game.keys, self.soundslink)
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
