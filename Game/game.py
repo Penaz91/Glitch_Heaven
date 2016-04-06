@@ -332,6 +332,7 @@ class Game(object):
                      "cftime": self.cftime,
                      "time": self.time,
                      "mode": self.mode,
+                     "deathCounter": self.deathCounter,
                      "modifiers": self.modifiers}
             self.mod_logger.debug("Shelf saved with data: %(shelf)s"
                                   % locals())
@@ -362,6 +363,7 @@ class Game(object):
             self.mode = shelf["mode"]
             self.cftime = shelf["cftime"]
             self.time = shelf["time"]
+            self.deathCounter = shelf["deathCounter"]
             self.modifiers = shelf["modifiers"]
             self.currentLevel = shelf["currentLevel"]
         if self.mode.lower() in ["criticalfailure", "cfsingle"]:
