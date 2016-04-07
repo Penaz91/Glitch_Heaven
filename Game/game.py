@@ -15,6 +15,7 @@ from os.path import join as pjoin
 from os.path import splitext, basename
 from components.mobileobstacle import Obstacle
 from escmenu import pauseMenu
+from components.UI.comicreader import comicReader
 from components.triggerableplatform import TriggerablePlatform
 from components.collectibletrigger import CollectibleTrigger
 import json
@@ -118,6 +119,7 @@ class Game(object):
                              % locals())
         self.eraseCurrentLevel()
         self.currentLevel = level
+        self.checkIntermission()
         with open(pjoin("data",
                         "maps",
                         campaignname,
@@ -253,8 +255,20 @@ class Game(object):
                   "r") as campfile:
             cmpf = json.loads(campfile.read())
             self.currentLevel = cmpf["FirstMap"]
+            self.intermissions = cmpf["Intermissions"]
             if mode == "criticalfailure":
                 self.cftime = cmpf["CFTime"]
+
+    def startIntermission(self, ID):
+        IM = comicReader(pjoin("resources",
+                               "intermissions",
+                               self.campaignname,
+                               ID), self.screen)
+        IM.look()
+
+    def checkIntermission(self):
+        if self.currentLevel in self.intermissions.keys():
+            self.startIntermission(self.intermissions[self.currentLevel])
 
     def eraseCurrentLevel(self):
         """
