@@ -433,6 +433,7 @@ class Game(object):
         self.running = True
         self.time = 0.
         self.sounds = sounds
+        self.DCactive = config.getboolean("Video", "deathcounter")
         self.deathCounter = 0
         self.mode = mode
         self.bgpath, self.mbackpath = 2 * [None]
@@ -599,8 +600,9 @@ class Game(object):
                 # ^----------------------------------------------------------^
                 # Renders the DeathCounter
                 # v-------------------------------------------------------------------v
-                self.dcounttxt = makeGlitched("Deaths: %d" % self.deathCounter,
-                                              self.font)
+                if self.DCactive:
+                    self.dcounttxt = makeGlitched("Deaths: %d" % self.deathCounter,
+                                                  self.font)
                 # ^-------------------------------------------------------------------^
             self.backpos = (min(-self.tilemap.viewport.x/6, 0),
                             min(-self.tilemap.viewport.y / 6, 0))
@@ -637,7 +639,8 @@ class Game(object):
                 screen.blit(self.timer, (50, 70))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
-            screen.blit(self.dcounttxt, (50, 50))
+            if self.DCactive:
+                screen.blit(self.dcounttxt, (50, 50))
             if self.garble:
                 screen.blit(self.screengarble, (0, 0))
                 self.garbletimer -= dt

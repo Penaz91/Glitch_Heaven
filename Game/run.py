@@ -126,7 +126,8 @@ if __name__ == "__main__":
         quit()
     except SystemExit:
         logger.info("Game has exited correctly")
-        logging.shutdown()
     except:
         logger.critical("There has been an exception, printing traceback",
                         exc_info=True)
+    finally:
+        logging.shutdown()
