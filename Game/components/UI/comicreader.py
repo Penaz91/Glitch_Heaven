@@ -9,9 +9,10 @@ from os.path import join as pjoin
 
 class comicReader(object):
 
-    def __init__(self, path, screen):
+    def __init__(self, path, screen, logger):
         super()
         self.path = path
+        self.mod_logger = logger.getChild("intermission")
         self.imagelist = [x for x in listdir(path)]
         self.images = [pygame.image.load(pjoin(path, x)).convert_alpha()
                        for x in sorted(self.imagelist)]
@@ -22,6 +23,13 @@ class comicReader(object):
         self.currentrect = self.blitting.get_rect()
         self.screenctr = self.screen.get_rect().center
         self.currentrect.center = self.screenctr
+        self.font = pygame.font.Font(pjoin(
+                            "resources", "fonts",
+                            "TranscendsGames.otf"), 16)
+        self.write1 = self.font.render("Press enter to continue",
+                                       False, (255, 255, 255))
+        self.write2 = self.font.render("Press ESC to skip",
+                                       False, (255, 255, 255))
 
     def get_factor(self, img, bx, by):
         ix, iy = img.get_size()
@@ -53,16 +61,24 @@ class comicReader(object):
             self.screen.fill((0, 0, 0))
             self.clock.tick(30)
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN and\
-                        event.key == pygame.K_RETURN:
-                    try:
-                        self.blitting = next(self.iter)
-                        self.blitting = pygame.transform.scale(
-                                self.blitting,
-                                self.get_factor(self.blitting, 800, 600))
-                        self.currentrect = self.blitting.get_rect()
-                        self.currentrect.center = self.screenctr
-                    except StopIteration:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        try:
+                            self.mod_logger.debug("Getting next picture")
+                            self.blitting = next(self.iter)
+                            self.blitting = pygame.transform.scale(
+                                    self.blitting,
+                                    self.get_factor(self.blitting, 800, 600))
+                            self.currentrect = self.blitting.get_rect()
+                            self.currentrect.center = self.screenctr
+                        except StopIteration:
+                            self.mod_logger.debug("Iterator ended, stopping")
+                            self.running = False
+                    elif event.key == pygame.K_ESCAPE:
+                        self.mod_logger.debug("Player stopped iteration, \
+                                ending")
                         self.running = False
             self.screen.blit(self.blitting, self.currentrect.topleft)
+            self.screen.blit(self.write1, (10, 10))
+            self.screen.blit(self.write2, (10, 25))
             pygame.display.update()

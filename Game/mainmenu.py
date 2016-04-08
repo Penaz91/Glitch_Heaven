@@ -22,6 +22,9 @@ class mainMenu(menu):
                 "Debug Mode Active, Keydebug Active: {0}".format(
                     config["Debug"]["keydebug"]), self.font)
 
+    def onEscape(self):
+        pass
+
     def makeNewGameMenu(self):
         self.newgameimg = self.font.render("Start A New Game", False,
                                            (255, 255, 255)).convert_alpha()

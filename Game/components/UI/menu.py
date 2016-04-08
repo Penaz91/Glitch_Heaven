@@ -60,7 +60,7 @@ class menu(object):
         pass
 
     def onEscape(self):
-        pass
+        self.goToMenu()
 
     def doAdditionalKeyboardHandling(self):
         pass

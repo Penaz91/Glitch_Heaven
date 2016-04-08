@@ -263,11 +263,12 @@ class Game(object):
         IM = comicReader(pjoin("resources",
                                "intermissions",
                                self.campaignname,
-                               ID), self.screen)
+                               ID), self.screen, self.mainLogger)
         IM.look()
 
     def checkIntermission(self):
         if self.currentLevel in self.intermissions.keys():
+            self.mod_logger.debug("Intermission found, starting intermission")
             self.startIntermission(self.intermissions[self.currentLevel])
 
     def eraseCurrentLevel(self):
