@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="44">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="45">
  <tileset firstgid="1" name="Tile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJzlWEsKwkAMHURxZ1VcCuKV1AP0/qfQAQvDkGaSTDK/PngrDc1r/p2cc3cmpz+5dlb0vpwdHyehnRWo/uwRu4uqRzJQdNx+3EVc8uqN8GPjMgiKjqvTyceXs9MqzfNe60PLDsMhw7YlHTloVQc3Nq3q4KIHHZTY9KCDghwdfoaEs/Go6BeGtbmcoyOcjU8dN5PQmsselDjmzAMuStWHtaYlP2aA2O4zUp1jdlAtWvYBDR3xbbL8PkW0jJ9m34Xuk5hr/+cQimuujhq3ONTftzLP/Q03A7TOdy62Eg9tOytI/fE7Tql9ioLW3qsUI+mA9quS39A0MFI8RtGB7T2lblUuoO/m2J7USm9N3QG95BV0k4fvuBcdKdTUAeWKtCZr6oByRVqTW8irh9Izwvyx6uOp+aFBixsdesYXmcwhQA==
+   eJztWFsKwjAQDKL4Z1X8FMQrqQfo/U+hQQshjJvsZrdN0w7Mly7d6b7bOeeuTHY/cu2s6H05Oj4OQjsr5PqzJexOqh7JkKPj8uEm4pBXT4IvG5chcnScnU4+PpydVmmez7U+tOwo7Apsa9JRglWHvQ5OntWsg4NVx3eGhLNxr+gXhX9zuURHOBvvOm4moTWXPXLiWDIPuGipPnxMekBq96lRh0U8UC1a9gENHfFtMvzeRbSMn2bfRfdJzH//5xDFtVTHFLc46u8t9SvKH3/D9YDW+c7FUuKhbWcFqT9+xxlrn8pBbe9VipZ0oP1qzG9oGmgpHq3ooPaesW5VLtB3c2pPqqW3pu6AueQVusnDdzwXHSlMqQPlirQmp9SBckVak0vIq5vSM8L8serjqfmhQYsbHT3jDcP9ITY=
   </data>
  </layer>
- <objectgroup name="Triggers">
+ <objectgroup name="Triggers" visible="0">
   <object id="1" x="192" y="1216" width="32" height="32">
    <properties>
     <property name="playerEntrance" value=""/>
@@ -39,12 +39,7 @@
     <property name="blocker" value="tblr"/>
    </properties>
   </object>
-  <object id="7" x="1184" y="256" width="32" height="32">
-   <properties>
-    <property name="blocker" value="tblr"/>
-   </properties>
-  </object>
-  <object id="8" x="1280" y="320" width="32" height="32">
+  <object id="7" x="1216" y="288" width="32" height="32">
    <properties>
     <property name="blocker" value="tblr"/>
    </properties>
@@ -66,7 +61,7 @@
   </object>
   <object id="12" x="32" y="0" width="1536" height="32">
    <properties>
-    <property name="blocker" value="t"/>
+    <property name="blocker" value="b"/>
    </properties>
   </object>
   <object id="13" x="416" y="32" width="64" height="800">
@@ -128,11 +123,6 @@
    </properties>
   </object>
   <object id="24" x="704" y="448" width="32" height="32">
-   <properties>
-    <property name="blocker" value="tblr"/>
-   </properties>
-  </object>
-  <object id="25" x="800" y="480" width="32" height="32">
    <properties>
     <property name="blocker" value="tblr"/>
    </properties>

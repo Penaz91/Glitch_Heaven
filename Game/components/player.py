@@ -434,35 +434,6 @@ class Player(pygame.sprite.Sprite):
         if not game.glitches["ledgeJump"] and not game.glitches["ledgeWalk"]:
             self.resting = False
         # ^--------------^
-        # Moving plats collision check
-        # NOTE: This has to stay here to avoid being able to go through
-        #       walls while on a platform
-        # v--------------------------------------------------------------v
-        collision = pygame.sprite.spritecollide(self, game.plats, False)
-        for block in collision:
-            if block.active:
-                if game.gravity == 1:
-                    if last.bottom <= block.last.top and\
-                            self.collisionrect.bottom > block.rect.top:
-                        self.rect.bottom = block.rect.top
-                        if block.bouncy:
-                            self.y_speed = - block.bouncepwr
-                            self.bouncesound.play()
-                        else:
-                            self.y_speed = block.yspeed
-                            self.resting = True  # Allows jump
-                else:
-                    if last.top >= block.last.bottom and\
-                           self.collisionrect.top < block.rect.bottom:
-                        self.rect.top = block.rect.bottom
-                        if block.bouncy:
-                            self.y_speed = block.bouncepwr
-                            self.bouncesound.play()
-                        else:
-                            self.y_speed = - block.yspeed
-                            self.resting = True  # Allows jump
-                if block.moving:
-                    self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with scrolling ground
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
@@ -568,9 +539,37 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = -200
                     else:
                         self.y_speed = 200
-
             self.rect.midbottom = self.collisionrect.midbottom
         # ^--------------------------------------------------------------^
+        # Moving plats collision check
+        # NOTE: This has to stay here to avoid being tped under a platform
+        #       if you touch a vertical wall
+        # v--------------------------------------------------------------v
+        collision = pygame.sprite.spritecollide(self, game.plats, False)
+        for block in collision:
+            if block.active:
+                if game.gravity == 1:
+                    if last.bottom <= block.last.top and\
+                            self.collisionrect.bottom > block.rect.top:
+                        self.rect.bottom = block.rect.top
+                        if block.bouncy:
+                            self.y_speed = - block.bouncepwr
+                            self.bouncesound.play()
+                        else:
+                            self.y_speed = block.yspeed
+                            self.resting = True  # Allows jump
+                else:
+                    if last.top >= block.last.bottom and\
+                           self.collisionrect.top < block.rect.bottom:
+                        self.rect.top = block.rect.bottom
+                        if block.bouncy:
+                            self.y_speed = block.bouncepwr
+                            self.bouncesound.play()
+                        else:
+                            self.y_speed = - block.yspeed
+                            self.resting = True  # Allows jump
+                if block.moving:
+                    self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with bouncy platforms and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers["Triggers"].collide(self.collisionrect,
