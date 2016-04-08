@@ -3,7 +3,6 @@
     "FirstMap": "Level1",
     "Intermissions":
     	{
-	"Level1": "1",
-	"bouncy": "1"
-	}
+        "Level1": "1"
+        }
 }

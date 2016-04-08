@@ -263,7 +263,8 @@ class Game(object):
         IM = comicReader(pjoin("resources",
                                "intermissions",
                                self.campaignname,
-                               ID), self.screen, self.mainLogger)
+                               ID), self.screen,
+                               self.keys["action"], self.mainLogger)
         IM.look()
 
     def checkIntermission(self):

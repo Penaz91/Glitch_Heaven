@@ -9,9 +9,10 @@ from os.path import join as pjoin
 
 class comicReader(object):
 
-    def __init__(self, path, screen, logger):
+    def __init__(self, path, screen, actionbtn, logger):
         super()
         self.path = path
+        self.actionbtn = actionbtn
         self.mod_logger = logger.getChild("intermission")
         self.imagelist = [x for x in listdir(path)]
         self.images = [pygame.image.load(pjoin(path, x)).convert_alpha()
@@ -26,7 +27,7 @@ class comicReader(object):
         self.font = pygame.font.Font(pjoin(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 16)
-        self.write1 = self.font.render("Press enter to continue",
+        self.write1 = self.font.render("Press ACTION to continue",
                                        False, (255, 255, 255))
         self.write2 = self.font.render("Press ESC to skip",
                                        False, (255, 255, 255))
@@ -62,7 +63,7 @@ class comicReader(object):
             self.clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:
+                    if event.key == self.actionbtn:
                         try:
                             self.mod_logger.debug("Getting next picture")
                             self.blitting = next(self.iter)
