@@ -14,6 +14,9 @@ class pauseMenu(menu):
         self.logSectionName = "pauseMenu"
         super().__init__(screen, keys, config, sounds, log)
 
+    def onEscape(self):
+        self.unpause()
+
     def doAdditionalClosingOperations(self):
         self.game.running = False
 
