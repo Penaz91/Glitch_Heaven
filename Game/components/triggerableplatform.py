@@ -65,9 +65,9 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         """
         self.dt = dt
         self.moving = False
+        self.last = self.rect.copy()
         if not game.glitches["timeLapse"] or game.player.x_speed != 0:
             if self.active:
-                self.last = self.rect.copy()
                 # Moves the platform
                 self.rect.x += self.direction * self.xspeed * dt
                 self.rect.y += self.direction * self.yspeed * dt
