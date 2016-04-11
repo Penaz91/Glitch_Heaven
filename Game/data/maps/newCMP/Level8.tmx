@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="72">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
+  <image source="resources/tiles/TestTile.png" width="416" height="288"/>
+ </tileset>
+ <layer name="Livello tile 1" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmTtqxEAMhodtUpoNKQMhZQ5g9gBp02xvcoHcv0+2MAyzev3/vLwQgypLI31opNHYS0rpdYAshnxWym2NSxrzrApDC/9ro3Wivo7I8UX4Yjk8X/vaH45cC7uXP3mKhX/nK8px83ESRPK7r+3V6Ltgh+YR4fhWdDV9dl/15tB0/znsmKL1ZMX2A3Jo+jUc2rkUjU3zzdSS9s7qX0zfl2KTeFGO1Xj3nPwZo5ZDY7B6VWmT686oc42h1EP6wWgOy445N2ZxMLnw9lQPDq1H9MxFD44tcXcE5uzrycHYWLlAzkpk1u3BgeZCs0Fm3dYcXi6iHLP3lZULbxZ5dA5kVmNiYmw2IaaRHFp/kPqCxaHFlUu5ZmuO6Mye2yB3Ey1GKYfouVw7t/eqES0ea3Z/JA4vppYcLWp9xv0DrZEI+wwOJice+6zvPlJcFsvoe5R1/4jsA+Reuznvazis+0cNR2RvITO7x6E9Unyt6x2Z2VkOKU/ot0Qrh6PqPPqwfetoHPv6aN86IgeakzyeN8APw9HqP1yek3OhK/2/smQh7RgfmpS6v6B+dVI=
+  </data>
+ </layer>
+ <objectgroup name="Triggers" visible="0">
+  <object id="1" x="64" y="1216" width="32" height="32">
+   <properties>
+    <property name="playerEntrance" value=""/>
+   </properties>
+  </object>
+  <object id="2" x="1504" y="1216" width="32" height="32">
+   <properties>
+    <property name="playerExit" value=""/>
+   </properties>
+  </object>
+  <object id="3" x="32" y="1248" width="1536" height="32">
+   <properties>
+    <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="5" x="32" y="1088" width="224" height="32">
+   <properties>
+    <property name="blocker" value="rb"/>
+   </properties>
+  </object>
+  <object id="6" x="32" y="608" width="256" height="32">
+   <properties>
+    <property name="blocker" value="rb"/>
+   </properties>
+  </object>
+  <object id="7" x="32" y="160" width="288" height="32">
+   <properties>
+    <property name="blocker" value="rb"/>
+   </properties>
+  </object>
+  <object id="8" x="160" y="352" width="256" height="32">
+   <properties>
+    <property name="blocker" value="lb"/>
+   </properties>
+  </object>
+  <object id="9" x="192" y="832" width="224" height="32">
+   <properties>
+    <property name="blocker" value="lb"/>
+   </properties>
+  </object>
+  <object id="10" x="0" y="32" width="32" height="1216">
+   <properties>
+    <property name="deadly" value="r"/>
+   </properties>
+  </object>
+  <object id="11" x="416" y="160" width="64" height="1088">
+   <properties>
+    <property name="deadly" value="lr"/>
+   </properties>
+  </object>
+  <object id="12" x="32" y="128" width="288" height="32">
+   <properties>
+    <property name="deadly" value="tlr"/>
+   </properties>
+  </object>
+  <object id="13" x="160" y="320" width="256" height="32">
+   <properties>
+    <property name="deadly" value="tlr"/>
+   </properties>
+  </object>
+  <object id="14" x="32" y="576" width="256" height="32">
+   <properties>
+    <property name="deadly" value="tlr"/>
+   </properties>
+  </object>
+  <object id="15" x="192" y="800" width="224" height="32">
+   <properties>
+    <property name="deadly" value="tlr"/>
+   </properties>
+  </object>
+  <object id="16" x="32" y="1056" width="224" height="32">
+   <properties>
+    <property name="deadly" value="tlr"/>
+   </properties>
+  </object>
+  <object id="17" x="416" y="128" width="64" height="32">
+   <properties>
+    <property name="blocker" value="tlr"/>
+   </properties>
+  </object>
+  <object id="18" x="448" y="96" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
+   </properties>
+  </object>
+  <object id="19" x="32" y="0" width="800" height="32">
+   <properties>
+    <property name="blocker" value="b"/>
+   </properties>
+  </object>
+  <object id="20" x="480" y="256" width="224" height="64">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="21" x="640" y="480" width="192" height="64">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="22" x="480" y="736" width="192" height="64">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="23" x="640" y="992" width="192" height="64">
+   <properties>
+    <property name="deadly" value="tblr"/>
+   </properties>
+  </object>
+  <object id="24" x="832" y="32" width="32" height="1056">
+   <properties>
+    <property name="deadly" value="l"/>
+   </properties>
+  </object>
+  <object id="25" x="832" y="1088" width="192" height="32">
+   <properties>
+    <property name="deadly" value="lrb"/>
+   </properties>
+  </object>
+  <object id="26" x="992" y="1056" width="32" height="32">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+  <object id="27" x="960" y="960" width="32" height="96">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+  <object id="28" x="928" y="896" width="32" height="64">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+  <object id="29" x="896" y="768" width="32" height="128">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+  <object id="30" x="864" y="480" width="32" height="288">
+   <properties>
+    <property name="deadly" value="r"/>
+   </properties>
+  </object>
+  <object id="31" x="896" y="416" width="32" height="64">
+   <properties>
+    <property name="deadly" value="rb"/>
+   </properties>
+  </object>
+  <object id="32" x="928" y="384" width="32" height="32">
+   <properties>
+    <property name="deadly" value="rb"/>
+   </properties>
+  </object>
+  <object id="33" x="960" y="352" width="32" height="32">
+   <properties>
+    <property name="deadly" value="rb"/>
+   </properties>
+  </object>
+  <object id="34" x="992" y="288" width="32" height="64">
+   <properties>
+    <property name="deadly" value="rb"/>
+   </properties>
+  </object>
+  <object id="35" x="1024" y="32" width="32" height="256">
+   <properties>
+    <property name="deadly" value="rb"/>
+   </properties>
+  </object>
+  <object id="36" x="1216" y="1216" width="32" height="32">
+   <properties>
+    <property name="deadly" value="l"/>
+   </properties>
+  </object>
+  <object id="37" x="1184" y="1152" width="32" height="64">
+   <properties>
+    <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="38" x="1152" y="992" width="32" height="160">
+   <properties>
+    <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="39" x="1120" y="960" width="32" height="32">
+   <properties>
+    <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="40" x="1088" y="896" width="32" height="64">
+   <properties>
+    <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="41" x="1056" y="736" width="32" height="160">
+   <properties>
+    <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="42" x="1024" y="608" width="32" height="128">
+   <properties>
+    <property name="deadly" value="lbt"/>
+   </properties>
+  </object>
+  <object id="43" x="1056" y="544" width="32" height="64">
+   <properties>
+    <property name="deadly" value="lt"/>
+   </properties>
+  </object>
+  <object id="44" x="1088" y="480" width="32" height="64">
+   <properties>
+    <property name="deadly" value="lt"/>
+   </properties>
+  </object>
+  <object id="45" x="1120" y="416" width="32" height="64">
+   <properties>
+    <property name="deadly" value="lt"/>
+   </properties>
+  </object>
+  <object id="46" x="1152" y="352" width="32" height="64">
+   <properties>
+    <property name="deadly" value="lt"/>
+   </properties>
+  </object>
+  <object id="47" x="1184" y="160" width="32" height="192">
+   <properties>
+    <property name="deadly" value="lt"/>
+   </properties>
+  </object>
+  <object id="48" x="1056" y="0" width="512" height="32">
+   <properties>
+    <property name="deadly" value="b"/>
+   </properties>
+  </object>
+  <object id="49" x="1216" y="128" width="224" height="32">
+   <properties>
+    <property name="blocker" value="lrt"/>
+   </properties>
+  </object>
+  <object id="50" x="1312" y="96" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
+   </properties>
+  </object>
+  <object id="51" x="832" y="1216" width="32" height="32">
+   <properties>
+    <property name="CheckPoint" value="1"/>
+   </properties>
+  </object>
+  <object id="52" x="1568" y="32" width="32" height="256">
+   <properties>
+    <property name="deadly" value="l"/>
+   </properties>
+  </object>
+  <object id="53" x="1536" y="288" width="32" height="64">
+   <properties>
+    <property name="deadly" value="lt"/>
+   </properties>
+  </object>
+  <object id="54" x="1504" y="352" width="32" height="96">
+   <properties>
+    <property name="deadly" value="lt"/>
+   </properties>
+  </object>
+  <object id="55" x="1472" y="448" width="32" height="192">
+   <properties>
+    <property name="deadly" value="lt"/>
+   </properties>
+  </object>
+  <object id="56" x="1440" y="640" width="32" height="160">
+   <properties>
+    <property name="deadly" value="ltb"/>
+   </properties>
+  </object>
+  <object id="57" x="1472" y="800" width="32" height="128">
+   <properties>
+    <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="58" x="1504" y="928" width="32" height="96">
+   <properties>
+    <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="59" x="1536" y="1024" width="32" height="64">
+   <properties>
+    <property name="deadly" value="lb"/>
+   </properties>
+  </object>
+  <object id="61" x="1568" y="1088" width="32" height="160">
+   <properties>
+    <property name="deadly" value="l"/>
+   </properties>
+  </object>
+  <object id="62" x="1408" y="160" width="32" height="128">
+   <properties>
+    <property name="deadly" value="br"/>
+   </properties>
+  </object>
+  <object id="63" x="1376" y="288" width="32" height="96">
+   <properties>
+    <property name="deadly" value="br"/>
+   </properties>
+  </object>
+  <object id="64" x="1344" y="384" width="32" height="96">
+   <properties>
+    <property name="deadly" value="br"/>
+   </properties>
+  </object>
+  <object id="65" x="1312" y="480" width="32" height="96">
+   <properties>
+    <property name="deadly" value="br"/>
+   </properties>
+  </object>
+  <object id="66" x="1280" y="576" width="32" height="160">
+   <properties>
+    <property name="deadly" value="r"/>
+   </properties>
+  </object>
+  <object id="67" x="1312" y="736" width="32" height="192">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+  <object id="68" x="1344" y="928" width="32" height="96">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+  <object id="69" x="1376" y="1024" width="32" height="96">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+  <object id="70" x="1408" y="1120" width="32" height="64">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+  <object id="71" x="1440" y="1184" width="32" height="64">
+   <properties>
+    <property name="deadly" value="tr"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

@@ -1,0 +1,508 @@
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - INFO --- ----------Logger initialised----------
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - DEBUG --- Current Working directory is: C:\Users\Penaz\Desktop\Progetti\GH\Glitch_Heaven\Game
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - INFO --- Parsing configuration file
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - DEBUG --- Screensize set to: (800, 600)
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - DEBUG --- Fullscreen Flag Set to: False
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - DEBUG --- Doublebuffer Flag set to: False
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - INFO --- Loading key dictionary
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - DEBUG --- Key Dictionary is:{'run': 122, 'confirm': 13, 'left': 276, 'restart': 114, 'escape': 27, 'up': 273, 'action': 274, 'right': 275, 'down': 274, 'jump': 273}
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - INFO --- Setting screen flags
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - INFO --- Pre-initialising Mixer
+[2016-04-09 10:36:05,767] (Glitch_Heaven) - INFO --- Initialising Display
+[2016-04-09 10:36:05,812] (Glitch_Heaven) - INFO --- Initialising Fonts
+[2016-04-09 10:36:05,812] (Glitch_Heaven) - INFO --- Initialising Mixer
+[2016-04-09 10:36:06,088] (Glitch_Heaven) - INFO --- Loading sounds
+[2016-04-09 10:36:06,091] (Glitch_Heaven) - INFO --- Setting up the Screen
+[2016-04-09 10:36:06,520] (Glitch_Heaven) - INFO --- Opening the menu
+[2016-04-09 10:36:06,555] (Glitch_Heaven.mainMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 10:36:06,586] (Glitch_Heaven.mainMenu) - DEBUG --- Checking Savegames Directory: savegames
+[2016-04-09 10:36:06,587] (Glitch_Heaven.mainMenu) - DEBUG --- No SaveFiles Found.
+[2016-04-09 10:36:07,183] (Glitch_Heaven.newGameMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 10:36:10,189] (Glitch_Heaven.game) - INFO --- Entering main game
+[2016-04-09 10:36:10,192] (Glitch_Heaven.game) - DEBUG --- Current Active Modifiers: {'moonwalk': False, 'vflip': False, 'chaos': False, 'hflip': False}
+[2016-04-09 10:36:10,193] (Glitch_Heaven.game) - DEBUG --- Using New Game mode
+[2016-04-09 10:36:10,194] (Glitch_Heaven.game) - INFO --- Loading campaign C:/Users/Penaz/Desktop/Progetti/GH/Glitch_Heaven/Game/data/campaigns/newCMP.cmp
+[2016-04-09 10:36:10,194] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level1
+[2016-04-09 10:36:10,195] (Glitch_Heaven.game) - DEBUG --- Intermission found, starting intermission
+[2016-04-09 10:36:11,136] (Glitch_Heaven.intermission) - DEBUG --- Player stopped iteration,                                 ending
+[2016-04-09 10:36:11,140] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 10:36:11,140] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'featherFalling', 'wallClimb', 'invertedControls', 'invertedGravity'], 'timer': 20.0}
+[2016-04-09 10:36:11,140] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'noRight': False, 'multiJump': False, 'timeLapse': False, 'highJump': False, 'featherFalling': False, 'slideInvert': False, 'hover': False, 'stopBounce': False, 'ledgeJump': False, 'ledgeWalk': False, 'hWrapping': False, 'noJump': False, 'stickyCeil': False, 'permBodies': False, 'clipOnCommand': False, 'vWrapping': False, 'invertedRun': False, 'wallClimb': False, 'invertedControls': False, 'solidHelp': False, 'speed': False, 'invertedGravity': False, 'noStop': False, 'obsResistant': False, 'gravity': False, 'noLeft': False}
+[2016-04-09 10:36:11,141] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 10:36:11,154] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 10:36:11,154] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 10:36:11,405] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 10:36:11,436] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 10:36:11,436] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 10:36:11,444] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 10:36:11,461] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 10:36:11,461] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 10:36:11,462] (Glitch_Heaven.game) - DEBUG --- Glitches Loaded: {'noRight': False, 'multiJump': False, 'timeLapse': False, 'highJump': False, 'featherFalling': False, 'slideInvert': False, 'hover': False, 'stopBounce': False, 'ledgeJump': False, 'ledgeWalk': False, 'hWrapping': False, 'noJump': False, 'stickyCeil': False, 'permBodies': False, 'clipOnCommand': False, 'vWrapping': False, 'invertedRun': False, 'wallClimb': False, 'invertedControls': False, 'solidHelp': False, 'speed': False, 'invertedGravity': False, 'noStop': False, 'obsResistant': False, 'gravity': False, 'noLeft': False}
+[2016-04-09 10:36:12,848] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 10:36:12,848] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level2
+[2016-04-09 10:36:12,853] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 10:36:12,854] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'featherFalling', 'wallClimb', 'invertedControls', 'invertedGravity'], 'timer': 13.0}
+[2016-04-09 10:36:12,854] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'noRight': False, 'multiJump': False, 'timeLapse': False, 'highJump': False, 'featherFalling': False, 'slideInvert': False, 'hover': False, 'stopBounce': False, 'ledgeJump': False, 'ledgeWalk': False, 'hWrapping': False, 'noJump': False, 'stickyCeil': False, 'permBodies': False, 'clipOnCommand': False, 'vWrapping': False, 'invertedRun': False, 'wallClimb': False, 'invertedControls': False, 'solidHelp': False, 'speed': False, 'invertedGravity': False, 'noStop': False, 'obsResistant': False, 'gravity': False, 'noLeft': False}
+[2016-04-09 10:36:12,854] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 10:36:12,875] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 10:36:12,875] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 10:36:12,877] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 10:36:12,877] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 10:36:12,877] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 10:36:12,877] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 10:36:12,895] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 10:36:12,895] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 10:36:35,685] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level3
+[2016-04-09 10:36:35,686] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 10:36:35,686] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'featherFalling', 'wallClimb', 'invertedControls', 'invertedGravity'], 'timer': 17.0}
+[2016-04-09 10:36:35,686] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'noRight': False, 'multiJump': False, 'timeLapse': False, 'highJump': False, 'featherFalling': False, 'slideInvert': False, 'hover': False, 'stopBounce': False, 'ledgeJump': False, 'ledgeWalk': False, 'hWrapping': False, 'noJump': False, 'stickyCeil': False, 'permBodies': False, 'clipOnCommand': False, 'vWrapping': False, 'invertedRun': False, 'wallClimb': False, 'invertedControls': False, 'solidHelp': False, 'speed': False, 'invertedGravity': False, 'noStop': False, 'obsResistant': False, 'gravity': False, 'noLeft': False}
+[2016-04-09 10:36:35,687] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 10:36:35,701] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 10:36:35,702] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 10:36:35,703] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 10:36:35,703] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 10:36:35,703] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 10:36:35,703] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 10:36:35,720] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 10:36:35,721] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 10:36:37,287] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 10:36:37,287] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level4
+[2016-04-09 10:36:37,289] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 10:36:37,289] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'featherFalling', 'wallClimb', 'invertedControls', 'invertedGravity'], 'timer': 10.0}
+[2016-04-09 10:36:37,289] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'noRight': False, 'multiJump': False, 'timeLapse': False, 'highJump': False, 'featherFalling': False, 'slideInvert': False, 'hover': False, 'stopBounce': False, 'ledgeJump': False, 'ledgeWalk': False, 'hWrapping': False, 'noJump': False, 'stickyCeil': False, 'permBodies': False, 'clipOnCommand': False, 'vWrapping': False, 'invertedRun': False, 'wallClimb': True, 'invertedControls': False, 'solidHelp': False, 'speed': False, 'invertedGravity': False, 'noStop': False, 'obsResistant': False, 'gravity': False, 'noLeft': False}
+[2016-04-09 10:36:37,289] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 10:36:37,303] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 10:36:37,303] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 10:36:37,304] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 10:36:37,304] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 10:36:37,304] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 10:36:37,305] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 10:36:37,322] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 10:36:37,322] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 10:36:38,359] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 10:36:38,359] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level5
+[2016-04-09 10:36:38,360] (Glitch_Heaven.newGameMenu) - INFO --- No File selected, Loading of campaign aborted
+[2016-04-09 10:36:39,588] (Glitch_Heaven) - INFO --- Game has exited correctly
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - INFO --- ----------Logger initialised----------
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - DEBUG --- Current Working directory is: C:\Users\Penaz\Desktop\Progetti\GH\Glitch_Heaven\Game
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - INFO --- Parsing configuration file
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - DEBUG --- Screensize set to: (800, 600)
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - DEBUG --- Fullscreen Flag Set to: False
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - DEBUG --- Doublebuffer Flag set to: False
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - INFO --- Loading key dictionary
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - DEBUG --- Key Dictionary is:{'jump': 273, 'run': 122, 'up': 273, 'action': 274, 'confirm': 13, 'restart': 114, 'left': 276, 'escape': 27, 'down': 274, 'right': 275}
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - INFO --- Setting screen flags
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - INFO --- Pre-initialising Mixer
+[2016-04-09 11:03:47,024] (Glitch_Heaven) - INFO --- Initialising Display
+[2016-04-09 11:03:47,067] (Glitch_Heaven) - INFO --- Initialising Fonts
+[2016-04-09 11:03:47,067] (Glitch_Heaven) - INFO --- Initialising Mixer
+[2016-04-09 11:03:47,319] (Glitch_Heaven) - INFO --- Loading sounds
+[2016-04-09 11:03:47,321] (Glitch_Heaven) - INFO --- Setting up the Screen
+[2016-04-09 11:03:47,711] (Glitch_Heaven) - INFO --- Opening the menu
+[2016-04-09 11:03:47,746] (Glitch_Heaven.mainMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 11:03:47,776] (Glitch_Heaven.mainMenu) - DEBUG --- Checking Savegames Directory: savegames
+[2016-04-09 11:03:47,777] (Glitch_Heaven.mainMenu) - DEBUG --- No SaveFiles Found.
+[2016-04-09 11:03:48,142] (Glitch_Heaven.newGameMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 11:03:50,355] (Glitch_Heaven.game) - INFO --- Entering main game
+[2016-04-09 11:03:50,358] (Glitch_Heaven.game) - DEBUG --- Current Active Modifiers: {'moonwalk': False, 'chaos': False, 'vflip': False, 'hflip': False}
+[2016-04-09 11:03:50,359] (Glitch_Heaven.game) - DEBUG --- Using New Game mode
+[2016-04-09 11:03:50,359] (Glitch_Heaven.game) - INFO --- Loading campaign C:/Users/Penaz/Desktop/Progetti/GH/Glitch_Heaven/Game/data/campaigns/newCMP.cmp
+[2016-04-09 11:03:50,359] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level1
+[2016-04-09 11:03:50,360] (Glitch_Heaven.game) - DEBUG --- Intermission found, starting intermission
+[2016-04-09 11:03:51,202] (Glitch_Heaven.intermission) - DEBUG --- Player stopped iteration,                                 ending
+[2016-04-09 11:03:51,206] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:03:51,206] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 18.0, 'glitches': ['invertedGravity', 'featherFalling', 'highJump', 'invertedControls', 'wallClimb']}
+[2016-04-09 11:03:51,206] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'obsResistant': False, 'invertedGravity': False, 'ledgeWalk': False, 'hWrapping': False, 'featherFalling': False, 'highJump': False, 'solidHelp': False, 'noLeft': False, 'timeLapse': False, 'permBodies': False, 'vWrapping': False, 'stickyCeil': False, 'clipOnCommand': False, 'invertedRun': False, 'invertedControls': False, 'hover': False, 'multiJump': False, 'stopBounce': False, 'ledgeJump': False, 'noJump': False, 'wallClimb': False, 'noStop': False, 'slideInvert': False, 'noRight': False, 'speed': False, 'gravity': False}
+[2016-04-09 11:03:51,207] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:03:51,220] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:03:51,220] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:03:51,470] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:03:51,502] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:03:51,502] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:03:51,510] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:03:51,527] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:03:51,527] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:03:51,527] (Glitch_Heaven.game) - DEBUG --- Glitches Loaded: {'obsResistant': False, 'invertedGravity': False, 'ledgeWalk': False, 'hWrapping': False, 'featherFalling': False, 'highJump': False, 'solidHelp': False, 'noLeft': False, 'timeLapse': False, 'permBodies': False, 'vWrapping': False, 'stickyCeil': False, 'clipOnCommand': False, 'invertedRun': False, 'invertedControls': False, 'hover': False, 'multiJump': False, 'stopBounce': False, 'ledgeJump': False, 'noJump': False, 'wallClimb': False, 'noStop': False, 'slideInvert': False, 'noRight': False, 'speed': False, 'gravity': False}
+[2016-04-09 11:03:52,319] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:03:52,319] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level2
+[2016-04-09 11:03:52,320] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:03:52,320] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 16.0, 'glitches': ['invertedGravity', 'featherFalling', 'highJump', 'invertedControls', 'wallClimb']}
+[2016-04-09 11:03:52,320] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'obsResistant': False, 'invertedGravity': False, 'ledgeWalk': False, 'hWrapping': False, 'featherFalling': False, 'highJump': False, 'solidHelp': False, 'noLeft': False, 'timeLapse': False, 'permBodies': False, 'vWrapping': False, 'stickyCeil': False, 'clipOnCommand': False, 'invertedRun': False, 'invertedControls': False, 'hover': False, 'multiJump': False, 'stopBounce': False, 'ledgeJump': False, 'noJump': False, 'wallClimb': False, 'noStop': False, 'slideInvert': False, 'noRight': False, 'speed': False, 'gravity': False}
+[2016-04-09 11:03:52,320] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:03:52,334] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:03:52,334] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:03:52,336] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:03:52,336] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:03:52,336] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:03:52,336] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:03:52,354] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:03:52,354] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:03:52,664] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:03:52,664] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level3
+[2016-04-09 11:03:52,666] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:03:52,666] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 9.0, 'glitches': ['invertedGravity', 'featherFalling', 'highJump', 'invertedControls', 'wallClimb']}
+[2016-04-09 11:03:52,666] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'obsResistant': False, 'invertedGravity': False, 'ledgeWalk': False, 'hWrapping': False, 'featherFalling': False, 'highJump': False, 'solidHelp': False, 'noLeft': False, 'timeLapse': False, 'permBodies': False, 'vWrapping': False, 'stickyCeil': False, 'clipOnCommand': False, 'invertedRun': False, 'invertedControls': False, 'hover': False, 'multiJump': False, 'stopBounce': False, 'ledgeJump': False, 'noJump': False, 'wallClimb': False, 'noStop': False, 'slideInvert': False, 'noRight': False, 'speed': False, 'gravity': False}
+[2016-04-09 11:03:52,666] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:03:52,680] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:03:52,680] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:03:52,681] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:03:52,681] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:03:52,681] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:03:52,681] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:03:52,699] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:03:52,699] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:03:53,042] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:03:53,042] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level4
+[2016-04-09 11:03:53,044] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:03:53,044] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 8.0, 'glitches': ['invertedGravity', 'featherFalling', 'highJump', 'invertedControls', 'wallClimb']}
+[2016-04-09 11:03:53,044] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'obsResistant': False, 'invertedGravity': False, 'ledgeWalk': False, 'hWrapping': False, 'featherFalling': False, 'highJump': False, 'solidHelp': False, 'noLeft': False, 'timeLapse': False, 'permBodies': False, 'vWrapping': False, 'stickyCeil': False, 'clipOnCommand': False, 'invertedRun': False, 'invertedControls': False, 'hover': False, 'multiJump': False, 'stopBounce': False, 'ledgeJump': False, 'noJump': False, 'wallClimb': True, 'noStop': False, 'slideInvert': False, 'noRight': False, 'speed': False, 'gravity': False}
+[2016-04-09 11:03:53,044] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:03:53,058] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:03:53,058] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:03:53,059] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:03:53,059] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:03:53,060] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:03:53,060] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:03:53,077] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:03:53,077] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:03:54,378] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:03:54,378] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level5
+[2016-04-09 11:03:54,380] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:03:54,380] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 20.0, 'glitches': ['invertedGravity', 'featherFalling', 'highJump', 'invertedControls', 'wallClimb']}
+[2016-04-09 11:03:54,380] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'obsResistant': False, 'invertedGravity': False, 'ledgeWalk': False, 'hWrapping': False, 'featherFalling': False, 'highJump': False, 'solidHelp': False, 'noLeft': False, 'timeLapse': False, 'permBodies': False, 'vWrapping': False, 'stickyCeil': False, 'clipOnCommand': False, 'invertedRun': False, 'invertedControls': False, 'hover': False, 'multiJump': False, 'stopBounce': False, 'ledgeJump': False, 'noJump': False, 'wallClimb': True, 'noStop': False, 'slideInvert': False, 'noRight': False, 'speed': False, 'gravity': False}
+[2016-04-09 11:03:54,380] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:03:54,393] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:03:54,393] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:03:54,394] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:03:54,394] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:03:54,395] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:03:54,395] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:03:54,412] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:03:54,412] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:04:08,288] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 11:04:14,837] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (430, 857)
+[2016-04-09 11:04:17,312] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (2336, 1672)
+[2016-04-09 11:04:35,894] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 11:04:41,107] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level6
+[2016-04-09 11:04:41,107] (Glitch_Heaven.newGameMenu) - INFO --- No File selected, Loading of campaign aborted
+[2016-04-09 11:04:42,897] (Glitch_Heaven) - INFO --- Game has exited correctly
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - INFO --- ----------Logger initialised----------
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - DEBUG --- Current Working directory is: C:\Users\Penaz\Desktop\Progetti\GH\Glitch_Heaven\Game
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - INFO --- Parsing configuration file
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - DEBUG --- Screensize set to: (800, 600)
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - DEBUG --- Fullscreen Flag Set to: False
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - DEBUG --- Doublebuffer Flag set to: False
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - INFO --- Loading key dictionary
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - DEBUG --- Key Dictionary is:{'right': 275, 'action': 274, 'up': 273, 'confirm': 13, 'restart': 114, 'jump': 273, 'escape': 27, 'run': 122, 'left': 276, 'down': 274}
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - INFO --- Setting screen flags
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - INFO --- Pre-initialising Mixer
+[2016-04-09 11:06:30,256] (Glitch_Heaven) - INFO --- Initialising Display
+[2016-04-09 11:06:30,305] (Glitch_Heaven) - INFO --- Initialising Fonts
+[2016-04-09 11:06:30,305] (Glitch_Heaven) - INFO --- Initialising Mixer
+[2016-04-09 11:06:30,555] (Glitch_Heaven) - INFO --- Loading sounds
+[2016-04-09 11:06:30,557] (Glitch_Heaven) - INFO --- Setting up the Screen
+[2016-04-09 11:06:30,961] (Glitch_Heaven) - INFO --- Opening the menu
+[2016-04-09 11:06:30,995] (Glitch_Heaven.mainMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 11:06:31,026] (Glitch_Heaven.mainMenu) - DEBUG --- Checking Savegames Directory: savegames
+[2016-04-09 11:06:31,026] (Glitch_Heaven.mainMenu) - DEBUG --- No SaveFiles Found.
+[2016-04-09 11:06:31,325] (Glitch_Heaven.newGameMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 11:06:33,700] (Glitch_Heaven.game) - INFO --- Entering main game
+[2016-04-09 11:06:33,703] (Glitch_Heaven.game) - DEBUG --- Current Active Modifiers: {'moonwalk': False, 'vflip': False, 'hflip': False, 'chaos': False}
+[2016-04-09 11:06:33,704] (Glitch_Heaven.game) - DEBUG --- Using New Game mode
+[2016-04-09 11:06:33,704] (Glitch_Heaven.game) - INFO --- Loading campaign C:/Users/Penaz/Desktop/Progetti/GH/Glitch_Heaven/Game/data/campaigns/newCMP.cmp
+[2016-04-09 11:06:33,705] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level1
+[2016-04-09 11:06:33,705] (Glitch_Heaven.game) - DEBUG --- Intermission found, starting intermission
+[2016-04-09 11:06:37,120] (Glitch_Heaven.intermission) - DEBUG --- Player stopped iteration,                                 ending
+[2016-04-09 11:06:37,124] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:06:37,124] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['wallClimb', 'highJump', 'invertedGravity', 'featherFalling', 'invertedControls'], 'timer': 19.0}
+[2016-04-09 11:06:37,124] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'wallClimb': False, 'highJump': False, 'stickyCeil': False, 'clipOnCommand': False, 'ledgeWalk': False, 'invertedGravity': False, 'permBodies': False, 'stopBounce': False, 'noJump': False, 'timeLapse': False, 'multiJump': False, 'noLeft': False, 'featherFalling': False, 'hover': False, 'hWrapping': False, 'gravity': False, 'speed': False, 'slideInvert': False, 'ledgeJump': False, 'noStop': False, 'invertedRun': False, 'obsResistant': False, 'invertedControls': False, 'noRight': False, 'solidHelp': False, 'vWrapping': False}
+[2016-04-09 11:06:37,125] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:06:37,138] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:06:37,138] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:06:37,388] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:06:37,419] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:06:37,419] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:06:37,426] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:06:37,443] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:06:37,443] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:06:37,443] (Glitch_Heaven.game) - DEBUG --- Glitches Loaded: {'wallClimb': False, 'highJump': False, 'stickyCeil': False, 'clipOnCommand': False, 'ledgeWalk': False, 'invertedGravity': False, 'permBodies': False, 'stopBounce': False, 'noJump': False, 'timeLapse': False, 'multiJump': False, 'noLeft': False, 'featherFalling': False, 'hover': False, 'hWrapping': False, 'gravity': False, 'speed': False, 'slideInvert': False, 'ledgeJump': False, 'noStop': False, 'invertedRun': False, 'obsResistant': False, 'invertedControls': False, 'noRight': False, 'solidHelp': False, 'vWrapping': False}
+[2016-04-09 11:06:38,236] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:06:38,236] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level2
+[2016-04-09 11:06:38,237] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:06:38,237] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['wallClimb', 'highJump', 'invertedGravity', 'featherFalling', 'invertedControls'], 'timer': 9.0}
+[2016-04-09 11:06:38,237] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'wallClimb': False, 'highJump': False, 'stickyCeil': False, 'clipOnCommand': False, 'ledgeWalk': False, 'invertedGravity': False, 'permBodies': False, 'stopBounce': False, 'noJump': False, 'timeLapse': False, 'multiJump': False, 'noLeft': False, 'featherFalling': False, 'hover': False, 'hWrapping': False, 'gravity': False, 'speed': False, 'slideInvert': False, 'ledgeJump': False, 'noStop': False, 'invertedRun': False, 'obsResistant': False, 'invertedControls': False, 'noRight': False, 'solidHelp': False, 'vWrapping': False}
+[2016-04-09 11:06:38,237] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:06:38,251] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:06:38,251] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:06:38,253] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:06:38,253] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:06:38,253] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:06:38,253] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:06:38,271] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:06:38,271] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:06:38,383] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:06:38,383] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level3
+[2016-04-09 11:06:38,385] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:06:38,385] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['wallClimb', 'highJump', 'invertedGravity', 'featherFalling', 'invertedControls'], 'timer': 8.0}
+[2016-04-09 11:06:38,385] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'wallClimb': False, 'highJump': False, 'stickyCeil': False, 'clipOnCommand': False, 'ledgeWalk': False, 'invertedGravity': False, 'permBodies': False, 'stopBounce': False, 'noJump': False, 'timeLapse': False, 'multiJump': False, 'noLeft': False, 'featherFalling': False, 'hover': False, 'hWrapping': False, 'gravity': False, 'speed': False, 'slideInvert': False, 'ledgeJump': False, 'noStop': False, 'invertedRun': False, 'obsResistant': False, 'invertedControls': False, 'noRight': False, 'solidHelp': False, 'vWrapping': False}
+[2016-04-09 11:06:38,385] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:06:38,399] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:06:38,399] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:06:38,400] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:06:38,400] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:06:38,400] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:06:38,400] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:06:38,418] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:06:38,418] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:06:38,563] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:06:38,563] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level4
+[2016-04-09 11:06:38,565] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:06:38,565] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['wallClimb', 'highJump', 'invertedGravity', 'featherFalling', 'invertedControls'], 'timer': 7.0}
+[2016-04-09 11:06:38,565] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'wallClimb': True, 'highJump': False, 'stickyCeil': False, 'clipOnCommand': False, 'ledgeWalk': False, 'invertedGravity': False, 'permBodies': False, 'stopBounce': False, 'noJump': False, 'timeLapse': False, 'multiJump': False, 'noLeft': False, 'featherFalling': False, 'hover': False, 'hWrapping': False, 'gravity': False, 'speed': False, 'slideInvert': False, 'ledgeJump': False, 'noStop': False, 'invertedRun': False, 'obsResistant': False, 'invertedControls': False, 'noRight': False, 'solidHelp': False, 'vWrapping': False}
+[2016-04-09 11:06:38,565] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:06:38,579] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:06:38,579] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:06:38,581] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:06:38,581] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:06:38,581] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:06:38,581] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:06:38,598] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:06:38,598] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:06:39,404] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:06:39,404] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level5
+[2016-04-09 11:06:39,406] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:06:39,406] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['wallClimb', 'highJump', 'invertedGravity', 'featherFalling', 'invertedControls'], 'timer': 17.0}
+[2016-04-09 11:06:39,406] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'wallClimb': True, 'highJump': False, 'stickyCeil': False, 'clipOnCommand': False, 'ledgeWalk': False, 'invertedGravity': False, 'permBodies': False, 'stopBounce': False, 'noJump': False, 'timeLapse': False, 'multiJump': False, 'noLeft': False, 'featherFalling': False, 'hover': False, 'hWrapping': False, 'gravity': False, 'speed': False, 'slideInvert': False, 'ledgeJump': False, 'noStop': False, 'invertedRun': False, 'obsResistant': False, 'invertedControls': False, 'noRight': False, 'solidHelp': False, 'vWrapping': False}
+[2016-04-09 11:06:39,406] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:06:39,419] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:06:39,420] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:06:39,446] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:06:39,447] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:06:39,447] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:06:39,447] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:06:39,465] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:06:39,465] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:06:47,599] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (1244, 1638)
+[2016-04-09 11:06:50,999] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (329, 1424)
+[2016-04-09 11:07:02,946] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 11:07:10,141] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 11:07:27,107] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level6
+[2016-04-09 11:07:27,108] (Glitch_Heaven.newGameMenu) - INFO --- No File selected, Loading of campaign aborted
+[2016-04-09 11:07:29,820] (Glitch_Heaven) - INFO --- Game has exited correctly
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - INFO --- ----------Logger initialised----------
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - DEBUG --- Current Working directory is: C:\Users\Penaz\Desktop\Progetti\GH\Glitch_Heaven\Game
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - INFO --- Parsing configuration file
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - DEBUG --- Screensize set to: (800, 600)
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - DEBUG --- Fullscreen Flag Set to: False
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - DEBUG --- Doublebuffer Flag set to: False
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - INFO --- Loading key dictionary
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - DEBUG --- Key Dictionary is:{'down': 274, 'left': 276, 'right': 275, 'confirm': 13, 'jump': 273, 'action': 274, 'run': 122, 'escape': 27, 'restart': 114, 'up': 273}
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - INFO --- Setting screen flags
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - INFO --- Pre-initialising Mixer
+[2016-04-09 11:08:04,344] (Glitch_Heaven) - INFO --- Initialising Display
+[2016-04-09 11:08:04,387] (Glitch_Heaven) - INFO --- Initialising Fonts
+[2016-04-09 11:08:04,387] (Glitch_Heaven) - INFO --- Initialising Mixer
+[2016-04-09 11:08:04,632] (Glitch_Heaven) - INFO --- Loading sounds
+[2016-04-09 11:08:04,634] (Glitch_Heaven) - INFO --- Setting up the Screen
+[2016-04-09 11:08:05,038] (Glitch_Heaven) - INFO --- Opening the menu
+[2016-04-09 11:08:05,072] (Glitch_Heaven.mainMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 11:08:05,102] (Glitch_Heaven.mainMenu) - DEBUG --- Checking Savegames Directory: savegames
+[2016-04-09 11:08:05,102] (Glitch_Heaven.mainMenu) - DEBUG --- No SaveFiles Found.
+[2016-04-09 11:08:05,402] (Glitch_Heaven.newGameMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 11:08:07,419] (Glitch_Heaven.game) - INFO --- Entering main game
+[2016-04-09 11:08:07,422] (Glitch_Heaven.game) - DEBUG --- Current Active Modifiers: {'chaos': False, 'moonwalk': False, 'hflip': False, 'vflip': False}
+[2016-04-09 11:08:07,424] (Glitch_Heaven.game) - DEBUG --- Using New Game mode
+[2016-04-09 11:08:07,424] (Glitch_Heaven.game) - INFO --- Loading campaign C:/Users/Penaz/Desktop/Progetti/GH/Glitch_Heaven/Game/data/campaigns/newCMP.cmp
+[2016-04-09 11:08:07,424] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level1
+[2016-04-09 11:08:07,424] (Glitch_Heaven.game) - DEBUG --- Intermission found, starting intermission
+[2016-04-09 11:08:08,232] (Glitch_Heaven.intermission) - DEBUG --- Player stopped iteration,                                 ending
+[2016-04-09 11:08:08,235] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:08:08,236] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 15.0, 'glitches': ['featherFalling', 'wallClimb', 'highJump', 'invertedControls', 'invertedGravity']}
+[2016-04-09 11:08:08,236] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'multiJump': False, 'featherFalling': False, 'hWrapping': False, 'solidHelp': False, 'stopBounce': False, 'noRight': False, 'obsResistant': False, 'permBodies': False, 'slideInvert': False, 'gravity': False, 'wallClimb': False, 'noLeft': False, 'hover': False, 'stickyCeil': False, 'clipOnCommand': False, 'highJump': False, 'noStop': False, 'timeLapse': False, 'vWrapping': False, 'invertedRun': False, 'invertedControls': False, 'noJump': False, 'invertedGravity': False, 'ledgeJump': False, 'speed': False, 'ledgeWalk': False}
+[2016-04-09 11:08:08,236] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:08:08,250] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:08:08,250] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:08:08,499] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:08:08,531] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:08:08,531] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:08:08,538] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:08:08,554] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:08:08,555] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:08:08,555] (Glitch_Heaven.game) - DEBUG --- Glitches Loaded: {'multiJump': False, 'featherFalling': False, 'hWrapping': False, 'solidHelp': False, 'stopBounce': False, 'noRight': False, 'obsResistant': False, 'permBodies': False, 'slideInvert': False, 'gravity': False, 'wallClimb': False, 'noLeft': False, 'hover': False, 'stickyCeil': False, 'clipOnCommand': False, 'highJump': False, 'noStop': False, 'timeLapse': False, 'vWrapping': False, 'invertedRun': False, 'invertedControls': False, 'noJump': False, 'invertedGravity': False, 'ledgeJump': False, 'speed': False, 'ledgeWalk': False}
+[2016-04-09 11:08:09,479] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:08:09,479] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level2
+[2016-04-09 11:08:09,480] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:08:09,480] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 18.0, 'glitches': ['featherFalling', 'wallClimb', 'highJump', 'invertedControls', 'invertedGravity']}
+[2016-04-09 11:08:09,480] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'multiJump': False, 'featherFalling': False, 'hWrapping': False, 'solidHelp': False, 'stopBounce': False, 'noRight': False, 'obsResistant': False, 'permBodies': False, 'slideInvert': False, 'gravity': False, 'wallClimb': False, 'noLeft': False, 'hover': False, 'stickyCeil': False, 'clipOnCommand': False, 'highJump': False, 'noStop': False, 'timeLapse': False, 'vWrapping': False, 'invertedRun': False, 'invertedControls': False, 'noJump': False, 'invertedGravity': False, 'ledgeJump': False, 'speed': False, 'ledgeWalk': False}
+[2016-04-09 11:08:09,480] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:08:09,494] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:08:09,494] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:08:09,496] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:08:09,496] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:08:09,496] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:08:09,496] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:08:09,513] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:08:09,514] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:08:13,785] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:08:13,785] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level3
+[2016-04-09 11:08:13,787] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:08:13,787] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 17.0, 'glitches': ['featherFalling', 'wallClimb', 'highJump', 'invertedControls', 'invertedGravity']}
+[2016-04-09 11:08:13,787] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'multiJump': False, 'featherFalling': False, 'hWrapping': False, 'solidHelp': False, 'stopBounce': False, 'noRight': False, 'obsResistant': False, 'permBodies': False, 'slideInvert': False, 'gravity': False, 'wallClimb': False, 'noLeft': False, 'hover': False, 'stickyCeil': False, 'clipOnCommand': False, 'highJump': False, 'noStop': False, 'timeLapse': False, 'vWrapping': False, 'invertedRun': False, 'invertedControls': False, 'noJump': False, 'invertedGravity': False, 'ledgeJump': False, 'speed': False, 'ledgeWalk': False}
+[2016-04-09 11:08:13,787] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:08:13,801] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:08:13,801] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:08:13,802] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:08:13,802] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:08:13,803] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:08:13,803] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:08:13,820] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:08:13,820] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:08:14,659] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:08:14,659] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level4
+[2016-04-09 11:08:14,660] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:08:14,661] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 10.0, 'glitches': ['featherFalling', 'wallClimb', 'highJump', 'invertedControls', 'invertedGravity']}
+[2016-04-09 11:08:14,661] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'multiJump': False, 'featherFalling': False, 'hWrapping': False, 'solidHelp': False, 'stopBounce': False, 'noRight': False, 'obsResistant': False, 'permBodies': False, 'slideInvert': False, 'gravity': False, 'wallClimb': True, 'noLeft': False, 'hover': False, 'stickyCeil': False, 'clipOnCommand': False, 'highJump': False, 'noStop': False, 'timeLapse': False, 'vWrapping': False, 'invertedRun': False, 'invertedControls': False, 'noJump': False, 'invertedGravity': False, 'ledgeJump': False, 'speed': False, 'ledgeWalk': False}
+[2016-04-09 11:08:14,661] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:08:14,675] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:08:14,675] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:08:14,676] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:08:14,676] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:08:14,676] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:08:14,676] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:08:14,693] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:08:14,694] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:08:15,565] (Glitch_Heaven.game) - DEBUG --- Debug key used, Loading next level
+[2016-04-09 11:08:15,565] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level5
+[2016-04-09 11:08:15,566] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 11:08:15,567] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'timer': 10.0, 'glitches': ['featherFalling', 'wallClimb', 'highJump', 'invertedControls', 'invertedGravity']}
+[2016-04-09 11:08:15,567] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'multiJump': False, 'featherFalling': False, 'hWrapping': False, 'solidHelp': False, 'stopBounce': False, 'noRight': False, 'obsResistant': False, 'permBodies': False, 'slideInvert': False, 'gravity': False, 'wallClimb': True, 'noLeft': False, 'hover': False, 'stickyCeil': False, 'clipOnCommand': False, 'highJump': False, 'noStop': False, 'timeLapse': False, 'vWrapping': False, 'invertedRun': False, 'invertedControls': False, 'noJump': False, 'invertedGravity': False, 'ledgeJump': False, 'speed': False, 'ledgeWalk': False}
+[2016-04-09 11:08:15,567] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 11:08:15,580] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 11:08:15,580] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 11:08:15,589] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 11:08:15,590] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 11:08:15,590] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 11:08:15,590] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 11:08:15,606] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 11:08:15,607] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 11:08:29,057] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 11:08:41,135] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 11:08:45,854] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level6
+[2016-04-09 11:08:45,855] (Glitch_Heaven.newGameMenu) - INFO --- No File selected, Loading of campaign aborted
+[2016-04-09 11:08:47,182] (Glitch_Heaven) - INFO --- Game has exited correctly
+[2016-04-09 15:14:57,448] (Glitch_Heaven) - INFO --- ----------Logger initialised----------
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - DEBUG --- Current Working directory is: C:\Users\Penaz\Desktop\Progetti\GH\Glitch_Heaven\Game
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - INFO --- Parsing configuration file
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - DEBUG --- Screensize set to: (800, 600)
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - DEBUG --- Fullscreen Flag Set to: False
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - DEBUG --- Doublebuffer Flag set to: False
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - INFO --- Loading key dictionary
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - DEBUG --- Key Dictionary is:{'restart': 114, 'down': 274, 'right': 275, 'up': 273, 'escape': 27, 'left': 276, 'run': 122, 'jump': 273, 'confirm': 13, 'action': 274}
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - INFO --- Setting screen flags
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - INFO --- Pre-initialising Mixer
+[2016-04-09 15:14:57,494] (Glitch_Heaven) - INFO --- Initialising Display
+[2016-04-09 15:14:57,543] (Glitch_Heaven) - INFO --- Initialising Fonts
+[2016-04-09 15:14:57,543] (Glitch_Heaven) - INFO --- Initialising Mixer
+[2016-04-09 15:14:57,825] (Glitch_Heaven) - INFO --- Loading sounds
+[2016-04-09 15:14:57,828] (Glitch_Heaven) - INFO --- Setting up the Screen
+[2016-04-09 15:14:58,375] (Glitch_Heaven) - INFO --- Opening the menu
+[2016-04-09 15:14:58,410] (Glitch_Heaven.mainMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 15:14:58,443] (Glitch_Heaven.mainMenu) - DEBUG --- Checking Savegames Directory: savegames
+[2016-04-09 15:14:58,443] (Glitch_Heaven.mainMenu) - DEBUG --- No SaveFiles Found.
+[2016-04-09 15:14:59,140] (Glitch_Heaven.newGameMenu) - DEBUG --- Mouse Cursor Shown
+[2016-04-09 15:15:02,201] (Glitch_Heaven.game) - INFO --- Entering main game
+[2016-04-09 15:15:02,204] (Glitch_Heaven.game) - DEBUG --- Current Active Modifiers: {'chaos': False, 'hflip': False, 'moonwalk': False, 'vflip': False}
+[2016-04-09 15:15:02,205] (Glitch_Heaven.game) - DEBUG --- Using New Game mode
+[2016-04-09 15:15:02,205] (Glitch_Heaven.game) - INFO --- Loading campaign C:/Users/Penaz/Desktop/Progetti/GH/Glitch_Heaven/Game/data/campaigns/newCMP.cmp
+[2016-04-09 15:15:02,206] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level1
+[2016-04-09 15:15:02,206] (Glitch_Heaven.game) - DEBUG --- Intermission found, starting intermission
+[2016-04-09 15:15:02,652] (Glitch_Heaven.intermission) - DEBUG --- Player stopped iteration,                                 ending
+[2016-04-09 15:15:02,680] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 15:15:02,680] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'invertedControls', 'invertedGravity', 'featherFalling', 'wallClimb'], 'timer': 8.0}
+[2016-04-09 15:15:02,680] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'invertedRun': False, 'slideInvert': False, 'permBodies': False, 'obsResistant': False, 'gravity': False, 'ledgeWalk': False, 'vWrapping': False, 'stickyCeil': False, 'hWrapping': False, 'timeLapse': False, 'highJump': False, 'invertedControls': False, 'noJump': False, 'stopBounce': False, 'invertedGravity': False, 'hover': False, 'noStop': False, 'noLeft': False, 'featherFalling': False, 'ledgeJump': False, 'solidHelp': False, 'multiJump': False, 'noRight': False, 'speed': False, 'wallClimb': False, 'clipOnCommand': False}
+[2016-04-09 15:15:02,681] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 15:15:02,701] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 15:15:02,701] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 15:15:02,951] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 15:15:02,983] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 15:15:02,983] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 15:15:02,993] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 15:15:03,010] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 15:15:03,010] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 15:15:03,010] (Glitch_Heaven.game) - DEBUG --- Glitches Loaded: {'invertedRun': False, 'slideInvert': False, 'permBodies': False, 'obsResistant': False, 'gravity': False, 'ledgeWalk': False, 'vWrapping': False, 'stickyCeil': False, 'hWrapping': False, 'timeLapse': False, 'highJump': False, 'invertedControls': False, 'noJump': False, 'stopBounce': False, 'invertedGravity': False, 'hover': False, 'noStop': False, 'noLeft': False, 'featherFalling': False, 'ledgeJump': False, 'solidHelp': False, 'multiJump': False, 'noRight': False, 'speed': False, 'wallClimb': False, 'clipOnCommand': False}
+[2016-04-09 15:15:06,844] (Glitch_Heaven.playerEntity) - INFO --- Player pressed the button                         with ID: 1
+[2016-04-09 15:15:06,877] (Glitch_Heaven.playerEntity) - INFO --- Player pressed the button                         with ID: 1
+[2016-04-09 15:15:06,910] (Glitch_Heaven.playerEntity) - INFO --- Player pressed the button                         with ID: 1
+[2016-04-09 15:15:15,031] (Glitch_Heaven.playerEntity) - INFO --- Player pressed the button                         with ID: 2
+[2016-04-09 15:15:15,063] (Glitch_Heaven.playerEntity) - INFO --- Player pressed the button                         with ID: 2
+[2016-04-09 15:15:27,307] (Glitch_Heaven.playerEntity) - INFO --- Player pressed the button                         with ID: 3
+[2016-04-09 15:15:27,341] (Glitch_Heaven.playerEntity) - INFO --- Player pressed the button                         with ID: 3
+[2016-04-09 15:15:27,373] (Glitch_Heaven.playerEntity) - INFO --- Player pressed the button                         with ID: 3
+[2016-04-09 15:15:39,287] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level2
+[2016-04-09 15:15:39,288] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 15:15:39,289] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'invertedControls', 'invertedGravity', 'featherFalling', 'wallClimb'], 'timer': 8.0}
+[2016-04-09 15:15:39,289] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'invertedRun': False, 'slideInvert': False, 'permBodies': False, 'obsResistant': False, 'gravity': False, 'ledgeWalk': False, 'vWrapping': False, 'stickyCeil': False, 'hWrapping': False, 'timeLapse': False, 'highJump': False, 'invertedControls': False, 'noJump': False, 'stopBounce': False, 'invertedGravity': False, 'hover': False, 'noStop': False, 'noLeft': False, 'featherFalling': False, 'ledgeJump': False, 'solidHelp': False, 'multiJump': False, 'noRight': False, 'speed': False, 'wallClimb': False, 'clipOnCommand': False}
+[2016-04-09 15:15:39,289] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 15:15:39,303] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 15:15:39,303] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 15:15:39,304] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 15:15:39,305] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 15:15:39,305] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 15:15:39,305] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 15:15:39,322] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 15:15:39,322] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 15:16:01,348] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level3
+[2016-04-09 15:16:01,349] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 15:16:01,349] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'invertedControls', 'invertedGravity', 'featherFalling', 'wallClimb'], 'timer': 19.0}
+[2016-04-09 15:16:01,350] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'invertedRun': False, 'slideInvert': False, 'permBodies': False, 'obsResistant': False, 'gravity': False, 'ledgeWalk': False, 'vWrapping': False, 'stickyCeil': False, 'hWrapping': False, 'timeLapse': False, 'highJump': False, 'invertedControls': False, 'noJump': False, 'stopBounce': False, 'invertedGravity': False, 'hover': False, 'noStop': False, 'noLeft': False, 'featherFalling': False, 'ledgeJump': False, 'solidHelp': False, 'multiJump': False, 'noRight': False, 'speed': False, 'wallClimb': False, 'clipOnCommand': False}
+[2016-04-09 15:16:01,350] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 15:16:01,365] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 15:16:01,365] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 15:16:01,366] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 15:16:01,366] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 15:16:01,366] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 15:16:01,367] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 15:16:01,384] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 15:16:01,384] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 15:16:12,160] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 15:16:15,657] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (1452, 1166)
+[2016-04-09 15:16:18,694] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (1771, 1236)
+[2016-04-09 15:16:20,938] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (1631, 1184)
+[2016-04-09 15:16:23,349] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (1778, 1216)
+[2016-04-09 15:16:28,033] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 15:16:31,498] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (384, 1704)
+[2016-04-09 15:16:35,030] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (378, 1562)
+[2016-04-09 15:16:41,268] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (384, 1530)
+[2016-04-09 15:16:48,230] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level4
+[2016-04-09 15:16:48,243] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 15:16:48,243] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'invertedControls', 'invertedGravity', 'featherFalling', 'wallClimb'], 'timer': 9.0}
+[2016-04-09 15:16:48,243] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'invertedRun': False, 'slideInvert': False, 'permBodies': False, 'obsResistant': False, 'gravity': False, 'ledgeWalk': False, 'vWrapping': False, 'stickyCeil': False, 'hWrapping': False, 'timeLapse': False, 'highJump': False, 'invertedControls': False, 'noJump': False, 'stopBounce': False, 'invertedGravity': False, 'hover': False, 'noStop': False, 'noLeft': False, 'featherFalling': False, 'ledgeJump': False, 'solidHelp': False, 'multiJump': False, 'noRight': False, 'speed': False, 'wallClimb': True, 'clipOnCommand': False}
+[2016-04-09 15:16:48,243] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 15:16:48,268] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 15:16:48,268] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 15:16:48,269] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 15:16:48,269] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 15:16:48,269] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 15:16:48,269] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 15:16:48,286] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 15:16:48,287] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 15:17:02,858] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level5
+[2016-04-09 15:17:02,882] (Glitch_Heaven.game) - DEBUG --- Level configuration loaded
+[2016-04-09 15:17:02,882] (Glitch_Heaven.game) - DEBUG --- Chaos Mode Parameters: {'glitches': ['highJump', 'invertedControls', 'invertedGravity', 'featherFalling', 'wallClimb'], 'timer': 11.0}
+[2016-04-09 15:17:02,882] (Glitch_Heaven.game) - DEBUG --- Glitches Active: {'invertedRun': False, 'slideInvert': False, 'permBodies': False, 'obsResistant': False, 'gravity': False, 'ledgeWalk': False, 'vWrapping': False, 'stickyCeil': False, 'hWrapping': False, 'timeLapse': False, 'highJump': False, 'invertedControls': False, 'noJump': False, 'stopBounce': False, 'invertedGravity': False, 'hover': False, 'noStop': False, 'noLeft': False, 'featherFalling': False, 'ledgeJump': False, 'solidHelp': False, 'multiJump': False, 'noRight': False, 'speed': False, 'wallClimb': True, 'clipOnCommand': False}
+[2016-04-09 15:17:02,882] (Glitch_Heaven.game) - DEBUG --- Loading Tilemap
+[2016-04-09 15:17:02,906] (Glitch_Heaven.game) - DEBUG --- Tilemap Loaded, building map
+[2016-04-09 15:17:02,906] (Glitch_Heaven.game) - DEBUG --- Loading Backgrounds
+[2016-04-09 15:17:02,946] (Glitch_Heaven.game) - INFO --- Map Loaded and built Successfully
+[2016-04-09 15:17:02,946] (Glitch_Heaven.game) - INFO --- Starting loadLevelPart2 Routine
+[2016-04-09 15:17:02,946] (Glitch_Heaven.game) - DEBUG --- Positioning Player
+[2016-04-09 15:17:02,946] (Glitch_Heaven.game) - DEBUG --- Creating Particle Surface
+[2016-04-09 15:17:02,963] (Glitch_Heaven.game) - INFO --- Loading of the level completed successfully, ready to play
+[2016-04-09 15:17:02,963] (Glitch_Heaven.game) - DEBUG --- Mouse cursor hidden
+[2016-04-09 15:17:05,948] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (330, 1424)
+[2016-04-09 15:17:12,052] (Glitch_Heaven.playerEntity) - INFO --- Player respawned, death coords: (1250, 1512)
+[2016-04-09 15:17:22,516] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 15:17:31,260] (Glitch_Heaven.playerEntity) - INFO --- Checkpoint Saved
+[2016-04-09 15:17:44,925] (Glitch_Heaven.game) - INFO --- LoadLevel Routine is loading: Level6
+[2016-04-09 15:17:44,925] (Glitch_Heaven.newGameMenu) - INFO --- No File selected, Loading of campaign aborted
+[2016-04-09 15:17:46,320] (Glitch_Heaven) - INFO --- Game has exited correctly

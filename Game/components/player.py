@@ -339,8 +339,8 @@ class Player(pygame.sprite.Sprite):
                                    self.runmultiplier)  # Use run/walk speed
                 # ^--------------------------------------------------------^
         elif self.right and not game.glitches["noRight"]:
+            self.direction = 1  # Used mainly for bouncy mechanics
             if not self.bounced:
-                self.direction = 1  # Used mainly for bouncy mechanics
                 self.x_speed = min(self.playermaxspeed * dt *
                                    self.runmultiplier,
                                    self.x_speed+self.playeraccel * dt *
