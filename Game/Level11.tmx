@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
+  <image source="resources/tiles/TestTile.png" width="416" height="288"/>
+ </tileset>
+ <layer name="Livello tile 1" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzlVkEOBCEI28Pefen8/7pXY4CAQqmzTUwmikCnoI6PjmGsrXbWQMCKo615c2TlsfOvWXic5oGqt+raQOpRyYWJR8RO2odAtGejfNB9HskvaovAWL6junh6CwHtjqjyXwUpzk6NaXuQPL7KfEYODOfV6b3B8r7yrJ/6z8Lb3iWe92LVyOJRjbfwmGNV8kCfK7frscZF8ajuY+a66uSRiX/kkRkfUVfPNCT7rLiZ6NQjEwx1lXHfMvPYOYO66gqpx9z3Vf2R8f9Z+vxEEyYeUj4Rf0w8pJy0OWsPwz24o8ktenjsbuVh7ek6d62cvP669NBi7vR0F48fKBkcRg==
+  </data>
+ </layer>
+</map>
