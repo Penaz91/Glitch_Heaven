@@ -41,7 +41,7 @@
   </object>
   <object id="8" x="544" y="1856" width="32" height="32">
    <properties>
-    <property name="playerExit" value="Level4"/>
+    <property name="playerExit" value="Level10"/>
    </properties>
   </object>
   <object id="9" x="32" y="160" width="352" height="32">
