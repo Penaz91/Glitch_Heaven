@@ -264,7 +264,7 @@ class Game(object):
                                "intermissions",
                                self.campaignname,
                                ID), self.screen,
-                               self.keys["action"], self.mainLogger)
+                         self.keys["action"], self.mainLogger)
         IM.look()
 
     def checkIntermission(self):
@@ -601,7 +601,8 @@ class Game(object):
                 # Renders the DeathCounter
                 # v-------------------------------------------------------------------v
                 if self.DCactive:
-                    self.dcounttxt = makeGlitched("Deaths: %d" % self.deathCounter,
+                    self.dcounttxt = makeGlitched("Deaths: %d"
+                                                  % self.deathCounter,
                                                   self.font)
                 # ^-------------------------------------------------------------------^
             self.backpos = (min(-self.tilemap.viewport.x/6, 0),

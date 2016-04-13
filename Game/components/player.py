@@ -467,6 +467,18 @@ class Player(pygame.sprite.Sprite):
                     self.resting = True
                     self.y_speed = 0
         # ^--------------------------------------------------------------^
+        if game.glitches["vWrapping"]:
+            if self.rect.y < 0:
+                last.y = game.tilemap.px_height + 32
+                self.rect.y = game.tilemap.px_height
+            elif self.rect.y > game.tilemap.px_height:
+                last.y = -32
+                self.rect.y = 0
+            self.collisionrect.midbottom = self.rect.midbottom
+        else:
+            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
+                self.respawn(game)
+        # ^--------------------------------------------------------------^
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
@@ -694,12 +706,6 @@ class Player(pygame.sprite.Sprite):
                 self.rect.x = 0
                 self.rect.y -= 3 * game.gravity
             # ^-----------------------------^
-        if game.glitches["vWrapping"]:
-            self.rect.y = self.rect.y % game.tilemap.px_height
-        else:
-            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
-                self.respawn(game)
-        # ^--------------------------------------------------------------^
         # Handles the triggering of mobile platforms
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,

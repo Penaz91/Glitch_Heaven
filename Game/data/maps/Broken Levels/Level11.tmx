@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="113">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="114">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJzNWcFOwzAMjSoEt24MjkiII//CiXGGcQf+/0gtsGZZdvLcuO0sPWnaUscvL7HdbF98u6v8Ju0w4cHAbsIe9GHZCDw/AvOgPDw7AHHUDFmHOTxeJxzLeb2fgFhqa3E/YRA4KrTmoOd3pc2D1vMGiLVmo4pVQu5BZE0s3wgPsl4uNJd1dubELU1qwWjF2cOl94x5JrVANSGby2UJHpYWBNIZiZG4HMGxbEvwYC2s/B5Z7zEwNpsHayHPl64zKBeue6TNW2NshDNiVm20vsvIta05tL1PeAZh5TpvjggXro2eNryXa/68vkbDivW2nHlcOb4zdJH5sdef11+wf28te7joOTK4eDkD2bu9+caqV9k1FeGR0ZdYNSuzpvIcrfzJ9W8OuE5ZGBSflw4ePe8HqHE+8vho7t6abs2DjfjM6e3YevdVpmltsnhk63EtPtf2O2uzBo9Iv8Dg88uo5aXoOs7dV2i/oO9I0P0f5UHjTxM+O/2gc6E8ovcpa56PCA+yWr/wUf7Wn+H5WiJfWfX7+x8/xnjmYfWq3lhrzq31oPGt+sd2yTwifWgrX3n3ZEju9HxuwaPW+1g9UE3/rXjI+xKPTzTHt579Kuezv1TejfZy8v3cev9bWw9pmku2HkhskbG1fCW5XCoPrpNI/6PfQ9F7nmgdtCxSz1EeqCZL6uHdTWbxkBotec69eLfSQ+ZdGnNS0H259q01kTweGzFdyr6yfOq+xOJZi0f/TzmU3H2l/Xv3XxTnL+uCRGs=
+   eJzNWbFOAzEMjSoE27UURiTEyL8wUWYoO/D/I2eBVcuyk+eL0+uTLFVtzvHLS2xfuis+7iq/SexnezBsO9sO9GFhAp6fgHlQHh72QBw1IOuwhMfrbIdyWu8nIJbaWtzPthF2UNaag57fljYPWs8bINYaJhWrNLkHkTWxfCM8CL1caC7r7CyJW0JqwdaKs4dL7xnzILVANSEs5TKCh6UFGemMxEhcDuBYxggerIWV3yPrPQXGZvNgLeT50nUG5cJ1j7R5a4yNcEZg1Ubru4xc25pD4322Z9CsXOfNEeHCtdHThvdyzZ/X12izYr0tJx5Xju8MXWR+7PXn9Rfs31vLHi56jgwuXs5A9m5vvrHqVXZNRXhk9CVWzcqsqTxHK39y/VtiXKcs2yg+Lx08et4PUHA+8vho7t6ars2DQXyW9HaM3n2VCa1NFo9sPa7F59p+Z23OwSPSL7Dx+WWr5aXoOi7dV2i/oO9I0P0f5UHjj7N9dvpB50J5RO9Tznk+IjwItX7ho/ytP5vna0S+sur397/9GOOZh9WremOtOdfWg8a36h/jknlE+tBWvvLuyZDc6flcg0et97F6oJr+a/GQ9yUen2iObz37VU5nf1TejfZy8v3cev87tx4Smku2HkhskbG1fCW5XCoPrpNI/6PfQ9F7nmgdtBCp5ygPVJORenh3k1k8pEYjz7kXb4sHn5HI/y7RvEtjjsp0X659a00kj0fn2ej91eh9ZfnUfYm19yL/U25K7r7S/r37L+LxC+F2RDs=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -54,7 +54,7 @@
     <property name="blocker" value="tbr"/>
    </properties>
   </object>
-  <object id="10" x="224" y="1088" width="128" height="192">
+  <object id="10" x="224" y="1088" width="128" height="128">
    <properties>
     <property name="blocker" value="tbrl"/>
    </properties>
@@ -350,7 +350,7 @@
     <property name="blocker" value="br"/>
    </properties>
   </object>
-  <object id="75" x="1248" y="1248" width="128" height="32">
+  <object id="75" x="1248" y="1248" width="128" height="64">
    <properties>
     <property name="blocker" value="btl"/>
    </properties>
@@ -455,17 +455,17 @@
     <property name="blocker" value="lt"/>
    </properties>
   </object>
-  <object id="95" x="1536" y="0" width="32" height="64">
+  <object id="95" x="1536" y="-32" width="32" height="96">
    <properties>
     <property name="blocker" value="lt"/>
    </properties>
   </object>
-  <object id="96" x="1376" y="1248" width="128" height="32">
+  <object id="96" x="1376" y="1248" width="128" height="64">
    <properties>
     <property name="blocker" value="tbrl"/>
    </properties>
   </object>
-  <object id="97" x="1568" y="0" width="32" height="1280">
+  <object id="97" x="1568" y="-32" width="32" height="1344">
    <properties>
     <property name="blocker" value="bl"/>
    </properties>
@@ -536,6 +536,11 @@
   <object id="111" x="1088" y="800" width="32" height="32">
    <properties>
     <property name="button" value="2"/>
+   </properties>
+  </object>
+  <object id="113" x="256" y="1216" width="32" height="64">
+   <properties>
+    <property name="blocker" value="tbrl"/>
    </properties>
   </object>
  </objectgroup>
