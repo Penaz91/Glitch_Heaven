@@ -690,8 +690,11 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'playerExit'):
             level = cell["playerExit"]
-            game.LoadLevel(level, game.campaignname, game.mode, game.screen)
-            game.loadLevelPart2(game.keys, self.soundslink)
+            if not game.mode in ["singlemap"]:
+                game.LoadLevel(level, game.campaignname, game.mode, game.screen)
+                game.loadLevelPart2(game.keys, self.soundslink)
+            else:
+                game.running = False
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
         # Wraps player movement if the glitch is active

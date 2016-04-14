@@ -3,6 +3,7 @@
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI import menuItem
 from os.path import join as pathjoin
+from os.path import splitext
 from libs.textglitcher import makeGlitched
 from tkinter import Tk
 from tkinter import filedialog
@@ -53,6 +54,24 @@ class NewGameMenu(menu):
                     self.modifiers,
                     self.mainLogger)
 
+    def newSMGame(self):
+        try:
+            Tk().withdraw()
+            formats = [("Glitch_Heaven Level", "*.tmx")]
+            self.lvl = filedialog.askopenfilename(
+                    filetypes=formats,
+                    initialdir=pathjoin("data",
+                                        "maps"))
+            self.lvl = splitext(self.lvl)[0]
+            if self.lvl:
+                self.running = False
+                Game().main(self.screen, self.keys, "singlemap",
+                            self.lvl, self.config, self.sounds,
+                            self.modifiers, self.mainLogger)
+        except FileNotFoundError:
+            self.modlogger.info("No File selected, "
+                                "Loading of level aborted")
+                    
     def makeCampaignMenu(self):
         self.newmainimg = self.font.render("Start Main Campaign", False,
                                            (255, 255, 255)).convert_alpha()
@@ -157,15 +176,18 @@ class NewGameMenu(menu):
 
     def makeSMMenu(self):
         self.smimg = self.font.render("Play a Single Map", False,
-                                      (100, 100, 100)).convert_alpha()
+                                      (255, 255, 255)).convert_alpha()
+        self.smsel = makeGlitched("Play a Single Map",
+                                  self.font)
         self.sm = menuItem.menuitem(self.smimg,
-                                    self.smimg,
+                                    self.smsel,
                                     (50, 540),
-                                    lambda: self.editDesc(None),
-                                    lambda: None,
+                                    lambda: self.editDesc("Load a single map"),
+                                    lambda: self.newSMGame(),
                                     self.config,
                                     self.sounds)
         self.items.append(self.sm)
+        self.activeItems.append(self.sm)
 
     def makeModifierMenuItem(self):
         if self.config.getboolean("Unlockables", "modifiers"):

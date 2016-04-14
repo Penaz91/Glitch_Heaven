@@ -113,17 +113,17 @@ class Game(object):
         - self.currenthelp
         """
         return self.currenthelp
-
-    def RealLoadLevel(self, level, campaignname, mode, screen):
-        self.mod_logger.info("LoadLevel Routine is loading: %(level)s"
-                             % locals())
-        self.eraseCurrentLevel()
+        
+    def generatePath(self, campaignname, level):
         self.currentLevel = level
-        self.checkIntermission()
-        with open(pjoin("data",
-                        "maps",
-                        campaignname,
-                        level+".conf")) as f:
+        return pjoin("data", "maps", campaignname, level)
+
+    def RealLoadLevel(self, path, mode, screen):
+        self.mod_logger.info("LoadLevel Routine is loading %(path)s" %locals())
+        self.eraseCurrentLevel()
+        if not mode in ["singlemap"]:
+            self.checkIntermission()
+        with open(path+".conf") as f:
             levelconfig = json.loads(f.read())
         self.mod_logger.debug("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
@@ -138,10 +138,7 @@ class Game(object):
         # Loads the level map, triggers, obstacles
         # v--------------------------------------------------------------v
         self.mod_logger.debug("Loading Tilemap")
-        self.tilemap = tmx.load(pjoin("data",
-                                      "maps",
-                                      campaignname,
-                                      level+".tmx"),
+        self.tilemap = tmx.load(path+".tmx",
                                 screen.get_size())
         self.mod_logger.debug("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
@@ -241,7 +238,8 @@ class Game(object):
             # No more levels, close
             self.running = False
         else:
-            self.RealLoadLevel(level, campaignname, mode, screen)
+            lvl = self.generatePath(campaignname, level)
+            self.RealLoadLevel(lvl, mode, screen)
 
     def loadCampaign(self, campaignfile, mode):
         """
@@ -513,6 +511,8 @@ class Game(object):
             self.redsurfrect = self.redsurf.get_rect()
             self.LoadLevel(self.currentLevel, self.campaignname,
                            self.mode, self.screen)
+        elif self.mode.lower() == "singlemap":
+            self.RealLoadLevel(cmp, "singlemap", self.screen)
         # ^--------------------------------------------------------------^
         self.fps = 30
         self.garble = False
@@ -571,7 +571,7 @@ class Game(object):
                                               True)
                         if event.key == pygame.K_RETURN:
                             self.garble = True
-                        if event.key == pygame.K_BACKSPACE:
+                        if event.key == pygame.K_BACKSPACE and not self.mode in ["singlemap"]:
                             self.mod_logger.debug("Debug key used, " +
                                                   "Loading next level")
                             level = self.forceNextLevel()
