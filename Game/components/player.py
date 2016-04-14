@@ -479,6 +479,36 @@ class Player(pygame.sprite.Sprite):
             if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
                 self.respawn(game)
         # ^--------------------------------------------------------------^
+        # Moving plats collision check
+        # NOTE: This has to stay here to avoid being tped under a platform
+        #       if you touch a vertical wall
+        # v--------------------------------------------------------------v
+        collision = pygame.sprite.spritecollide(self, game.plats, False)
+        for block in collision:
+            if block.active:
+                if game.gravity == 1:
+                    if last.bottom <= block.last.top and\
+                            self.collisionrect.bottom > block.rect.top:
+                        self.rect.bottom = block.rect.top
+                        if block.bouncy:
+                            self.y_speed = - block.bouncepwr
+                            self.bouncesound.play()
+                        else:
+                            self.y_speed = block.yspeed
+                            self.resting = True  # Allows jump
+                else:
+                    if last.top >= block.last.bottom and\
+                           self.collisionrect.top < block.rect.bottom:
+                        self.rect.top = block.rect.bottom
+                        if block.bouncy:
+                            self.y_speed = block.bouncepwr
+                            self.bouncesound.play()
+                        else:
+                            self.y_speed = - block.yspeed
+                            self.resting = True  # Allows jump
+                if block.moving:
+                    self.rect.x += block.xspeed * dt * block.direction
+        self.collisionrect.midbottom = self.rect.midbottom
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
@@ -553,35 +583,6 @@ class Player(pygame.sprite.Sprite):
                         self.y_speed = 200
             self.rect.midbottom = self.collisionrect.midbottom
         # ^--------------------------------------------------------------^
-        # Moving plats collision check
-        # NOTE: This has to stay here to avoid being tped under a platform
-        #       if you touch a vertical wall
-        # v--------------------------------------------------------------v
-        collision = pygame.sprite.spritecollide(self, game.plats, False)
-        for block in collision:
-            if block.active:
-                if game.gravity == 1:
-                    if last.bottom <= block.last.top and\
-                            self.collisionrect.bottom > block.rect.top:
-                        self.rect.bottom = block.rect.top
-                        if block.bouncy:
-                            self.y_speed = - block.bouncepwr
-                            self.bouncesound.play()
-                        else:
-                            self.y_speed = block.yspeed
-                            self.resting = True  # Allows jump
-                else:
-                    if last.top >= block.last.bottom and\
-                           self.collisionrect.top < block.rect.bottom:
-                        self.rect.top = block.rect.bottom
-                        if block.bouncy:
-                            self.y_speed = block.bouncepwr
-                            self.bouncesound.play()
-                        else:
-                            self.y_speed = - block.yspeed
-                            self.resting = True  # Allows jump
-                if block.moving:
-                    self.rect.x += block.xspeed * dt * block.direction
         # Test for collision with bouncy platforms and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers["Triggers"].collide(self.collisionrect,
@@ -690,8 +691,9 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'playerExit'):
             level = cell["playerExit"]
-            if not game.mode in ["singlemap"]:
-                game.LoadLevel(level, game.campaignname, game.mode, game.screen)
+            if game.mode not in ["singlemap"]:
+                game.LoadLevel(level, game.campaignname,
+                               game.mode, game.screen)
                 game.loadLevelPart2(game.keys, self.soundslink)
             else:
                 game.running = False
