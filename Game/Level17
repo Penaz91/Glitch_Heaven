@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
+  <image source="resources/tiles/TestTile.png" width="416" height="288"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmLFuAjEMhq0bylZawVKEWjryLkgMdO7EWJB4/4WzdJGiYCc+x4ELzS9ZF1mRk++cS5ybA8C6cpv39gb16xUah0S7grF9WXMsezsk7MdwPCdrjoVhrDFqHLQaR54aB62pcfz1dlLYo87UZ8+HVo0jT40D4IXwSTm09eMn48/hoOYs4cBasoN0PTnGcu5RWg7q3b0r5xCLKZWG4xfK3EHvyeEYaubwGWri+PJ8IUMNHBiv82wLtwylODCuZq/7DmLhfjrmn5NkjBkz77COtTrPlwSXhaTnaooDuc+JGKUYUFYcKVEMVL2i1T04uDxY1ooWHHumjYqtJWuO8M5JrXO3X10G8+u3WDv2PUwhHx9Me8X4c8aW6D9y+OsK28fBYv7Yf2dLjo2wXywfXA58P6VH3G2fiSNcM/jEtbQensegT+q8mUI+uHe9EvRxahx6uXXl7gt+u2P82N5GjItR0nDMK3xrPpY=
+  </data>
+ </layer>
+</map>
