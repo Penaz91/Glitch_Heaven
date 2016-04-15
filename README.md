@@ -28,7 +28,6 @@ and more challenging.
 - **Clipping glitch**: You can glitch through certain walls (can be applied via map editor by omitting certain blocker parameters)
 - **Solid Help Glitch**: The help text will behave like a temporary platform
 - **Clip-on-command glitch**: Pressing down arrow makes you go through the platform you're standing on
-- **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end (Separated in horizontal and vertical Wrap)
 - **LedgeJump Glitch:** If you walk out of a platform without jumping, you can jump in mid-air once while falling.
 - **LedgeWalk Glitch:** if you go over a ledge, you don't fall. In order to fall you need to jump.
 - **NoMovement Glitches:** A pack of 3 glitches (NoLeft, NoRight, NoJump) that disallow the usage of 1 or more commands for the player.
@@ -43,7 +42,7 @@ and more challenging.
 - **TimeLapse glitch** Platforms and obstacles move only when you move horizontally
 
 ### Glitches Partially Implemented or that need BuxFixes/Testing:
-None at the moment
+- **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end (Separated in horizontal and vertical Wrap) - See Issue #57
 
 ### Glitches Planned:
 None At The moment
