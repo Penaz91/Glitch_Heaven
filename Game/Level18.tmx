@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
+  <image source="resources/tiles/TestTile.png" width="416" height="288"/>
+ </tileset>
+ <layer name="Livello tile 1" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmL9Ow0AMxi0G2BoojCyMSKyIB+jKQAUj8ABAef+xsYQl19iOnbsmTZRP+pb0/v165/PdNQCwCbj5820FW21nxiG/XUJMj4myWWHbTwVlV7BwoM6DdSNtj8lxHaz73PH7e+vvxDi6OD5b3zNvRX3JsW79mvRFcLw0nq34pjFLDizD9wTOXSs+onNIfUbWm7WusP7C4esUOPDbWcJaLGCfO2aKxZ1iynOy3K/D8SLGjHn3jn1bQz5Ha/+RnI/of+6V4xxfTl99ZK3DY3N4ffXRqXB05a5IvxGOaA70ynlxTrFK8ZWN5yiHJi3/eaJ8p+Xu6Dkarc13CUfmvAVweJbnc5Zt58MYy5Ac1rqaA4cVU1bsl3D8gJ//Is7cB2/Ajuna85FVhmMF/88qJM5BZ/9oPq+hCAfNg3aWJ3EOfvb3OErzE1eEg+YhykGy1hW2h/ept/gwO0Vj8+5vDdTlGGtdUU7U8gxpShzefj4XDiwTeZdAHZvjyihjceD+KvOWPNsMySHvqjLPWRzaWpL1hubw9iPKBzK+p8ZhaY4cmPO19Tg1Dsr5PM6GPl/V5JAek4PuuV3mY7Tetvj71xgcEfd9I104bC0c8+GQ+6znB+bSPi3vAZkdYX4=
+  </data>
+ </layer>
+</map>
