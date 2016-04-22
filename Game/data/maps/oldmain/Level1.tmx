@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="7">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
+  <image source="resources/tiles/TestTile.png" width="416" height="288"/>
+ </tileset>
+ <layer name="Livello tile 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzjZ2BgkKES5gdiAQbqAb5R80bNGzVv1LxR8xjkyTRDEM08UBnNRCUMMgsAhkUEpQ==
+  </data>
+ </layer>
+ <objectgroup name="Triggers" visible="0">
+  <object id="1" x="0" y="0" width="640" height="32">
+   <properties>
+    <property name="blocker" value="b"/>
+   </properties>
+  </object>
+  <object id="2" x="0" y="608" width="640" height="32">
+   <properties>
+    <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="3" x="0" y="32" width="32" height="576">
+   <properties>
+    <property name="blocker" value="r"/>
+   </properties>
+  </object>
+  <object id="4" x="608" y="32" width="32" height="576">
+   <properties>
+    <property name="blocker" value="l"/>
+   </properties>
+  </object>
+  <object id="5" x="64" y="576" width="32" height="32">
+   <properties>
+    <property name="playerEntrance" value=""/>
+   </properties>
+  </object>
+  <object id="6" x="512" y="576" width="32" height="32">
+   <properties>
+    <property name="playerExit" value="LevelMono"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

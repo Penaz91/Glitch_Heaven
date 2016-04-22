@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="105">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="110">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJzVmU1LAzEQhkMRvHX9vAniccFr6Q/oVYhaj0Xr2f9/twNGxmE+k3S3DrywTTPpPDuTbLoZUkp3DRoa/XsIYrhIbXbd6N/Dluk4HE+NY0ZN43g9aIt0LvSjHDcHLZAkv54WyYdUP7QdxhyQWvPtsRaOjNrx/accoFHQQmjjBDXxdgQO3I5j5jg4SesOpy8jtvKbe6TPCTikuDhfi6H4TZ2PtRFPlOE9xeZhD46NEdvS2Q8M4h/R2BGOjD7jee7h8NZHNP4aDqld4/Dc2xKfVnNS/BbHR/o7/6V+GocWFxef1n+lMBw7HyUPmXf9naOYm3vO0H5Tcli54GJbCzFauajlyKSd47DmBBfb1By0nXJ45kVvDtA+9X2e19TUnPnIQQ5r7fwPdeVZc06RI7punipHzTwFvw2jXZDjHl3fHvSIBP0y+r5c9+aQbPfDpPlvGdH/OA/C+D05QC8KC+ahTLSupP2qtr/CvIUjWhcRFsrUi4P6c/URZRkDPKsJOcrvRVi8uZmaI5oTnBstPxwHff9mic5/a19SkxMrPxxHq1kctTnRWFo5zpg2zz6xNSd0/BaOUn/0HZ+HozUnPTkk4zgy068lJ3NxcDYXRzkPsM4BvBwttUX/M0c4rpK+zyrm5QDz7P0sBrA56wob3CMrfu19nvUclM4bNKvhACv55mTVwFT5uETXz4GxvOeMZc3A5z7S2ZFXAzMmlvZdrWDMb4DJbvE=
+   eJzVmUtLAzEQx0MRvHV9HQXxWPBa+gF6FaLWY/Fx9vvf7YCRcZhnkmbrwB+2aSY7v53JbnYzpZRuGzQ1+vcQxHCR2uy60b+HLdNxOB4bx4yaxvFy0A7pXOhHOW4OWiBJfj0tkg+pfmg7jDkhtebbYy0cGbXj6085QCtBC6GNE9TE6xE4cDuOmePgJN13OH0ZsZVzfiB9DuCQ4uJ8LYbiNzofGyOeKMNbis3DHhxbI7alsx8YxL9CY0c4MvqN57mHw1sf0fhrOKR2jcNzbUt8Ws1J8Vsc7+nv/Jf6aRxaXFx8Wv+1wnDsfJQ8ZN71d45ibu45Q/uN5LBywcW2EWK0clHLkUk7x2HNCS620Ry0nXJ45kVvDtBH6vs8r6mpOfORgxzWvfM/1JXnnnOKHNH75qly1MxT8Nsy2gc57tAxvJ8+IEG/jP4vx705JNv/MGn+O0b0HedeGL8nB+hZYcE8lInWlbRe1dZXmLdwROsiwkKZenFQf64+oiyrAM96IEc5X4TFm5vRHNGc4Nxo+eE46Pc3S3T+W+uSmpxY+eE4Ws3iqM2JxtLKcca0edaJrTmh47dwlPqj3/g8HK056ckhGceRmX4tOZmLg7O5OMp+gLUP4OVoqS36zhzhuEr6OquYlwPMs/azGMDmrCtscI2s+LXvedZzUNpv0KyGA6zkm5NVA6PycYmOnwJjefcZyz0D7/tIe0deTcyYWNp/tYIxvwFy0W7w
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -91,6 +91,7 @@
   </object>
   <object id="17" x="320" y="128" width="32" height="608">
    <properties>
+    <property name="ObsReverse" value=""/>
     <property name="blocker" value="lr"/>
    </properties>
   </object>
@@ -117,6 +118,7 @@
   </object>
   <object id="23" x="0" y="32" width="32" height="1216">
    <properties>
+    <property name="ObsReverse" value=""/>
     <property name="blocker" value="r"/>
    </properties>
   </object>
@@ -233,9 +235,9 @@
     <property name="id" value="1"/>
    </properties>
   </object>
-  <object id="47" x="192" y="704" width="128" height="32">
+  <object id="47" x="224" y="704" width="96" height="32">
    <properties>
-    <property name="bouncy" value="lt"/>
+    <property name="bouncy" value="t"/>
     <property name="power" value="1200"/>
    </properties>
   </object>
@@ -515,6 +517,29 @@
   <object id="104" x="992" y="160" width="32" height="32">
    <properties>
     <property name="blocker" value="t"/>
+   </properties>
+  </object>
+  <object id="106" x="256" y="576" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="100"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="107" x="224" y="416" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="100"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="108" x="96" y="256" width="32" height="32">
+   <properties>
+    <property name="ObsSpeed" value="100"/>
+    <property name="Obstacle" value="h"/>
+   </properties>
+  </object>
+  <object id="109" x="192" y="704" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tl"/>
    </properties>
   </object>
  </objectgroup>

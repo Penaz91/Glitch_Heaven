@@ -3,6 +3,8 @@
     "FirstMap": "Level1",
     "Intermissions":
     	{
-        "Level1": "1"
+        "Level1": "1",
+        "Level8": "2",
+        "Level12": "3"
         }
 }
