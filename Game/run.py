@@ -19,7 +19,7 @@ if __name__ == "__main__":
         wd = dirname(sys.executable)
     elif __file__:
         wd = dirname(realpath(__file__))
-    os.chdir(wd)
+    chdir(wd)
     # ^---------------------------------------------------------------^
     try:
         config = configparser.ConfigParser()

@@ -119,6 +119,7 @@ class menu(object):
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.confirmSound.play()
                             item.function()
+                            # Found the item, break the cycle
                             break
                         self.doAdditionalMouseHandling()
             self.title = self.titleani.next(self.dt)
