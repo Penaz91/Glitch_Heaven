@@ -161,7 +161,7 @@ class mainMenu(menu):
         # ^------------------------------------------------------------------^
 
     def doAdditionalBlits(self):
-        if self.config["Debug"]["Debugmode"]:
+        if self.config.getboolean("Debug", "debugmode"):
             self.screen.blit(self.dbtxt, (50, 560))
 
     def doMoreLoopOperations(self):

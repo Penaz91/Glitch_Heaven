@@ -6,10 +6,21 @@ import pygame
 from mainmenu import mainMenu
 import configparser
 import logging
+import sys
 from logging.handlers import TimedRotatingFileHandler
 from os.path import join as pathjoin
 from os import getcwd as pwd
+from os.path import dirname, realpath
+from os import chdir
 if __name__ == "__main__":
+    # Changed directory for non-console execution
+    # v---------------------------------------------------------------v
+    if getattr(sys, 'frozen', False):
+        wd = dirname(sys.executable)
+    elif __file__:
+        wd = dirname(realpath(__file__))
+    chdir(wd)
+    # ^---------------------------------------------------------------^
     try:
         config = configparser.ConfigParser()
         config.read("game.conf")

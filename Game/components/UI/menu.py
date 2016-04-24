@@ -114,11 +114,13 @@ class menu(object):
                             item.makeSelected()
                         else:
                             item.makeUnselected()
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONUP:
                     for item in self.activeItems:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
                             item.confirmSound.play()
                             item.function()
+                            # Found the item, break the cycle
+                            break
                         self.doAdditionalMouseHandling()
             self.title = self.titleani.next(self.dt)
             self.screen.blit(self.background, (0, 0))
