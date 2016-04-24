@@ -53,4 +53,4 @@ class Help(MobilePlatform):
         self.age -= 1
         if self.age == 0:
             self.kill()
-            game.setHelpFlag(False)     # Allows the sign to be enabled again
+            game.helpflagActive = False

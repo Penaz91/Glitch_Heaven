@@ -5,7 +5,6 @@
 # ------------------------------------------------
 # TODO Area
 # - Add a game HUD
-# - Add Joypad support
 # ------------------------------------------------
 import pygame
 from components.player import Player
@@ -24,21 +23,8 @@ from os.path import join as pathjoin
 from tkinter import filedialog
 from libs.textglitcher import makeGlitched, makeMoreGlitched
 from tkinter import Tk
+from libs.debugconstants import _debugkeys_
 _garbletimer_ = 0.1
-_debugkeys_ = {
-        pygame.K_1: "wallClimb", pygame.K_2: "multiJump",
-        pygame.K_3: "highJump", pygame.K_4: "featherFalling",
-        pygame.K_5: "gravity", pygame.K_6: "hover",
-        pygame.K_7: "stickyCeil", pygame.K_8: "invertedGravity",
-        pygame.K_9: "permBodies", pygame.K_q: "solidHelp",
-        pygame.K_w: "clipOnCommand", pygame.K_e: "hWrapping",
-        pygame.K_r: "vWrapping", pygame.K_t: "ledgeWalk",
-        pygame.K_y: "ledgeJump", pygame.K_u: "slideInvert",
-        pygame.K_i: "noLeft", pygame.K_o: "noRight",
-        pygame.K_p: "noJump", pygame.K_a: "stopBounce",
-        pygame.K_s: "speed", pygame.K_d: "invertedRun",
-        pygame.K_f: "invertedControls", pygame.K_g: "obsResistant",
-        pygame.K_h: "noStop", pygame.K_j: "timeLapse"}
 
 
 class Game(object):
@@ -50,7 +36,7 @@ class Game(object):
         else:
             falseFunction()
 
-    def checkGravity(self):
+    def changeGravity(self):
             self.gravity *= -1
 
     def toggleGlitch(self, glitch, garble):
@@ -78,50 +64,15 @@ class Game(object):
             self.garble = True
             self.sounds["sfx"]["static"].play()
 
-    def getHelpFlag(self):
-        """
-        Getter method for helpflagactive
-
-        Returns:
-        - self.helpflagActive
-        """
-        return self.helpflagActive
-
-    def setHelpFlag(self, flag):
-        """
-        Setter method for helpflagactive
-
-        Keyword Arguments:
-        - flag: The flag to set
-        """
-        self.helpflagActive = flag
-
-    def setHelpText(self, txt):
-        """
-        Setter Method for currenthelp
-
-        Keyword Arguments:
-        - txt: The text to set
-        """
-        self.currenthelp = txt
-
-    def getHelpText(self):
-        """
-        Getter Method for currenthelp
-
-        Returns:
-        - self.currenthelp
-        """
-        return self.currenthelp
-        
     def generatePath(self, campaignname, level):
         self.currentLevel = level
         return pjoin("data", "maps", campaignname, level)
 
     def RealLoadLevel(self, path, mode, screen):
-        self.mod_logger.info("LoadLevel Routine is loading %(path)s" %locals())
+        self.mod_logger.info("LoadLevel Routine is loading %(path)s"
+                             % locals())
         self.eraseCurrentLevel()
-        if not mode in ["singlemap"]:
+        if mode not in ["singlemap"]:
             self.checkIntermission()
         with open(path+".conf") as f:
             levelconfig = json.loads(f.read())
@@ -129,9 +80,6 @@ class Game(object):
         self.loadChaosParameters(levelconfig)
         if mode == "cfsingle":
             self.cftime = int(levelconfig["Level Info"]["CFTime"])
-        self.helpflagActive = False
-        self.currenthelp = ""
-        self.screen = screen
         self.glitches = levelconfig["Glitches"]["Standard"]
         self.mod_logger.debug("Glitches Active: {0}".format(self.glitches))
         # ^--------------------------------------------------------------^
@@ -139,7 +87,7 @@ class Game(object):
         # v--------------------------------------------------------------v
         self.mod_logger.debug("Loading Tilemap")
         self.tilemap = tmx.load(path+".tmx",
-                                screen.get_size())
+                                self.screensize)
         self.mod_logger.debug("Tilemap Loaded, building map")
         self.obstacles = tmx.SpriteLayer()
         # Small optimisation in case the same background is loaded
@@ -175,46 +123,36 @@ class Game(object):
         else:
             self.hasOverlay = False
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
-            obs = obstacle['Obstacle']
-            speed = obstacle['ObsSpeed']
-            Obstacle((obstacle.px, obstacle.py), ("v" in obs), speed, None,
-                     self.obstacles,
+            Obstacle((obstacle.px, obstacle.py), ("v" in obstacle['Obstacle']),
+                     obstacle['ObsSpeed'], None, self.obstacles,
                      preloaded_ani=self.preloaded_sprites["glitches"])
         self.tilemap.layers.append(self.obstacles)
         for platform in self.tilemap.layers['Triggers'].find('Platform'):
-            plat = platform['Platform']
-            size = int(platform['PlatSize'])
-            spd = int(platform['PlatSpeed'])
-            if "bouncyplat" in platform:
-                bouncy = True
-                bouncepwr = int(platform['bouncyplat'])
-            else:
-                bouncy = False
-                bouncepwr = 0
-            TriggerablePlatform(platform.px, platform.py, ("v" in plat),
-                                bouncepwr, spd, size, False, platform['id'],
-                                self.plats, game=self, bouncy=bouncy,
-                                image=self.preloaded_sprites["platforms"])
+            bouncy = "bouncyplat" in platform
+            bouncepwr = int(platform['bouncyplat']) if bouncy else 0
+            TriggerablePlatform(
+                    platform.px, platform.py,
+                    ("v" in platform['Platform']), bouncepwr,
+                    int(platform['PlatSpeed']), int(platform['PlatSize']),
+                    False, platform['id'], self.plats, game=self,
+                    bouncy=bouncy, image=self.preloaded_sprites["platforms"])
         self.tilemap.layers.append(self.plats)
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
-            totrigger = trig['ToggleGlitch']
-            tr = CollectibleTrigger(trig.px, trig.py, self, totrigger,
-                                    preloaded_animation=self.preloaded_sprites[
-                                        "collectibleitem"
-                                        ])
-            self.GlitchTriggers.add(tr)
+            self.GlitchTriggers.add(CollectibleTrigger(
+                trig.px, trig.py, self, trig['ToggleGlitch'],
+                preloaded_animation=self.preloaded_sprites[
+                    "collectibleitem"
+                    ]))
         self.tilemap.layers.append(self.GlitchTriggers)
+        self.titletxt = None
         if self.mode in ["criticalfailure", "cfsingle"]:
-            self.title = makeGlitched(
-                            makeMoreGlitched(
+            self.titletxt = makeMoreGlitched(
                                 str(levelconfig['Level Info']['Name']),
-                                50),
-                            self.font)
+                                50)
         else:
-            self.title = makeGlitched(
-                            str(levelconfig['Level Info']['Name']),
-                            self.font)
-        center = 400 - int(self.title.get_rect().width)/2
+            self.titletxt = str(levelconfig['Level Info']['Name'])
+        self.title = makeGlitched(self.titletxt, self.font)
+        center = (self.screensize[0] - int(self.title.get_rect().width))/2
         self.titleposition = (center, 578)
         if mode.lower() == "cfsingle":
             self.time = 0.
@@ -286,6 +224,8 @@ class Game(object):
         self.plats.empty()
         self.GlitchTriggers.empty()
         self.sprites.empty()
+        self.helpflagActive = False
+        self.currenthelp = ""
         self.sprites.add(self.player)
 
     def loadLevelPart2(self, keys, sounds):
@@ -435,6 +375,7 @@ class Game(object):
         self.deathCounter = 0
         self.mode = mode
         self.bgpath, self.mbackpath = 2 * [None]
+        self.screensize = screen.get_size()
         self.middlepath, self.overpath = 2 * [None]
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
@@ -571,7 +512,8 @@ class Game(object):
                                               True)
                         if event.key == pygame.K_RETURN:
                             self.garble = True
-                        if event.key == pygame.K_BACKSPACE and not self.mode in ["singlemap"]:
+                        if event.key == pygame.K_BACKSPACE and\
+                                self.mode not in ["singlemap"]:
                             self.mod_logger.debug("Debug key used, " +
                                                   "Loading next level")
                             level = self.forceNextLevel()
