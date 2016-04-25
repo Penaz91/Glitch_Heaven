@@ -234,7 +234,8 @@ class Player(pygame.sprite.Sprite):
         game.player.x_speed, game.player.y_speed = 0, 0
         # ^-----------------------------------------------------^
         if not game.glitches["permBodies"]:
-            game.deathCounter += 1
+            # game.deathCounter += 1
+            game.gameStatus["deathCounter"] += 1
 
     def animate(self, yspeed, xspeed, resting, bounced,
                 direction, dt, gravity, running, pushing, glitched, game):
@@ -267,7 +268,7 @@ class Player(pygame.sprite.Sprite):
         # Image Flipping
         self.image = pygame.transform.flip(self.image, (direction == -1),
                                            (gravity == -1))
-        if game.modifiers["moonwalk"]:
+        if game.gameStatus["modifiers"]["moonwalk"]:
             self.image = pygame.transform.flip(
                          self.image, True, False)
         # Particle emission
@@ -691,9 +692,9 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'playerExit'):
             level = cell["playerExit"]
-            if game.mode not in ["singlemap"]:
-                game.LoadLevel(level, game.campaignname,
-                               game.mode, game.screen)
+            if game.gameStatus["mode"] not in ["singlemap"]:
+                game.LoadLevel(level, game.gameStatus["campaignName"],
+                               game.gameStatus["mode"], game.screen)
                 game.loadLevelPart2(game.keys, self.soundslink)
             else:
                 game.running = False
@@ -766,7 +767,7 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Handles the glitchiness in Critical Failure mode
         # v--------------------------------------------------------------v
-        if game.mode.lower() in ["criticalfailure", "cfsingle"]:
+        if game.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
             redcoll = game.tilemap.pixel_to_screen(self.rect.x, self.rect.y)
             if redcoll[1] < game.redsurfrect.bottom:
                 self.glitched = True

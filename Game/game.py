@@ -59,13 +59,14 @@ class Game(object):
         self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
         if glitch == "invertedGravity":
-            self.checkGravity()
+            self.changeGravity()
         if garble:
             self.garble = True
             self.sounds["sfx"]["static"].play()
 
     def generatePath(self, campaignname, level):
-        self.currentLevel = level
+        self.gameStatus["currentLevel"] = level
+        # self.currentLevel = level
         return pjoin("data", "maps", campaignname, level)
 
     def RealLoadLevel(self, path, mode, screen):
@@ -79,7 +80,9 @@ class Game(object):
         self.mod_logger.debug("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
         if mode == "cfsingle":
-            self.cftime = int(levelconfig["Level Info"]["CFTime"])
+            # self.cftime = int(levelconfig["Level Info"]["CFTime"])
+            self.gameStatus["cftime"] = levelconfig.getint("Level Info",
+                                                           "CFTime")
         self.glitches = levelconfig["Glitches"]["Standard"]
         self.mod_logger.debug("Glitches Active: {0}".format(self.glitches))
         # ^--------------------------------------------------------------^
@@ -93,6 +96,23 @@ class Game(object):
         # Small optimisation in case the same background is loaded
         # v------------------------------v
         self.mod_logger.debug("Loading Backgrounds")
+        self.oldComponentPaths = self.componentPaths.copy()
+        for key in self.componentPaths.keys():
+            self.componentPaths[key] = pjoin("resources", "backgrounds",
+                                             levelconfig["Level Components"]
+                                             [key])
+            if self.componentPaths[key] != self.oldComponentPaths[key]:
+                self.components[key] = pygame.image.load(
+                        self.componentPaths[key]).convert_alpha()
+        self.hasOverlay = levelconfig["Level Components"]["overlay"]\
+            is not None
+        if self.hasOverlay:
+            self.overpath = pjoin("resources", "overlays",
+                                  levelconfig["Level Components"]
+                                  ["overlay"])
+            if self.overpath != self.oldoverpath:
+                self.overlay = pygame.image.load(self.overpath).convert_alpha()
+        """
         self.oldbgpath = self.bgpath
         self.oldmbackpath = self.mbackpath
         self.oldmiddlepath = self.middlepath
@@ -122,6 +142,7 @@ class Game(object):
                 self.overlay = pygame.image.load(self.overpath).convert_alpha()
         else:
             self.hasOverlay = False
+        """
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
             Obstacle((obstacle.px, obstacle.py), ("v" in obstacle['Obstacle']),
                      obstacle['ObsSpeed'], None, self.obstacles,
@@ -145,7 +166,7 @@ class Game(object):
                     ]))
         self.tilemap.layers.append(self.GlitchTriggers)
         self.titletxt = None
-        if self.mode in ["criticalfailure", "cfsingle"]:
+        if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
             self.titletxt = makeMoreGlitched(
                                 str(levelconfig['Level Info']['Name']),
                                 50)
@@ -155,7 +176,8 @@ class Game(object):
         center = (self.screensize[0] - int(self.title.get_rect().width))/2
         self.titleposition = (center, 578)
         if mode.lower() == "cfsingle":
-            self.time = 0.
+            # self.time = 0.
+            self.gameStatus["time"] = 0.
         self.mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
@@ -190,23 +212,34 @@ class Game(object):
         with open(campaignfile,
                   "r") as campfile:
             cmpf = json.loads(campfile.read())
-            self.currentLevel = cmpf["FirstMap"]
+            # self.currentLevel = cmpf["FirstMap"]
+            self.gameStatus["currentLevel"] = cmpf["FirstMap"]
             self.intermissions = cmpf["Intermissions"]
             if mode == "criticalfailure":
-                self.cftime = cmpf["CFTime"]
+                # self.cftime = cmpf["CFTime"]
+                self.gameStatus["cftime"] = cmpf["CFTime"]
 
     def startIntermission(self, ID):
-        IM = comicReader(pjoin("resources",
+        """IM = comicReader(pjoin("resources",
                                "intermissions",
                                self.campaignname,
                                ID), self.screen,
+                         self.keys["action"], self.mainLogger)"""
+        IM = comicReader(pjoin("resources",
+                               "intermissions",
+                               self.gameStatus["campaignName"],
+                               ID), self.screen,
                          self.keys["action"], self.mainLogger)
+
         IM.look()
 
     def checkIntermission(self):
-        if self.currentLevel in self.intermissions.keys():
+        # if self.currentLevel in self.intermissions.keys():
+        if self.gameStatus["currentLevel"] in self.intermissions.keys():
             self.mod_logger.debug("Intermission found, starting intermission")
-            self.startIntermission(self.intermissions[self.currentLevel])
+            # self.startIntermission(self.intermissions[self.currentLevel])
+            self.startIntermission(
+                    self.intermissions[self.gameStatus["currentLevel"]])
 
     def eraseCurrentLevel(self):
         """
@@ -226,7 +259,6 @@ class Game(object):
         self.sprites.empty()
         self.helpflagActive = False
         self.currenthelp = ""
-        self.sprites.add(self.player)
 
     def loadLevelPart2(self, keys, sounds):
         """
@@ -253,7 +285,6 @@ class Game(object):
                                                     self.tilemap.px_height),
                                                    pygame.SRCALPHA,
                                                    32).convert_alpha()
-        self.gravity = 1
         # In case the invertedgravity glitch is up, invert gravity
         # v--------v
         if self.glitches["invertedGravity"]:
@@ -264,8 +295,8 @@ class Game(object):
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
         self.mod_logger.info("Loading of the level completed" +
                              " successfully, ready to play")
-        pygame.mouse.set_visible(False)
-        self.mod_logger.debug("Mouse cursor hidden")
+        # pygame.mouse.set_visible(False)
+        # self.mod_logger.debug("Mouse cursor hidden")
 
     def saveGame(self):
         """
@@ -277,22 +308,27 @@ class Game(object):
                                             initialdir="./savegames",
                                             defaultextension=".dat")
         if path:
-            if not (self.mode.lower() in ["criticalfailure", "cfsingle"]):
-                self.cftime, self.time = 0, 0
-                self.mode = "newgame"
-            shelf = {"campaignfile": self.campaignFile,
+            # if not (self.mode.lower() in ["criticalfailure", "cfsingle"]):
+            if not (self.gameStatus["mode"] in ["criticalfailure",
+                                                "cfsingle"]):
+                self.gameStatus["cftime"] = 0
+                self.gameStatus["time"] = 0
+                self.gameStatus["mode"] = "newgame"
+                # self.cftime, self.time = 0, 0
+                # self.mode = "newgame"
+            """shelf = {"campaignfile": self.campaignFile,
                      "currentLevel": self.currentLevel,
                      "campaignname": self.campaignname,
                      "cftime": self.cftime,
                      "time": self.time,
                      "mode": self.mode,
                      "deathCounter": self.deathCounter,
-                     "modifiers": self.modifiers}
-            self.mod_logger.debug("Shelf saved with data: %(shelf)s"
-                                  % locals())
+                     "modifiers": self.modifiers}"""
+            self.mod_logger.debug("Saved with data: {0}"
+                                  % self.gameStatus)
             with open(path, "w") as savefile:
-                string = json.dumps(shelf)
-                savefile.write(string)
+                # savefile.write(json.dumps(shelf))
+                savefile.write(json.dumps(self.gameStatus))
                 self.mod_logger.info("Game saved on the file: \
                         %(savefile)s" % locals())
 
@@ -310,6 +346,7 @@ class Game(object):
         self.mod_logger.info("Loading Save from: %(path)s"
                              % locals())
         with open(path, "r") as savefile:
+            """
             string = savefile.read()
             shelf = json.loads(string)
             self.campaignFile = shelf["campaignfile"]
@@ -320,7 +357,9 @@ class Game(object):
             self.deathCounter = shelf["deathCounter"]
             self.modifiers = shelf["modifiers"]
             self.currentLevel = shelf["currentLevel"]
-        if self.mode.lower() in ["criticalfailure", "cfsingle"]:
+            """
+            self.gameStatus = json.loads(savefile.read())
+        if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
             self.mod_logger.debug("Using Load Game mode -\
                     Critical Failure Modifier")
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
@@ -365,18 +404,46 @@ class Game(object):
         Returns:
         - Nothing
         """
+        self.gameStatus = {
+                "campaignFile": None,
+                "campaignName": None,
+                "mode": None,
+                "cftime": None,
+                "time": None,
+                "deathCounter": None,
+                "modifiers": None,
+                "currentLevel": None
+                }
+        self.oldComponentPaths = {
+                "background": None,
+                "middle_back1": None,
+                "middle_back2": None,
+        }
+        self.componentPaths = {
+                "background": None,
+                "middle_back1": None,
+                "middle_back2": None,
+        }
+        self.components = {
+                "background": None,
+                "middle_back1": None,
+                "middle_back2": None,
+        }
         self.mainLogger = log
         self.mod_logger = log.getChild("game")
         self.mod_logger.info("Entering main game")
         self.running = True
-        self.time = 0.
+        self.gravity = 1
+        # self.time = 0.
+        self.gameStatus["time"] = 0.
         self.sounds = sounds
         self.DCactive = config.getboolean("Video", "deathcounter")
-        self.deathCounter = 0
-        self.mode = mode
-        self.bgpath, self.mbackpath = 2 * [None]
+        # self.deathCounter = 0
+        self.gameStatus["deathCounter"] = 0
+        self.gameStatus["mode"] = mode
+        # self.bgpath, self.mbackpath = 2 * [None]
         self.screensize = screen.get_size()
-        self.middlepath, self.overpath = 2 * [None]
+        # self.middlepath, self.overpath = 2 * [None]
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
         self.clock = pygame.time.Clock()
@@ -394,9 +461,10 @@ class Game(object):
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
-        self.modifiers = modifiers
+        # self.modifiers = modifiers
+        self.gameStatus["modifiers"] = modifiers
         self.mod_logger.debug("Current Active Modifiers: {0}".format(
-            self.modifiers))
+            modifiers))
         # Preloading graphics area
         # v-------------------------------------------------------------------v
         self.preloaded_sprites = {
@@ -416,29 +484,46 @@ class Game(object):
         # Defines if a level should be loaded or a
         # new campaign should be started.
         # v--------------------------------------------------------------v
-        if self.mode.lower() == "load":
+        if self.gameStatus["mode"] == "load":
             self.mod_logger.debug("Using Load mode")
             try:
                 self.loadGame()
-                self.LoadLevel(self.currentLevel, self.campaignname,
-                               self.mode, self.screen)
+                # self.LoadLevel(self.currentLevel, self.campaignname,
+                #                self.mode, self.screen)
+                self.LoadLevel(self.gameStatus["currentLevel"],
+                               self.gameStatus["campaignName"],
+                               self.gameStatus["mode"],
+                               self.screen)
             except FileNotFoundError:
                 self.mod_logger.info("No file provided, loading cancelled")
                 self.running = False
-        elif self.mode.lower() == "newgame":
+        elif self.gameStatus["mode"] == "newgame":
             self.mod_logger.debug("Using New Game mode")
-            self.campaignFile = cmp
-            self.campaignname = splitext(basename(cmp))[0]
-            self.loadCampaign(self.campaignFile, self.mode)
-            self.LoadLevel(self.currentLevel, self.campaignname,
-                           self.mode, self.screen)
-        elif self.mode.lower() in ["criticalfailure", "cfsingle"]:
+            self.gameStatus["campaignFile"] = cmp
+            # self.campaignFile = cmp
+            # self.campaignname = splitext(basename(cmp))[0]
+            self.gameStatus["campaignName"] = splitext(basename(cmp))[0]
+            # self.loadCampaign(self.campaignFile, self.mode)
+            self.loadCampaign(self.gameStatus["campaignFile"],
+                              self.gameStatus["mode"])
+            self.LoadLevel(self.gameStatus["currentLevel"],
+                           self.gameStatus["campaignName"],
+                           self.gameStatus["mode"],
+                           self.screen)
+
+            # self.LoadLevel(self.currentLevel, self.campaignname,
+            #                self.mode, self.screen)
+        elif self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
             self.mod_logger.debug("Using New Game mode - \
                     Critical Failure Modifier")
-            self.cftime = 0
-            self.campaignFile = cmp
-            self.campaignname = splitext(basename(cmp))[0]
-            self.loadCampaign(self.campaignFile, self.mode)
+            # self.cftime = 0
+            self.gameStatus["cftime"] = 0
+            # self.campaignFile = cmp
+            # self.campaignname = splitext(basename(cmp))[0]
+            self.gameStatus["campaignName"] = splitext(basename(cmp))[0]
+            # self.loadCampaign(self.campaignFile, self.mode)
+            self.LoadCampaign(self.gameStatus["campaignFile"],
+                              self.gameStatus["mode"])
             self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
                                                   pygame.SRCALPHA)
             linesize = 3
@@ -450,9 +535,14 @@ class Game(object):
                                                800,
                                                linesize))
             self.redsurfrect = self.redsurf.get_rect()
-            self.LoadLevel(self.currentLevel, self.campaignname,
-                           self.mode, self.screen)
-        elif self.mode.lower() == "singlemap":
+            # self.LoadLevel(self.currentLevel, self.campaignname,
+            #                self.mode, self.screen)
+            self.LoadLevel(self.gameStatus["currentLevel"],
+                           self.gameStatus["campaignName"],
+                           self.gameStatus["mode"],
+                           self.screen)
+        # elif self.mode.lower() == "singlemap":
+        elif self.gameStatus["mode"] == "singlemap":
             self.RealLoadLevel(cmp, "singlemap", self.screen)
         # ^--------------------------------------------------------------^
         self.fps = 30
@@ -473,11 +563,18 @@ class Game(object):
             dt = min(0.05, dt)
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
-            if self.mode.lower() in ["criticalfailure", "cfsingle"]:
-                self.time += dt
+            # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
+            if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
+                # self.time += dt
+                self.gameStatus["time"] += dt
+                # self.redsurfrect.y = -self.gsize[1] + \
+                #    (self.gsize[1] * self.time) / self.cftime
                 self.redsurfrect.y = -self.gsize[1] + \
-                    (self.gsize[1] * self.time) / self.cftime
-                self.rcftime = self.cftime - self.time
+                    (self.gsize[1] * self.gameStatus["time"]) \
+                    / self.gameStatus["cftime"]
+                # self.rcftime = self.cftime - self.time
+                self.rcftime = self.gameStatus["cftime"] \
+                    - self.gameStatus["time"]
                 self.timer = makeGlitched("Time Before Failure: {0}".format(
                     str(timedelta(seconds=self.rcftime))),
                                           self.font)
@@ -487,7 +584,8 @@ class Game(object):
             # ^-------------------------------------------------------------------^
             # For Chaos Mode
             # v-------------------------------------------------------------------v
-            if self.modifiers["chaos"]:
+            # if self.modifiers["chaos"]:
+            if self.gameStatus["modifiers"]["chaos"]:
                 self.chaosParameters["timer"] -= dt
                 if self.chaosParameters["timer"] <= 0.:
                     self.toggleGlitch(choice(
@@ -513,13 +611,16 @@ class Game(object):
                         if event.key == pygame.K_RETURN:
                             self.garble = True
                         if event.key == pygame.K_BACKSPACE and\
-                                self.mode not in ["singlemap"]:
+                                self.gameStatus["mode"] not in ["singlemap"]:
                             self.mod_logger.debug("Debug key used, " +
                                                   "Loading next level")
                             level = self.forceNextLevel()
-                            self.LoadLevel(level, self.campaignname,
-                                           self.mode, self.screen)
-
+                            # self.LoadLevel(level, self.campaignname,
+                            #                self.mode, self.screen)
+                            self.LoadLevel(level,
+                                           self.gameStatus["campaignName"],
+                                           self.gameStatus["mode"],
+                                           self.screen)
                             self.loadLevelPart2(self.keys, sounds)
                 if config.getboolean("Debug", "keydebug") and\
                         event.type == pygame.KEYDOWN:
@@ -543,9 +644,10 @@ class Game(object):
                 # Renders the DeathCounter
                 # v-------------------------------------------------------------------v
                 if self.DCactive:
-                    self.dcounttxt = makeGlitched("Deaths: %d"
-                                                  % self.deathCounter,
-                                                  self.font)
+                    self.dcounttxt = makeGlitched(
+                            "Deaths: %d"
+                            % self.gameStatus["deathCounter"],
+                            self.font)
                 # ^-------------------------------------------------------------------^
             self.backpos = (min(-self.tilemap.viewport.x/6, 0),
                             min(-self.tilemap.viewport.y / 6, 0))
@@ -553,11 +655,14 @@ class Game(object):
                                   min(-self.tilemap.viewport.y / 4, 0))
             self.middlepos = (min(-self.tilemap.viewport.x/2, 0),
                               min(-self.tilemap.viewport.y / 2, 0))
-            self.gameviewport.blit(self.bg, self.backpos)
-            self.gameviewport.blit(self.middleback, self.middlebackpos)
+            self.gameviewport.blit(self.components["background"],
+                                   self.backpos)
+            self.gameviewport.blit(self.components["middle_back1"],
+                                   self.middlebackpos)
             self.tilemap.update(dt, self)
             self.helptxts.update(dt, self)
-            self.gameviewport.blit(self.middle, self.middlepos)
+            self.gameviewport.blit(self.components["middle_back2"],
+                                   self.middlepos)
             self.tilemap.draw(self.gameviewport)
             if not self.glitches["timeLapse"] or self.player.x_speed != 0:
                 self.particlesurf.fill((0, 0, 0, 0))
@@ -570,15 +675,19 @@ class Game(object):
                 self.gameviewport.blit(self.overlay,
                                        (-self.tilemap.viewport.x*1.5,
                                         -self.tilemap.viewport.y*1.5))
-            if self.mode.lower() in ["criticalfailure", "cfsingle"]:
+            # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
+            if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
                 self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
-            if self.modifiers["vflip"] or self.modifiers["hflip"]:
+            # if self.modifiers["vflip"] or self.modifiers["hflip"]:
+            if self.gameStatus["modifiers"]["vflip"] or\
+                    self.gameStatus["modifiers"]["hflip"]:
                 self.gameviewport = pygame.transform.flip(
                         self.gameviewport,
-                        self.modifiers["hflip"],
-                        self.modifiers["vflip"])
+                        self.gameStatus["modifiers"]["hflip"],
+                        self.gameStatus["modifiers"]["vflip"])
             screen.blit(self.gameviewport, (0, 0))
-            if self.mode.lower() in ["criticalfailure", "cfsingle"]:
+            # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
+            if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
                 screen.blit(self.timer, (50, 70))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
