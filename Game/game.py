@@ -42,16 +42,27 @@ _dialogConstants_ = {
 
 
 class Game(object):
-    """ The Main Game """
 
     def customGlitchToggle(self, glitchname, trueFunction, falseFunction):
+        """
+        Toggles glitches via a custom function by checking the
+        self.glitches list
+
+        Keyword Parameters:
+        - glitchname: Name of the glitch to toggle
+        - trueFunction: Function to be executed when enabling
+                        the glitch
+        - falseFunction: Function to be executed when disabling
+                         the glitch
+        """
         if self.glitches[glitchname]:
             trueFunction()
         else:
             falseFunction()
 
     def changeGravity(self):
-            self.gravity *= -1
+        """Inverts gravity"""
+        self.gravity *= -1
 
     def toggleGlitch(self, glitch, garble):
         """
@@ -61,9 +72,7 @@ class Game(object):
 
         Keyword Arguments:
         - Glitch: String key which identifies the glitch to toggle
-
-        Retuns:
-        - Nothing
+        - Garble: Allows to enable a "static" effect on toggle
         """
         self.glitches[glitch] = not self.glitches[glitch]
         self.mod_logger.debug("{0} Glitch has been set to {1}".format(
@@ -79,10 +88,26 @@ class Game(object):
             self.sounds["sfx"]["static"].play()
 
     def generatePath(self, campaignname, level):
+        """
+        Generates a level path from the campaign Name and
+        its level name
+
+        Keyword Arguments:
+        - campaignname: Name of the campaign
+        - level: Name of the level
+        """
         self.gameStatus["currentLevel"] = level
         return pjoin("data", "maps", campaignname, level)
 
     def RealLoadLevel(self, path, mode, screen):
+        """
+        Loads a level structure, given path, mode and screen
+
+        Keyword Arguments:
+        - path: Full path to the level
+        - mode: Mode to open the level in
+        - screen: The screen instance
+        """
         self.mod_logger.info("LoadLevel Routine is loading %(path)s"
                              % locals())
         self.eraseCurrentLevel()
@@ -163,14 +188,13 @@ class Game(object):
 
     def LoadLevel(self, level, campaignname, mode, screen):
         """
-        Method to load the defined level
+        Check if the level exists and loads it
 
         Keyword Arguments:
         - level: The level name, without the file extension.
+        - campaignname: The campaign name
+        - mode: The game mode
         - screen: The surface to draw the level to
-
-        Returns:
-        - Nothing
         """
         # Loads the level configuration and the control keys
         # v--------------------------------------------------------------v
@@ -187,19 +211,23 @@ class Game(object):
 
         Keyword Arguments:
         - campaignFile: The file (Without extension) defining the campaign
+        - mode: The game mode
         """
         self.mod_logger.info("Loading campaign {0}".format(campaignfile))
         with open(campaignfile,
                   "r") as campfile:
             cmpf = json.loads(campfile.read())
-            # self.currentLevel = cmpf["FirstMap"]
             self.gameStatus["currentLevel"] = cmpf["FirstMap"]
             self.intermissions = cmpf["Intermissions"]
             if mode == "criticalfailure":
-                # self.cftime = cmpf["CFTime"]
                 self.gameStatus["cftime"] = cmpf["CFTime"]
 
     def startIntermission(self, ID):
+        """Starts an comicReader intermission instance
+
+        Keyword Arguments:
+        - ID: The intermission Identifier
+        """
         IM = comicReader(pjoin("resources",
                                "intermissions",
                                self.gameStatus["campaignName"],
@@ -208,21 +236,25 @@ class Game(object):
         IM.look()
 
     def checkIntermission(self):
+        """
+        Checks if in the current level that is about to load
+        there is an intermission to be played
+        """
         if self.gameStatus["currentLevel"] in self.intermissions.keys():
             self.mod_logger.debug("Intermission found, starting intermission")
             self.startIntermission(
                     self.intermissions[self.gameStatus["currentLevel"]])
 
     def eraseCurrentLevel(self):
-        """
-        Erases the whole level, tilemap, kills the player and
-        prepares for a new load
-        """
         # At first call, does nothing (Player still has to be created)
         # Self-remaps at runtime to the stage deleting function
         self.eraseCurrentLevel = self.eraseCurrentLevel_Post
 
     def eraseCurrentLevel_Post(self):
+        """
+        Erases the whole level, tilemap, memorises the player and
+        prepares for a new load
+        """
         self.gravity = 1
         self.tilemap = None
         self.player.x_speed, self.player.y_speed = 0, 0
@@ -235,7 +267,11 @@ class Game(object):
     def loadLevelPart2(self, keys, sounds):
         """
         Terminates the level loading by defining the sprite layer,
-        and spawning the player.
+        and moving the player to the spawn point.
+
+        Keyword Arguments:
+        - keys: The instance of the keyboard assignments dictionary
+        - sounds: The instance of the sounds dictionary
         """
         self.mod_logger.info("Starting loadLevelPart2 Routine")
         self.sprites = tmx.SpriteLayer()
@@ -270,7 +306,7 @@ class Game(object):
 
     def saveGame(self):
         """
-        Saves the game level/campaign in a shelf file.
+        Saves the game status in a JSON file.
         """
         Tk().withdraw()
         path = filedialog.asksaveasfilename(**_dialogConstants_["saveGame"])
@@ -289,7 +325,7 @@ class Game(object):
 
     def loadGame(self):
         """
-        Opens the game from a json file
+        Opens the game from a JSON file
         """
         Tk().withdraw()
         path = filedialog.askopenfilename(**_dialogConstants_["loadGame"])
@@ -315,9 +351,17 @@ class Game(object):
             self.redsurfrect = self.redsurf.get_rect()
 
     def newChaosTime(self):
+        """ Generates a new timer to countdown to a new random
+        glitch toggle"""
         self.chaosParameters["timer"] = float(randint(5, 20))
 
     def loadChaosParameters(self, lvlconf):
+        """
+        Loads the chaos mode glitches from a level config instance
+
+        Keyword Parameters:
+        - lvlconf: The level config instance
+        """
         self.chaosParameters = {"glitches": None, "timer": None}
         self.chaosParameters["glitches"] = \
             [x
@@ -328,12 +372,24 @@ class Game(object):
             self.chaosParameters))
 
     def forceNextLevel(self):
+        """
+        DEBUG METHOD
+        Used to jump to the first playerexit level found
+        """
         return self.tilemap.layers["Triggers"].find(
                 "playerExit")[0]["playerExit"]
 
     def givePosition(self, op, fact):
-            return (min(op(-self.tilemap.viewport.x, fact), 0),
-                    min(op(-self.tilemap.viewport.y, fact), 0))
+        """
+        Returns the viewport position, scaled by a certain factor,
+        according to a certain operation
+
+        Keyword Arguments:
+        - op: Operation to perform (usually __mul__ or __floordiv__)
+        - fact: Scaling factor
+        """
+        return (min(op(-self.tilemap.viewport.x, fact), 0),
+                min(op(-self.tilemap.viewport.y, fact), 0))
 
     def main(self, screen, keys, mode, cmp, config, sounds, modifiers, log):
         """
@@ -342,11 +398,13 @@ class Game(object):
         Keyword Arguments:
         - Screen: The surface to draw the game to.
         - keys: The control keys to use.
-        - Mode: This can be "load" or "newgame", to trigger load mode
-                or new game mode
-
-        Returns:
-        - Nothing
+        - Mode: Identifies the mode of the game (newgame, load,
+                singlemap, criticalfailure, cfsingle)
+        - cmp: campaign file
+        - config: Game configuration instance
+        - sounds: Sounds dictionary instance
+        - modifiers: Modifiers Dictionary instance
+        - log: The main logger, inherited by the bootstrapper
         """
         self.gameStatus = {
                 "campaignFile": None,
