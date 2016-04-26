@@ -7,6 +7,7 @@
 # - Add a game HUD
 # ------------------------------------------------
 import pygame
+from operator import __mul__, __floordiv__
 from components.player import Player
 from datetime import timedelta
 from libs import tmx
@@ -403,7 +404,12 @@ class Game(object):
             self.chaosParameters))
 
     def forceNextLevel(self):
-        return self.tilemap.layers["Triggers"].find("playerExit")[0]["playerExit"]
+        return self.tilemap.layers["Triggers"].find(
+                "playerExit")[0]["playerExit"]
+
+    def givePosition(self, op, fact):
+            return (min(op(-self.tilemap.viewport.x, fact), 0),
+                    min(op(-self.tilemap.viewport.y, fact), 0))
 
     def main(self, screen, keys, mode, cmp, config, sounds, modifiers, log):
         """
@@ -431,17 +437,17 @@ class Game(object):
         self.oldComponentPaths = {
                 "background": None,
                 "middle_back1": None,
-                "middle_back2": None,
+                "middle_back2": None
         }
         self.componentPaths = {
                 "background": None,
                 "middle_back1": None,
-                "middle_back2": None,
+                "middle_back2": None
         }
         self.components = {
                 "background": None,
                 "middle_back1": None,
-                "middle_back2": None,
+                "middle_back2": None
         }
         self.mainLogger = log
         self.mod_logger = log.getChild("game")
@@ -572,7 +578,7 @@ class Game(object):
             self.mod_logger.debug("Glitches Loaded: {0}".format(self.glitches))
         """Game Loop"""
         while self.running:
-            dt = min (self.clock.tick(self.fps)/1000., 0.05)
+            dt = min(self.clock.tick(self.fps)/1000., 0.05)
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
             # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
@@ -650,12 +656,17 @@ class Game(object):
                             self.sprites.remove(*self.deadbodies)
                             self.deadbodies.empty()
                             self.player.respawn(self)
+            """
             self.backpos = (min(-self.tilemap.viewport.x/6, 0),
                             min(-self.tilemap.viewport.y / 6, 0))
             self.middlebackpos = (min(-self.tilemap.viewport.x/4, 0),
                                   min(-self.tilemap.viewport.y / 4, 0))
             self.middlepos = (min(-self.tilemap.viewport.x/2, 0),
                               min(-self.tilemap.viewport.y / 2, 0))
+            """
+            self.backpos = self.givePosition(__floordiv__, 6)
+            self.middlebackpos = self.givePosition(__floordiv__, 4)
+            self.middlepos = self.givePosition(__floordiv__, 2)
             self.gameviewport.blit(self.components["background"],
                                    self.backpos)
             self.gameviewport.blit(self.components["middle_back1"],
@@ -674,8 +685,7 @@ class Game(object):
                                     -self.tilemap.viewport.y))
             if self.hasOverlay:
                 self.gameviewport.blit(self.overlay,
-                                       (-self.tilemap.viewport.x*1.5,
-                                        -self.tilemap.viewport.y*1.5))
+                                       self.givePosition(__mul__, 1.5))
             # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
             if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
                 self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
@@ -692,7 +702,7 @@ class Game(object):
                 screen.blit(self.timer, (50, 70))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
-            if config.getboolean("Video","deathcounter"):
+            if config.getboolean("Video", "deathcounter"):
                 self.dcounttxt = makeGlitched(
                             "Deaths: %d"
                             % self.gameStatus["deathCounter"],
