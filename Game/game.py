@@ -80,7 +80,6 @@ class Game(object):
 
     def generatePath(self, campaignname, level):
         self.gameStatus["currentLevel"] = level
-        # self.currentLevel = level
         return pjoin("data", "maps", campaignname, level)
 
     def RealLoadLevel(self, path, mode, screen):
@@ -94,7 +93,6 @@ class Game(object):
         self.mod_logger.debug("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
         if mode == "cfsingle":
-            # self.cftime = int(levelconfig["Level Info"]["CFTime"])
             self.gameStatus["cftime"] = levelconfig.getint("Level Info",
                                                            "CFTime")
         self.glitches = levelconfig["Glitches"]["Standard"]
@@ -126,37 +124,6 @@ class Game(object):
                                   ["overlay"])
             if self.overpath != self.oldoverpath:
                 self.overlay = pygame.image.load(self.overpath).convert_alpha()
-        """
-        self.oldbgpath = self.bgpath
-        self.oldmbackpath = self.mbackpath
-        self.oldmiddlepath = self.middlepath
-        self.oldoverpath = self.overpath
-        self.bgpath = pjoin("resources", "backgrounds",
-                            levelconfig["Level Components"]
-                            ["background"])
-        self.mbackpath = pjoin("resources", "backgrounds",
-                               levelconfig["Level Components"]
-                               ["middle_back1"])
-        self.middlepath = pjoin("resources", "backgrounds",
-                                levelconfig["Level Components"]
-                                ["middle_back2"])
-        if self.bgpath != self.oldbgpath:
-            self.bg = pygame.image.load(self.bgpath).convert_alpha()
-        if self.mbackpath != self.oldmbackpath:
-            self.middleback = pygame.image.load(self.mbackpath
-                                                ).convert_alpha()
-        if self.middlepath != self.oldmiddlepath:
-            self.middle = pygame.image.load(self.middlepath).convert_alpha()
-        if levelconfig["Level Components"]["overlay"] is not None:
-            self.hasOverlay = True
-            self.overpath = pjoin("resources", "overlays",
-                                  levelconfig["Level Components"]
-                                  ["overlay"])
-            if self.overpath != self.oldoverpath:
-                self.overlay = pygame.image.load(self.overpath).convert_alpha()
-        else:
-            self.hasOverlay = False
-        """
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
             Obstacle((obstacle.px, obstacle.py), ("v" in obstacle['Obstacle']),
                      obstacle['ObsSpeed'], None, self.obstacles,
@@ -190,7 +157,6 @@ class Game(object):
         center = (self.screensize[0] - int(self.title.get_rect().width))/2
         self.titleposition = (center, 578)
         if mode.lower() == "cfsingle":
-            # self.time = 0.
             self.gameStatus["time"] = 0.
         self.mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
@@ -234,24 +200,16 @@ class Game(object):
                 self.gameStatus["cftime"] = cmpf["CFTime"]
 
     def startIntermission(self, ID):
-        """IM = comicReader(pjoin("resources",
-                               "intermissions",
-                               self.campaignname,
-                               ID), self.screen,
-                         self.keys["action"], self.mainLogger)"""
         IM = comicReader(pjoin("resources",
                                "intermissions",
                                self.gameStatus["campaignName"],
                                ID), self.screen,
                          self.keys["action"], self.mainLogger)
-
         IM.look()
 
     def checkIntermission(self):
-        # if self.currentLevel in self.intermissions.keys():
         if self.gameStatus["currentLevel"] in self.intermissions.keys():
             self.mod_logger.debug("Intermission found, starting intermission")
-            # self.startIntermission(self.intermissions[self.currentLevel])
             self.startIntermission(
                     self.intermissions[self.gameStatus["currentLevel"]])
 
@@ -309,40 +267,22 @@ class Game(object):
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
         self.mod_logger.info("Loading of the level completed" +
                              " successfully, ready to play")
-        # pygame.mouse.set_visible(False)
-        # self.mod_logger.debug("Mouse cursor hidden")
 
     def saveGame(self):
         """
         Saves the game level/campaign in a shelf file.
         """
         Tk().withdraw()
-        # formats = [("Glitch_Heaven Savegame", "*.dat")]
-        # path = filedialog.asksaveasfilename(filetypes=formats,
-        #                                     initialdir="./savegames",
-        #                                     defaultextension=".dat")
         path = filedialog.asksaveasfilename(**_dialogConstants_["saveGame"])
         if path:
-            # if not (self.mode.lower() in ["criticalfailure", "cfsingle"]):
             if not (self.gameStatus["mode"] in ["criticalfailure",
                                                 "cfsingle"]):
                 self.gameStatus["cftime"] = 0
                 self.gameStatus["time"] = 0
                 self.gameStatus["mode"] = "newgame"
-                # self.cftime, self.time = 0, 0
-                # self.mode = "newgame"
-            """shelf = {"campaignfile": self.campaignFile,
-                     "currentLevel": self.currentLevel,
-                     "campaignname": self.campaignname,
-                     "cftime": self.cftime,
-                     "time": self.time,
-                     "mode": self.mode,
-                     "deathCounter": self.deathCounter,
-                     "modifiers": self.modifiers}"""
             self.mod_logger.debug("Saved with data: {0}"
                                   % self.gameStatus)
             with open(path, "w") as savefile:
-                # savefile.write(json.dumps(shelf))
                 savefile.write(json.dumps(self.gameStatus))
                 self.mod_logger.info("Game saved on the file: \
                         %(savefile)s" % locals())
@@ -352,28 +292,12 @@ class Game(object):
         Opens the game from a json file
         """
         Tk().withdraw()
-        # formats = [("Glitch_Heaven Savegame", "*.dat")]
-        # path = filedialog.askopenfilename(filetypes=formats,
-        #                                   initialdir="savegames",
-        #                                   multiple=False)
         path = filedialog.askopenfilename(**_dialogConstants_["loadGame"])
         if not path:
             raise FileNotFoundError
         self.mod_logger.info("Loading Save from: %(path)s"
                              % locals())
         with open(path, "r") as savefile:
-            """
-            string = savefile.read()
-            shelf = json.loads(string)
-            self.campaignFile = shelf["campaignfile"]
-            self.campaignname = shelf["campaignname"]
-            self.mode = shelf["mode"]
-            self.cftime = shelf["cftime"]
-            self.time = shelf["time"]
-            self.deathCounter = shelf["deathCounter"]
-            self.modifiers = shelf["modifiers"]
-            self.currentLevel = shelf["currentLevel"]
-            """
             self.gameStatus = json.loads(savefile.read())
         if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
             self.mod_logger.debug("Using Load Game mode -\
@@ -454,15 +378,11 @@ class Game(object):
         self.mod_logger.info("Entering main game")
         self.running = True
         self.gravity = 1
-        # self.time = 0.
         self.gameStatus["time"] = 0.
         self.sounds = sounds
-        # self.deathCounter = 0
         self.gameStatus["deathCounter"] = 0
         self.gameStatus["mode"] = mode
-        # self.bgpath, self.mbackpath = 2 * [None]
         self.screensize = screen.get_size()
-        # self.middlepath, self.overpath = 2 * [None]
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
         self.clock = pygame.time.Clock()
@@ -480,7 +400,6 @@ class Game(object):
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
-        # self.modifiers = modifiers
         self.gameStatus["modifiers"] = modifiers
         self.mod_logger.debug("Current Active Modifiers: {0}".format(
             modifiers))
@@ -511,8 +430,6 @@ class Game(object):
             self.mod_logger.debug("Using Load mode")
             try:
                 self.loadGame()
-                # self.LoadLevel(self.currentLevel, self.campaignname,
-                #                self.mode, self.screen)
                 self.LoadLevel(self.gameStatus["currentLevel"],
                                self.gameStatus["campaignName"],
                                self.gameStatus["mode"],
@@ -523,28 +440,18 @@ class Game(object):
         elif self.gameStatus["mode"] == "newgame":
             self.mod_logger.debug("Using New Game mode")
             self.gameStatus["campaignFile"] = cmp
-            # self.campaignFile = cmp
-            # self.campaignname = splitext(basename(cmp))[0]
             self.gameStatus["campaignName"] = splitext(basename(cmp))[0]
-            # self.loadCampaign(self.campaignFile, self.mode)
             self.loadCampaign(self.gameStatus["campaignFile"],
                               self.gameStatus["mode"])
             self.LoadLevel(self.gameStatus["currentLevel"],
                            self.gameStatus["campaignName"],
                            self.gameStatus["mode"],
                            self.screen)
-
-            # self.LoadLevel(self.currentLevel, self.campaignname,
-            #                self.mode, self.screen)
         elif self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
             self.mod_logger.debug("Using New Game mode - \
                     Critical Failure Modifier")
-            # self.cftime = 0
             self.gameStatus["cftime"] = 0
-            # self.campaignFile = cmp
-            # self.campaignname = splitext(basename(cmp))[0]
             self.gameStatus["campaignName"] = splitext(basename(cmp))[0]
-            # self.loadCampaign(self.campaignFile, self.mode)
             self.LoadCampaign(self.gameStatus["campaignFile"],
                               self.gameStatus["mode"])
             self.redsurf = pygame.surface.Surface(self.gsize,
@@ -558,13 +465,10 @@ class Game(object):
                                                self.gsize[0],
                                                linesize))
             self.redsurfrect = self.redsurf.get_rect()
-            # self.LoadLevel(self.currentLevel, self.campaignname,
-            #                self.mode, self.screen)
             self.LoadLevel(self.gameStatus["currentLevel"],
                            self.gameStatus["campaignName"],
                            self.gameStatus["mode"],
                            self.screen)
-        # elif self.mode.lower() == "singlemap":
         elif self.gameStatus["mode"] == "singlemap":
             self.RealLoadLevel(cmp, "singlemap", self.screen)
         # ^--------------------------------------------------------------^
@@ -581,16 +485,11 @@ class Game(object):
             dt = min(self.clock.tick(self.fps)/1000., 0.05)
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
-            # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
             if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
-                # self.time += dt
                 self.gameStatus["time"] += dt
-                # self.redsurfrect.y = -self.gsize[1] + \
-                #    (self.gsize[1] * self.time) / self.cftime
                 self.redsurfrect.y = -self.gsize[1] + \
                     (self.gsize[1] * self.gameStatus["time"]) \
                     / self.gameStatus["cftime"]
-                # self.rcftime = self.cftime - self.time
                 self.rcftime = self.gameStatus["cftime"] \
                     - self.gameStatus["time"]
                 self.timer = makeGlitched("Time Before Failure: {0}".format(
@@ -602,7 +501,6 @@ class Game(object):
             # ^-------------------------------------------------------------------^
             # For Chaos Mode
             # v-------------------------------------------------------------------v
-            # if self.modifiers["chaos"]:
             if self.gameStatus["modifiers"]["chaos"]:
                 self.chaosParameters["timer"] -= dt
                 if self.chaosParameters["timer"] <= 0.:
@@ -633,8 +531,6 @@ class Game(object):
                             self.mod_logger.debug("Debug key used, " +
                                                   "Loading next level")
                             level = self.forceNextLevel()
-                            # self.LoadLevel(level, self.campaignname,
-                            #                self.mode, self.screen)
                             self.LoadLevel(level,
                                            self.gameStatus["campaignName"],
                                            self.gameStatus["mode"],
@@ -656,14 +552,6 @@ class Game(object):
                             self.sprites.remove(*self.deadbodies)
                             self.deadbodies.empty()
                             self.player.respawn(self)
-            """
-            self.backpos = (min(-self.tilemap.viewport.x/6, 0),
-                            min(-self.tilemap.viewport.y / 6, 0))
-            self.middlebackpos = (min(-self.tilemap.viewport.x/4, 0),
-                                  min(-self.tilemap.viewport.y / 4, 0))
-            self.middlepos = (min(-self.tilemap.viewport.x/2, 0),
-                              min(-self.tilemap.viewport.y / 2, 0))
-            """
             self.backpos = self.givePosition(__floordiv__, 6)
             self.middlebackpos = self.givePosition(__floordiv__, 4)
             self.middlepos = self.givePosition(__floordiv__, 2)
@@ -686,10 +574,8 @@ class Game(object):
             if self.hasOverlay:
                 self.gameviewport.blit(self.overlay,
                                        self.givePosition(__mul__, 1.5))
-            # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
             if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
                 self.gameviewport.blit(self.redsurf, (0, self.redsurfrect.y))
-            # if self.modifiers["vflip"] or self.modifiers["hflip"]:
             if self.gameStatus["modifiers"]["vflip"] or\
                     self.gameStatus["modifiers"]["hflip"]:
                 self.gameviewport = pygame.transform.flip(
@@ -697,7 +583,6 @@ class Game(object):
                         self.gameStatus["modifiers"]["hflip"],
                         self.gameStatus["modifiers"]["vflip"])
             screen.blit(self.gameviewport, (0, 0))
-            # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
             if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
                 screen.blit(self.timer, (50, 70))
             screen.blit(self.titleholder, (0, 576))
