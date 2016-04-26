@@ -678,7 +678,7 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'Help'):
             helptext = cell['Help']
-            if helptext != game.helpflagActive:
+            if helptext != game.currenthelp:
                 game.helpflagActive = False
             if not game.getHelpFlag():
                 game.helpflagActive = False

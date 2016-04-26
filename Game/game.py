@@ -351,11 +351,11 @@ class Game(object):
         self.gameStatus = {
                 "campaignFile": None,
                 "campaignName": None,
-                "mode": None,
+                "mode": mode,
                 "cftime": None,
-                "time": None,
-                "deathCounter": None,
-                "modifiers": None,
+                "time": 0.,
+                "deathCounter": 0,
+                "modifiers": modifiers,
                 "currentLevel": None
                 }
         self.oldComponentPaths = {
@@ -378,10 +378,7 @@ class Game(object):
         self.mod_logger.info("Entering main game")
         self.running = True
         self.gravity = 1
-        self.gameStatus["time"] = 0.
         self.sounds = sounds
-        self.gameStatus["deathCounter"] = 0
-        self.gameStatus["mode"] = mode
         self.screensize = screen.get_size()
         self.gsize = (800, 576)
         self.gameviewport = pygame.surface.Surface(self.gsize)
@@ -400,7 +397,6 @@ class Game(object):
         self.helptxts = pygame.sprite.Group()
         self.plats = tmx.SpriteLayer()
         self.GlitchTriggers = tmx.SpriteLayer()
-        self.gameStatus["modifiers"] = modifiers
         self.mod_logger.debug("Current Active Modifiers: {0}".format(
             modifiers))
         # Preloading graphics area
