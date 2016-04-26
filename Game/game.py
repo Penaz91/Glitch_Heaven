@@ -21,10 +21,23 @@ import json
 from random import randint, choice
 from os.path import join as pathjoin
 from tkinter import filedialog
+from os import getcwd
 from libs.textglitcher import makeGlitched, makeMoreGlitched
 from tkinter import Tk
 from libs.debugconstants import _debugkeys_
 _garbletimer_ = 0.1
+_dialogConstants_ = {
+    "saveGame": {
+        "filetypes": [("Glitch_Heaven Savegame", "*.dat")],
+        "initialdir": pjoin(getcwd(), "savegames"),
+        "defaultextension": ".dat"
+                },
+    "loadGame": {
+        "filetypes": [("Glitch_Heaven Savegame", "*.dat")],
+        "initialdir": pjoin(getcwd(), "savegames"),
+        "multiple": False
+                }
+                    }
 
 
 class Game(object):
@@ -303,10 +316,11 @@ class Game(object):
         Saves the game level/campaign in a shelf file.
         """
         Tk().withdraw()
-        formats = [("Glitch_Heaven Savegame", "*.dat")]
-        path = filedialog.asksaveasfilename(filetypes=formats,
-                                            initialdir="./savegames",
-                                            defaultextension=".dat")
+        # formats = [("Glitch_Heaven Savegame", "*.dat")]
+        # path = filedialog.asksaveasfilename(filetypes=formats,
+        #                                     initialdir="./savegames",
+        #                                     defaultextension=".dat")
+        path = filedialog.asksaveasfilename(**_dialogConstants_["saveGame"])
         if path:
             # if not (self.mode.lower() in ["criticalfailure", "cfsingle"]):
             if not (self.gameStatus["mode"] in ["criticalfailure",
@@ -337,10 +351,11 @@ class Game(object):
         Opens the game from a json file
         """
         Tk().withdraw()
-        formats = [("Glitch_Heaven Savegame", "*.dat")]
-        path = filedialog.askopenfilename(filetypes=formats,
-                                          initialdir="savegames",
-                                          multiple=False)
+        # formats = [("Glitch_Heaven Savegame", "*.dat")]
+        # path = filedialog.askopenfilename(filetypes=formats,
+        #                                   initialdir="savegames",
+        #                                   multiple=False)
+        path = filedialog.askopenfilename(**_dialogConstants_["loadGame"])
         if not path:
             raise FileNotFoundError
         self.mod_logger.info("Loading Save from: %(path)s"
@@ -362,7 +377,7 @@ class Game(object):
         if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
             self.mod_logger.debug("Using Load Game mode -\
                     Critical Failure Modifier")
-            self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
+            self.redsurf = pygame.surface.Surface(self.gsize,
                                                   pygame.SRCALPHA)
             linesize = 3
             bot = self.redsurf.get_rect().bottom
@@ -370,7 +385,7 @@ class Game(object):
             self.redsurf.fill((255, 255, 255, 255),
                               pygame.rect.Rect(0,
                                                bot - linesize,
-                                               800,
+                                               self.gsize[0],
                                                linesize))
             self.redsurfrect = self.redsurf.get_rect()
 
@@ -388,8 +403,7 @@ class Game(object):
             self.chaosParameters))
 
     def forceNextLevel(self):
-        lvl = self.tilemap.layers["Triggers"].find("playerExit")[0]
-        return lvl["playerExit"]
+        return self.tilemap.layers["Triggers"].find("playerExit")[0]["playerExit"]
 
     def main(self, screen, keys, mode, cmp, config, sounds, modifiers, log):
         """
@@ -437,7 +451,6 @@ class Game(object):
         # self.time = 0.
         self.gameStatus["time"] = 0.
         self.sounds = sounds
-        self.DCactive = config.getboolean("Video", "deathcounter")
         # self.deathCounter = 0
         self.gameStatus["deathCounter"] = 0
         self.gameStatus["mode"] = mode
@@ -478,7 +491,11 @@ class Game(object):
                 "collectibleitem": pathjoin("resources",
                                             "sprites",
                                             "GlitchTrigger.png"
-                                            )
+                                            ),
+                "static": pygame.image.load(pathjoin("resources",
+                                                     "backgrounds",
+                                                     "screengarble.png")
+                                            ).convert_alpha()
                 }
         # ^-------------------------------------------------------------------^
         # Defines if a level should be loaded or a
@@ -524,7 +541,7 @@ class Game(object):
             # self.loadCampaign(self.campaignFile, self.mode)
             self.LoadCampaign(self.gameStatus["campaignFile"],
                               self.gameStatus["mode"])
-            self.redsurf = pygame.surface.Surface((800, self.gsize[1]),
+            self.redsurf = pygame.surface.Surface(self.gsize,
                                                   pygame.SRCALPHA)
             linesize = 3
             bot = self.redsurf.get_rect().bottom
@@ -532,7 +549,7 @@ class Game(object):
             self.redsurf.fill((255, 255, 255, 255),
                               pygame.rect.Rect(0,
                                                bot - linesize,
-                                               800,
+                                               self.gsize[0],
                                                linesize))
             self.redsurfrect = self.redsurf.get_rect()
             # self.LoadLevel(self.currentLevel, self.campaignname,
@@ -549,18 +566,13 @@ class Game(object):
         self.garble = False
         self.garbletimer = _garbletimer_
         self.deadbodies = pygame.sprite.Group()
-        self.screengarble = pygame.image.load(pathjoin("resources",
-                                                       "backgrounds",
-                                                       "screengarble.png")
-                                              ).convert_alpha()
         pygame.display.set_caption("Glitch_Heaven - Pre-Pre-Alpha Version")
         if self.running:
             self.loadLevelPart2(self.keys, sounds)
             self.mod_logger.debug("Glitches Loaded: {0}".format(self.glitches))
         """Game Loop"""
         while self.running:
-            dt = self.clock.tick(self.fps)/1000.
-            dt = min(0.05, dt)
+            dt = min (self.clock.tick(self.fps)/1000., 0.05)
             # For Critical Failure mode
             # v-------------------------------------------------------------------v
             # if self.mode.lower() in ["criticalfailure", "cfsingle"]:
@@ -638,17 +650,6 @@ class Game(object):
                             self.sprites.remove(*self.deadbodies)
                             self.deadbodies.empty()
                             self.player.respawn(self)
-                if event.type == pygame.QUIT:
-                    self.running = False
-                # ^----------------------------------------------------------^
-                # Renders the DeathCounter
-                # v-------------------------------------------------------------------v
-                if self.DCactive:
-                    self.dcounttxt = makeGlitched(
-                            "Deaths: %d"
-                            % self.gameStatus["deathCounter"],
-                            self.font)
-                # ^-------------------------------------------------------------------^
             self.backpos = (min(-self.tilemap.viewport.x/6, 0),
                             min(-self.tilemap.viewport.y / 6, 0))
             self.middlebackpos = (min(-self.tilemap.viewport.x/4, 0),
@@ -691,10 +692,14 @@ class Game(object):
                 screen.blit(self.timer, (50, 70))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
-            if self.DCactive:
+            if config.getboolean("Video","deathcounter"):
+                self.dcounttxt = makeGlitched(
+                            "Deaths: %d"
+                            % self.gameStatus["deathCounter"],
+                            self.font)
                 screen.blit(self.dcounttxt, (50, 50))
             if self.garble:
-                screen.blit(self.screengarble, (0, 0))
+                screen.blit(self.preloaded_sprites["static"], (0, 0))
                 self.garbletimer -= dt
                 if self.garbletimer <= 0:
                     self.garble = False
