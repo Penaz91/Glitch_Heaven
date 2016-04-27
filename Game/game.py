@@ -74,18 +74,27 @@ class Game(object):
         - Glitch: String key which identifies the glitch to toggle
         - Garble: Allows to enable a "static" effect on toggle
         """
+        # Inverts the status of the glitch
+        # v--------------------------------------------------v
         self.glitches[glitch] = not self.glitches[glitch]
         self.mod_logger.debug("{0} Glitch has been set to {1}".format(
             glitch,
             self.glitches[glitch]))
+        # ^--------------------------------------------------^
+        # Does a custom toggle of Highjump, speed, and inverted gravity glitch
+        # v--------------------------------------------------v
         pl = self.player
         self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
         if glitch == "invertedGravity":
             self.changeGravity()
+        # ^--------------------------------------------------^
+        # Plays static
+        # v--------------------------------------------------v
         if garble:
             self.garble = True
             self.sounds["sfx"]["static"].play()
+        # ^--------------------------------------------------^
 
     def generatePath(self, campaignname, level):
         """
@@ -110,28 +119,42 @@ class Game(object):
         """
         self.mod_logger.info("LoadLevel Routine is loading %(path)s"
                              % locals())
+        # Erases level and if we're doing a campaign, checks for intermissions
+        # v--------------------------------------------------v
         self.eraseCurrentLevel()
         if mode not in ["singlemap"]:
             self.checkIntermission()
+        # ^--------------------------------------------------^
+        # Loads the level configuration and its chaos parameters
+        # v--------------------------------------------------v
         with open(path+".conf") as f:
             levelconfig = json.loads(f.read())
         self.mod_logger.debug("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
+        # ^--------------------------------------------------^
+        # If we're in the single timer Critical Failure, load the level time
+        # And reset the time to 0.
+        # v--------------------------------------------------v
         if mode == "cfsingle":
             self.gameStatus["cftime"] = levelconfig.getint("Level Info",
                                                            "CFTime")
+            self.gameStatus["time"] = 0.
+        # ^--------------------------------------------------^
+        # Loads the level glitches
+        # v--------------------------------------------------v
         self.glitches = levelconfig["Glitches"]["Standard"]
         self.mod_logger.debug("Glitches Active: {0}".format(self.glitches))
         # ^--------------------------------------------------------------^
-        # Loads the level map, triggers, obstacles
+        # Loads the level map
         # v--------------------------------------------------------------v
         self.mod_logger.debug("Loading Tilemap")
         self.tilemap = tmx.load(path+".tmx",
                                 self.screensize)
         self.mod_logger.debug("Tilemap Loaded, building map")
-        self.obstacles = tmx.SpriteLayer()
-        # Small optimisation in case the same background is loaded
-        # v------------------------------v
+        # ^--------------------------------------------------------------^
+        # Loads backgrounds and overlays, optimised in case
+        # the same ones are used
+        # v--------------------------------------------------------------v
         self.mod_logger.debug("Loading Backgrounds")
         self.oldComponentPaths = self.componentPaths.copy()
         for key in self.componentPaths.keys():
@@ -149,11 +172,18 @@ class Game(object):
                                   ["overlay"])
             if self.overpath != self.oldoverpath:
                 self.overlay = pygame.image.load(self.overpath).convert_alpha()
+        # ^--------------------------------------------------------------^
+        # Creates all the mobile obstacles
+        # v--------------------------------------------------------------v
+        self.obstacles = tmx.SpriteLayer()
         for obstacle in self.tilemap.layers['Triggers'].find('Obstacle'):
             Obstacle((obstacle.px, obstacle.py), ("v" in obstacle['Obstacle']),
                      obstacle['ObsSpeed'], None, self.obstacles,
                      preloaded_ani=self.preloaded_sprites["glitches"])
         self.tilemap.layers.append(self.obstacles)
+        # ^--------------------------------------------------------------^
+        # Creates all the triggerable platforms
+        # v--------------------------------------------------------------v
         for platform in self.tilemap.layers['Triggers'].find('Platform'):
             bouncy = "bouncyplat" in platform
             bouncepwr = int(platform['bouncyplat']) if bouncy else 0
@@ -164,6 +194,9 @@ class Game(object):
                     False, platform['id'], self.plats, game=self,
                     bouncy=bouncy, image=self.preloaded_sprites["platforms"])
         self.tilemap.layers.append(self.plats)
+        # ^--------------------------------------------------------------^
+        # Creates all the glitch toggles
+        # v--------------------------------------------------------------v
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
             self.GlitchTriggers.add(CollectibleTrigger(
                 trig.px, trig.py, self, trig['ToggleGlitch'],
@@ -171,7 +204,10 @@ class Game(object):
                     "collectibleitem"
                     ]))
         self.tilemap.layers.append(self.GlitchTriggers)
-        self.titletxt = None
+        # ^--------------------------------------------------------------^
+        # In case of critical failure modes, further garbles
+        # level title texts, then renders the title
+        # v--------------------------------------------------------------v
         if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
             self.titletxt = makeMoreGlitched(
                                 str(levelconfig['Level Info']['Name']),
@@ -179,10 +215,12 @@ class Game(object):
         else:
             self.titletxt = str(levelconfig['Level Info']['Name'])
         self.title = makeGlitched(self.titletxt, self.font)
+        # ^--------------------------------------------------------------^
+        # Finds the center position of the title
+        # v--------------------------------------------------------------v
         center = (self.screensize[0] - int(self.title.get_rect().width))/2
         self.titleposition = (center, 578)
-        if mode.lower() == "cfsingle":
-            self.gameStatus["time"] = 0.
+        # ^--------------------------------------------------------------^
         self.mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
 
@@ -196,8 +234,6 @@ class Game(object):
         - mode: The game mode
         - screen: The surface to draw the level to
         """
-        # Loads the level configuration and the control keys
-        # v--------------------------------------------------------------v
         if level == "":
             # No more levels, close
             self.running = False
@@ -218,7 +254,7 @@ class Game(object):
                   "r") as campfile:
             cmpf = json.loads(campfile.read())
             self.gameStatus["currentLevel"] = cmpf["FirstMap"]
-            self.intermissions = cmpf["Intermissions"]
+            self.gameStatus["intermissions"] = cmpf["Intermissions"]
             if mode == "criticalfailure":
                 self.gameStatus["cftime"] = cmpf["CFTime"]
 
@@ -240,10 +276,12 @@ class Game(object):
         Checks if in the current level that is about to load
         there is an intermission to be played
         """
-        if self.gameStatus["currentLevel"] in self.intermissions.keys():
+        if self.gameStatus["currentLevel"] in\
+                self.gameStatus["intermissions"].keys():
             self.mod_logger.debug("Intermission found, starting intermission")
             self.startIntermission(
-                    self.intermissions[self.gameStatus["currentLevel"]])
+                    self.gameStatus[
+                        "intermissions"][self.gameStatus["currentLevel"]])
 
     def eraseCurrentLevel(self):
         # At first call, does nothing (Player still has to be created)
@@ -256,6 +294,7 @@ class Game(object):
         prepares for a new load
         """
         self.gravity = 1
+        self.titletxt = None
         self.tilemap = None
         self.player.x_speed, self.player.y_speed = 0, 0
         self.plats.empty()
@@ -273,6 +312,9 @@ class Game(object):
         - keys: The instance of the keyboard assignments dictionary
         - sounds: The instance of the sounds dictionary
         """
+        # Creates the sprite level, positions the player
+        # and the backgrounds
+        # v--------------------------------------------------------------v
         self.mod_logger.info("Starting loadLevelPart2 Routine")
         self.sprites = tmx.SpriteLayer()
         start_cell = self.tilemap.layers['Triggers'].find('playerEntrance')[0]
@@ -288,21 +330,25 @@ class Game(object):
                                  sounds=sounds, log=self.mainLogger)
         self.player.lastcheckpoint = start_cell.px, start_cell.py
         self.sprites.add(self.player)
+        # ^--------------------------------------------------------------^
         self.mod_logger.debug("Creating Particle Surface")
+        # Builds the particle surface
+        # v--------------------------------------------------------------v
         self.particlesurf = pygame.surface.Surface((self.tilemap.px_width,
                                                     self.tilemap.px_height),
                                                    pygame.SRCALPHA,
                                                    32).convert_alpha()
         # In case the invertedgravity glitch is up, invert gravity
-        # v--------v
+        # And check for highjump and speed glitches
+        # v--------------------------------------------------------------v
         if self.glitches["invertedGravity"]:
             self.gravity = -1
-        # ^--------^
         pl = self.player
         self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
         self.mod_logger.info("Loading of the level completed" +
                              " successfully, ready to play")
+        # ^--------------------------------------------------------------^
 
     def saveGame(self):
         """
@@ -435,6 +481,7 @@ class Game(object):
         self.mod_logger = log.getChild("game")
         self.mod_logger.info("Entering main game")
         self.running = True
+        self.titletxt = None
         self.gravity = 1
         self.sounds = sounds
         self.screensize = screen.get_size()
@@ -479,6 +526,7 @@ class Game(object):
         # ^-------------------------------------------------------------------^
         # Defines if a level should be loaded or a
         # new campaign should be started.
+        # It also defines the modes
         # v--------------------------------------------------------------v
         if self.gameStatus["mode"] == "load":
             self.mod_logger.debug("Using Load mode")
