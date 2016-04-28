@@ -131,7 +131,8 @@ class Player(pygame.sprite.Sprite):
         }
 
     def setupEmitters(self):
-        if self.game.config.getboolean("Video", "playerparticles"):
+        # if self.game.config.getboolean("Video", "playerparticles"):
+        if self.game.config["Video"]["playerparticles"]:
             self.leftemitter = emitter.Emitter(self.rect.bottomleft,
                                                self._initialParticleColor_,
                                                self._finalParticleColor_,
@@ -272,7 +273,8 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.transform.flip(
                          self.image, True, False)
         # Particle emission
-        if self.game.config.getboolean("Video", "playerparticles"):
+        # if self.game.config.getboolean("Video", "playerparticles"):
+        if self.game.config["Video"]["playerparticles"]:
             if(xspeed != 0 and resting) and not pushing:
                 if direction == 1:
                     self.emit_Left()
@@ -384,7 +386,8 @@ class Player(pygame.sprite.Sprite):
                             self.resting:
                         self.y_speed = self._jump_speed_ * \
                            self.jumpMultiplier * game.gravity
-                        if game.config.getboolean("Video", "playerparticles"):
+                        # if game.config.getboolean("Video", "playerparticles"):
+                        if game.config["Video"]["playerparticles"]:
                             self.emitJumpParticles()
                     # ^------------------------------------------------------^
         elif game.glitches["hover"]:
@@ -392,7 +395,8 @@ class Player(pygame.sprite.Sprite):
                 if self.resting:
                     self.jumpsound.play()
                 self.y_speed = self._jump_speed_*game.gravity*0.8
-                if game.config.getboolean("Video", "playerparticles"):
+                # if game.config.getboolean("Video", "playerparticles"):
+                if game.config["Video"]["playerparticles"]:
                     self.emitJumpParticles()
         else:
             if key[self.keys["jump"]] and self.resting and\
@@ -405,7 +409,8 @@ class Player(pygame.sprite.Sprite):
                     # v------------------------------------------------------v
                     self.y_speed = self._jump_speed_ * \
                             self.jumpMultiplier * game.gravity
-                    if game.config.getboolean("Video", "playerparticles"):
+                    # if game.config.getboolean("Video", "playerparticles"):
+                    if game.config["Video"]["playerparticles"]:
                         self.emitJumpParticles()
                         # ^------------------------------------------------------^
                     self.resting = False    # I jumped, so i'm not on a surface

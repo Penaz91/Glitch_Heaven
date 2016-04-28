@@ -4,6 +4,7 @@
 from components.UI.menuItem import menuitem
 from libs.textglitcher import makeGlitched
 import pygame
+import json
 
 
 class KeyboardItem (menuitem):
@@ -26,9 +27,12 @@ class KeyboardItem (menuitem):
                             False, (255, 255, 255)).convert_alpha()
                     self.selected = makeGlitched(
                             (str(pygame.key.name(event.key))).upper(), font)
-                    config.set("Controls", str(key), str(event.key))
-                    with open("game.conf", "w") as conf:
-                        config.write(conf)
+                    # config.set("Controls", str(key), str(event.key))
+                    # with open("game.conf", "w") as conf:
+                    #    config.write(conf)
+                    config["Controls"][str(key)] = str(event.key)
+                    with open("newconf.json", "w") as conf:
+                        conf.write(json.dumps(config))
                     keys[key] = event.key
                     truth = False
                     self.mod_logger.debug("Key Changed to %s"

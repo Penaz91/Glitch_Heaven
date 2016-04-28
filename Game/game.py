@@ -618,7 +618,8 @@ class Game(object):
                 # Debug Area - Glitch Toggles
                 # v----------------------------------------------------------v
                 mods = pygame.key.get_mods()
-                if config.getboolean("Debug", "debugmode") and\
+                # if config.getboolean("Debug", "debugmode") and\
+                if config["Debug"]["debugmode"] and\
                         mods & pygame.KMOD_LSHIFT and\
                         mods & pygame.KMOD_LCTRL and\
                         mods & pygame.KMOD_LALT:
@@ -638,7 +639,8 @@ class Game(object):
                                            self.gameStatus["mode"],
                                            self.screen)
                             self.loadLevelPart2(self.keys, sounds)
-                if config.getboolean("Debug", "keydebug") and\
+                # if config.getboolean("Debug", "keydebug") and\
+                if config["Debug"]["keydebug"] and\
                         event.type == pygame.KEYDOWN:
                     self.mod_logger.debug("A key was pressed: {0}"
                                           .format(pygame.key.name(event.key)))
@@ -689,7 +691,8 @@ class Game(object):
                 screen.blit(self.timer, (50, 70))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
-            if config.getboolean("Video", "deathcounter"):
+            #if config.getboolean("Video", "deathcounter"):
+            if config["Video"]["deathcounter"]:
                 self.dcounttxt = makeGlitched(
                             "Deaths: %d"
                             % self.gameStatus["deathCounter"],

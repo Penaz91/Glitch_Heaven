@@ -67,14 +67,17 @@ class AudioSettings(menu):
 
     def doAdditionalClosingOperations(self):
         for sound in self.sounds["menu"]:
-            self.sounds["menu"][sound].set_volume((
-                self.config.getfloat("Sound",
-                                     "menuvolume"))/100)
+            self.sounds["menu"][sound].set_volume(
+                # self.config.getfloat("Sound",
+                #                      "menuvolume"))/100)
+                self.config["Sound"]["menuvolume"]/100.)
         for sound in self.sounds["sfx"]:
             self.sounds["sfx"][sound].set_volume(
-                    (self.config.getfloat("Sound",
-                                          "sfxvolume"))/100)
+                    # (self.config.getfloat("Sound",
+                    #                       "sfxvolume"))/100)
+                    self.config["Sound"]["sfxvolume"]/100.)
         for sound in self.sounds["music"]:
             self.sounds["music"][sound].set_volume(
-                    (self.config.getfloat("Sound",
-                                          "musicvolume"))/100)
+                    # (self.config.getfloat("Sound",
+                    #                       "musicvolume"))/100)
+                    self.config["Sound"]["musicvolume"]/100.)

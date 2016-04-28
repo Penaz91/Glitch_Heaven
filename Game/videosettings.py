@@ -4,6 +4,7 @@
 from components.UI.menu import menu
 from components.UI import menuItem
 from libs.textglitcher import makeGlitched
+import json
 
 
 class VideoSettings(menu):
@@ -11,14 +12,19 @@ class VideoSettings(menu):
     def __init__(self, screen, keys, config, sounds, log):
         self.logSectionName = "videoSettings"
         super().__init__(screen, keys, config, sounds, log)
-        
+
     def toggle(self, option):
-        self.config.set("Video", option, str(not self.config.getboolean("Video",option)))
-        with open("game.conf", "w") as conf:
-            self.config.write(conf)
+        # self.config.set("Video", option, str(not self.config.getboolean("Video",option)))
+        self.config["Video"][option] = not self.config["Video"][option]
+        # with open("game.conf", "w") as conf:
+        #     self.config.write(conf)
+        with open("newconf.json", "w") as conf:
+            conf.write(json.dumps(self.config))
+
     def makePlayerParticlesItem(self):
         self.partimg = self.font.render("Player Particles",
-                                     False, (255, 255, 255)).convert_alpha()
+                                        False,
+                                        (255, 255, 255)).convert_alpha()
         self.partsel = makeGlitched("Player Particles", self.font)
         self.partitem = menuItem.menuitem(self.partimg,
                                           self.partsel,
@@ -31,10 +37,11 @@ class VideoSettings(menu):
                                           self.sounds)
         self.activeItems.append(self.partitem)
         self.items.append(self.partitem)
-        
+
     def makeDeathCounterItem(self):
         self.DCImg = self.font.render("Death Counter Visible",
-                                     False, (255, 255, 255)).convert_alpha()
+                                      False,
+                                      (255, 255, 255)).convert_alpha()
         self.DCsel = makeGlitched("Death Counter Visible", self.font)
         self.DCitem = menuItem.menuitem(self.DCImg,
                                         self.DCsel,

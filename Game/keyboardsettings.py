@@ -22,7 +22,8 @@ class KeyboardSettings(menu):
         self.lefttext = self.font.render("Move Left: ",
                                          False,
                                          (255, 255, 255)).convert_alpha()
-        key = self.config.get("Controls", "left")
+        #key = self.config.get("Controls", "left")
+        key = self.config["Controls"]["left"]
         keytext = str(pygame.key.name(int(key)))
         self.leftimg = self.font.render(keytext.upper(),
                                         False, (255, 255, 255)).convert_alpha()
@@ -50,7 +51,8 @@ class KeyboardSettings(menu):
         self.righttext = self.font.render("Move Right: ",
                                           False,
                                           (255, 255, 255)).convert_alpha()
-        key = self.config.get("Controls", "right")
+        # key = self.config.get("Controls", "right")
+        key = self.config["Controls"]["right"]
         keytext = str(pygame.key.name(int(key)))
         self.rightimg = self.font.render(keytext.upper(),
                                          False,
@@ -80,7 +82,8 @@ class KeyboardSettings(menu):
         self.jumptext = self.font.render("Jump: ",
                                          False,
                                          (255, 255, 255)).convert_alpha()
-        key = self.config.get("Controls", "jump")
+        #key = self.config.get("Controls", "jump")
+        key = self.config["Controls"]["jump"]
         keytext = str(pygame.key.name(int(key)))
         self.jumpimg = self.font.render(keytext.upper(),
                                         False, (255, 255, 255)).convert_alpha()
@@ -108,7 +111,8 @@ class KeyboardSettings(menu):
         self.runtext = self.font.render("Run: ",
                                         False,
                                         (255, 255, 255)).convert_alpha()
-        key = self.config.get("Controls", "run")
+        #key = self.config.get("Controls", "run")
+        key = self.config["Controls"]["run"]
         keytext = str(pygame.key.name(int(key)))
         self.runimg = self.font.render(keytext.upper(),
                                        False,
@@ -136,7 +140,8 @@ class KeyboardSettings(menu):
         # v------------------------------------------------------------------v
         self.acttext = self.font.render("Action/Interact: ",
                                         False, (255, 255, 255)).convert_alpha()
-        key = self.config.get("Controls", "action")
+        #key = self.config.get("Controls", "action")
+        key = self.config["Controls"]["action"]
         keytext = str(pygame.key.name(int(key)))
         self.actimg = self.font.render(keytext.upper(),
                                        False,
@@ -165,7 +170,8 @@ class KeyboardSettings(menu):
         self.resttext = self.font.render("Restart Level: ",
                                          False,
                                          (255, 255, 255)).convert_alpha()
-        key = self.config.get("Controls", "restart")
+        #key = self.config.get("Controls", "restart")
+        key = self.config["Controls"]["restart"]
         keytext = str(pygame.key.name(int(key)))
         self.restimg = self.font.render(keytext.upper(),
                                         False,
