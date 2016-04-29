@@ -19,7 +19,7 @@ class VideoSettings(menu):
         # with open("game.conf", "w") as conf:
         #     self.config.write(conf)
         with open("newconf.json", "w") as conf:
-            conf.write(json.dumps(self.config))
+            conf.write(json.dumps(self.config, indent=4))
 
     def makePlayerParticlesItem(self):
         self.partimg = self.font.render("Player Particles",

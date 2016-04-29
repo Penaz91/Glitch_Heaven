@@ -55,7 +55,7 @@ class Meter(object):
         # self.config.set("Sound", self.what, str((x/(self.rect.width))*100))
         self.config["Sound"][self.what] = (x/(self.rect.width)) * 100
         with open("newconf.json", "w") as conf:
-            conf.write(json.dumps(self.config))
+            conf.write(json.dumps(self.config, indent=4))
         # with open("game.conf", "w") as conf:
         #    self.config.write(conf)
         self.testsound.set_volume(x/(self.rect.width))

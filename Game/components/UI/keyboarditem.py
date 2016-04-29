@@ -32,7 +32,7 @@ class KeyboardItem (menuitem):
                     #    config.write(conf)
                     config["Controls"][str(key)] = str(event.key)
                     with open("newconf.json", "w") as conf:
-                        conf.write(json.dumps(config))
+                        conf.write(json.dumps(config, indent=4))
                     keys[key] = event.key
                     truth = False
                     self.mod_logger.debug("Key Changed to %s"
