@@ -54,7 +54,7 @@ class Meter(object):
         self.fillerrect.x, self.fillerrect.y = self.location
         # self.config.set("Sound", self.what, str((x/(self.rect.width))*100))
         self.config["Sound"][self.what] = (x/(self.rect.width)) * 100
-        with open("newconf.json", "w") as conf:
+        with open("config.json", "w") as conf:
             conf.write(json.dumps(self.config, indent=4))
         # with open("game.conf", "w") as conf:
         #    self.config.write(conf)

@@ -18,7 +18,7 @@ class VideoSettings(menu):
         self.config["Video"][option] = not self.config["Video"][option]
         # with open("game.conf", "w") as conf:
         #     self.config.write(conf)
-        with open("newconf.json", "w") as conf:
+        with open("config.json", "w") as conf:
             conf.write(json.dumps(self.config, indent=4))
 
     def makePlayerParticlesItem(self):

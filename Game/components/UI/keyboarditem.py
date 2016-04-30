@@ -31,7 +31,7 @@ class KeyboardItem (menuitem):
                     # with open("game.conf", "w") as conf:
                     #    config.write(conf)
                     config["Controls"][str(key)] = str(event.key)
-                    with open("newconf.json", "w") as conf:
+                    with open("config.json", "w") as conf:
                         conf.write(json.dumps(config, indent=4))
                     keys[key] = event.key
                     truth = False

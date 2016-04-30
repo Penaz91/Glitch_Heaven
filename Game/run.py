@@ -26,7 +26,7 @@ if __name__ == "__main__":
         # config = configparser.ConfigParser()
         # config.read("game.conf")
         config = None
-        with open(pathjoin("newconf.json")) as conf:
+        with open(pathjoin("config.json")) as conf:
             config = json.loads(conf.read())
     except IOError:
         print("There has been an error while loading the " +

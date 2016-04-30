@@ -127,7 +127,7 @@ class Game(object):
         # ^--------------------------------------------------^
         # Loads the level configuration and its chaos parameters
         # v--------------------------------------------------v
-        with open(path+".conf") as f:
+        with open(path+".json") as f:
             levelconfig = json.loads(f.read())
         self.mod_logger.debug("Level configuration loaded")
         self.loadChaosParameters(levelconfig)
