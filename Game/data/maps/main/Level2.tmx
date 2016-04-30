@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="68">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="69">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
@@ -63,7 +63,7 @@
   </object>
   <object id="11" x="416" y="128" width="32" height="32">
    <properties>
-    <property name="blocker" value="lb"/>
+    <property name="blocker" value="rb"/>
    </properties>
   </object>
   <object id="12" x="288" y="256" width="352" height="32">
@@ -180,7 +180,7 @@
   </object>
   <object id="37" x="704" y="544" width="32" height="160">
    <properties>
-    <property name="blocker" value="tr"/>
+    <property name="blocker" value="tl"/>
    </properties>
   </object>
   <object id="38" x="512" y="416" width="32" height="320">
@@ -218,7 +218,7 @@
   </object>
   <object id="44" x="512" y="384" width="32" height="32">
    <properties>
-    <property name="blocker" value="lt"/>
+    <property name="blocker" value="rt"/>
    </properties>
   </object>
   <object id="45" x="288" y="512" width="96" height="32">
@@ -288,7 +288,7 @@
   </object>
   <object id="59" x="1344" y="1088" width="32" height="32">
    <properties>
-    <property name="blocker" value="lt"/>
+    <property name="blocker" value="rt"/>
    </properties>
   </object>
   <object id="60" x="768" y="1088" width="576" height="32">
@@ -323,7 +323,7 @@
   </object>
   <object id="67" x="736" y="1024" width="32" height="32">
    <properties>
-    <property name="blocker" value="lt"/>
+    <property name="blocker" value="rt"/>
    </properties>
   </object>
  </objectgroup>
