@@ -45,7 +45,7 @@ and more challenging.
 - **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end (Separated in horizontal and vertical Wrap) - See Issue #57
 
 ### Glitches Planned:
-None At The moment
+- **Intertia Glitches:** 2 glitches that will make the controls either very stiff or very slippery. Useful for very reaction-prone stages or to put the player in difficulty
 
 ### Planned Features
 - Better Particle Engine
