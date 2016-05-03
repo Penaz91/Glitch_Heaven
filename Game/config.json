@@ -1,39 +1,39 @@
 {
     "Video": {
-        "screenheight": 600,
+        "playerparticles": true,
         "obstacleparticles": false,
-        "screenwidth": 800,
         "deathcounter": true,
-        "doublebuffer": false,
         "fullscreen": false,
-        "playerparticles": true
-    },
-    "Unlockables": {
-        "modifiers": true,
-        "CFMode": true,
-        "NHMode": false
+        "doublebuffer": false,
+        "screenheight": 600,
+        "screenwidth": 800
     },
     "Sound": {
+        "sfxvolume": 6.0,
         "mixer_preinit": true,
         "musicvolume": 5.5,
-        "menuvolume": 15.0,
-        "sfxvolume": 6.0
-    },
-    "Controls": {
-        "jump": 273,
-        "action": 274,
-        "left": 276,
-        "right": 275,
-        "up": 273,
-        "restart": 114,
-        "confirm": 13,
-        "down": 274,
-        "escape": 27,
-        "run": 122
+        "menuvolume": 15.0
     },
     "Debug": {
         "debugmode": true,
-        "loggerlevel": "DEBUG",
-        "keydebug": false
+        "keydebug": false,
+        "loggerlevel": "DEBUG"
+    },
+    "Controls": {
+        "right": 275,
+        "action": 274,
+        "run": 122,
+        "restart": 114,
+        "jump": 273,
+        "left": 276,
+        "up": 273,
+        "down": 274,
+        "confirm": 13,
+        "escape": 27
+    },
+    "Unlockables": {
+        "NHMode": false,
+        "modifiers": true,
+        "CFMode": true
     }
 }

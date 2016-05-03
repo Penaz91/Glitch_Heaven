@@ -1,16 +1,6 @@
 # Player component
 # Part of the Glitch_Heaven Project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
-#
-# ------------------------------------------------
-# TODO AREA
-# - Reduce boilerplate concerning Common operations with left
-#   and right movement.
-# - Reduce boilerplate concerning the emission of particles
-# - Tie player size to the size of the sprite
-# - Tie bouncing mechanics directly to direction via formula,
-#   instead of using conditionals, to save CPU power.
-# ------------------------------------------------
 import pygame
 from os.path import join as pjoin
 from components.deadbody import DeadBody
@@ -685,7 +675,7 @@ class Player(pygame.sprite.Sprite):
             helptext = cell['Help']
             if helptext != game.currenthelp:
                 game.helpflagActive = False
-            if not game.getHelpFlag():
+            if not game.helpflagActive:
                 game.helpflagActive = False
                 game.currenthelp = helptext
                 x, y = game.tilemap.pixel_from_screen(cell.px+cell.width/2,
