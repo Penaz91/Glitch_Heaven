@@ -3,6 +3,7 @@
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 import pygame
 from os.path import join as pjoin
+import json
 from components.deadbody import DeadBody
 from components.help import Help
 from libs.spritesheetanimation import SpritesheetAnimation as SpriteAni
@@ -44,7 +45,7 @@ class Player(pygame.sprite.Sprite):
     def HiJumpOff(self):
         self.jumpMultiplier = 1
 
-    def loadSprites(self):
+    """def loadSprites(self):
         self.idleani = SpriteAni(0.25,
                                  pjoin("resources",
                                        "sprites",
@@ -133,6 +134,41 @@ class Player(pygame.sprite.Sprite):
             "jump_fall": self.gfallingsprite,
             "push": self.gpushimg
         }
+    """
+
+    def loadSprites(self):
+        self.normalSprite = {
+            "idle": None,
+            "walk": None,
+            "run": None,
+            "bounced": None,
+            "jump_rise": None,
+            "jump_fall": None,
+            "push": None
+        }
+        self.glitchedSprite = self.normalSprite.copy()
+        self.generators = None
+        with open(pjoin("components", "PlayerAniGen.json")) as gen:
+            self.generators = json.loads(gen.read())
+        for item in self.generators.keys():
+            if self.generators[item]["is_Animation"]:
+                self.normalSprite[item] = SpriteAni(self.generators[item]["frametime"],
+                                                    pjoin("resources",
+                                                          "sprites",
+                                                          "Player",
+                                                          item + ".png"))
+                self.glitchedSprite[item] = SpriteAni(self.generators[item]["frametime"],
+                                                      pjoin("resources",
+                                                            "sprites",
+                                                            "Glitched_Player",
+                                                            item + ".png"))
+            else:
+                self.normalSprite[item] = pygame.image.load(
+                        pjoin("resources", "sprites", "Player",
+                              item + ".png")).convert_alpha()
+                self.glitchedSprite[item] = pygame.image.load(
+                        pjoin("resources", "sprites", "Glitched_Player",
+                              item + ".png")).convert_alpha()
 
     def setupEmitters(self):
         # if self.game.config.getboolean("Video", "playerparticles"):
@@ -189,7 +225,8 @@ class Player(pygame.sprite.Sprite):
         self.deathsound = sounds["sfx"]["death"]
         self.bouncesound = sounds["sfx"]["bounce"]
         self.loadSprites()
-        self.image = self.idleani.currentframe
+        # self.image = self.idleani.currentframe
+        self.image = self.normalSprite["idle"].currentframe
         self.rect = pygame.rect.Rect(location, self.image.get_size())
         self.rect.x, self.rect.y = location
         # self.resting = False
@@ -260,11 +297,12 @@ class Player(pygame.sprite.Sprite):
             # IDLE - Walk - Run code
             if xspeed == 0:
                 # Player is idle
-                self.image = spriteList["idle"].next(dt)
-            else:
                 if pushing:
                     self.image = spriteList["push"]
-                elif running:
+                else:
+                    self.image = spriteList["idle"].next(dt)
+            else:
+                if running:
                     self.image = spriteList["run"].next(dt)
                 else:
                     self.image = spriteList["walk"].next(dt)
@@ -483,14 +521,17 @@ class Player(pygame.sprite.Sprite):
                 if last.bottom <= block.rect.top and\
                         self.collisionrect.bottom > block.rect.top:
                     self.rect.bottom = block.rect.top
-                    self.status["resting"] = True
-                    self.y_speed = 0
+                    # self.status["resting"] = True
+                    # self.y_speed = 0
             else:
                 if last.top >= block.rect.bottom and\
                         self.collisionrect.top < block.rect.bottom:
                     self.rect.top = block.rect.bottom
-                    self.status["resting"] = True
-                    self.y_speed = 0
+                    # self.status["resting"] = True
+                    # self.y_speed = 0
+            self.status["resting"] = True
+            self.y_speed = 0
+
         # ^--------------------------------------------------------------^
         if game.glitches["vWrapping"]:
             if self.rect.y < 0:
@@ -591,6 +632,7 @@ class Player(pygame.sprite.Sprite):
                 self.status["bounced"] = False
                 self.collisionrect.right = cell.left
                 self.status["pushing"] = True
+                self.x_speed = 0
                 if game.glitches["wallClimb"]:
                     if game.gravity == 1:
                         self.y_speed = -200
@@ -601,6 +643,7 @@ class Player(pygame.sprite.Sprite):
                 self.status["bounced"] = False
                 self.collisionrect.left = cell.right
                 self.status["pushing"] = True
+                self.x_speed = 0
                 if game.glitches["wallClimb"]:
                     if game.gravity == 1:
                         self.y_speed = -200

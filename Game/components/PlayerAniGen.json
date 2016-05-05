@@ -1,0 +1,34 @@
+{
+	"idle":
+	{
+		"is_Animation": true,
+		"frametime": 0.25
+	},
+	"jump_fall":
+	{
+		"is_Animation": false
+	},
+	"jump_rise":
+	{
+		"is_Animation": false
+	},
+	"walk":
+	{
+		"is_Animation": true,
+		"frametime": 0.06
+	},
+	"run":
+	{
+		"is_Animation": true,
+		"frametime": 0.04
+	},
+	"bounced":
+	{
+		"is_Animation": true,
+		"frametime": 0.04
+	},
+	"push":
+	{
+		"is_Animation": false
+	}
+}
