@@ -86,6 +86,8 @@ class Game(object):
         pl = self.player
         self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
+        self.customGlitchToggle("featherFalling", pl.FeatherFallOn,
+                                pl.FeatherFallOff)
         if glitch == "invertedGravity":
             self.changeGravity()
         # ^--------------------------------------------------^
@@ -346,6 +348,8 @@ class Game(object):
         pl = self.player
         self.customGlitchToggle("highJump", pl.HiJumpOn, pl.HiJumpOff)
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
+        self.customGlitchToggle("featherFalling", pl.FeatherFallOn,
+                                pl.FeatherFallOff)
         self.mod_logger.info("Loading of the level completed" +
                              " successfully, ready to play")
         # ^--------------------------------------------------------------^
@@ -691,7 +695,7 @@ class Game(object):
                 screen.blit(self.timer, (50, 70))
             screen.blit(self.titleholder, (0, 576))
             screen.blit(self.title, self.titleposition)
-            #if config.getboolean("Video", "deathcounter"):
+            # if config.getboolean("Video", "deathcounter"):
             if config["Video"]["deathcounter"]:
                 self.dcounttxt = makeGlitched(
                             "Deaths: %d"
