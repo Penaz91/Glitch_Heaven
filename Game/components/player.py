@@ -16,6 +16,7 @@ class Player(pygame.sprite.Sprite):
     _jump_speed_ = -650
     _initialParticleColor_ = (0, 255, 84)
     _finalParticleColor_ = (0, 103, 34)
+    _hovermodifier_ = 0.8
 
     def fixCollision(self, gravity):
         if gravity == 1:
@@ -148,7 +149,8 @@ class Player(pygame.sprite.Sprite):
         }
         self.glitchedSprite = self.normalSprite.copy()
         self.generators = None
-        with open(pjoin("components", "PlayerAniGen.json")) as gen:
+        with open(pjoin("resources", "datastructures",
+                        "PlayerAniGen.json")) as gen:
             self.generators = json.loads(gen.read())
         for item in self.generators.keys():
             if self.generators[item]["is_Animation"]:
@@ -444,7 +446,7 @@ class Player(pygame.sprite.Sprite):
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
                 if self.status["resting"]:
                     self.jumpsound.play()
-                self.y_speed = self._jump_speed_*game.gravity*0.8
+                self.y_speed = self._jump_speed_*game.gravity*self._hovermodifier_
                 # if game.config.getboolean("Video", "playerparticles"):
                 if game.config["Video"]["playerparticles"]:
                     self.emitJumpParticles()
@@ -505,13 +507,14 @@ class Player(pygame.sprite.Sprite):
                   self.collisionrect.bottom > cell.top
             bottom = last.top >= cell.bottom and\
                 self.collisionrect.top < cell.bottom
-            if top or bottom:
+            if (game.gravity == 1 and top) or\
+               (game.gravity == -1 and bottom):
                 slide = int(cell['slide'])
                 if game.glitches["slideInvert"]:
                     if key[self.keys["action"]]:
                         slide *= -1
                 self.rect.x += slide * dt
-                self.collisionrect.midbottom = self.rect.midbottom
+                fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Test for collision with deadbody platforms and act accordingly
         # v--------------------------------------------------------------v
@@ -577,10 +580,10 @@ class Player(pygame.sprite.Sprite):
         self.collisionrect.midbottom = self.rect.midbottom
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
+        self.status["pushing"] = False
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'blocker'):
             blockers = cell['blocker']
-            self.status["pushing"] = False
             if 't' in blockers and last.bottom <= cell.top and\
                     self.collisionrect.bottom > cell.top:
                 # Framework for clip-on-command glitch
