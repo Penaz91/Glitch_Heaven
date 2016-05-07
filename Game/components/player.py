@@ -154,12 +154,14 @@ class Player(pygame.sprite.Sprite):
             self.generators = json.loads(gen.read())
         for item in self.generators.keys():
             if self.generators[item]["is_Animation"]:
-                self.normalSprite[item] = SpriteAni(self.generators[item]["frametime"],
+                self.normalSprite[item] = SpriteAni(self.generators[item]
+                                                    ["frametime"],
                                                     pjoin("resources",
                                                           "sprites",
                                                           "Player",
                                                           item + ".png"))
-                self.glitchedSprite[item] = SpriteAni(self.generators[item]["frametime"],
+                self.glitchedSprite[item] = SpriteAni(self.generators[item]
+                                                      ["frametime"],
                                                       pjoin("resources",
                                                             "sprites",
                                                             "Glitched_Player",
@@ -222,7 +224,7 @@ class Player(pygame.sprite.Sprite):
         self.runmultiplier = 1
         # self.glitched = False
         self.jumpMultiplier = 1
-        # self.soundslink = sounds
+        self.soundslink = sounds
         self.jumpsound = sounds["sfx"]["jump"]
         self.deathsound = sounds["sfx"]["death"]
         self.bouncesound = sounds["sfx"]["bounce"]
@@ -446,7 +448,8 @@ class Player(pygame.sprite.Sprite):
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
                 if self.status["resting"]:
                     self.jumpsound.play()
-                self.y_speed = self._jump_speed_*game.gravity*self._hovermodifier_
+                self.y_speed = self._jump_speed_\
+                    * game.gravity*self._hovermodifier_
                 # if game.config.getboolean("Video", "playerparticles"):
                 if game.config["Video"]["playerparticles"]:
                     self.emitJumpParticles()
@@ -514,7 +517,7 @@ class Player(pygame.sprite.Sprite):
                     if key[self.keys["action"]]:
                         slide *= -1
                 self.rect.x += slide * dt
-                fixCollision(game.gravity)
+                self.fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Test for collision with deadbody platforms and act accordingly
         # v--------------------------------------------------------------v
@@ -555,7 +558,22 @@ class Player(pygame.sprite.Sprite):
         collision = pygame.sprite.spritecollide(self, game.plats, False)
         for block in collision:
             if block.active:
-                if game.gravity == 1:
+                top = last.bottom <= block.last.top and\
+                    self.collisionrect.bottom > block.rect.top
+                bottom = last.top >= block.last.bottom and\
+                    self.collisionrect.top < block.rect.bottom
+                if top or bottom:
+                    if top:
+                        self.rect.bottom = block.rect.top
+                    elif bottom:
+                        self.rect.top = block.rect.bottom
+                    if block.bouncy:
+                        self.y_speed = - block.bouncepwr * game.gravity
+                        self.bouncesound.play()
+                    else:
+                        self.y_speed = block.yspeed * game.gravity
+                        self.status["resting"] = True
+                """if game.gravity == 1:
                     if last.bottom <= block.last.top and\
                             self.collisionrect.bottom > block.rect.top:
                         self.rect.bottom = block.rect.top
@@ -574,7 +592,7 @@ class Player(pygame.sprite.Sprite):
                             self.bouncesound.play()
                         else:
                             self.y_speed = - block.yspeed
-                            self.status["resting"] = True  # Allows jump
+                            self.status["resting"] = True  # Allows jump"""
                 if block.moving:
                     self.rect.x += block.xspeed * dt * block.direction
         self.collisionrect.midbottom = self.rect.midbottom
@@ -586,7 +604,29 @@ class Player(pygame.sprite.Sprite):
             blockers = cell['blocker']
             if 't' in blockers and last.bottom <= cell.top and\
                     self.collisionrect.bottom > cell.top:
-                # Framework for clip-on-command glitch
+                self.status["bounced"] = False
+                # Corrects position only if you're not clipping via glitch
+                # v----------------------------------------------------v
+                if game.glitches["clipOnCommand"]:
+                    if not key[self.keys["action"]]:
+                        self.collisionrect.bottom = cell.top
+                else:
+                    self.collisionrect.bottom = cell.top
+                # ^----------------------------------------------------^
+                # Puts resting status if feet are colliding, else looks for a
+                # stickyceil glitch and acts as a consequence
+                # v----------------------------------------------------v
+                if game.gravity == 1:
+                    self.status["resting"] = True
+                    self.y_speed = 0
+                else:
+                    if game.glitches["stickyCeil"] and\
+                            not key[self.keys["action"]]:
+                        self.y_speed = 5/dt
+                    else:
+                        self.y_speed = 0
+                # ^----------------------------------------------------^
+                """
                 self.status["bounced"] = False
                 if game.glitches["clipOnCommand"]:
                     if not key[self.keys["action"]]:
@@ -605,12 +645,33 @@ class Player(pygame.sprite.Sprite):
                         else:
                             self.y_speed = 0
                     if game.gravity == 1:
-                        self.status["resting"] = True
+                        self.status["resting"] = True"""
             elif 'b' in blockers and last.top >= cell.bottom and\
                     self.collisionrect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
                 self.status["bounced"] = False
+                # Corrects position only if you're not clipping via glitch
+                # v----------------------------------------------------v
                 if game.glitches["clipOnCommand"]:
+                    if not key[self.keys["action"]]:
+                        self.collisionrect.top = cell.bottom
+                else:
+                    self.collisionrect.top = cell.bottom
+                # ^----------------------------------------------------^
+                # Puts resting status if feet are colliding, else looks for a
+                # stickyceil glitch and acts as a consequence
+                # v----------------------------------------------------v
+                if game.gravity == -1:
+                    self.status["resting"] = True
+                    self.y_speed = 0
+                else:
+                    if game.glitches["stickyCeil"] and\
+                            not key[self.keys["action"]]:
+                        self.y_speed = -5/dt
+                    else:
+                        self.y_speed = 0
+                # ^----------------------------------------------------^
+                """if game.glitches["clipOnCommand"]:
                     if not key[self.keys["action"]]:
                         self.collisionrect.top = cell.bottom
                         if game.glitches["stickyCeil"]:
@@ -629,7 +690,7 @@ class Player(pygame.sprite.Sprite):
                         else:
                             self.y_speed = 0
                 if game.gravity == -1:
-                    self.status["resting"] = True
+                    self.status["resting"] = True"""
             elif 'l' in blockers and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
                 self.status["bounced"] = False
@@ -637,10 +698,7 @@ class Player(pygame.sprite.Sprite):
                 self.status["pushing"] = True
                 self.x_speed = 0
                 if game.glitches["wallClimb"]:
-                    if game.gravity == 1:
-                        self.y_speed = -200
-                    else:
-                        self.y_speed = 200
+                        self.y_speed = -200 * game.gravity
             elif 'r' in blockers and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
                 self.status["bounced"] = False
@@ -648,10 +706,7 @@ class Player(pygame.sprite.Sprite):
                 self.status["pushing"] = True
                 self.x_speed = 0
                 if game.glitches["wallClimb"]:
-                    if game.gravity == 1:
-                        self.y_speed = -200
-                    else:
-                        self.y_speed = 200
+                        self.y_speed = -200 * game.gravity
             self.rect.midbottom = self.collisionrect.midbottom
         # ^--------------------------------------------------------------^
         # Test for collision with bouncy platforms and act accordingly
@@ -666,20 +721,14 @@ class Player(pygame.sprite.Sprite):
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
-                    if game.gravity == 1:
-                        self.y_speed = - power*game.gravity
-                    elif game.gravity == -1:
-                        self.y_speed = power*game.gravity
+                    self.y_speed = - power
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.collisionrect.top < cell.bottom:
                 self.rect.top = cell.bottom
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
-                    if game.gravity == 1:
-                        self.y_speed = power*game.gravity
-                    elif game.gravity == -1:
-                        self.y_speed = - power*game.gravity
+                    self.y_speed = power
             if 'l' in bouncy and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
                 self.rect.right = cell.left
@@ -688,10 +737,8 @@ class Player(pygame.sprite.Sprite):
                     self.bouncesound.play()
                     self.status["bounced"] = True
                     self.x_speed = -power*dt
-                    if self.y_speed < 0:
-                        self.y_speed = - game.gravity*power
-                    else:
-                        self.y_speed = game.gravity*power
+                    directioner = -1 if (self.y_speed <= 0) else 1
+                    self.y_speed = game.gravity*power*directioner
             if 'r' in bouncy and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
                 self.rect.left = cell.right
@@ -700,10 +747,8 @@ class Player(pygame.sprite.Sprite):
                     self.bouncesound.play()
                     self.status["bounced"] = True
                     self.x_speed = power*dt
-                    if self.y_speed < 0:
-                        self.y_speed = - game.gravity*power
-                    else:
-                        self.y_speed = game.gravity*power
+                    directioner = -1 if (self.y_speed <= 0) else 1
+                    self.y_speed = game.gravity*power*directioner
         # ^--------------------------------------------------------------^
         # Test for collisions with deadly ground and act accordingly
         # v--------------------------------------------------------------v
@@ -789,12 +834,12 @@ class Player(pygame.sprite.Sprite):
                                                             "button"):
             if key[self.keys["action"]]:
                 butt = cell['button']
-                self.mod_logger.info("Player pressed the button \
-                        with ID: %(butt)s" % locals())
                 for plat in game.plats:
                     if plat.id == butt:
                         plat.active = True
                         plat.image = plat.activeimg
+                        self.mod_logger.info("Player pressed the button \
+                                with ID: %(butt)s" % locals())
         # ^--------------------------------------------------------------^
         # Handles the triggering of teleporters
         # v--------------------------------------------------------------v
