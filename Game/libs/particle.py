@@ -52,9 +52,10 @@ class Particle (pygame.sprite.Sprite):
         # When the particle starts getting old, we start changing
         # color with an upper limitation of 255 and a lower of 0
         if self.age < 100:
-            self.red = (self.color[0])+(self.colorsteps[0])
-            self.green = (self.color[1])+(self.colorsteps[1])
-            self.blue = (self.color[2])+(self.colorsteps[2])
+            self.red = min(max((self.color[0])+(self.colorsteps[0]), 0), 255)
+            self.green = min(max((self.color[1])+(self.colorsteps[1]), 0), 255)
+            self.blue = min(max((self.color[2])+(self.colorsteps[2]), 0), 255)
+            """
             if self.red < 0:
                 self.red = 0
             elif self.red > 255:
@@ -67,6 +68,7 @@ class Particle (pygame.sprite.Sprite):
                 self.blue = 0
             elif self.blue > 255:
                 self.blue = 255
+            """
             # Set the new particle color and paint the surface
             # v----------------------------------------------v
             self.color = (self.red, self.green, self.blue)
