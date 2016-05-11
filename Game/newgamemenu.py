@@ -123,7 +123,6 @@ class NewGameMenu(menu):
         self.items.append(self.sr)
 
     def makeNHMenu(self):
-        # if self.config.getboolean("Unlockables", "NHMode"):
         if self.config["Unlockables"]["NHMode"]:
             self.nhimg = self.font.render("Start the Second Quest",
                                           False,
@@ -141,7 +140,6 @@ class NewGameMenu(menu):
         self.items.append(self.nh)
 
     def makeSDMenu(self):
-        # if self.config.getboolean("Unlockables", "CFMode"):
         if self.config["Unlockables"]["CFMode"]:
             self.sdimg = self.font.render("Start 'Critical Failure' Mode",
                                           False,
@@ -192,7 +190,6 @@ class NewGameMenu(menu):
         self.activeItems.append(self.sm)
 
     def makeModifierMenuItem(self):
-        # if self.config.getboolean("Unlockables", "modifiers"):
         if self.config["Unlockables"]["modifiers"]:
             self.chimg = self.font.render("Modifiers Menu",
                                           False,

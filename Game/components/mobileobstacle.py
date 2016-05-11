@@ -27,12 +27,14 @@ class Obstacle(pygame.sprite.Sprite):
         self.image = self.ani.next(0)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = location
+        self.speed = spd
+        """
         if vertical:
             self.xspeed = 0
             self.yspeed = spd
         else:
             self.yspeed = 0
-            self.xspeed = spd
+            self.xspeed = spd"""
         self.direction = 1
         self.vertical = vertical
 
@@ -47,8 +49,10 @@ class Obstacle(pygame.sprite.Sprite):
         last = self.rect.copy()
         if not game.glitches["timeLapse"] or game.player.x_speed != 0:
             # Moves the obstacle
-            self.rect.x += self.direction * self.xspeed * dt
-            self.rect.y += self.direction * self.yspeed * dt
+            if self.vertical:
+                self.rect.y += self.direction * self.speed * dt
+            else:
+                self.rect.x += self.direction * self.speed * dt
             self.image = self.ani.rand_next(dt)
             # Reverses the obstacle when a "ObsReverse" trigger is touched
             # v-----------------------------------------------------------------v

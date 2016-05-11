@@ -42,6 +42,7 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         self.bouncy = bouncy
         self.id = identifier
         self.vertical = vertical
+        self.speed = spd
         if vertical:
             self.xspeed = 0
             self.yspeed = spd
@@ -69,8 +70,8 @@ class TriggerablePlatform(pygame.sprite.Sprite):
         if not game.glitches["timeLapse"] or game.player.x_speed != 0:
             if self.active:
                 # Moves the platform
-                self.rect.x += self.direction * self.xspeed * dt
                 self.rect.y += self.direction * self.yspeed * dt
+                self.rect.x += self.direction * self.xspeed * dt
                 self.moving = True
                 # Reverses the platform when a "PlatReverse" trigger is touched
                 # v-----------------------------------------------------------------v

@@ -14,10 +14,7 @@ class VideoSettings(menu):
         super().__init__(screen, keys, config, sounds, log)
 
     def toggle(self, option):
-        # self.config.set("Video", option, str(not self.config.getboolean("Video",option)))
         self.config["Video"][option] = not self.config["Video"][option]
-        # with open("game.conf", "w") as conf:
-        #     self.config.write(conf)
         with open("config.json", "w") as conf:
             conf.write(json.dumps(self.config, indent=4))
 
@@ -31,8 +28,10 @@ class VideoSettings(menu):
                                           (50, 180),
                                           lambda: self.editDesc(
                                            "Current Status: {0}".format(
-                                            self.config["Video"]["playerparticles"])),
-                                          lambda: self.toggle("playerparticles"),
+                                            self.config["Video"]
+                                            ["playerparticles"])),
+                                          lambda: self.toggle(
+                                              "playerparticles"),
                                           self.config,
                                           self.sounds)
         self.activeItems.append(self.partitem)
@@ -48,7 +47,8 @@ class VideoSettings(menu):
                                         (50, 240),
                                         lambda: self.editDesc(
                                          "Current Status: {0}".format(
-                                          self.config["Video"]["deathcounter"])),
+                                          self.config["Video"]
+                                          ["deathcounter"])),
                                         lambda: self.toggle("deathcounter"),
                                         self.config,
                                         self.sounds)
@@ -80,5 +80,4 @@ class VideoSettings(menu):
         self.makeMainMenuItem()
 
     def doAdditionalBlits(self):
-        # self.screen.blit(self.line, (100, 200))
         pass

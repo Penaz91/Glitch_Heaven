@@ -22,7 +22,7 @@ class menuitem(object):
         self.unselected = unselected
         self.selected = selected
         self.rect = self.unselected.get_rect()
-        self.location = location
+        # self.location = location
         self.rect.x, self.rect.y = location
         self.image = self.unselected
         self.selectedStatus = False
