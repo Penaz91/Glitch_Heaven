@@ -54,6 +54,18 @@ class Player(pygame.sprite.Sprite):
         """Turns on the High Jump Glitch"""
         self.jumpMultiplier = 1
 
+    def LowAccel(self):
+        """Turns on the Low Acceleration Glitch"""
+        self.playeraccel = 15
+
+    def HighAccel(self):
+        """Turns on the High Acceleration Glitch"""
+        self.playeraccel = 60
+
+    def ResetAccel(self):
+        """Resets Acceleation glitches"""
+        self.playeraccel = 30
+
     def loadSprites(self):
         """Loads sprites and animations, uses a JSON to generate paths quickly
         using a simple loop"""
