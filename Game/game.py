@@ -643,23 +643,24 @@ class Game(object):
                                            self.gameStatus["mode"],
                                            self.screen)
                             self.loadLevelPart2(self.keys, sounds)
+                # Temporary toggles for pause menu and saveGame
+                # v----------------------------------------------------------v
+                elif event.type == pygame.KEYDOWN and\
+                        event.key == keys["escape"]:
+                    pauseMenu(screen, keys, self,
+                              self.config, sounds, self.mainLogger).mainLoop()
+                elif event.type == pygame.KEYDOWN and\
+                        event.key == self.keys["restart"]:
+                            self.sprites.remove(*self.deadbodies)
+                            self.deadbodies.empty()
+                            self.player.respawn(self)
+
                 # if config.getboolean("Debug", "keydebug") and\
                 if config["Debug"]["keydebug"] and\
                         event.type == pygame.KEYDOWN:
                     self.mod_logger.debug("A key was pressed: {0}"
                                           .format(pygame.key.name(event.key)))
                 # ^----------------------------------------------------------^
-                # Temporary toggles for pause menu and saveGame
-                # v----------------------------------------------------------v
-                if event.type == pygame.KEYDOWN and\
-                        event.key == keys["escape"]:
-                    pauseMenu(screen, keys, self,
-                              self.config, sounds, self.mainLogger).mainLoop()
-                if event.type == pygame.KEYDOWN and\
-                        event.key == self.keys["restart"]:
-                            self.sprites.remove(*self.deadbodies)
-                            self.deadbodies.empty()
-                            self.player.respawn(self)
             self.backpos = self.givePosition(__floordiv__, 6)
             self.middlebackpos = self.givePosition(__floordiv__, 4)
             self.middlepos = self.givePosition(__floordiv__, 2)
