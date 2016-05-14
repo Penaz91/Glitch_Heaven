@@ -88,7 +88,7 @@ class Game(object):
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
         self.customGlitchToggle("featherFalling", pl.FeatherFallOn,
                                 pl.FeatherFallOff)
-        self.customGlitchToggle("hiAccel", pl.HighAccel, pl.ResetAccel)
+        self.customGlitchToggle("highAccel", pl.HighAccel, pl.ResetAccel)
         self.customGlitchToggle("lowAccel", pl.LowAccel, pl.ResetAccel)
         if glitch == "invertedGravity":
             self.changeGravity()
@@ -352,7 +352,7 @@ class Game(object):
         self.customGlitchToggle("speed", pl.DoubleSpeedOn, pl.DoubleSpeedOff)
         self.customGlitchToggle("featherFalling", pl.FeatherFallOn,
                                 pl.FeatherFallOff)
-        self.customGlitchToggle("hiAccel", pl.HighAccel, pl.ResetAccel)
+        self.customGlitchToggle("highAccel", pl.HighAccel, pl.ResetAccel)
         self.customGlitchToggle("lowAccel", pl.LowAccel, pl.ResetAccel)
         self.mod_logger.info("Loading of the level completed" +
                              " successfully, ready to play")

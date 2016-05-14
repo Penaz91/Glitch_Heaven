@@ -60,11 +60,11 @@ class Player(pygame.sprite.Sprite):
 
     def HighAccel(self):
         """Turns on the High Acceleration Glitch"""
-        self.playeraccel = 60
+        self.playeraccel = 100
 
     def ResetAccel(self):
         """Resets Acceleation glitches"""
-        self.playeraccel = 30
+        self.playeraccel = 50
 
     def loadSprites(self):
         """Loads sprites and animations, uses a JSON to generate paths quickly
@@ -483,7 +483,9 @@ class Player(pygame.sprite.Sprite):
                         self.bouncesound.play()
                     else:
                         self.y_speed = block.yspeed * game.gravity
-                        self.status["resting"] = True
+                        if (game.gravity == 1 and top) or\
+                                (game.gravity == -1 and bottom):
+                            self.status["resting"] = True
                 if block.moving:
                     self.rect.x += block.xspeed * dt * block.direction
         self.collisionrect.midbottom = self.rect.midbottom

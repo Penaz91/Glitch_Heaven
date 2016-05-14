@@ -12,4 +12,5 @@ _debugkeys_ = {
         pygame.K_p: "noJump", pygame.K_a: "stopBounce",
         pygame.K_s: "speed", pygame.K_d: "invertedRun",
         pygame.K_f: "invertedControls", pygame.K_g: "obsResistant",
-        pygame.K_h: "noStop", pygame.K_j: "timeLapse"}
+        pygame.K_h: "noStop", pygame.K_j: "timeLapse",
+        pygame.K_k: "lowAccel", pygame.K_l: "highAccel"}
