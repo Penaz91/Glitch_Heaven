@@ -140,8 +140,7 @@ class Game(object):
         # And reset the time to 0.
         # v--------------------------------------------------v
         if mode == "cfsingle":
-            self.gameStatus["cftime"] = levelconfig.getint("Level Info",
-                                                           "CFTime")
+            self.gameStatus["cftime"] = levelconfig["Level Info"]["CFTime"]
             self.gameStatus["time"] = 0.
         # ^--------------------------------------------------^
         # Loads the level glitches
@@ -254,8 +253,7 @@ class Game(object):
         - mode: The game mode
         """
         self.mod_logger.info("Loading campaign {0}".format(campaignfile))
-        with open(campaignfile,
-                  "r") as campfile:
+        with open(campaignfile, "r") as campfile:
             cmpf = json.loads(campfile.read())
             self.gameStatus["currentLevel"] = cmpf["FirstMap"]
             self.gameStatus["intermissions"] = cmpf["Intermissions"]
@@ -561,8 +559,9 @@ class Game(object):
             self.mod_logger.debug("Using New Game mode - \
                     Critical Failure Modifier")
             self.gameStatus["cftime"] = 0
+            self.gameStatus["campaignFile"] = cmp
             self.gameStatus["campaignName"] = splitext(basename(cmp))[0]
-            self.LoadCampaign(self.gameStatus["campaignFile"],
+            self.loadCampaign(self.gameStatus["campaignFile"],
                               self.gameStatus["mode"])
             self.redsurf = pygame.surface.Surface(self.gsize,
                                                   pygame.SRCALPHA)

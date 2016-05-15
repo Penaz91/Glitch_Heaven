@@ -18,6 +18,10 @@ class CFMenu(menu):
 
     def newCFGame(self):
         self.running = False
+        self.modlogger.info("Starting" + pathjoin("data",
+                             "campaigns",
+                             "main.cmp"))
+
         Game().main(self.screen, self.keys,
                     "criticalfailure",
                     pathjoin("data",
