@@ -30,6 +30,7 @@ class menuitem(object):
         self.onhover = onhover
         self.sound = sounds["menu"]["select"]
         self.confirmSound = sounds["menu"]["confirm"]
+        self.special = None
 
     def makeSelected(self):
         """ Turns the element status to "Selected" """

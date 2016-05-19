@@ -61,6 +61,7 @@ class dirList(object):
                 sounds
                 )
             )
+            self.itemList[len(self.itemList)-1].special = item
             ypos += itemH + spacing
 
     def update(self):
@@ -73,6 +74,7 @@ class dirList(object):
 
     def selectItem(self, item):
         self.selectedItem = item
+        print(self.selectedItem)
 
     def checkMouseHover(self):
         for item in loadList.itemList:
