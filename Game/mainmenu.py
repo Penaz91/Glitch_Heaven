@@ -2,12 +2,13 @@
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 import pygame
-from game import Game
+#from game import Game
 import os
 from components.UI import menuItem
 from optionsmenu import OptionsMenu
 from newgamemenu import NewGameMenu
 from credits import Credits
+from loadmenu import loadMenu
 from libs.textglitcher import makeGlitched
 from components.UI.menu import menu
 
@@ -100,6 +101,7 @@ class mainMenu(menu):
             self.cont = self.font.render("Load Saved Game", False,
                                          (255, 255, 255)).convert_alpha()
             self.contsel = makeGlitched("Load Saved Game", self.font)
+            """
             self.cgam = menuItem.menuitem(self.cont,
                                           self.contsel,
                                           (50, 240),
@@ -115,6 +117,20 @@ class mainMenu(menu):
                                                               self.mainLogger),
                                           self.config,
                                           self.sounds)
+                                          """
+            self.cgam = menuItem.menuitem(self.cont,
+                                          self.contsel,
+                                          (50, 240),
+                                          lambda: self.editDesc(
+                                              "Load a previously saved Game"),
+                                          lambda: loadMenu(
+                                             self.screen, self.keys,
+                                             self.config,
+                                             self.sounds,
+                                             self.mainLogger).mainLoop(),
+                                          self.config,
+                                          self.sounds)
+
             self.activeItems.append(self.cgam)
         self.items.append(self.cgam)
         self.update = False

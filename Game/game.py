@@ -375,12 +375,13 @@ class Game(object):
                 self.mod_logger.info("Game saved on the file: \
                         %(savefile)s" % locals())
 
-    def loadGame(self):
+    def loadGame(self, path=None):
         """
         Opens the game from a JSON file
         """
         Tk().withdraw()
-        path = filedialog.askopenfilename(**_dialogConstants_["loadGame"])
+        if path is None:
+            path = filedialog.askopenfilename(**_dialogConstants_["loadGame"])
         if not path:
             raise FileNotFoundError
         self.mod_logger.info("Loading Save from: %(path)s"
@@ -537,7 +538,7 @@ class Game(object):
         if self.gameStatus["mode"] == "load":
             self.mod_logger.debug("Using Load mode")
             try:
-                self.loadGame()
+                self.loadGame(cmp)
                 self.LoadLevel(self.gameStatus["currentLevel"],
                                self.gameStatus["campaignName"],
                                self.gameStatus["mode"],

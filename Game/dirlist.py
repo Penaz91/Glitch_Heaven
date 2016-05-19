@@ -61,7 +61,7 @@ class dirList(object):
                 sounds
                 )
             )
-            self.itemList[len(self.itemList)-1].special = item
+            self.itemList[len(self.itemList)-1].special = str(item)
             ypos += itemH + spacing
 
     def update(self):
@@ -77,7 +77,7 @@ class dirList(object):
         print(self.selectedItem)
 
     def checkMouseHover(self):
-        for item in loadList.itemList:
+        for item in self.itemList:
             collpt = [i1 - i2 for i1, i2
                       in zip(pygame.mouse.get_pos(), self.location)]
             if item.rect.collidepoint(collpt):
@@ -86,7 +86,7 @@ class dirList(object):
                 item.makeUnselected()
 
     def checkMouseClick(self):
-        for item in loadList.itemList:
+        for item in self.itemList:
             collpt = [i1 - i2 for i1, i2
                       in zip(pygame.mouse.get_pos(), self.location)]
             if item.rect.collidepoint(collpt):

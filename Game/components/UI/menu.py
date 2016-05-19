@@ -71,6 +71,12 @@ class menu(object):
     def doAdditionalBlits(self):
         pass
 
+    def doAdditionalMotionHandling(self):
+        pass
+
+    def doExternalClickHandling(self):
+        pass
+
     def goToMenu(self):
         self.doAdditionalClosingOperations()
         self.modlogger.info("Going to the previous menu")
@@ -114,6 +120,7 @@ class menu(object):
                             item.makeSelected()
                         else:
                             item.makeUnselected()
+                    self.doAdditionalMotionHandling()
                 if event.type == pygame.MOUSEBUTTONUP:
                     for item in self.activeItems:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
@@ -122,6 +129,7 @@ class menu(object):
                             # Found the item, break the cycle
                             break
                         self.doAdditionalMouseHandling()
+                    self.doExternalClickHandling()
             self.title = self.titleani.next(self.dt)
             self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.title, (self.titlerect.topleft))
