@@ -379,8 +379,8 @@ class Game(object):
         """
         Opens the game from a JSON file
         """
-        Tk().withdraw()
         if path is None:
+            Tk().withdraw()
             path = filedialog.askopenfilename(**_dialogConstants_["loadGame"])
         if not path:
             raise FileNotFoundError
