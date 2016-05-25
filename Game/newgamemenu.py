@@ -10,6 +10,7 @@ from tkinter import filedialog
 from game import Game
 from cfmenu import CFMenu
 from components.UI.menu import menu
+from loadcmpmenu import loadCmpMenu
 from modmenu import modMenu
 
 
@@ -22,10 +23,9 @@ class NewGameMenu(menu):
                           "hflip": False, "moonwalk": False}
         super().__init__(screen, keys, config, sounds, log)
 
+    """
     def loadcustom(self):
-        """
         Loads a custom campaign from a open file dialog
-        """
         try:
             Tk().withdraw()
             formats = [("Glitch_Heaven Campaign", "*.cmp")]
@@ -41,6 +41,11 @@ class NewGameMenu(menu):
         except FileNotFoundError:
             self.modlogger.info("No File selected, "
                                 "Loading of campaign aborted")
+    """
+
+    def loadcustom(self):
+        loadCmpMenu(self.screen, self.keys, self.config,
+                    self.sounds, self.modifiers, self.mainLogger).mainLoop()
 
     def newGame(self, keys, gameconfig, screen, sounds):
         self.running = False

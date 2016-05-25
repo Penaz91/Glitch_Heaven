@@ -1,4 +1,4 @@
-# Load Game Menu Component
+# Load Campaign Menu Component
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 
@@ -12,14 +12,15 @@ import pygame
 from game import Game
 
 
-class loadMenu(menu):
+class loadCmpMenu(menu):
     white = (255, 255, 255)
     grey = (128, 128, 128)
     dgrey = (64, 64, 64)
 
-    def __init__(self, screen, keys, config, sounds, log):
-        self.logSectionName = "loadGameMenu"
-        self.dirlist = sorted(listdir(pjoin("savegames")))
+    def __init__(self, screen, keys, config, sounds, modifiers, log):
+        self.logSectionName = "loadCampaignMenu"
+        self.modifiers = modifiers
+        self.dirlist = sorted(listdir(pjoin("data", "campaigns")))
         self.font = pygame.font.Font(pjoin(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 24)
@@ -48,15 +49,15 @@ class loadMenu(menu):
         self.activeItems.append(self.mainmenu)
         self.items.append(self.mainmenu)
 
-    def loadGame(self, savegame):
-        print(pjoin("savegames", savegame))
+    def loadGame(self, name):
+        print(pjoin("data", "campaigns", name))
         Game().main(self.screen,
                     self.keys,
-                    "load",
-                    pjoin("savegames", savegame),
+                    "newgame",
+                    pjoin("data", "campaigns", name),
                     self.config,
                     self.sounds,
-                    None,
+                    self.modifiers,
                     self.mainLogger)
         self.running = False
 
@@ -68,7 +69,7 @@ class loadMenu(menu):
                                           self.loadsel,
                                           (250, 560),
                                           lambda: self.editDesc(
-                                              "Load the selected savegame"),
+                                              "Load the selected campaign"),
                                           lambda: self.loadGame(
                                               self.dirlist[self.id]
                                               ),

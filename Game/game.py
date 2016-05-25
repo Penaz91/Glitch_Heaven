@@ -484,6 +484,7 @@ class Game(object):
                 "middle_back1": None,
                 "middle_back2": None
         }
+        self.oldoverpath = None
         self.mainLogger = log
         self.mod_logger = log.getChild("game")
         self.mod_logger.info("Entering main game")
