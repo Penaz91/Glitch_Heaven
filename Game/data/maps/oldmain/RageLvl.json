@@ -40,7 +40,9 @@
             "invertedControls": false,
             "obsResistant": false,
             "noStop": false,
-            "timeLapse": false
+            "timeLapse": false,
+            "highAccel": false,
+            "lowAccel": false
         },
         "ChaosMode":
         {
@@ -69,7 +71,9 @@
             "invertedControls": true,
             "obsResistant": false,
             "noStop": false,
-            "timeLapse": false
+            "timeLapse": false,
+            "highAccel": false,
+            "lowAccel": false
         }
     }
 }

@@ -41,8 +41,8 @@
             "obsResistant": false,
             "noStop": false,
             "timeLapse": false,
-	    "highAccel": false,
-	    "lowAccel": false
+            "highAccel": false,
+            "lowAccel": false
         },
         "ChaosMode":
         {
@@ -72,8 +72,8 @@
             "obsResistant": false,
             "noStop": false,
             "timeLapse": false,
-	    "highAccel": false,
-	    "lowAccel": false
+            "highAccel": false,
+            "lowAccel": false
         }
     }
 }
