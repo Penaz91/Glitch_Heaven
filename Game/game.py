@@ -659,7 +659,6 @@ class Game(object):
                             self.sprites.remove(*self.deadbodies)
                             self.deadbodies.empty()
                             self.player.respawn(self)
-
                 # if config.getboolean("Debug", "keydebug") and\
                 if config["Debug"]["keydebug"] and\
                         event.type == pygame.KEYDOWN:

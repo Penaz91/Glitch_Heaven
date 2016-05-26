@@ -87,7 +87,10 @@ if __name__ == "__main__":
         # ^-------------------------------------------------------------------^
         if config["Sound"]["mixer_preinit"]:
             logger.info("Pre-initialising Mixer")
-            pygame.mixer.pre_init(48000, 16, 2, 4096)
+            try:
+                pygame.mixer.pre_init(48000, 16, 2, 4096)
+            except:
+                logger.error("Mixer pre-init failed, continuing")
         logger.info("Initialising Display")
         pygame.display.init()
         logger.info("Initialising Fonts")

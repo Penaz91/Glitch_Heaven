@@ -212,8 +212,11 @@ class Player(pygame.sprite.Sprite):
         # ^-----------------------------------------------------^
         # Does a complete respawn of the player
         # v-----------------------------------------------------v
-        game.player.rect.x, game.player.rect.y = self.lastcheckpoint
-        game.player.x_speed, game.player.y_speed = 0, 0
+        self.rect.x, self.rect.y = self.lastcheckpoint
+        self.x_speed, self.y_speed = 0, 0
+        self.fixCollision(game.gravity)
+        # game.player.rect.x, game.player.rect.y = self.lastcheckpoint
+        # game.player.x_speed, game.player.y_speed = 0, 0
         # ^-----------------------------------------------------^
 
     def animate(self, yspeed, xspeed, resting, bounced,
@@ -450,18 +453,7 @@ class Player(pygame.sprite.Sprite):
             self.status["resting"] = True
             self.y_speed = 0
         # ^--------------------------------------------------------------^
-        if game.glitches["vWrapping"]:
-            if self.rect.y < 0:
-                last.y = game.tilemap.px_height + 32
-                self.rect.y = game.tilemap.px_height
-            elif self.rect.y > game.tilemap.px_height:
-                last.y = -32
-                self.rect.y = 0
-            self.collisionrect.midbottom = self.rect.midbottom
-        else:
-            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
-                self.respawn(game)
-        # ^--------------------------------------------------------------^
+
         # Moving plats collision check
         # NOTE: This has to stay here to avoid being tped under a platform
         #       if you touch a vertical wall
@@ -667,6 +659,18 @@ class Player(pygame.sprite.Sprite):
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
         # Wraps player movement if the glitch is active
         # v--------------------------------------------------------------v
+        if game.glitches["vWrapping"]:
+            if self.rect.y < 0:
+                last.y = game.tilemap.px_height + 32
+                self.rect.y = game.tilemap.px_height
+            elif self.rect.y > game.tilemap.px_height:
+                last.y = -32
+                self.rect.y = 0
+            self.collisionrect.midbottom = self.rect.midbottom
+        else:
+            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
+                self.respawn(game)
+        # ^--------------------------------------------------------------^
         if game.glitches["hWrapping"]:
             # This piece of code should avoid phasing through the floor
             # v-----------------------------v
