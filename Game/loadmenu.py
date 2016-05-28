@@ -4,12 +4,11 @@
 
 # WILL BE DEPRECATED IN FAVOR OF A GENERIC + INHERITED VERSION
 from components.UI.menu import menu
-from components.UI import menuItem
-from libs.textglitcher import makeGlitched
 from os import listdir
 from os.path import join as pjoin
 import pygame
 from game import Game
+from components.UI.textMenuItem import textMenuItem
 
 
 class loadMenu(menu):
@@ -34,17 +33,11 @@ class loadMenu(menu):
         super().__init__(screen, keys, config, sounds, log)
 
     def makeMainMenuItem(self):
-        self.menu = self.font.render("Main Menu",
-                                     False, (255, 255, 255)).convert_alpha()
-        self.menusel = makeGlitched("Main Menu", self.font)
-        self.mainmenu = menuItem.menuitem(self.menu,
-                                          self.menusel,
-                                          (50, 560),
-                                          lambda: self.editDesc(
-                                              "Go to the main menu"),
-                                          lambda: self.goToMenu(),
-                                          self.config,
-                                          self.sounds)
+        self.mainmenu = textMenuItem("Main Menu", (50, 560),
+                                     lambda: self.editDesc(
+                                         "Go to the main menu"),
+                                     lambda: self.goToMenu(),
+                                     self.config, self.sounds, self.font)
         self.activeItems.append(self.mainmenu)
         self.items.append(self.mainmenu)
 
@@ -61,19 +54,12 @@ class loadMenu(menu):
         self.running = False
 
     def makeLoadItem(self):
-        self.load = self.font.render("Load",
-                                     False, (255, 255, 255)).convert_alpha()
-        self.loadsel = makeGlitched("Load", self.font)
-        self.loadgame = menuItem.menuitem(self.load,
-                                          self.loadsel,
-                                          (250, 560),
-                                          lambda: self.editDesc(
-                                              "Load the selected savegame"),
-                                          lambda: self.loadGame(
-                                              self.dirlist[self.id]
-                                              ),
-                                          self.config,
-                                          self.sounds)
+        self.loadgame = textMenuItem("Load", (250, 560),
+                                     lambda: self.editDesc(
+                                         "Load the selected savegame"),
+                                     lambda: self.loadGame(
+                                         self.dirlist[self.id]),
+                                     self.config, self.sounds, self.font)
         self.activeItems.append(self.loadgame)
         self.items.append(self.loadgame)
 
@@ -86,34 +72,28 @@ class loadMenu(menu):
         self.updateOperation = self.update_yes
 
     def makeLeftArrow(self):
-        self.leftimg = pygame.transform.flip(self.font.render("v", False,
-                                             (255, 255, 255)).convert_alpha(),
-                                             False, True)
-        self.leftsel = pygame.transform.flip(makeGlitched("v", self.font),
-                                             False, True)
-        self.left = menuItem.menuitem(self.leftimg,
-                                      self.leftsel,
-                                      (50, 260),
-                                      lambda: self.editDesc(
-                                          "Previous savegame"),
-                                      lambda: self.lessN(),
-                                      self.config,
-                                      self.sounds)
+        self.left = textMenuItem("v", (50, 260),
+                                 lambda: self.editDesc(
+                                     "Previous SaveGame"),
+                                 lambda: self.lessN(),
+                                 self.config, self.sounds, self.font)
+        # There must be a better way!!
+        # v----------------------------------------------------------------v
+        self.left.selected = pygame.transform.flip(self.left.selected,
+                                                   False, True)
+        self.left.unselected = pygame.transform.flip(self.left.unselected,
+                                                     False, True)
+        self.left.image = self.left.unselected
+        # ^----------------------------------------------------------------^
         self.items.append(self.left)
         self.activeItems.append(self.left)
 
     def makeRightArrow(self):
-        self.rightimg = self.font.render("v", False,
-                                         (255, 255, 255)).convert_alpha()
-        self.rightsel = makeGlitched("v", self.font)
-        self.right = menuItem.menuitem(self.rightimg,
-                                       self.rightsel,
-                                       (50, 380),
-                                       lambda: self.editDesc(
-                                           "Next savegame"),
-                                       lambda: self.addN(),
-                                       self.config,
-                                       self.sounds)
+        self.right = textMenuItem("v", (50, 380),
+                                  lambda: self.editDesc(
+                                      "Next SaveGame"),
+                                  lambda: self.addN(),
+                                  self.config, self.sounds, self.font)
         self.items.append(self.right)
         self.activeItems.append(self.right)
 
