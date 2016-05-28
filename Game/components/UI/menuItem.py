@@ -43,13 +43,13 @@ class menuitem(object):
         self.image = self.unselected
         self.selectedStatus = False
 
-    def update(self):
+    # def update(self):
         """
         Changes the status if the update function is called
 
         #MIGHT NEED DEPRECATION#
         """
-        if self.selected:
-            self.makeSelected()
-        else:
-            self.makeUnselected()
+        # if self.selected:
+            # self.makeSelected()
+        # else:
+            # self.makeUnselected()
