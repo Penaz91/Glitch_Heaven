@@ -6,7 +6,8 @@
 from components.UI.menu import menu
 from components.UI import menuItem
 from libs.textglitcher import makeGlitched
-from os import listdir, isdir
+from os import listdir
+from os.path import isdir
 from os.path import join as pjoin
 import pygame
 # from game import Game

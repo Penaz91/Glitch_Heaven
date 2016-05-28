@@ -11,6 +11,7 @@ from game import Game
 from cfmenu import CFMenu
 from components.UI.menu import menu
 from loadcmpmenu import loadCmpMenu
+from loadsinglefolds import loadSingleFoldMenu
 from modmenu import modMenu
 
 
@@ -46,6 +47,10 @@ class NewGameMenu(menu):
     def loadcustom(self):
         loadCmpMenu(self.screen, self.keys, self.config,
                     self.sounds, self.modifiers, self.mainLogger).mainLoop()
+                    
+    def loadSingle(self):
+        loadSingleFoldMenu(self.screen, self.keys, self.config,
+                           self.sounds, self.modifiers, self.mainLogger).mainLoop()
 
     def newGame(self, keys, gameconfig, screen, sounds):
         self.running = False
@@ -60,6 +65,8 @@ class NewGameMenu(menu):
                     self.mainLogger)
 
     def newSMGame(self):
+        self.loadSingle()
+    """
         try:
             Tk().withdraw()
             formats = [("Glitch_Heaven Level", "*.tmx")]
@@ -75,7 +82,7 @@ class NewGameMenu(menu):
                             self.modifiers, self.mainLogger)
         except FileNotFoundError:
             self.modlogger.info("No File selected, "
-                                "Loading of level aborted")
+                                "Loading of level aborted")"""
 
     def makeCampaignMenu(self):
         self.newmainimg = self.font.render("Start Main Campaign", False,
