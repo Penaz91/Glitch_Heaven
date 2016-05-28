@@ -1,4 +1,4 @@
-# Load Single Map (Folder part) Menu Component
+# Load Single Map (File part) Menu Component
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 
