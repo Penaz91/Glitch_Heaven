@@ -9,23 +9,21 @@ from libs.textglitcher import makeGlitched
 from os import listdir
 from os.path import isdir
 from os.path import join as pjoin
-from loadsingleFiles import loadSingleFileMenu
 import pygame
-# from game import Game
+from game import Game
 
 
-class loadSingleFoldMenu(menu):
+class loadSingleFileMenu(menu):
     white = (255, 255, 255)
     grey = (128, 128, 128)
     dgrey = (64, 64, 64)
 
-    def __init__(self, screen, keys, config, sounds, modifiers, log):
+    def __init__(self, screen, keys, config, sounds, modifiers, log, fold):
         self.logSectionName = "loadSingleFoldMenu"
         self.modifiers = modifiers
-        directory = pjoin("data", "maps")
-        self.dirlist = sorted(
-                [name for name in listdir(directory)
-                    if isdir(pjoin(directory, name))])
+        self.directory = pjoin("data", "maps", fold)
+        self.dirlist = sorted(listdir(self.directory))
+        self.dirlist = [fi for fi in self.dirlist if fi.endswith(".tmx")]
         self.font = pygame.font.Font(pjoin(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 24)
@@ -53,6 +51,12 @@ class loadSingleFoldMenu(menu):
                                           self.sounds)
         self.activeItems.append(self.mainmenu)
         self.items.append(self.mainmenu)
+        
+    def openMap(self, name):
+            self.running = False
+            Game().main(self.screen, self.keys, "singlemap",
+                        pjoin(self.directory, name), self.config, self.sounds,
+                        self.modifiers, self.mainLogger)
 
     def makeLoadItem(self):
         self.load = self.font.render("Open",
@@ -62,9 +66,8 @@ class loadSingleFoldMenu(menu):
                                           self.loadsel,
                                           (250, 560),
                                           lambda: self.editDesc(
-                                              "Explore this directory"),
-                                          lambda: loadSingleFileMenu(self.screen, self.keys, self.config,
-                           self.sounds, self.modifiers, self.mainLogger, self.dirlist[self.id]).mainLoop(),
+                                              "Open This map"),
+                                          lambda: self.openMap(self.dirlist[self.id][:-4]),
                                           self.config,
                                           self.sounds)
         self.activeItems.append(self.loadgame)
