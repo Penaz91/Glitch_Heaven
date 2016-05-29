@@ -4,6 +4,7 @@
 from components.UI.menu import menu
 from libs.textglitcher import makeGlitched
 from components.UI import menuItem
+from components.UI.textMenuItem import textMenuItem
 
 
 class modMenu(menu):
@@ -19,92 +20,55 @@ class modMenu(menu):
             mod, self.modifiers[mod]))
 
     def makeMainMenuItem(self):
-        # "Main Menu" menu element
-        # v------------------------------------------------------------------v
-        self.menu = self.font.render("Previous Menu",
-                                     False, (255, 255, 255)).convert_alpha()
-        self.menusel = makeGlitched("Previous Menu", self.font)
-        self.mainmenu = menuItem.menuitem(self.menu,
-                                          self.menusel,
-                                          (600, 560),
-                                          lambda: self.editDesc(
+        self.mainmenu = textMenuItem("Previous Menu", (600, 560),
+                                     lambda: self.editDesc(
                                               "Go to the main menu"),
-                                          lambda: self.goToMenu(),
-                                          self.config,
-                                          self.sounds)
+                                     lambda: self.goToMenu(),
+                                     self.config, self.sounds, self.font)
         self.activeItems.append(self.mainmenu)
         self.items.append(self.mainmenu)
-        # ^------------------------------------------------------------------^
 
     def makeChaosToggle(self):
-        self.chaosimg = self.font.render("Chaos Mode",
-                                         False, (255, 255, 255)
-                                         ).convert_alpha()
-        self.chaossel = makeGlitched("Chaos Mode", self.font)
-        self.chaos = menuItem.menuitem(self.chaosimg,
-                                       self.chaossel,
-                                       (50, 180),
-                                       lambda: self.editDesc(
+        self.chaos = textMenuItem("Chaos Mode", (50, 180),
+                                  lambda: self.editDesc(
                                            "Current Status: {0}".format(
                                             self.modifiers["chaos"])),
-                                       lambda: self.toggleModifier("chaos"),
-                                       self.config,
-                                       self.sounds)
+                                  lambda: self.toggleModifier("chaos"),
+                                  self.config, self.sounds, self.font)
         self.activeItems.append(self.chaos)
         self.items.append(self.chaos)
 
     def makeVFlipToggle(self):
-        self.vflipimg = self.font.render("Vertical Flip Mode",
-                                         False, (255, 255, 255)
-                                         ).convert_alpha()
-        self.vflipsel = makeGlitched("Vertical Flip Mode", self.font)
-        self.vflip = menuItem.menuitem(self.vflipimg,
-                                       self.vflipsel,
-                                       (50, 240),
-                                       lambda: self.editDesc(
+        self.vflip = textMenuItem("Vertical Flip Mode", (50, 240),
+                                  lambda: self.editDesc(
                                            "Current Status: {0}".format(
                                             self.modifiers["vflip"])),
-                                       lambda: self.toggleModifier("vflip"),
-                                       self.config,
-                                       self.sounds)
+                                  lambda: self.toggleModifier("vflip"),
+                                  self.config, self.sounds, self.font)
         self.activeItems.append(self.vflip)
         self.items.append(self.vflip)
 
     def makeHFlipToggle(self):
-            self.hflipimg = self.font.render("Horizontal Flip Mode",
-                                             False, (255, 255, 255)
-                                             ).convert_alpha()
-            self.hflipsel = makeGlitched("Horizontal Flip Mode", self.font)
-            self.hflip = menuItem.menuitem(self.hflipimg,
-                                           self.hflipsel,
-                                           (50, 300),
-                                           lambda: self.editDesc(
+        self.hflip= textMenuItem("Horizontal Flip Mode", (50, 300),
+                                 lambda: self.editDesc(
                                                "Current Status: {0}".format(
                                                 self.modifiers["hflip"])),
-                                           lambda: self.toggleModifier(
-                                               "hflip"),
-                                           self.config,
-                                           self.sounds)
-            self.activeItems.append(self.hflip)
-            self.items.append(self.hflip)
+                                 lambda: self.toggleModifier(
+                                     "hflip"),
+                                 self.config, self.sounds, self.font)
+        self.activeItems.append(self.hflip)
+        self.items.append(self.hflip)
 
     def makeMWToggle(self):
-            self.mwimg = self.font.render("MoonWalk Mode",
-                                          False,
-                                          (255, 255, 255)).convert_alpha()
-            self.mwsel = makeGlitched("MoonWalk Mode", self.font)
-            self.mw = menuItem.menuitem(self.mwimg,
-                                        self.mwsel,
-                                        (50, 360),
-                                        lambda: self.editDesc(
-                                            "Current Status: {0}".format(
-                                             self.modifiers["moonwalk"])),
-                                        lambda: self.toggleModifier(
-                                            "moonwalk"),
-                                        self.config,
-                                        self.sounds)
-            self.activeItems.append(self.mw)
-            self.items.append(self.mw)
+        self.mw = textMenuItem("MoonWalk Mode", (50, 360),
+                               lambda: self.editDesc(
+                                        "Current Status: {0}".format(
+                                         self.modifiers["moonwalk"])),
+                               lambda: self.toggleModifier(
+                                        "moonwalk"),
+                               self.config, self.sounds, self.font)
+        self.activeItems.append(self.mw)
+        self.items.append(self.mw)
 
     def makeMenuItems(self):
         self.makeChaosToggle()
