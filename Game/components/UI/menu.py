@@ -116,7 +116,7 @@ class menu(object):
                     for item in self.activeItems:
                         # Wrong code, selects/deselects continuously
                         if item.rect.collidepoint(*pygame.mouse.get_pos())\
-                                and not item.selectedStatus:
+                                and not item.selected:
                             item.makeSelected()
                         else:
                             item.makeUnselected()

@@ -2,7 +2,6 @@
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 import pygame
-#from game import Game
 import os
 from components.UI import menuItem
 from optionsmenu import OptionsMenu
@@ -10,6 +9,7 @@ from newgamemenu import NewGameMenu
 from credits import Credits
 from loadmenu import loadMenu
 from libs.textglitcher import makeGlitched
+from components.UI.textMenuItem import textMenuItem
 from components.UI.menu import menu
 
 
@@ -27,58 +27,36 @@ class mainMenu(menu):
         pass
 
     def makeNewGameMenu(self):
-        self.newgameimg = self.font.render("Start A New Game", False,
-                                           (255, 255, 255)).convert_alpha()
-        self.selectedgameimg = makeGlitched("Start A New Game", self.font)
-        self.newgamemenu = menuItem.menuitem(self.newgameimg,
-                                             self.selectedgameimg,
-                                             (50, 180),
-                                             lambda: self.editDesc(
+        self.newgamemenu = textMenuItem("Start A New Game", (50, 180),
+                                        lambda: self.editDesc(
                                                  "Start a new game,in any mode"
                                                  ),
-                                             lambda: NewGameMenu(
-                                                self.screen,
-                                                self.keys,
-                                                self.config,
-                                                self.sounds,
+                                        lambda: NewGameMenu(
+                                                self.screen, self.keys,
+                                                self.config, self.sounds,
                                                 self.mainLogger).mainLoop(),
-                                             self.config,
-                                             self.sounds)
+                                        self.config, self.sounds, self.font)
         self.activeItems.append(self.newgamemenu)
         self.items.append(self.newgamemenu)
 
     def makeCreditsMenu(self):
-        self.creditsimg = self.font.render("Credits", False,
-                                           (255, 255, 255)).convert_alpha()
-        self.selectedcreditsimg = makeGlitched("Credits", self.font)
-        self.credits = menuItem.menuitem(self.creditsimg,
-                                         self.selectedcreditsimg,
-                                         (50, 360),
-                                         lambda: self.editDesc(
+        self.credits = textMenuItem("Credits", (50, 360),
+                                    lambda: self.editDesc(
                                              "Look at Names"),
-                                         lambda: Credits(
-                                             self.screen,
-                                             self.keys,
-                                             self.config,
-                                             self.sounds,
+                                    lambda: Credits(
+                                             self.screen, self.keys,
+                                             self.config, self.sounds,
                                              self.mainLogger).mainLoop(),
-                                         self.config,
-                                         self.sounds)
+                                    self.config, self.sounds, self.font)
         self.activeItems.append(self.credits)
         self.items.append(self.credits)
 
     def makeQuitMenu(self):
-        self.exitimg = self.font.render("Quit", False,
-                                        (255, 255, 255)).convert_alpha()
-        self.exitselected = makeGlitched("Quit", self.font)
-        self.exit = menuItem.menuitem(self.exitimg,
-                                      self.exitselected,
-                                      (700, 560),
-                                      lambda: self.editDesc("Quit the Game"),
-                                      lambda: pygame.event.post(
+        self.exit = textMenuItem("Quit", (700, 560),
+                                 lambda: self.editDesc("Quit the Game"),
+                                 lambda: pygame.event.post(
                                           pygame.event.Event(pygame.QUIT)),
-                                      self.config,
-                                      self.sounds)
+                                 self.config, self.sounds, self.font)
         self.activeItems.append(self.exit)
         self.items.append(self.exit)
 
@@ -98,59 +76,27 @@ class mainMenu(menu):
                                           self.sounds)
         else:
             self.modlogger.debug("SaveFiles Found, enabling load menu item.")
-            self.cont = self.font.render("Load Saved Game", False,
-                                         (255, 255, 255)).convert_alpha()
-            self.contsel = makeGlitched("Load Saved Game", self.font)
-            """
-            self.cgam = menuItem.menuitem(self.cont,
-                                          self.contsel,
-                                          (50, 240),
-                                          lambda: self.editDesc(
+            self.cgam = textMenuItem("Load Saved Game", (50, 240),
+                                     lambda: self.editDesc(
                                               "Load a previously saved Game"),
-                                          lambda: Game().main(self.screen,
-                                                              self.keys,
-                                                              "load",
-                                                              None,
-                                                              self.config,
-                                                              self.sounds,
-                                                              None,
-                                                              self.mainLogger),
-                                          self.config,
-                                          self.sounds)
-                                          """
-            self.cgam = menuItem.menuitem(self.cont,
-                                          self.contsel,
-                                          (50, 240),
-                                          lambda: self.editDesc(
-                                              "Load a previously saved Game"),
-                                          lambda: loadMenu(
+                                     lambda: loadMenu(
                                              self.screen, self.keys,
-                                             self.config,
-                                             self.sounds,
+                                             self.config, self.sounds,
                                              self.mainLogger).mainLoop(),
-                                          self.config,
-                                          self.sounds)
-
+                                     self.config, self.sounds, self.font)
             self.activeItems.append(self.cgam)
         self.items.append(self.cgam)
         self.update = False
 
     def makeOptionsMenu(self):
-        self.optimg = self.font.render("Options", False,
-                                       (255, 255, 255)).convert_alpha()
-        self.optsel = makeGlitched("Options", self.font)
-        self.options = menuItem.menuitem(self.optimg,
-                                         self.optsel,
-                                         (50, 300),
-                                         lambda: self.editDesc(
+        self.options = textMenuItem("Options", (50, 300),
+                                    lambda: self.editDesc(
                                              "Fiddle With Options"),
-                                         lambda: OptionsMenu(
+                                    lambda: OptionsMenu(
                                              self.screen, self.keys,
-                                             self.config,
-                                             self.sounds,
+                                             self.config, self.sounds,
                                              self.mainLogger).mainLoop(),
-                                         self.config,
-                                         self.sounds)
+                                    self.config, self.sounds, self.font)
         self.activeItems.append(self.options)
         self.items.append(self.options)
 

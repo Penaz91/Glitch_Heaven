@@ -19,13 +19,13 @@ class menuitem(object):
 
         :return: Nothing
         """
-        self.unselected = unselected
-        self.selected = selected
-        self.rect = self.unselected.get_rect()
+        self.unselectedimg = unselected
+        self.selectedimg = selected
+        self.rect = self.unselectedimg.get_rect()
         # self.location = location
         self.rect.x, self.rect.y = location
-        self.image = self.unselected
-        self.selectedStatus = False
+        self.image = self.unselectedimg
+        self.selected = False
         self.function = function
         self.onhover = onhover
         self.sound = sounds["menu"]["select"]
@@ -33,15 +33,15 @@ class menuitem(object):
 
     def makeSelected(self):
         """ Turns the element status to "Selected" """
-        self.image = self.selected
-        self.selectedStatus = True
+        self.image = self.selectedimg
+        self.selected = True
         self.onhover()
         self.sound.play()
 
     def makeUnselected(self):
         """ Turns the element status to "Unselected" """
-        self.image = self.unselected
-        self.selectedStatus = False
+        self.image = self.unselectedimg
+        self.selected = False
 
     # def update(self):
         """

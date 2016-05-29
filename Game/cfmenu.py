@@ -4,12 +4,13 @@
 from components.UI import menuItem
 from os.path import join as pathjoin
 from libs.textglitcher import makeGlitched
+from components.UI.textMenuItem import textMenuItem
 from game import Game
 from components.UI.menu import menu
 
 
 class CFMenu(menu):
-    """ Represents a pause menu window"""
+    """ Represents the critical failure menu"""
 
     def __init__(self, screen, keys, config, sounds, modifiers, log):
         self.logSectionName = "CFMenu"
@@ -45,54 +46,31 @@ class CFMenu(menu):
                     self.mainLogger)
 
     def makeCFMenu(self):
-        self.sdimg = self.font.render("Start Shared Time mode", False,
-                                      (255, 255, 255)).convert_alpha()
-        self.sdselimg = makeGlitched("Start Shared Time mode", self.font)
-        self.sd = menuItem.menuitem(self.sdimg,
-                                    self.sdselimg,
-                                    (50, 180),
-                                    lambda: self.editDesc(
-                                        "All rooms share the same timer."),
+        self.sd = textMenuItem("Start Shared Time Mode", (50, 180),
+                               lambda: self.editDesc(
+                                    "All Rooms share the same timer."),
                                     lambda: self.newCFGame(),
-                                    self.config,
-                                    self.sounds
-                                    )
+                                    self.config, self.sounds, self.font)
         self.items.append(self.sd)
         self.activeItems.append(self.sd)
 
     def makeCFSMenu(self):
-        self.sdsimg = self.font.render("Start Separated Times mode", False,
-                                       (255, 255, 255)).convert_alpha()
-        self.sdsselimg = makeGlitched("Start Separated Times mode", self.font)
-        self.sds = menuItem.menuitem(self.sdsimg,
-                                     self.sdsselimg,
-                                     (50, 240),
-                                     lambda: self.editDesc(
+        self.sds = textMenuItem("Start Separated Times Mode", (50, 240),
+                                lambda: self.editDesc(
                                          "Each room has its timer."),
-                                     lambda: self.newCFSGame(),
-                                     self.config,
-                                     self.sounds
-                                     )
+                                lambda: self.newCFSGame(),
+                                self.config, self.sounds, self.font)
         self.items.append(self.sds)
         self.activeItems.append(self.sds)
 
     def makeMainMenuItem(self):
-        # "Main Menu" menu element
-        # v------------------------------------------------------------------v
-        self.menu = self.font.render("Previous Menu",
-                                     False, (255, 255, 255)).convert_alpha()
-        self.menusel = makeGlitched("Previous Menu", self.font)
-        self.mainmenu = menuItem.menuitem(self.menu,
-                                          self.menusel,
-                                          (50, 560),
-                                          lambda: self.editDesc(
+        self.mainmenu = textMenuItem("Previous Menu", (50, 560),
+                                     lambda: self.editDesc(
                                               "Go to the previous menu"),
-                                          lambda: self.goToMenu(),
-                                          self.config,
-                                          self.sounds)
+                                     lambda: self.goToMenu(),
+                                     self.config, self.sounds, self.font)
         self.items.append(self.mainmenu)
         self.activeItems.append(self.mainmenu)
-        # ^------------------------------------------------------------------^
 
     def makeMenuItems(self):
         self.makeCFMenu()

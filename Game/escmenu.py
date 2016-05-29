@@ -4,6 +4,7 @@
 from components.UI.menu import menu
 from components.UI import menuItem
 from libs.textglitcher import makeGlitched
+from components.UI.textMenuItem import textMenuItem
 import pygame
 
 
@@ -27,63 +28,39 @@ class pauseMenu(menu):
         self.modlogger.debug("Mouse cursor hidden")
 
     def makeResumeItem(self):
-        self.resgameimg = self.font.render("Resume Game", False,
-                                           (255, 255, 255)).convert_alpha()
-        self.selectedimg = makeGlitched("Resume Game", self.font)
-        self.resgame = menuItem.menuitem(self.resgameimg,
-                                         self.selectedimg,
-                                         (50, 240),
-                                         lambda: self.editDesc(
+        self.resgame = textMenuItem("Resume Game", (50, 240),
+                                    lambda: self.editDesc(
                                              "Resume the paused Game"),
-                                         lambda: self.unpause(),
-                                         self.config,
-                                         self.sounds)
+                                    lambda: self.unpause(),
+                                    self.config, self.sounds, self.font)
         self.activeItems.append(self.resgame)
         self.items.append(self.resgame)
 
     def makeSaveGameItem(self):
-        self.saveimg = self.font.render("Save Game", False,
-                                        (255, 255, 255)).convert_alpha()
-        self.saveselected = makeGlitched("Save Game", self.font)
-        self.savegame = menuItem.menuitem(self.saveimg,
-                                          self.saveselected,
-                                          (50, 320),
-                                          lambda: self.editDesc(
+        self.savegame = textMenuItem("Save Game", (50, 320),
+                                     lambda: self.editDesc(
                                               "Save for safety"),
-                                          lambda: self.game.saveGame(),
-                                          self.config,
-                                          self.sounds)
+                                     lambda: self.game.saveGame(),
+                                     self.config, self.sounds, self.font)
         self.activeItems.append(self.savegame)
         self.items.append(self.savegame)
 
     def makeQuitItem(self):
-        self.exitimg = self.font.render("Quit to Desktop",
-                                        False, (255, 255, 255)).convert_alpha()
-        self.exitselected = makeGlitched("Quit to Desktop", self.font)
-        self.exit = menuItem.menuitem(self.exitimg,
-                                      self.exitselected,
-                                      (50, 560),
-                                      lambda: self.editDesc(
+        self.exit = textMenuItem("Quit to Desktop", (50, 560),
+                                 lambda: self.editDesc(
                                           "Outta Here, NOW!!"),
-                                      lambda: pygame.event.post(
+                                 lambda: pygame.event.post(
                                         pygame.event.Event(pygame.QUIT)),
-                                      self.config,
-                                      self.sounds)
+                                 self.config, self.sounds, self.font)
         self.activeItems.append(self.exit)
         self.items.append(self.exit)
 
     def makeMainMenuItem(self):
-        self.menu = self.font.render("Main Menu",
-                                     False, (255, 255, 255)).convert_alpha()
-        self.menusel = makeGlitched("Main Menu", self.font)
-        self.mainmenu = menuItem.menuitem(self.menu,
-                                          self.menusel,
-                                          (50, 400),
-                                          lambda: self.editDesc(
+        self.mainmenu = textMenuItem("Main Menu", (50, 400),
+                                     lambda: self.editDesc(
                                               "Get back to the main menu"),
-                                          lambda: self.goToMenu(),
-                                          self.config,
-                                          self.sounds)
+                                     lambda: self.goToMenu(),
+                                     self.config, self.sounds, self.font)
         self.activeItems.append(self.mainmenu)
         self.items.append(self.mainmenu)
 

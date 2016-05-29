@@ -79,11 +79,11 @@ class loadMenu(menu):
                                  self.config, self.sounds, self.font)
         # There must be a better way!!
         # v----------------------------------------------------------------v
-        self.left.selected = pygame.transform.flip(self.left.selected,
+        self.left.selectedimg = pygame.transform.flip(self.left.selectedimg,
                                                    False, True)
-        self.left.unselected = pygame.transform.flip(self.left.unselected,
+        self.left.unselectedimg = pygame.transform.flip(self.left.unselectedimg,
                                                      False, True)
-        self.left.image = self.left.unselected
+        self.left.image = self.left.unselectedimg
         # ^----------------------------------------------------------------^
         self.items.append(self.left)
         self.activeItems.append(self.left)
