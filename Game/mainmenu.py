@@ -7,7 +7,7 @@ from components.UI import menuItem
 from optionsmenu import OptionsMenu
 from newgamemenu import NewGameMenu
 from credits import Credits
-from loadmenu import loadMenu
+from loadSaves import loadSaveMenu
 from libs.textglitcher import makeGlitched
 from components.UI.textMenuItem import textMenuItem
 from components.UI.menu import menu
@@ -79,7 +79,7 @@ class mainMenu(menu):
             self.cgam = textMenuItem("Load Saved Game", (50, 240),
                                      lambda: self.editDesc(
                                               "Load a previously saved Game"),
-                                     lambda: loadMenu(
+                                     lambda: loadSaveMenu(
                                              self.screen, self.keys,
                                              self.config, self.sounds,
                                              self.mainLogger).mainLoop(),

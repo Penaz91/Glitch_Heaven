@@ -1,14 +1,10 @@
-# Load Game Menu Component
+# Generic Load Menu Component
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
-
-# WILL BE DEPRECATED IN FAVOR OF A GENERIC + INHERITED VERSION
 from components.UI.menu import menu
-from os import listdir
 from os.path import join as pjoin
-import pygame
-from game import Game
 from components.UI.textMenuItem import textMenuItem
+import pygame
 
 
 class loadMenu(menu):
@@ -17,11 +13,8 @@ class loadMenu(menu):
     dgrey = (64, 64, 64)
 
     def __init__(self, screen, keys, config, sounds, log):
-        self.logSectionName = "loadGameMenu"
-        self.dirlist = sorted(listdir(pjoin("savegames")))
-        self.font = pygame.font.Font(pjoin(
-                            "resources", "fonts",
-                            "TranscendsGames.otf"), 24)
+        self.font = pygame.font.Font(pjoin("resources", "fonts",
+                                           "TranscendsGames.otf"), 24)
         self.id = 0
         self.time = .1
         self.n, self.nl1, self.nl2, self.np1, self.np2 = 5*[None]
@@ -35,33 +28,11 @@ class loadMenu(menu):
     def makeMainMenuItem(self):
         self.mainmenu = textMenuItem("Main Menu", (50, 560),
                                      lambda: self.editDesc(
-                                         "Go to the main menu"),
+                                        "Go to the Main Menu"),
                                      lambda: self.goToMenu(),
                                      self.config, self.sounds, self.font)
         self.activeItems.append(self.mainmenu)
         self.items.append(self.mainmenu)
-
-    def loadGame(self, savegame):
-        print(pjoin("savegames", savegame))
-        Game().main(self.screen,
-                    self.keys,
-                    "load",
-                    pjoin("savegames", savegame),
-                    self.config,
-                    self.sounds,
-                    None,
-                    self.mainLogger)
-        self.running = False
-
-    def makeLoadItem(self):
-        self.loadgame = textMenuItem("Load", (250, 560),
-                                     lambda: self.editDesc(
-                                         "Load the selected savegame"),
-                                     lambda: self.loadGame(
-                                         self.dirlist[self.id]),
-                                     self.config, self.sounds, self.font)
-        self.activeItems.append(self.loadgame)
-        self.items.append(self.loadgame)
 
     def addN(self):
         self.id = (self.id + 1) % len(self.dirlist)
@@ -80,9 +51,10 @@ class loadMenu(menu):
         # There must be a better way!!
         # v----------------------------------------------------------------v
         self.left.selectedimg = pygame.transform.flip(self.left.selectedimg,
-                                                   False, True)
-        self.left.unselectedimg = pygame.transform.flip(self.left.unselectedimg,
-                                                     False, True)
+                                                      False, True)
+        self.left.unselectedimg = pygame.transform.flip(
+                self.left.unselectedimg,
+                False, True)
         self.left.image = self.left.unselectedimg
         # ^----------------------------------------------------------------^
         self.items.append(self.left)
