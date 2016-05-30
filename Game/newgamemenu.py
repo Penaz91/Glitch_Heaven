@@ -3,10 +3,7 @@
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI import menuItem
 from os.path import join as pathjoin
-from os.path import splitext
 from libs.textglitcher import makeGlitched
-from tkinter import Tk
-from tkinter import filedialog
 from game import Game
 from cfmenu import CFMenu
 from components.UI.menu import menu
@@ -24,33 +21,14 @@ class NewGameMenu(menu):
                           "hflip": False, "moonwalk": False}
         super().__init__(screen, keys, config, sounds, log)
 
-    """
-    def loadcustom(self):
-        Loads a custom campaign from a open file dialog
-        try:
-            Tk().withdraw()
-            formats = [("Glitch_Heaven Campaign", "*.cmp")]
-            self.camp = filedialog.askopenfilename(
-                    filetypes=formats,
-                    initialdir=pathjoin("data",
-                                        "campaigns"))
-            if self.camp:
-                self.running = False
-                Game().main(self.screen, self.keys, "newgame",
-                            self.camp, self.config, self.sounds,
-                            self.modifiers, self.mainLogger)
-        except FileNotFoundError:
-            self.modlogger.info("No File selected, "
-                                "Loading of campaign aborted")
-    """
-
     def loadcustom(self):
         loadCmpMenu(self.screen, self.keys, self.config,
                     self.sounds, self.modifiers, self.mainLogger).mainLoop()
-                    
+
     def loadSingle(self):
         loadSingleFoldMenu(self.screen, self.keys, self.config,
-                           self.sounds, self.modifiers, self.mainLogger).mainLoop()
+                           self.sounds, self.modifiers, self.mainLogger
+                           ).mainLoop()
 
     def newGame(self, keys, gameconfig, screen, sounds):
         self.running = False
@@ -66,23 +44,6 @@ class NewGameMenu(menu):
 
     def newSMGame(self):
         self.loadSingle()
-    """
-        try:
-            Tk().withdraw()
-            formats = [("Glitch_Heaven Level", "*.tmx")]
-            self.lvl = filedialog.askopenfilename(
-                    filetypes=formats,
-                    initialdir=pathjoin("data",
-                                        "maps"))
-            self.lvl = splitext(self.lvl)[0]
-            if self.lvl:
-                self.running = False
-                Game().main(self.screen, self.keys, "singlemap",
-                            self.lvl, self.config, self.sounds,
-                            self.modifiers, self.mainLogger)
-        except FileNotFoundError:
-            self.modlogger.info("No File selected, "
-                                "Loading of level aborted")"""
 
     def makeCampaignMenu(self):
         self.newmainimg = self.font.render("Start Main Campaign", False,

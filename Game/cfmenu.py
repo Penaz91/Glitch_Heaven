@@ -46,9 +46,9 @@ class CFMenu(menu):
     def makeCFMenu(self):
         self.sd = textMenuItem("Start Shared Time Mode", (50, 180),
                                lambda: self.editDesc(
-                                    "All Rooms share the same timer."),
-                                    lambda: self.newCFGame(),
-                                    self.config, self.sounds, self.font)
+                                   "All Rooms share the same timer."),
+                               lambda: self.newCFGame(),
+                               self.config, self.sounds, self.font)
         self.items.append(self.sd)
         self.activeItems.append(self.sd)
 

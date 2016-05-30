@@ -2,8 +2,6 @@
 # Part of the Glitch_Heaven Project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI.menu import menu
-from libs.textglitcher import makeGlitched
-from components.UI import menuItem
 from components.UI.textMenuItem import textMenuItem
 
 
@@ -49,13 +47,13 @@ class modMenu(menu):
         self.items.append(self.vflip)
 
     def makeHFlipToggle(self):
-        self.hflip= textMenuItem("Horizontal Flip Mode", (50, 300),
-                                 lambda: self.editDesc(
+        self.hflip = textMenuItem("Horizontal Flip Mode", (50, 300),
+                                  lambda: self.editDesc(
                                                "Current Status: {0}".format(
                                                 self.modifiers["hflip"])),
-                                 lambda: self.toggleModifier(
+                                  lambda: self.toggleModifier(
                                      "hflip"),
-                                 self.config, self.sounds, self.font)
+                                  self.config, self.sounds, self.font)
         self.activeItems.append(self.hflip)
         self.items.append(self.hflip)
 

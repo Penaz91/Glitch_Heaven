@@ -1,11 +1,9 @@
 # Options Menu Component
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
-from components.UI import menuItem
 from videosettings import VideoSettings
 from audiosettings import AudioSettings
 from keyboardsettings import KeyboardSettings
-from libs.textglitcher import makeGlitched
 from components.UI.menu import menu
 from components.UI.textMenuItem import textMenuItem
 

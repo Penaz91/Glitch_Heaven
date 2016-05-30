@@ -23,8 +23,6 @@ if __name__ == "__main__":
     chdir(wd)
     # ^---------------------------------------------------------------^
     try:
-        # config = configparser.ConfigParser()
-        # config.read("game.conf")
         config = None
         with open(pathjoin("config.json")) as conf:
             config = json.loads(conf.read())
@@ -56,10 +54,8 @@ if __name__ == "__main__":
         screensize = (int(config["Video"]["screenwidth"]),
                       int(config["Video"]["screenheight"]))
         logger.debug("Screensize set to: " + str(screensize))
-        # fullscreen = config.getboolean("Video", "fullscreen")
         fullscreen = config["Video"]["fullscreen"]
         logger.debug("Fullscreen Flag Set to: "+str(fullscreen))
-        # doublebuffer = config.getboolean("Video", "doublebuffer")
         doublebuffer = config["Video"]["fullscreen"]
         logger.debug("Doublebuffer Flag set to: " +
                      str(doublebuffer))
@@ -67,10 +63,6 @@ if __name__ == "__main__":
         # Reads the control keys
         # v-------------------------------v
         logger.info("Loading key dictionary")
-        # keys = dict(config["Controls"])
-        # for key in keys:
-        #    keys[key] = int(keys[key])
-        # logger.debug("Key Dictionary is:" + str(keys))
         keys = config["Controls"]
         # ^-------------------------------^
         # Sets the screen flags
@@ -129,18 +121,12 @@ if __name__ == "__main__":
                 "music": {}}
         for sound in sounds["menu"]:
             sounds["menu"][sound].set_volume(
-                # config.getfloat("Sound",
-                #                 "menuvolume"))/100)
                 config["Sound"]["menuvolume"]/100.)
         for sound in sounds["sfx"]:
             sounds["sfx"][sound].set_volume(
-                # (config.getfloat("Sound",
-                #                  "sfxvolume"))/100)
                 config["Sound"]["sfxvolume"]/100.)
         for sound in sounds["music"]:
             sounds["music"][sound].set_volume(
-                    # (config.getfloat("Sound",
-                    #                  "musicvolume"))/100)
                     config["Sound"]["musicvolume"]/100.)
         # ^-------------------------------------------------------------------^
         logger.info("Setting up the Screen")
