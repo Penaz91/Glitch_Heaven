@@ -11,7 +11,6 @@ class KeyboardSettings(menu):
     white = (255, 255, 255)
 
     def __init__(self, screen, keys, config, sounds, log):
-        self.writings = []
         self.drawer = []
         self.logSectionName = "keyboardSettings"
         super().__init__(screen, keys, config, sounds, log)
@@ -27,57 +26,27 @@ class KeyboardSettings(menu):
                                                      self.config, self.keys),
                                self.config, self.sounds, self.modlogger,
                                self.font)
-        self.drawer.append((txt, btn, location))
-        return btn
-
-    def makeLeftKeyItem(self):
-        self.left = self.makeItem("Move Left:", "left", (50, 180))
-        self.activeItems.append(self.left)
-        self.items.append(self.left)
-
-    def makeRightKeyItem(self):
-        self.right = self.makeItem("Move Right:", "right", (50, 240))
-        self.activeItems.append(self.right)
-        self.items.append(self.right)
-
-    def makeJumpKeyItem(self):
-        self.jump = self.makeItem("Jump: ", "jump", (50, 300))
-        self.activeItems.append(self.jump)
-        self.items.append(self.jump)
-
-    def makeRunKeyItem(self):
-        self.run = self.makeItem("Run: ", "run", (50, 360))
-        self.activeItems.append(self.run)
-        self.items.append(self.run)
-
-    def makeActionKeyItem(self):
-        self.act = self.makeItem("Action/Interact: ", "action", (50, 420))
-        self.activeItems.append(self.act)
-        self.items.append(self.act)
-
-    def makeRestartKeyItem(self):
-        self.rest = self.makeItem("Restart Level: ", "restart", (50, 480))
-        self.activeItems.append(self.rest)
-        self.items.append(self.rest)
+        self.drawer.append((txt, location))
+        self.activeItems.append(btn)
+        self.items.append(btn)
 
     def makeMainMenuItem(self):
         self.mainmenu = textMenuItem("Previous Menu", (50, 560),
                                      lambda: None,
                                      lambda: self.goToMenu(),
                                      self.config, self.sounds, self.font)
-
         self.items.append(self.mainmenu)
         self.activeItems.append(self.mainmenu)
 
     def makeMenuItems(self):
-        self.makeLeftKeyItem()
-        self.makeRightKeyItem()
-        self.makeJumpKeyItem()
-        self.makeRunKeyItem()
-        self.makeActionKeyItem()
-        self.makeRestartKeyItem()
+        self.makeItem("Move Left:", "left", (50, 180))
+        self.makeItem("Move Right:", "right", (50, 240))
+        self.makeItem("Jump: ", "jump", (50, 300))
+        self.makeItem("Run: ", "run", (50, 360))
+        self.makeItem("Action/Interact: ", "action", (50, 420))
+        self.makeItem("Restart Level: ", "restart", (50, 480))
         self.makeMainMenuItem()
 
     def doAdditionalBlits(self):
         for item in self.drawer:
-            self.screen.blit(item[0], item[2])
+            self.screen.blit(item[0], item[1])

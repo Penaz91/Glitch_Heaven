@@ -2,8 +2,6 @@
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI.menu import menu
-from components.UI import menuItem
-from libs.textglitcher import makeGlitched
 from components.UI.textMenuItem import textMenuItem
 from components.UI import meter
 import pygame
@@ -35,9 +33,9 @@ class AudioSettings(menu):
 
     def makePreviousMenuItem(self):
         self.prevmenu = textMenuItem("Apply and go back", (50, 560),
-                                 lambda: None,
-                                 lambda: self.goToMenu(),
-                                 self.config, self.sounds, self.font)
+                                     lambda: None,
+                                     lambda: self.goToMenu(),
+                                     self.config, self.sounds, self.font)
         self.activeItems.append(self.prevmenu)
         self.items.append(self.prevmenu)
 

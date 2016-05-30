@@ -1,9 +1,7 @@
 # New Game Menu Component
 # Part of the Glitch_Heaven project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
-from components.UI import menuItem
 from os.path import join as pathjoin
-from libs.textglitcher import makeGlitched
 from components.UI.textMenuItem import textMenuItem
 from game import Game
 from components.UI.menu import menu
@@ -20,8 +18,8 @@ class CFMenu(menu):
     def newCFGame(self):
         self.running = False
         self.modlogger.info("Starting" + pathjoin("data",
-                             "campaigns",
-                             "main.cmp"))
+                                                  "campaigns",
+                                                  "main.cmp"))
 
         Game().main(self.screen, self.keys,
                     "criticalfailure",
