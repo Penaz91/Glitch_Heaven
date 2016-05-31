@@ -2,7 +2,7 @@
 import pygame
 
 pygame.init()
-screen = pygame.display.set_mode((640, 480))
+screen = pygame.display.set_mode((800, 600))
 font = pygame.font.SysFont("Arial", 24)
 writing = []
 accepted = [
@@ -17,9 +17,12 @@ accepted = [
     pygame.K_KP4, pygame.K_KP5, pygame.K_KP6, pygame.K_KP7, pygame.K_KP8,
     pygame.K_KP9
 ]
+surf= pygame.surface.Surface((800, 200))
+surf.fill((255, 0, 0))
 
 while True:
     screen.fill((0, 0, 0))
+    surf.fill((255, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_BACKSPACE:
@@ -30,6 +33,9 @@ while True:
             elif event.key in accepted:
                 if not (pygame.key.get_mods() & pygame.KMOD_LCTRL):
                     writing.append(event.unicode)
-    surf = font.render("".join(writing), False, (255, 255, 255))
-    screen.blit(surf, (50, 50))
+    write = font.render("".join(writing), False, (255, 255, 255))
+    wrect = write.get_rect()
+    wrect.center = surf.get_rect().center
+    surf.blit(write, wrect)
+    screen.blit(surf, (0, 200))
     pygame.display.update()
