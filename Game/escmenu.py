@@ -3,6 +3,7 @@
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI.menu import menu
 from components.UI.textMenuItem import textMenuItem
+from saveGame import saveGameMenu
 import pygame
 
 
@@ -38,7 +39,10 @@ class pauseMenu(menu):
         self.savegame = textMenuItem("Save Game", (50, 320),
                                      lambda: self.editDesc(
                                               "Save for safety"),
-                                     lambda: self.game.saveGame(),
+                                     lambda: saveGameMenu(
+                                         self.screen, self.keys, self.config,
+                                         self.sounds, self.mainLogger,
+                                         self.game).mainLoop(),
                                      self.config, self.sounds, self.font)
         self.activeItems.append(self.savegame)
         self.items.append(self.savegame)

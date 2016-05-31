@@ -4,7 +4,7 @@
 import pygame
 
 
-class textBox(object):
+class textInput(object):
     white = (255, 255, 255)
 
     def __init__(self, screen, font, message):
@@ -15,9 +15,11 @@ class textBox(object):
         self.writings = [
             (msg, msg.get_rect()),
         ]
-        msg = (self.font.render("Backspace to delete - Enter to confirm", False, self.white))
+        msg = (self.font.render(
+            "Backspace to delete - Enter to confirm - Esc to abort",
+            False, self.white))
         self.writings.append((msg, msg.get_rect()))
-        self.surface = pygame.surface.Surface((800, 200), pygame.SRCALPHA)
+        self.surface = pygame.surface.Surface((800, 200))
         self.catching = True
         self._accepted_keys_ = [
             pygame.K_a, pygame.K_b, pygame.K_c, pygame.K_d, pygame.K_e,
@@ -28,19 +30,27 @@ class textBox(object):
             pygame.K_z, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3,
             pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8,
             pygame.K_9, pygame.K_KP0, pygame.K_KP1, pygame.K_KP2, pygame.K_KP3,
-            pygame.K_KP4, pygame.K_KP5, pygame.K_KP6, pygame.K_KP7, pygame.K_KP8,
-            pygame.K_KP9
+            pygame.K_KP4, pygame.K_KP5, pygame.K_KP6, pygame.K_KP7,
+            pygame.K_KP8, pygame.K_KP9, pygame.K_SPACE
         ]
-        
+        self.writings[0][1].center = self.surface.get_rect().center
+        self.writings[0][1][1] = 10
+        self.writings[1][1].center = self.surface.get_rect().center
+        self.writings[1][1][1] = 160
+
     def get_input(self):
         self.catching = True
+        clock = pygame.time.Clock()
         while self.catching:
-            self.surface.fill((74, 74, 74, 5))
+            clock.tick(30)
+            self.surface.fill((74, 74, 74))
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
-                        if len(self.buffer)!=0:
+                        if len(self.buffer) != 0:
                             self.buffer.pop()
+                    elif event.key == pygame.K_ESCAPE:
+                        self.catching = False
                     elif event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
                         self.catching = False
                         return "".join(self.buffer)
@@ -51,21 +61,15 @@ class textBox(object):
             wrect = write.get_rect()
             wrect.center = self.surface.get_rect().center
             self.surface.blit(write, wrect)
-            self.writings[0][1].center = self.surface.get_rect().center
-            self.writings[0][1][1] = 10
-            self.writings[1][1].center = self.surface.get_rect().center
-            self.writings[1][1][1] = 160
             for item in self.writings:
-                self.surface.blit(item[0],item[1])
-            screen.blit(self.surface, (0, 200))
+                self.surface.blit(item[0], item[1])
+            self.screen.blit(self.surface, (0, 200))
             pygame.display.update()
-            
-if __name__=="__main__":
+
+if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
     font = pygame.font.SysFont("Arial", 24)
-    img = pygame.image.load("bg.png").convert_alpha()
-    screen.blit(img, (0, 0))
-    input = textBox(screen, font, "Insert your savefile name")
+    input = textInput(screen, font, "Insert your savefile name")
     text = input.get_input()
     print(text)
