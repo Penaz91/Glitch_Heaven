@@ -21,24 +21,9 @@ from components.collectibletrigger import CollectibleTrigger
 import json
 from random import randint, choice
 from os.path import join as pathjoin
-from tkinter import filedialog
-from os import getcwd
 from libs.textglitcher import makeGlitched, makeMoreGlitched
-from tkinter import Tk
 from libs.debugconstants import _debugkeys_
 _garbletimer_ = 0.1
-_dialogConstants_ = {
-    "saveGame": {
-        "filetypes": [("Glitch_Heaven Savegame", "*.dat")],
-        "initialdir": pjoin(getcwd(), "savegames"),
-        "defaultextension": ".dat"
-                },
-    "loadGame": {
-        "filetypes": [("Glitch_Heaven Savegame", "*.dat")],
-        "initialdir": pjoin(getcwd(), "savegames"),
-        "multiple": False
-                }
-                    }
 
 
 class Game(object):
@@ -356,34 +341,10 @@ class Game(object):
                              " successfully, ready to play")
         # ^--------------------------------------------------------------^
 
-    def saveGame(self):
-        """
-        Saves the game status in a JSON file.
-        """
-        Tk().withdraw()
-        path = filedialog.asksaveasfilename(**_dialogConstants_["saveGame"])
-        if path:
-            if not (self.gameStatus["mode"] in ["criticalfailure",
-                                                "cfsingle"]):
-                self.gameStatus["cftime"] = 0
-                self.gameStatus["time"] = 0
-                self.gameStatus["mode"] = "newgame"
-            self.mod_logger.debug("Saved with data: {0}"
-                                  % self.gameStatus)
-            with open(path, "w") as savefile:
-                savefile.write(json.dumps(self.gameStatus))
-                self.mod_logger.info("Game saved on the file: \
-                        %(savefile)s" % locals())
-
     def loadGame(self, path=None):
         """
         Opens the game from a JSON file
         """
-        if path is None:
-            Tk().withdraw()
-            path = filedialog.askopenfilename(**_dialogConstants_["loadGame"])
-        if not path:
-            raise FileNotFoundError
         self.mod_logger.info("Loading Save from: %(path)s"
                              % locals())
         with open(path, "r") as savefile:
