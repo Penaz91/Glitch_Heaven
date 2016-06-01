@@ -248,7 +248,7 @@ class Player(pygame.sprite.Sprite):
             # Jump - Fall Animation
             if yspeed * gravity > 0:
                 self.image = spriteList["jump_fall"]
-            elif yspeed * gravity < 0:
+            elif yspeed * gravity <= 0:
                 self.image = spriteList["jump_rise"]
         # Image Flipping
         self.image = pygame.transform.flip(self.image, (direction == -1),
