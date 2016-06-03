@@ -222,7 +222,7 @@ class Game(object):
         - mode: The game mode
         - screen: The surface to draw the level to
         """
-        if level == "":
+        if not level:
             # No more levels, close
             self.running = False
         else:
@@ -337,6 +337,7 @@ class Game(object):
                                 pl.FeatherFallOff)
         self.customGlitchToggle("highAccel", pl.HighAccel, pl.ResetAccel)
         self.customGlitchToggle("lowAccel", pl.LowAccel, pl.ResetAccel)
+        self.player.RealignCollision(self.gravity)
         self.mod_logger.info("Loading of the level completed" +
                              " successfully, ready to play")
         # ^--------------------------------------------------------------^
@@ -608,7 +609,8 @@ class Game(object):
                                            self.gameStatus["campaignName"],
                                            self.gameStatus["mode"],
                                            self.screen)
-                            self.loadLevelPart2(self.keys, sounds)
+                            if level:
+                                self.loadLevelPart2(self.keys, sounds)
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
                 elif event.type == pygame.KEYDOWN and\
