@@ -26,15 +26,17 @@ class mainMenu(menu):
     def onEscape(self):
         pass
 
+    def newGame(self):
+        self.update = True
+        NewGameMenu(self.screen, self.keys, self.config, self.sounds,
+                    self.mainLogger).mainLoop()
+
     def makeNewGameMenu(self):
         self.newgamemenu = textMenuItem("Start A New Game", (50, 180),
                                         lambda: self.editDesc(
                                                  "Start a new game,in any mode"
                                                  ),
-                                        lambda: NewGameMenu(
-                                                self.screen, self.keys,
-                                                self.config, self.sounds,
-                                                self.mainLogger).mainLoop(),
+                                        lambda: self.newGame(),
                                         self.config, self.sounds, self.font)
         self.activeItems.append(self.newgamemenu)
         self.items.append(self.newgamemenu)
@@ -60,6 +62,11 @@ class mainMenu(menu):
         self.activeItems.append(self.exit)
         self.items.append(self.exit)
 
+    def loadSaveGame(self):
+        self.update = True
+        loadSaveMenu(self.screen, self.keys, self.config, self.sounds,
+                     self.mainLogger).mainLoop()
+
     def makeLoadMenu(self):
         self.modlogger.debug("Checking Savegames Directory: " + str(
             os.path.join("savegames")))
@@ -79,10 +86,7 @@ class mainMenu(menu):
             self.cgam = textMenuItem("Load Saved Game", (50, 240),
                                      lambda: self.editDesc(
                                               "Load a previously saved Game"),
-                                     lambda: loadSaveMenu(
-                                             self.screen, self.keys,
-                                             self.config, self.sounds,
-                                             self.mainLogger).mainLoop(),
+                                     lambda: self.loadSaveGame(),
                                      self.config, self.sounds, self.font)
             self.activeItems.append(self.cgam)
         self.items.append(self.cgam)
@@ -128,4 +132,6 @@ class mainMenu(menu):
 
     def doMoreLoopOperations(self):
         if self.update:
+            self.activeItems.clear()
+            self.items.clear()
             self.makeMenuItems()
