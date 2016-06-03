@@ -17,6 +17,7 @@ class menu(object):
         self.keys = keys
         self.config = config
         self.sounds = sounds
+        self.update = False
         self.background = pygame.image.load(pathjoin("resources",
                                                      "UI",
                                                      "back.png")

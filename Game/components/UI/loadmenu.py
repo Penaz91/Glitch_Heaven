@@ -18,7 +18,7 @@ class loadMenu(menu):
         self.id = 0
         self.time = .1
         self.n, self.nl1, self.nl2, self.np1, self.np2 = 5*[None]
-        if self.dirlist is not None:
+        if self.dirlist:
             self.updateOperation = self.update_yes
         else:
             self.updateOperation = self.update_no
@@ -108,7 +108,7 @@ class loadMenu(menu):
     def doAdditionalBlits(self):
         self.updateOperation()
         self.time -= self.dt
-        if self.dirlist is not None:
+        if self.dirlist:
             self.screen.blit(self.nl2, (150, 260))
             self.screen.blit(self.nl1, (150, 290))
             self.screen.blit(self.n, (150, 320))

@@ -4,8 +4,10 @@
 from components.UI.loadmenu import loadMenu
 from os import listdir
 from os.path import join as pjoin
+from os import remove
 from game import Game
 from components.UI.textMenuItem import textMenuItem
+from components.UI.textinput import textInput
 
 
 class loadSaveMenu(loadMenu):
@@ -27,6 +29,12 @@ class loadSaveMenu(loadMenu):
                     self.mainLogger)
         self.running = False
 
+    def eraseSave(self, savegame):
+        confirm = textInput(self.screen, self.font, "Type 'Yes' to confirm deletion").get_input()
+        if (confirm.upper() == "YES"):
+            remove(pjoin("savegames", savegame))
+            self.running = False
+
     def makeLoadItem(self):
         self.loadgame = textMenuItem("Load", (250, 560),
                                      lambda: self.editDesc(
@@ -36,3 +44,16 @@ class loadSaveMenu(loadMenu):
                                      self.config, self.sounds, self.font)
         self.activeItems.append(self.loadgame)
         self.items.append(self.loadgame)
+
+    def makeEraseItem(self):
+        self.erase = textMenuItem("Erase", (400, 560),
+                                  lambda: self.editDesc(
+                                    "Delete the Selected SaveGame"),
+                                  lambda: self.eraseSave(self.dirlist[self.id]),
+                                  self.config, self.sounds, self.font)
+        self.activeItems.append(self.erase)
+        self.items.append(self.erase)
+        
+    def makeMenuItems(self):
+        super().makeMenuItems()
+        self.makeEraseItem()
