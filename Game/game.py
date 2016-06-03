@@ -21,24 +21,9 @@ from components.collectibletrigger import CollectibleTrigger
 import json
 from random import randint, choice
 from os.path import join as pathjoin
-from tkinter import filedialog
-from os import getcwd
 from libs.textglitcher import makeGlitched, makeMoreGlitched
-from tkinter import Tk
 from libs.debugconstants import _debugkeys_
 _garbletimer_ = 0.1
-_dialogConstants_ = {
-    "saveGame": {
-        "filetypes": [("Glitch_Heaven Savegame", "*.dat")],
-        "initialdir": pjoin(getcwd(), "savegames"),
-        "defaultextension": ".dat"
-                },
-    "loadGame": {
-        "filetypes": [("Glitch_Heaven Savegame", "*.dat")],
-        "initialdir": pjoin(getcwd(), "savegames"),
-        "multiple": False
-                }
-                    }
 
 
 class Game(object):
@@ -237,7 +222,7 @@ class Game(object):
         - mode: The game mode
         - screen: The surface to draw the level to
         """
-        if level == "":
+        if not level:
             # No more levels, close
             self.running = False
         else:
@@ -352,37 +337,15 @@ class Game(object):
                                 pl.FeatherFallOff)
         self.customGlitchToggle("highAccel", pl.HighAccel, pl.ResetAccel)
         self.customGlitchToggle("lowAccel", pl.LowAccel, pl.ResetAccel)
+        self.player.RealignCollision(self.gravity)
         self.mod_logger.info("Loading of the level completed" +
                              " successfully, ready to play")
         # ^--------------------------------------------------------------^
 
-    def saveGame(self):
-        """
-        Saves the game status in a JSON file.
-        """
-        Tk().withdraw()
-        path = filedialog.asksaveasfilename(**_dialogConstants_["saveGame"])
-        if path:
-            if not (self.gameStatus["mode"] in ["criticalfailure",
-                                                "cfsingle"]):
-                self.gameStatus["cftime"] = 0
-                self.gameStatus["time"] = 0
-                self.gameStatus["mode"] = "newgame"
-            self.mod_logger.debug("Saved with data: {0}"
-                                  % self.gameStatus)
-            with open(path, "w") as savefile:
-                savefile.write(json.dumps(self.gameStatus))
-                self.mod_logger.info("Game saved on the file: \
-                        %(savefile)s" % locals())
-
-    def loadGame(self):
+    def loadGame(self, path=None):
         """
         Opens the game from a JSON file
         """
-        Tk().withdraw()
-        path = filedialog.askopenfilename(**_dialogConstants_["loadGame"])
-        if not path:
-            raise FileNotFoundError
         self.mod_logger.info("Loading Save from: %(path)s"
                              % locals())
         with open(path, "r") as savefile:
@@ -483,6 +446,7 @@ class Game(object):
                 "middle_back1": None,
                 "middle_back2": None
         }
+        self.oldoverpath = None
         self.mainLogger = log
         self.mod_logger = log.getChild("game")
         self.mod_logger.info("Entering main game")
@@ -537,7 +501,7 @@ class Game(object):
         if self.gameStatus["mode"] == "load":
             self.mod_logger.debug("Using Load mode")
             try:
-                self.loadGame()
+                self.loadGame(cmp)
                 self.LoadLevel(self.gameStatus["currentLevel"],
                                self.gameStatus["campaignName"],
                                self.gameStatus["mode"],
@@ -645,7 +609,8 @@ class Game(object):
                                            self.gameStatus["campaignName"],
                                            self.gameStatus["mode"],
                                            self.screen)
-                            self.loadLevelPart2(self.keys, sounds)
+                            if level:
+                                self.loadLevelPart2(self.keys, sounds)
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
                 elif event.type == pygame.KEYDOWN and\
@@ -657,7 +622,6 @@ class Game(object):
                             self.sprites.remove(*self.deadbodies)
                             self.deadbodies.empty()
                             self.player.respawn(self)
-
                 # if config.getboolean("Debug", "keydebug") and\
                 if config["Debug"]["keydebug"] and\
                         event.type == pygame.KEYDOWN:

@@ -40,7 +40,7 @@
             "invertedControls": false,
             "obsResistant": false,
             "noStop": false,
-            "timeLapse": false,
+            "timeLapse": true,
 	    "highAccel": false,
 	    "lowAccel": false
         },

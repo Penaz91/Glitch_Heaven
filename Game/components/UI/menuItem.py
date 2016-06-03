@@ -2,8 +2,6 @@
 # Part of the Glitch_Heaven Project
 # Copyright 2015-2016 - Penaz <penazarea@altervista.org>
 
-# from libs import animation
-
 
 class menuitem(object):
     """ Represents a menu item """
@@ -19,13 +17,12 @@ class menuitem(object):
 
         :return: Nothing
         """
-        self.unselected = unselected
-        self.selected = selected
-        self.rect = self.unselected.get_rect()
-        # self.location = location
+        self.unselectedimg = unselected
+        self.selectedimg = selected
+        self.rect = self.unselectedimg.get_rect()
         self.rect.x, self.rect.y = location
-        self.image = self.unselected
-        self.selectedStatus = False
+        self.image = self.unselectedimg
+        self.selected = False
         self.function = function
         self.onhover = onhover
         self.sound = sounds["menu"]["select"]
@@ -33,23 +30,12 @@ class menuitem(object):
 
     def makeSelected(self):
         """ Turns the element status to "Selected" """
-        self.image = self.selected
-        self.selectedStatus = True
+        self.image = self.selectedimg
+        self.selected = True
         self.onhover()
         self.sound.play()
 
     def makeUnselected(self):
         """ Turns the element status to "Unselected" """
-        self.image = self.unselected
-        self.selectedStatus = False
-
-    def update(self):
-        """
-        Changes the status if the update function is called
-
-        #MIGHT NEED DEPRECATION#
-        """
-        if self.selected:
-            self.makeSelected()
-        else:
-            self.makeUnselected()
+        self.image = self.unselectedimg
+        self.selected = False

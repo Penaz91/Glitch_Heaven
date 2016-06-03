@@ -22,10 +22,10 @@ class KeyboardItem (menuitem):
         while selecting:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    self.unselected = font.render(
+                    self.unselectedimg = font.render(
                             (str(pygame.key.name(event.key))).upper(),
                             False, (255, 255, 255)).convert_alpha()
-                    self.selected = makeGlitched(
+                    self.selectedimg = makeGlitched(
                             (str(pygame.key.name(event.key))).upper(), font)
                     self.image = self.selected
                     config["Controls"][str(key)] = event.key

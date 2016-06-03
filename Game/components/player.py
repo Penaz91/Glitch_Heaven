@@ -18,13 +18,19 @@ class Player(pygame.sprite.Sprite):
     _finalParticleColor_ = (0, 103, 34)
     _hovermodifier_ = 0.8
 
-    def fixCollision(self, gravity):
+    def RealignCollision(self, gravity):
         """ re-aligns the drawing rect to the collision rect
         Parameter: The game gravity"""
         if gravity == 1:
             self.collisionrect.midbottom = self.rect.midbottom
         else:
             self.collisionrect.midtop = self.rect.midtop
+            
+    def fixCollision(self, gravity):
+        if gravity == 1:
+            self.rect.midbottom = self.collisionrect.midbottom
+        else:
+            self.rect.midtop = self.collisionrect.midtop
 
     def FeatherFallOn(self):
         """Turns on the featherfalling glitch"""
@@ -172,7 +178,7 @@ class Player(pygame.sprite.Sprite):
         if self.game.config["Video"]["playerparticles"]:
             self.setupEmitters()
         self.lastcheckpoint = location
-        self.collisionrect = pygame.rect.Rect((0, 0), (20, 32))
+        self.collisionrect = pygame.rect.Rect((0, 0), (20, 30))
         self.collisionrect.midbottom = self.rect.midbottom
         self.status = {
                 "glitched": False,
@@ -212,8 +218,11 @@ class Player(pygame.sprite.Sprite):
         # ^-----------------------------------------------------^
         # Does a complete respawn of the player
         # v-----------------------------------------------------v
-        game.player.rect.x, game.player.rect.y = self.lastcheckpoint
-        game.player.x_speed, game.player.y_speed = 0, 0
+        self.rect.x, self.rect.y = self.lastcheckpoint
+        self.x_speed, self.y_speed = 0, 0
+        self.RealignCollision(game.gravity)
+        # game.player.rect.x, game.player.rect.y = self.lastcheckpoint
+        # game.player.x_speed, game.player.y_speed = 0, 0
         # ^-----------------------------------------------------^
 
     def animate(self, yspeed, xspeed, resting, bounced,
@@ -245,7 +254,7 @@ class Player(pygame.sprite.Sprite):
             # Jump - Fall Animation
             if yspeed * gravity > 0:
                 self.image = spriteList["jump_fall"]
-            elif yspeed * gravity < 0:
+            elif yspeed * gravity <= 0:
                 self.image = spriteList["jump_rise"]
         # Image Flipping
         self.image = pygame.transform.flip(self.image, (direction == -1),
@@ -283,7 +292,7 @@ class Player(pygame.sprite.Sprite):
         Returns:
         - Nothing
         """
-        self.fixCollision(game.gravity)
+        # self.fixCollision(game.gravity)
         last = self.collisionrect.copy()  # Copy last position for compare
         key = pygame.key.get_pressed()
         # Check if run button is pressed (With eventual Invertedrun glitch)
@@ -346,7 +355,7 @@ class Player(pygame.sprite.Sprite):
                                            self.x_speed+(self.playeraccel*dt))
             # ^--------------------------------------------------------------^
         self.rect.x += self.x_speed         # Move the player
-        self.fixCollision(game.gravity)
+        #self.fixCollision(game.gravity)
         if game.glitches["multiJump"]:
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
                 # Plays the jump sound only with a player descending, to avoid
@@ -411,7 +420,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.rect.y += self.y_speed * dt    # Move the player vertically
         # ^------------------------------------------------------^
-        self.fixCollision(game.gravity)
+        self.RealignCollision(game.gravity)
         # This avoids the ability to jump in air after leaving a platform
         # + ledgejump glitch framework
         # v--------------v
@@ -432,7 +441,7 @@ class Player(pygame.sprite.Sprite):
                 if game.glitches["slideInvert"]:
                     if key[self.keys["action"]]:
                         slide *= -1
-                self.rect.x += slide * dt
+                self.collisionrect.x += slide * dt
                 self.fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Test for collision with deadbody platforms and act accordingly
@@ -450,18 +459,6 @@ class Player(pygame.sprite.Sprite):
             self.status["resting"] = True
             self.y_speed = 0
         # ^--------------------------------------------------------------^
-        if game.glitches["vWrapping"]:
-            if self.rect.y < 0:
-                last.y = game.tilemap.px_height + 32
-                self.rect.y = game.tilemap.px_height
-            elif self.rect.y > game.tilemap.px_height:
-                last.y = -32
-                self.rect.y = 0
-            self.collisionrect.midbottom = self.rect.midbottom
-        else:
-            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
-                self.respawn(game)
-        # ^--------------------------------------------------------------^
         # Moving plats collision check
         # NOTE: This has to stay here to avoid being tped under a platform
         #       if you touch a vertical wall
@@ -475,9 +472,9 @@ class Player(pygame.sprite.Sprite):
                     self.collisionrect.top < block.rect.bottom
                 if top or bottom:
                     if top:
-                        self.rect.bottom = block.rect.top
+                        self.collisionrect.bottom = block.rect.top
                     elif bottom:
-                        self.rect.top = block.rect.bottom
+                        self.collisionrect.top = block.rect.bottom
                     if block.bouncy:
                         self.y_speed = - block.bouncepwr * game.gravity
                         self.bouncesound.play()
@@ -487,8 +484,9 @@ class Player(pygame.sprite.Sprite):
                                 (game.gravity == -1 and bottom):
                             self.status["resting"] = True
                 if block.moving:
-                    self.rect.x += block.xspeed * dt * block.direction
-        self.collisionrect.midbottom = self.rect.midbottom
+                    self.collisionrect.x += block.xspeed * dt * block.direction
+            self.fixCollision(game.gravity)
+        # self.collisionrect.midbottom = self.rect.midbottom
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
         self.status["pushing"] = False
@@ -560,7 +558,7 @@ class Player(pygame.sprite.Sprite):
                 self.x_speed = 0
                 if game.glitches["wallClimb"]:
                         self.y_speed = -200 * game.gravity
-            self.rect.midbottom = self.collisionrect.midbottom
+            self.fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Test for collision with bouncy platforms and act accordingly
         # v--------------------------------------------------------------v
@@ -570,21 +568,21 @@ class Player(pygame.sprite.Sprite):
             power = int(cell["power"])
             if 't' in bouncy and last.bottom <= cell.top and\
                     self.collisionrect.bottom > cell.top:
-                self.rect.bottom = cell.top
+                self.collisionrect.bottom = cell.top
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
                     self.y_speed = - power
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.collisionrect.top < cell.bottom:
-                self.rect.top = cell.bottom
+                self.collisionrect.top = cell.bottom
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
                     self.y_speed = power
             if 'l' in bouncy and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
-                self.rect.right = cell.left
+                self.collisionrect.right = cell.left
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
@@ -594,7 +592,7 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = game.gravity*power*directioner
             if 'r' in bouncy and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
-                self.rect.left = cell.right
+                self.collisionrect.left = cell.right
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
@@ -602,6 +600,7 @@ class Player(pygame.sprite.Sprite):
                     self.x_speed = power*dt
                     directioner = -1 if (self.y_speed <= 0) else 1
                     self.y_speed = game.gravity*power*directioner
+            self.fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Test for collisions with deadly ground and act accordingly
         # v--------------------------------------------------------------v
@@ -660,13 +659,26 @@ class Player(pygame.sprite.Sprite):
             if game.gameStatus["mode"] not in ["singlemap"]:
                 game.LoadLevel(level, game.gameStatus["campaignName"],
                                game.gameStatus["mode"], game.screen)
-                game.loadLevelPart2(game.keys, self.soundslink)
+                if level:
+                    game.loadLevelPart2(game.keys, self.soundslink)
             else:
                 game.running = False
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
         # Wraps player movement if the glitch is active
         # v--------------------------------------------------------------v
+        if game.glitches["vWrapping"]:
+            if self.rect.y < 0:
+                last.y = game.tilemap.px_height + 32
+                self.rect.y = game.tilemap.px_height
+            elif self.rect.y > game.tilemap.px_height:
+                last.y = -32
+                self.rect.y = 0
+            self.collisionrect.midbottom = self.rect.midbottom
+        else:
+            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
+                self.respawn(game)
+        # ^--------------------------------------------------------------^
         if game.glitches["hWrapping"]:
             # This piece of code should avoid phasing through the floor
             # v-----------------------------v

@@ -17,6 +17,7 @@ class menu(object):
         self.keys = keys
         self.config = config
         self.sounds = sounds
+        self.update = False
         self.background = pygame.image.load(pathjoin("resources",
                                                      "UI",
                                                      "back.png")
@@ -71,6 +72,12 @@ class menu(object):
     def doAdditionalBlits(self):
         pass
 
+    def doAdditionalMotionHandling(self):
+        pass
+
+    def doExternalClickHandling(self):
+        pass
+
     def goToMenu(self):
         self.doAdditionalClosingOperations()
         self.modlogger.info("Going to the previous menu")
@@ -110,10 +117,11 @@ class menu(object):
                     for item in self.activeItems:
                         # Wrong code, selects/deselects continuously
                         if item.rect.collidepoint(*pygame.mouse.get_pos())\
-                                and not item.selectedStatus:
+                                and not item.selected:
                             item.makeSelected()
                         else:
                             item.makeUnselected()
+                    self.doAdditionalMotionHandling()
                 if event.type == pygame.MOUSEBUTTONUP:
                     for item in self.activeItems:
                         if item.rect.collidepoint(*pygame.mouse.get_pos()):
@@ -122,6 +130,7 @@ class menu(object):
                             # Found the item, break the cycle
                             break
                         self.doAdditionalMouseHandling()
+                    self.doExternalClickHandling()
             self.title = self.titleani.next(self.dt)
             self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.title, (self.titlerect.topleft))
