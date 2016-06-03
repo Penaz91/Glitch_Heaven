@@ -35,12 +35,14 @@ class loadMenu(menu):
         self.items.append(self.mainmenu)
 
     def addN(self):
-        self.id = (self.id + 1) % len(self.dirlist)
-        self.updateOperation = self.update_yes
+        if self.dirlist:
+            self.id = (self.id + 1) % len(self.dirlist)
+            self.updateOperation = self.update_yes
 
     def lessN(self):
-        self.id = (self.id - 1) % len(self.dirlist)
-        self.updateOperation = self.update_yes
+        if self.dirlist:
+            self.id = (self.id - 1) % len(self.dirlist)
+            self.updateOperation = self.update_yes
 
     def makeLeftArrow(self):
         self.left = textMenuItem("v", (50, 260),
