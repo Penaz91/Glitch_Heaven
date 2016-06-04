@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
             self.collisionrect.midbottom = self.rect.midbottom
         else:
             self.collisionrect.midtop = self.rect.midtop
-            
+
     def fixCollision(self, gravity):
         if gravity == 1:
             self.rect.midbottom = self.collisionrect.midbottom
@@ -355,7 +355,7 @@ class Player(pygame.sprite.Sprite):
                                            self.x_speed+(self.playeraccel*dt))
             # ^--------------------------------------------------------------^
         self.rect.x += self.x_speed         # Move the player
-        #self.fixCollision(game.gravity)
+        # self.fixCollision(game.gravity)
         if game.glitches["multiJump"]:
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
                 # Plays the jump sound only with a player descending, to avoid
@@ -713,8 +713,9 @@ class Player(pygame.sprite.Sprite):
                 for out in game.tilemap.layers['Triggers'].find("TpOut"):
                     tpout = out['TpOut']
                     if tpout == tpin:
-                        self.rect.x = out.px
-                        self.rect.y = out.py
+                        self.collisionrect.x = out.px
+                        self.collisionrect.y = out.py
+                        self.fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Handles the Glitched Area animations
         # v--------------------------------------------------------------v
