@@ -53,6 +53,8 @@ and more challenging.
 None at the moment
 
 ### Planned Features
+- Make the Buttons/Checkpoints look active when used
+- Make all interactibles require a press of the action button
 - Better Particle Engine
 - Sound Effects
 - Music

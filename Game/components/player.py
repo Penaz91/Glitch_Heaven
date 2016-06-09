@@ -6,6 +6,7 @@ from os.path import join as pjoin
 import json
 from components.deadbody import DeadBody
 from components.help import Help
+from components.UI.textinput import textInput
 from libs.spritesheetanimation import SpritesheetAnimation as SpriteAni
 from libs import emitter
 
@@ -656,13 +657,26 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'playerExit'):
             level = cell["playerExit"]
-            if game.gameStatus["mode"] not in ["singlemap"]:
-                game.LoadLevel(level, game.gameStatus["campaignName"],
-                               game.gameStatus["mode"], game.screen)
-                if level:
-                    game.loadLevelPart2(game.keys, self.soundslink)
+            if "password" in cell:
+                pw = cell["password"]
             else:
-                game.running = False
+                pw = None
+            passed = False
+            if pw:
+                guess = textInput(game.screen, game.font,
+                                  "Password required").get_input()
+                if guess == pw:
+                    passed = True
+            else:
+                passed = True
+            if passed:
+                if game.gameStatus["mode"] not in ["singlemap"]:
+                    game.LoadLevel(level, game.gameStatus["campaignName"],
+                                   game.gameStatus["mode"], game.screen)
+                    if level:
+                        game.loadLevelPart2(game.keys, self.soundslink)
+                else:
+                    game.running = False
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
         # Wraps player movement if the glitch is active
