@@ -35,5 +35,8 @@
         "obstacleparticles": false,
         "screenwidth": 800,
         "screenheight": 600
+    },
+    General: {
+	autosaving: false
     }
 }

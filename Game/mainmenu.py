@@ -53,6 +53,15 @@ class mainMenu(menu):
         self.activeItems.append(self.credits)
         self.items.append(self.credits)
 
+    def makeHowToMenu(self):
+        self.howTo = textMenuItem("How to Play", (50, 420),
+                                  lambda: self.editDesc(
+                                      "Learn how to play the game"),
+                                  lambda: None,
+                                  self.config, self.sounds, self.font)
+        self.activeItems.append(self.howTo)
+        self.items.append(self.howTo)
+
     def makeQuitMenu(self):
         self.exit = textMenuItem("Quit", (700, 560),
                                  lambda: self.editDesc("Quit the Game"),
@@ -121,6 +130,7 @@ class mainMenu(menu):
         # v------------------------------------------------------------------v
         self.makeCreditsMenu()
         # ^------------------------------------------------------------------^
+        self.makeHowToMenu()
         # Quit game menu element
         # v------------------------------------------------------------------v
         self.makeQuitMenu()
