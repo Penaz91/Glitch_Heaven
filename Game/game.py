@@ -273,6 +273,7 @@ class Game(object):
     def eraseCurrentLevel(self):
         # At first call, does nothing (Player still has to be created)
         # Self-remaps at runtime to the stage deleting function
+        self.currenthelp = ""
         self.eraseCurrentLevel = self.eraseCurrentLevel_Post
 
     def eraseCurrentLevel_Post(self):

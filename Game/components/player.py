@@ -642,41 +642,57 @@ class Player(pygame.sprite.Sprite):
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'Help'):
-            helptext = cell['Help']
-            if helptext != game.currenthelp:
-                game.helpflagActive = False
-            if not game.helpflagActive:
-                game.helpflagActive = False
-                game.currenthelp = helptext
-                x, y = game.tilemap.pixel_from_screen(cell.px+cell.width/2,
-                                                      cell.py-20)
-                Help(x, y, game.sprites, game=game, Text=helptext)
+            if key[self.keys["action"]]:
+                if "password" in cell:
+                    pw = cell["password"]
+                else:
+                    pw = None
+                passed = False
+                if pw:
+                    guess = textInput(game.screen, game.font,
+                                      "Password required").get_input()
+                    if guess == pw:
+                        passed = True
+                else:
+                    passed = True
+                if passed:
+                    helptext = cell['Help']
+                    if helptext != game.currenthelp:
+                        game.helpflagActive = False
+                    if not game.helpflagActive:
+                        game.helpflagActive = False
+                        game.currenthelp = helptext
+                        x, y = game.tilemap.pixel_from_screen(
+                                cell.px+cell.width/2,
+                                cell.py-20)
+                        Help(x, y, game.sprites, game=game, Text=helptext)
         # ^--------------------------------------------------------------^
         # Test collision with exit trigger and act accordingly
         # v--------------------------------------------------------------v
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'playerExit'):
-            level = cell["playerExit"]
-            if "password" in cell:
-                pw = cell["password"]
-            else:
-                pw = None
-            passed = False
-            if pw:
-                guess = textInput(game.screen, game.font,
-                                  "Password required").get_input()
-                if guess == pw:
-                    passed = True
-            else:
-                passed = True
-            if passed:
-                if game.gameStatus["mode"] not in ["singlemap"]:
-                    game.LoadLevel(level, game.gameStatus["campaignName"],
-                                   game.gameStatus["mode"], game.screen)
-                    if level:
-                        game.loadLevelPart2(game.keys, self.soundslink)
+            if key[self.keys["action"]]:
+                level = cell["playerExit"]
+                if "password" in cell:
+                    pw = cell["password"]
                 else:
-                    game.running = False
+                    pw = None
+                passed = False
+                if pw:
+                    guess = textInput(game.screen, game.font,
+                                      "Password required").get_input()
+                    if guess == pw:
+                        passed = True
+                else:
+                    passed = True
+                if passed:
+                    if game.gameStatus["mode"] not in ["singlemap"]:
+                        game.LoadLevel(level, game.gameStatus["campaignName"],
+                                       game.gameStatus["mode"], game.screen)
+                        if level:
+                            game.loadLevelPart2(game.keys, self.soundslink)
+                    else:
+                        game.running = False
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
         # Wraps player movement if the glitch is active
@@ -709,12 +725,25 @@ class Player(pygame.sprite.Sprite):
                                                             "button"):
             if key[self.keys["action"]]:
                 butt = cell['button']
-                for plat in game.plats:
-                    if plat.id == butt:
-                        plat.active = True
-                        plat.image = plat.activeimg
-                        self.mod_logger.info("Player pressed the button \
-                                with ID: %(butt)s" % locals())
+                if "password" in cell:
+                    pw = cell["password"]
+                else:
+                    pw = None
+                passed = False
+                if pw:
+                    guess = textInput(game.screen, game.font,
+                                      "Password required").get_input()
+                    if guess == pw:
+                        passed = True
+                else:
+                    passed = True
+                if passed:
+                    for plat in game.plats:
+                        if plat.id == butt:
+                            plat.active = True
+                            plat.image = plat.activeimg
+                            self.mod_logger.info("Player pressed the button \
+                                    with ID: %(butt)s" % locals())
         # ^--------------------------------------------------------------^
         # Handles the triggering of teleporters
         # v--------------------------------------------------------------v
