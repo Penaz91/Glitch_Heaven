@@ -37,6 +37,6 @@
         "screenheight": 600
     },
     "General": {
-	"autosaving": false
+	      "autosaving": true
     }
 }

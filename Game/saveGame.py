@@ -30,6 +30,7 @@ class saveGameMenu(loadMenu):
             savefile.write(json.dumps(self.gameInstance.gameStatus))
             self.modlogger.info("Game saved on the file: \
                     %(savefile)s" % locals())
+        self.gameInstance.SaveFile = path;
         self.running = False
 
     def makeNewSave(self):

@@ -211,6 +211,12 @@ class Game(object):
         # ^--------------------------------------------------------------^
         self.mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
+        if self.config["General"]["autosaving"] and self.SaveFile:
+            self.mod_logger.debug("Saved with data: {0}"
+                                 % self.gameStatus)
+            with open(self.SaveFile, "w") as savefile:
+                savefile.write(json.dumps(self.gameStatus))
+                self.mod_logger.info("Game autosaved on the file: {0}".format(self.SaveFile))
 
     def LoadLevel(self, level, campaignname, mode, screen):
         """
@@ -349,6 +355,8 @@ class Game(object):
         """
         self.mod_logger.info("Loading Save from: %(path)s"
                              % locals())
+        if self.config["General"]["autosaving"]:
+            self.SaveFile = path;
         with open(path, "r") as savefile:
             self.gameStatus = json.loads(savefile.read())
         if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
@@ -422,6 +430,7 @@ class Game(object):
         - modifiers: Modifiers Dictionary instance
         - log: The main logger, inherited by the bootstrapper
         """
+        self.SaveFile = None
         self.gameStatus = {
                 "campaignFile": None,
                 "campaignName": None,
