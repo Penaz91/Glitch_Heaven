@@ -23,6 +23,8 @@ from random import randint, choice
 from os.path import join as pathjoin
 from libs.textglitcher import makeGlitched, makeMoreGlitched
 from libs.debugconstants import _debugkeys_
+from components.button import button
+from components.checkpoint import checkPoint
 _garbletimer_ = 0.1
 
 
@@ -182,6 +184,25 @@ class Game(object):
                     False, platform['id'], self.plats, game=self,
                     bouncy=bouncy, image=self.preloaded_sprites["platforms"])
         self.tilemap.layers.append(self.plats)
+
+        # ^--------------------------------------------------------------^
+        # Creates all the buttons
+        # v--------------------------------------------------------------v
+        self.btns = tmx.SpriteLayer()
+        for btn in self.tilemap.layers['Triggers'].find('button'):
+            ident = btn['button']
+            password = None
+            if "password" in btn:
+                password = btn["password"]
+            button((btn.px, btn.py), ident, password, self.btns)
+        self.tilemap.layers.append(self.btns)
+        # ^--------------------------------------------------------------^
+        # Creates all the checkpoints
+        # v--------------------------------------------------------------v
+        self.checkpoints = tmx.SpriteLayer()
+        for chk in self.tilemap.layers["Triggers"].find('CheckPoint'):
+            checkPoint((chk.px, chk.py), self.checkpoints)
+        self.tilemap.layers.append(self.checkpoints)
         # ^--------------------------------------------------------------^
         # Creates all the glitch toggles
         # v--------------------------------------------------------------v
@@ -294,6 +315,7 @@ class Game(object):
         self.plats.empty()
         self.GlitchTriggers.empty()
         self.sprites.empty()
+        self.btns.empty()
         self.helpflagActive = False
         self.currenthelp = ""
 

@@ -721,7 +721,7 @@ class Player(pygame.sprite.Sprite):
             # ^-----------------------------^
         # Handles the triggering of mobile platforms
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
+        """for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             "button"):
             if key[self.keys["action"]]:
                 butt = cell['button']
@@ -743,7 +743,32 @@ class Player(pygame.sprite.Sprite):
                             plat.active = True
                             plat.image = plat.activeimg
                             self.mod_logger.info("Player pressed the button \
-                                    with ID: %(butt)s" % locals())
+                                    with ID: %(butt)s" % locals())"""
+        if key[self.keys["action"]]:
+            for item in pygame.sprite.spritecollide(self, game.btns,
+                                                    False):
+                passed = False
+                if item.password:
+                    guess = textInput(game.screen, game.font,
+                                      "Password required").get_input()
+                    if guess == item.password:
+                        passed = True
+                else:
+                    passed = True
+                if passed:
+                    for plat in game.plats:
+                        if plat.id == item.id:
+                            plat.active = True
+                            plat.image = plat.activeimg
+                            item.activate()
+                            self.mod_logger.info("Player pressed the button \
+                                    with ID: {0}".format(item.id))
+            # Checkpoint Handling
+            for item in pygame.sprite.spritecollide(self, game.checkpoints, False):
+                if not item.used:
+                    self.lastcheckpoint = (self.rect.x, self.rect.y)
+                    item.activate()
+                    self.mod_logger.info("Checkpoint Saved")
         # ^--------------------------------------------------------------^
         # Handles the triggering of teleporters
         # v--------------------------------------------------------------v
@@ -769,13 +794,13 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         # Handles The checkpoints
         # v--------------------------------------------------------------v
-        for cell in game.tilemap.layers['Triggers'].collide(
+        """for cell in game.tilemap.layers['Triggers'].collide(
                 self.collisionrect, 'CheckPoint'):
                 chk = cell['CheckPoint']
                 if chk == 1:
                     self.lastcheckpoint = (self.rect.x, self.rect.y)
                     cell['CheckPoint'] = 0
-                    self.mod_logger.info("Checkpoint Saved")
+                    self.mod_logger.info("Checkpoint Saved")"""
         # ^--------------------------------------------------------------^
         # Handles The Glitch Triggers
         # v--------------------------------------------------------------v
