@@ -53,7 +53,6 @@ and more challenging.
 None at the moment
 
 ### Planned Features
-- Make the Buttons/Checkpoints look active when used
 - Make all interactibles require a press of the action button
 - Better Particle Engine
 - Sound Effects
@@ -61,6 +60,11 @@ None at the moment
 - Animations
 - **real** graphics
 - In-game help
+
+### Other Implemented Features:
+- Password Locks: Find the password to unlock a terminal, button or exit
+- Custom Maps and Campaigns support
+- Infinite Savegames (As many as your HD can handle)
 
 ### Other info:
 This Game uses Renfred Harper's Python3 port of Richard Jones's TMX Library to load maps.

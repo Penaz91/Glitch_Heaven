@@ -5,6 +5,7 @@
     	{
         "Level1": "1",
         "Level8": "2",
-        "Level12": "3"
+        "Level12": "3",
+	":CampaignEnd:" : "3"
         }
 }

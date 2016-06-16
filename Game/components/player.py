@@ -764,7 +764,8 @@ class Player(pygame.sprite.Sprite):
                             self.mod_logger.info("Player pressed the button \
                                     with ID: {0}".format(item.id))
             # Checkpoint Handling
-            for item in pygame.sprite.spritecollide(self, game.checkpoints, False):
+            for item in pygame.sprite.spritecollide(self, game.checkpoints,
+                                                    False):
                 if not item.used:
                     self.lastcheckpoint = (self.rect.x, self.rect.y)
                     item.activate()

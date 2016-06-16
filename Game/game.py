@@ -234,10 +234,11 @@ class Game(object):
         # ^--------------------------------------------------------------^
         if self.config["General"]["autosaving"] and self.SaveFile:
             self.mod_logger.debug("Saved with data: {0}"
-                                 % self.gameStatus)
+                                  % self.gameStatus)
             with open(self.SaveFile, "w") as savefile:
                 savefile.write(json.dumps(self.gameStatus))
-                self.mod_logger.info("Game autosaved on the file: {0}".format(self.SaveFile))
+                self.mod_logger.info("Game autosaved on the file: {0}"
+                                     % (self.SaveFile))
 
     def LoadLevel(self, level, campaignname, mode, screen):
         """
@@ -251,6 +252,9 @@ class Game(object):
         """
         if not level:
             # No more levels, close
+            if ":CampaignEnd:" in self.gameStatus["intermissions"]:
+                self.startIntermission(
+                        self.gameStatus["intermissions"][":CampaignEnd:"])
             self.running = False
         else:
             lvl = self.generatePath(campaignname, level)
@@ -378,7 +382,7 @@ class Game(object):
         self.mod_logger.info("Loading Save from: %(path)s"
                              % locals())
         if self.config["General"]["autosaving"]:
-            self.SaveFile = path;
+            self.SaveFile = path
         with open(path, "r") as savefile:
             self.gameStatus = json.loads(savefile.read())
         if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
