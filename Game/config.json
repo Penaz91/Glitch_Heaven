@@ -1,42 +1,42 @@
 {
+    "Debug": {
+        "debugmode": true,
+        "keydebug": false,
+        "loggerlevel": "DEBUG"
+    },
     "Controls": {
+        "confirm": 13,
         "jump": 273,
+        "up": 273,
         "escape": 27,
         "restart": 114,
-        "action": 274,
-        "down": 274,
+        "right": 275,
         "run": 122,
+        "down": 274,
         "left": 276,
-        "confirm": 13,
-        "up": 273,
-        "right": 275
+        "action": 274
     },
-    "Debug": {
-        "loggerlevel": "DEBUG",
-        "keydebug": false,
-        "debugmode": true
+    "Video": {
+        "obstacleparticles": false,
+        "screenheight": 600,
+        "deathcounter": true,
+        "playerparticles": true,
+        "screenwidth": 800,
+        "doublebuffer": false,
+        "fullscreen": false
     },
     "Sound": {
         "sfxvolume": 6.0,
-        "musicvolume": 5.5,
         "mixer_preinit": true,
+        "musicvolume": 5.5,
         "menuvolume": 15.0
     },
     "Unlockables": {
-        "CFMode": true,
         "NHMode": false,
+        "CFMode": true,
         "modifiers": true
     },
-    "Video": {
-        "playerparticles": true,
-        "deathcounter": true,
-        "doublebuffer": false,
-        "fullscreen": false,
-        "obstacleparticles": false,
-        "screenwidth": 800,
-        "screenheight": 600
-    },
     "General": {
-	      "autosaving": true
+        "autosaving": true
     }
 }

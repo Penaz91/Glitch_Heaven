@@ -27,7 +27,7 @@ class KeyboardItem (menuitem):
                             False, (255, 255, 255)).convert_alpha()
                     self.selectedimg = makeGlitched(
                             (str(pygame.key.name(event.key))).upper(), font)
-                    self.image = self.selected
+                    self.image = self.selectedimg
                     config["Controls"][str(key)] = event.key
                     with open("config.json", "w") as conf:
                         conf.write(json.dumps(config, indent=4))
