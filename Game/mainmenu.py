@@ -11,6 +11,8 @@ from loadSaves import loadSaveMenu
 from libs.textglitcher import makeGlitched
 from components.UI.textMenuItem import textMenuItem
 from components.UI.menu import menu
+from components.UI.comicreader import comicReader
+from os.path import join as pjoin
 
 
 class mainMenu(menu):
@@ -57,7 +59,9 @@ class mainMenu(menu):
         self.howTo = textMenuItem("How to Play", (50, 420),
                                   lambda: self.editDesc(
                                       "Learn how to play the game"),
-                                  lambda: None,
+                                  lambda: comicReader(pjoin("resources",
+                                                         "howto"), self.screen,
+                                                   self.keys["action"], self.mainLogger).look(),
                                   self.config, self.sounds, self.font)
         self.activeItems.append(self.howTo)
         self.items.append(self.howTo)
