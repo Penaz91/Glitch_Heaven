@@ -11,6 +11,7 @@ from operator import __mul__, __floordiv__
 from components.player import Player
 from datetime import timedelta
 from libs import tmx
+from components.laser import Laser
 from os.path import join as pjoin
 from os.path import splitext, basename
 from components.mobileobstacle import Obstacle
@@ -184,7 +185,20 @@ class Game(object):
                     False, platform['id'], self.plats, game=self,
                     bouncy=bouncy, image=self.preloaded_sprites["platforms"])
         self.tilemap.layers.append(self.plats)
-
+        # Creates all the lasers
+        # v--------------------------------------------------------------v
+        self.lasers = tmx.SpriteLayer()
+        for laser in self.tilemap.layers['Triggers'].find('Laser'):
+            time = laser['Laser']
+            number = 0
+            if 'id' in laser:
+                number = laser['id']
+            size = (laser.width, laser.height)
+            vertical = size[1] > size[0]
+            definingsize = size[1] if vertical else size[0]
+            Laser(definingsize, vertical, time, number, (laser.px, laser.py),
+                  self.lasers)
+        self.tilemap.layers.append(self.lasers)
         # ^--------------------------------------------------------------^
         # Creates all the buttons
         # v--------------------------------------------------------------v

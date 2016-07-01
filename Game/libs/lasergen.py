@@ -8,7 +8,7 @@ from os.path import join as pjoin
 
 def generate(size, vertical=False, image=None):
     if image is None:
-        graphics = pygame.image.load(pjoin("laser.png")).convert_alpha()
+        graphics = pygame.image.load(pjoin("resources", "sprites", "laser.png")).convert_alpha()
     else:
         graphics = image
     if vertical:

@@ -839,6 +839,11 @@ class Player(pygame.sprite.Sprite):
                 self.rect.x += block.xspeed * dt * block.direction
             else:
                 self.respawn(game)
+        # Handles touching lasers
+        collision = pygame.sprite.spritecollide(self, game.lasers, False)
+        secondpass = [laser for laser in collision if laser.active]
+        for block in secondpass:
+            self.respawn(game)
         # MUST BE LAST OPERATION
         # v--------------------------------------------------------------v
         self.animate(self.y_speed, self.x_speed, self.status["resting"],
