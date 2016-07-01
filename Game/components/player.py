@@ -840,10 +840,23 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.respawn(game)
         # Handles touching lasers
+        # v--------------------------------------------------------------v
         collision = pygame.sprite.spritecollide(self, game.lasers, False)
         secondpass = [laser for laser in collision if laser.active]
         for block in secondpass:
-            self.respawn(game)
+            if game.glitches["laserresistant"]:
+                # FIXME: Screen trembles when on lasers
+                # FIXME: Need to make vertical lasers work like walls
+                if self.y_speed * game.gravity >= 0:
+                    if game.gravity == 1 and self.rect.bottom > block.rect.top:
+                        self.rect.bottom = block.rect.top
+                        self.status["resting"] = True  # Allows jump
+                    elif game.gravity == -1 and\
+                            self.rect.top < block.rect.bottom:
+                        self.rect.top = block.rect.bottom
+                        self.status["resting"] = True  # Allows jump
+            else:
+                self.respawn(game)
         # MUST BE LAST OPERATION
         # v--------------------------------------------------------------v
         self.animate(self.y_speed, self.x_speed, self.status["resting"],

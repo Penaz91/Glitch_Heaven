@@ -50,7 +50,7 @@ and more challenging.
 - **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end (Separated in horizontal and vertical Wrap) - See Issue #57
 
 ### Glitches Planned:
-None at the moment
+- **Resistance to lasers:** This will allow the player to use lasers as platforms
 
 ### Planned Features
 - Make all interactibles require a press of the action button

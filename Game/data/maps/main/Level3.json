@@ -42,7 +42,8 @@
             "noStop": false,
             "timeLapse": false,
 	    "highAccel": false,
-	    "lowAccel": false
+	    "lowAccel": false,
+	    "laserresistant": false
         },
         "ChaosMode":
         {
@@ -73,7 +74,8 @@
             "noStop": false,
             "timeLapse": false,
 	    "highAccel": false,
-	    "lowAccel": false
+	    "lowAccel": false,
+	    "laserresistant": false
 	}
     }
 }
