@@ -16,6 +16,7 @@ class Laser(pygame.sprite.Sprite):
         self.rect.x, self.rect.y = location
         self.id = number
         self.time = 0.
+        self.vertical = vertical
         self.triggertime = time
         self.active = time == 0
         self.update = self.update_timed

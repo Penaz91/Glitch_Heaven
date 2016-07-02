@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="46">
- <tileset firstgid="1" name="Tile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
+ <tileset firstgid="1" name="Tile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztWFsKwjAQDKL4Z1X8FMQrqQfo/U+hQQshjJvsZrdN0w7Mly7d6b7bOeeuTHY/cu2s6H05Oj4OQjsr5PqzJexOqh7JkKPj8uEm4pBXT4IvG5chcnScnU4+PpydVmmez7U+tOwo7Apsa9JRglWHvQ5OntWsg4NVx3eGhLNxr+gXhX9zuURHOBvvOm4moTWXPXLiWDIPuGipPnxMekBq96lRh0U8UC1a9gENHfFtMvzeRbSMn2bfRfdJzH//5xDFtVTHFLc46u8t9SvKH3/D9YDW+c7FUuKhbWcFqT9+xxlrn8pBbe9VipZ0oP1qzG9oGmgpHq3ooPaesW5VLtB3c2pPqqW3pu6AueQVusnDdzwXHSlMqQPlirQmp9SBckVak0vIq5vSM8L8serjqfmhQYsbHT3jDcP9ITY=
+   eJztWFEOgjAMXYzGP1DDp4nxDHoS9QDc/xTaCAlZSrd2LYzBS94PoaxvbdeV2jl3ZbLuyLWzIvhycnxUQjsrxPqzJ+zOqh7JEKOj+XHnsc+rN8GPjcsoYnRcnE4+vpydVmmeL7U+tOwoHBJsc9KRgk2HvQ5OnuWsg4NNx7+HDHvjUdEvCmN9OUXHsDfeddwMQqsvA2LimNIPuCipPiAmLULq7pOjDot4YLVoeQ6AP5L6hFrrdfizSf/d2qNl/GC9h8Du2dn6e+7PJz7H3ucQi2s18jyExs03n2P5U9J5RfkDM1yL0DrfuVhLPLTtrCD1B87dqe5TMchtX6UoSQd2v5ryH5oGSopHKTqoe89UsyoX2H9z6p6Uy9kamgOWklfYTD7c46XoCGFOHViuSGtyTh1Yrkhrcg15dVNaY5g/Vud4qH9o0GJGx9b4ApIfIZA=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -204,7 +204,7 @@
     <property name="PlatReverse" value=""/>
    </properties>
   </object>
-  <object id="45" x="32" y="576" width="384" height="32">
+  <object id="45" x="32" y="608" width="384" height="32">
    <properties>
     <property name="Laser" value="5"/>
    </properties>

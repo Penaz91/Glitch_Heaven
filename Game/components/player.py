@@ -845,16 +845,27 @@ class Player(pygame.sprite.Sprite):
         secondpass = [laser for laser in collision if laser.active]
         for block in secondpass:
             if game.glitches["laserresistant"]:
-                # FIXME: Screen trembles when on lasers
-                # FIXME: Need to make vertical lasers work like walls
-                if self.y_speed * game.gravity >= 0:
-                    if game.gravity == 1 and self.rect.bottom > block.rect.top:
-                        self.rect.bottom = block.rect.top
-                        self.status["resting"] = True  # Allows jump
-                    elif game.gravity == -1 and\
-                            self.rect.top < block.rect.bottom:
-                        self.rect.top = block.rect.bottom
-                        self.status["resting"] = True  # Allows jump
+                if block.vertical:
+                    if self.x_speed > 0 and self.rect.right > block.rect.left:
+                        self.rect.right = block.rect.left
+                        self.x_speed = 0
+                        self.status["pushing"] = True
+                    elif self.x_speed < 0 and self.rect.left < block.rect.right:
+                        self.rect.left = block.rect.right
+                        self.x_speed = 0
+                        self.status["pushing"] = True
+                else:
+                    # FIXME: Screen trembles when on lasers
+                    if self.y_speed * game.gravity >= 0:
+                        if game.gravity == 1 and self.rect.bottom > block.rect.top:
+                            self.rect.bottom = block.rect.top
+                            self.y_speed = 0
+                            self.status["resting"] = True  # Allows jump
+                        elif game.gravity == -1 and\
+                                self.rect.top < block.rect.bottom:
+                            self.rect.top = block.rect.bottom
+                            self.y_speed = 0
+                            self.status["resting"] = True  # Allows jump
             else:
                 self.respawn(game)
         # MUST BE LAST OPERATION
