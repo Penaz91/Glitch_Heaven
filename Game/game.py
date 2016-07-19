@@ -100,6 +100,11 @@ class Game(object):
         self.gameStatus["currentLevel"] = level
         return pjoin("data", "maps", campaignname, level)
 
+    def showLoadingScreen(self):
+        self.screen.fill((0, 0, 0))
+        self.screen.blit(self.loadWriting, (50, 50))
+        pygame.display.update()
+
     def RealLoadLevel(self, path, mode, screen):
         """
         Loads a level structure, given path, mode and screen
@@ -114,9 +119,11 @@ class Game(object):
         # Erases level and if we're doing a campaign, checks for intermissions
         # v--------------------------------------------------v
         self.eraseCurrentLevel()
+        self.showLoadingScreen()
         if mode not in ["singlemap"]:
             self.checkIntermission()
         # ^--------------------------------------------------^
+        self.showLoadingScreen()
         # Loads the level configuration and its chaos parameters
         # v--------------------------------------------------v
         with open(path+".json") as f:
@@ -515,6 +522,7 @@ class Game(object):
         self.font = pygame.font.Font(pjoin(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 20)
+        self.loadWriting = self.font.render("Loading...", False, (255, 255, 255))
         self.title, self.titleposition, self.player = 3 * [None]
         self.screen = screen
         self.keys = keys
