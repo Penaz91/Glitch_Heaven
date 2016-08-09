@@ -829,14 +829,16 @@ class Player(pygame.sprite.Sprite):
                 if self.y_speed * game.gravity > 0:
                     if game.gravity == 1 and self.rect.bottom > block.rect.top:
                         self.rect.bottom = block.rect.top
-                        self.y_speed = block.yspeed
+                        if block.vertical:
+                            self.y_speed = block.speed
                         self.status["resting"] = True  # Allows jump
                     elif game.gravity == -1 and\
                             self.rect.top < block.rect.bottom:
                         self.rect.top = block.rect.bottom
                         self.y_speed = - block.yspeed
                         self.status["resting"] = True  # Allows jump
-                self.rect.x += block.xspeed * dt * block.direction
+                if not block.vertical:
+                    self.rect.x += block.speed * dt * block.direction
             else:
                 self.respawn(game)
         # Handles touching lasers
