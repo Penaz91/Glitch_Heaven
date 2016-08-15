@@ -761,8 +761,16 @@ class Player(pygame.sprite.Sprite):
                             plat.active = True
                             plat.image = plat.activeimg
                             item.activate()
-                            self.mod_logger.info("Player pressed the button \
-                                    with ID: {0}".format(item.id))
+                    for laser in game.lasers:
+                        if laser.id == item.id:
+                            laser.triggertime = 0
+                            laser.active = False
+                            laser.update = laser.update_static
+                            laser.image = laser.inactiveimage
+                            item.activate()
+                    self.mod_logger.info("Player pressed the button \
+                            with ID: {0}".format(item.id))
+
             # Checkpoint Handling
             for item in pygame.sprite.spritecollide(self, game.checkpoints,
                                                     False):
@@ -852,14 +860,16 @@ class Player(pygame.sprite.Sprite):
                         self.rect.right = block.rect.left
                         self.x_speed = 0
                         self.status["pushing"] = True
-                    elif self.x_speed < 0 and self.rect.left < block.rect.right:
+                    elif self.x_speed < 0 and \
+                            self.rect.left < block.rect.right:
                         self.rect.left = block.rect.right
                         self.x_speed = 0
                         self.status["pushing"] = True
                 else:
                     # FIXME: Screen trembles when on lasers
                     if self.y_speed * game.gravity >= 0:
-                        if game.gravity == 1 and self.rect.bottom > block.rect.top:
+                        if game.gravity == 1 and\
+                                self.rect.bottom > block.rect.top:
                             self.rect.bottom = block.rect.top
                             self.y_speed = 0
                             self.status["resting"] = True  # Allows jump

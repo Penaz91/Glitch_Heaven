@@ -522,7 +522,8 @@ class Game(object):
         self.font = pygame.font.Font(pjoin(
                             "resources", "fonts",
                             "TranscendsGames.otf"), 20)
-        self.loadWriting = self.font.render("Loading...", False, (255, 255, 255))
+        self.loadWriting = self.font.render("Loading...", False,
+                                            (255, 255, 255))
         self.title, self.titleposition, self.player = 3 * [None]
         self.screen = screen
         self.keys = keys

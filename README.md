@@ -48,9 +48,10 @@ and more challenging.
 
 ### Glitches Partially Implemented or that need BuxFixes/Testing:
 - **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end (Separated in horizontal and vertical Wrap) - See Issue #57
+- **Resistance to lasers:** This will allow the player to use lasers as platforms
 
 ### Glitches Planned:
-- **Resistance to lasers:** This will allow the player to use lasers as platforms
+None at the moment
 
 ### Planned Features
 - Make all interactibles require a press of the action button

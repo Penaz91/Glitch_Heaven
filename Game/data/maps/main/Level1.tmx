@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="46">
- <tileset firstgid="1" name="Tile" tilewidth="32" tileheight="32" tilecount="117">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="47">
+ <tileset firstgid="1" name="Tile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
@@ -207,6 +207,12 @@
   <object id="45" x="32" y="608" width="384" height="32">
    <properties>
     <property name="Laser" value="5"/>
+    <property name="id" value="l1"/>
+   </properties>
+  </object>
+  <object id="46" x="160" y="864" width="32" height="32">
+   <properties>
+    <property name="button" value="l1"/>
    </properties>
   </object>
  </objectgroup>
