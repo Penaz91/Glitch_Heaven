@@ -12,7 +12,8 @@ from logging.handlers import TimedRotatingFileHandler
 from os.path import join as pathjoin
 from os import getcwd as pwd
 from os.path import dirname, realpath
-from os import chdir
+from os import chdir, environ
+environ['SDL_VIDEO_CENTERED'] = '1'
 if __name__ == "__main__":
     # Changed directory for non-console execution
     # v---------------------------------------------------------------v
@@ -22,6 +23,11 @@ if __name__ == "__main__":
         wd = dirname(realpath(__file__))
     chdir(wd)
     # ^---------------------------------------------------------------^
+    pygame.display.init()
+    img = pygame.image.load(pathjoin("resources", "UI", "Loading.png"))
+    screen = pygame.display.set_mode((400, 200), pygame.NOFRAME, 32)
+    screen.blit(img, (0, 0))
+    pygame.display.update()
     try:
         config = None
         with open(pathjoin("config.json")) as conf:
@@ -83,8 +89,7 @@ if __name__ == "__main__":
                 pygame.mixer.pre_init(48000, 16, 2, 4096)
             except:
                 logger.error("Mixer pre-init failed, continuing")
-        logger.info("Initialising Display")
-        pygame.display.init()
+        logger.info("Display Already Initialized")
         logger.info("Initialising Fonts")
         pygame.font.init()
         logger.info("Initialising Mixer")
