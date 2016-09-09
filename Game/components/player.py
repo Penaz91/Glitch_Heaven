@@ -487,6 +487,22 @@ class Player(pygame.sprite.Sprite):
                 if block.moving:
                     self.collisionrect.x += block.xspeed * dt * block.direction
             self.fixCollision(game.gravity)
+        # Wraps player movement if the glitch is active
+        # v--------------------------------------------------------------v
+        if game.glitches["vWrapping"]:
+            if self.rect.y < 0:
+                last.y = game.tilemap.px_height
+                self.rect.y = game.tilemap.px_height
+                self.rect.x = last.x
+            elif self.rect.y > game.tilemap.px_height:
+                last.y = 0
+                self.rect.y = 0
+                self.rect.x = last.x
+            self.RealignCollision(game.gravity)
+        else:
+            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
+                self.respawn(game)
+        # ^--------------------------------------------------------------^
         # self.collisionrect.midbottom = self.rect.midbottom
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
@@ -695,20 +711,6 @@ class Player(pygame.sprite.Sprite):
                         game.running = False
         # ^--------------------------------------------------------------^
         game.tilemap.set_focus(self.rect.x, self.rect.y)    # Sets screen focus
-        # Wraps player movement if the glitch is active
-        # v--------------------------------------------------------------v
-        if game.glitches["vWrapping"]:
-            if self.rect.y < 0:
-                last.y = game.tilemap.px_height + 32
-                self.rect.y = game.tilemap.px_height
-            elif self.rect.y > game.tilemap.px_height:
-                last.y = -32
-                self.rect.y = 0
-            self.collisionrect.midbottom = self.rect.midbottom
-        else:
-            if self.rect.y < 0 or self.rect.y > game.tilemap.px_height:
-                self.respawn(game)
-        # ^--------------------------------------------------------------^
         if game.glitches["hWrapping"]:
             # This piece of code should avoid phasing through the floor
             # v-----------------------------v
