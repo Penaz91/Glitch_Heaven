@@ -44,10 +44,10 @@ and more challenging.
 - **Movement toggle Glitch** You can't stop walking, you gotta keep moving!
 - **TimeLapse glitch** Platforms and obstacles move only when you move horizontally
 - **Intertia Glitches:** 2 glitches that will make the controls either very stiff or very slippery. Useful for very reaction-prone stages or to put the player in difficulty
+- **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end (Separated in horizontal and vertical Wrap)
 
 
 ### Glitches Partially Implemented or that need BuxFixes/Testing:
-- **Screen Wrap Glitch:** Going over the screen edge makes you wrap at the other end (Separated in horizontal and vertical Wrap) - See Issue #57
 - **Resistance to lasers:** This will allow the player to use lasers as platforms
 
 ### Glitches Planned:
