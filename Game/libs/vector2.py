@@ -23,6 +23,15 @@ class Vector:
     def __sub__(self, b):
         return Vector(self.x - b.x, self.y - b.y)
 
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+
+    def __div__(self, scalar):
+        return Vector(self.x / scalar, self.y / scalar)
+
+    def __neg__(self):
+        return Vector(-self.x, -self.y)
+
     def scale(self, scalef):
         self.x *= scalef
         self.y *= scalef

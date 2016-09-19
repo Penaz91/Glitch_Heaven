@@ -48,11 +48,13 @@ class Player(pygame.sprite.Sprite):
         """Turns on the Double Speed Glitch"""
         self.playermaxspeed = 350
         self.playeraccel = 100
+        self.friction = 0.09
 
     def DoubleSpeedOff(self):
         """Turns off the Double Speed Glitch"""
         self.playermaxspeed = 250
         self.playeraccel = 50
+        self.friction = 0.15
 
     def HiJumpOn(self):
         """Turns on the High Jump Glitch"""
@@ -162,6 +164,7 @@ class Player(pygame.sprite.Sprite):
         self.mod_logger = log.getChild("playerEntity")
         self.playermaxspeed = 250
         self.playeraccel = 30
+        self.friction = 0.15
         self.runmultiplier = 1
         self.jumpMultiplier = 1
         self.soundslink = sounds
@@ -320,7 +323,7 @@ class Player(pygame.sprite.Sprite):
         # ^--------------------------------------------------------------^
         if self.left and not game.glitches["noLeft"]:
             self.direction = -1     # Mainly for different bounce mechanics
-            if not self.status["bounced"]:  # Not bounced away->control in air
+            """if not self.status["bounced"]:  # Not bounced away->control in air
                 # Why do i have different control in air if i'm running?
                 # This might lead to a change of speed in air
                 # Do i want this?
@@ -328,15 +331,19 @@ class Player(pygame.sprite.Sprite):
                 self.x_speed = max(-self.playermaxspeed * dt *
                                    self.runmultiplier,
                                    self.x_speed-self.playeraccel*dt *
-                                   self.runmultiplier)  # Use run/walk speed
-                # ^--------------------------------------------------------^
+                                   self.runmultiplier)  # Use run/walk speed"""
+            self.x_speed += self.playeraccel * dt * self.runmultiplier * self.direction
+            self.x_speed += self.x_speed * self.friction * self.direction
+            # ^--------------------------------------------------------^
         elif self.right and not game.glitches["noRight"]:
             self.direction = 1  # Used mainly for bouncy mechanics
-            if not self.status["bounced"]:
+            """if not self.status["bounced"]:
                 self.x_speed = min(self.playermaxspeed * dt *
                                    self.runmultiplier,
                                    self.x_speed+self.playeraccel * dt *
-                                   self.runmultiplier)  # Use run/walk speed
+                                   self.runmultiplier)  # Use run/walk speed"""
+            self.x_speed += self.playeraccel * dt * self.runmultiplier * self.direction
+            self.x_speed -= self.x_speed * self.friction * self.direction
         else:
             # Gives the player some control over the fall if they're not
             # bounced away from a spring
@@ -349,6 +356,7 @@ class Player(pygame.sprite.Sprite):
                             self.direction * self.runmultiplier * dt
             else:
                 if not self.status["bounced"]:
+                    # Player deceleration
                     if self.direction == 1:
                         self.x_speed = max(0,
                                            self.x_speed-(self.playeraccel*dt))
@@ -356,7 +364,7 @@ class Player(pygame.sprite.Sprite):
                         self.x_speed = min(0,
                                            self.x_speed+(self.playeraccel*dt))
             # ^--------------------------------------------------------------^
-        self.rect.x += self.x_speed         # Move the player
+        self.rect.x += self.x_speed        # Move the player
         # self.fixCollision(game.gravity)
         if game.glitches["multiJump"]:
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
