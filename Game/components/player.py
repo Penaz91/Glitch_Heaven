@@ -48,7 +48,7 @@ class Player(pygame.sprite.Sprite):
         """Turns on the Double Speed Glitch"""
         self.playermaxspeed = 350
         self.playeraccel = 100
-        self.friction = 0.09
+        self.friction = 0.1
 
     def DoubleSpeedOff(self):
         """Turns off the Double Speed Glitch"""
@@ -285,6 +285,13 @@ class Player(pygame.sprite.Sprite):
             self.leftemitter.move(self.rect.topleft)
         self.rightemitter.emit(1, self.game.gravity)
         self.leftemitter.emit(1, self.game.gravity)
+        
+    def calc_accel(self, speed, runpower, direction, dt):
+        if speed >= self.playermaxspeed*dt*runpower and direction == 1:
+            return 0
+        if speed <= -self.playermaxspeed*dt*runpower and direction == -1:
+            return 0
+        return min(self.playeraccel * dt * runpower * direction, self.playermaxspeed - speed)
 
     def update(self, dt, game):
         """
@@ -332,8 +339,10 @@ class Player(pygame.sprite.Sprite):
                                    self.runmultiplier,
                                    self.x_speed-self.playeraccel*dt *
                                    self.runmultiplier)  # Use run/walk speed"""
-            self.x_speed += self.playeraccel * dt * self.runmultiplier * self.direction
-            self.x_speed += self.x_speed * self.friction * self.direction
+            accel = self.calc_accel(self.x_speed, self.runmultiplier, self.direction, dt)
+            """self.x_speed += self.playeraccel * dt * self.runmultiplier * self.direction
+            self.x_speed += (self.x_speed * self.friction * self.direction)"""
+            self.x_speed += accel
             # ^--------------------------------------------------------^
         elif self.right and not game.glitches["noRight"]:
             self.direction = 1  # Used mainly for bouncy mechanics
@@ -342,8 +351,10 @@ class Player(pygame.sprite.Sprite):
                                    self.runmultiplier,
                                    self.x_speed+self.playeraccel * dt *
                                    self.runmultiplier)  # Use run/walk speed"""
-            self.x_speed += self.playeraccel * dt * self.runmultiplier * self.direction
-            self.x_speed -= self.x_speed * self.friction * self.direction
+            """self.x_speed += self.playeraccel * dt * self.runmultiplier * self.direction
+            self.x_speed -= self.x_speed * self.friction * self.direction"""
+            accel = self.calc_accel(self.x_speed, self.runmultiplier, self.direction, dt)
+            self.x_speed += accel
         else:
             # Gives the player some control over the fall if they're not
             # bounced away from a spring
