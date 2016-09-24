@@ -14,7 +14,7 @@
     <property name="playerEntrance" value=""/>
    </properties>
   </object>
-  <object id="2" x="0" y="1248" width="1600" height="32">
+  <object id="2" x="32" y="1248" width="1536" height="32">
    <properties>
     <property name="blocker" value="t"/>
    </properties>

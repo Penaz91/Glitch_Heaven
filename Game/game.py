@@ -478,6 +478,7 @@ class Game(object):
         - log: The main logger, inherited by the bootstrapper
         """
         self.SaveFile = None
+        self.showCollision = False
         self.gameStatus = {
                 "campaignFile": None,
                 "campaignName": None,
@@ -670,6 +671,9 @@ class Game(object):
                                            self.screen)
                             if level:
                                 self.loadLevelPart2(self.keys, sounds)
+                        if event.key == pygame.K_KP_DIVIDE:
+                            self.mod_logger.info("Toggled Collision Rectangle View")
+                            self.showCollision = not self.showCollision
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
                 elif event.type == pygame.KEYDOWN and\
@@ -735,4 +739,8 @@ class Game(object):
                 if self.garbletimer <= 0:
                     self.garble = False
                     self.garbletimer = _garbletimer_
+            if self.showCollision:
+                rec = self.player.collisionrect.copy()
+                rec.x, rec.y = self.tilemap.pixel_to_screen(self.player.collisionrect.x, self.player.collisionrect.y)
+                pygame.draw.rect(screen, (255, 0, 0), rec, 1)
             pygame.display.update()

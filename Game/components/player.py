@@ -46,15 +46,13 @@ class Player(pygame.sprite.Sprite):
 
     def DoubleSpeedOn(self):
         """Turns on the Double Speed Glitch"""
-        self.playermaxspeed = 350
+        self.playermaxspeed = 300
         self.playeraccel = 100
-        self.friction = 0.1
 
     def DoubleSpeedOff(self):
         """Turns off the Double Speed Glitch"""
-        self.playermaxspeed = 250
+        self.playermaxspeed = 200
         self.playeraccel = 50
-        self.friction = 0.15
 
     def HiJumpOn(self):
         """Turns on the High Jump Glitch"""
@@ -162,9 +160,8 @@ class Player(pygame.sprite.Sprite):
         """
         super(Player, self).__init__(*groups)
         self.mod_logger = log.getChild("playerEntity")
-        self.playermaxspeed = 250
+        self.playermaxspeed = 200
         self.playeraccel = 30
-        self.friction = 0.15
         self.runmultiplier = 1
         self.jumpMultiplier = 1
         self.soundslink = sounds
@@ -306,6 +303,7 @@ class Player(pygame.sprite.Sprite):
         """
         # self.fixCollision(game.gravity)
         last = self.collisionrect.copy()  # Copy last position for compare
+        self.last = last
         key = pygame.key.get_pressed()
         # Check if run button is pressed (With eventual Invertedrun glitch)
         # v--------------------------------------------------------------v
@@ -340,8 +338,6 @@ class Player(pygame.sprite.Sprite):
                                    self.x_speed-self.playeraccel*dt *
                                    self.runmultiplier)  # Use run/walk speed"""
             accel = self.calc_accel(self.x_speed, self.runmultiplier, self.direction, dt)
-            """self.x_speed += self.playeraccel * dt * self.runmultiplier * self.direction
-            self.x_speed += (self.x_speed * self.friction * self.direction)"""
             self.x_speed += accel
             # ^--------------------------------------------------------^
         elif self.right and not game.glitches["noRight"]:
@@ -351,8 +347,6 @@ class Player(pygame.sprite.Sprite):
                                    self.runmultiplier,
                                    self.x_speed+self.playeraccel * dt *
                                    self.runmultiplier)  # Use run/walk speed"""
-            """self.x_speed += self.playeraccel * dt * self.runmultiplier * self.direction
-            self.x_speed -= self.x_speed * self.friction * self.direction"""
             accel = self.calc_accel(self.x_speed, self.runmultiplier, self.direction, dt)
             self.x_speed += accel
         else:
@@ -375,8 +369,8 @@ class Player(pygame.sprite.Sprite):
                         self.x_speed = min(0,
                                            self.x_speed+(self.playeraccel*dt))
             # ^--------------------------------------------------------------^
-        self.rect.x += self.x_speed        # Move the player
-        # self.fixCollision(game.gravity)
+        self.collisionrect.x += self.x_speed        # Move the player
+        self.fixCollision(game.gravity)
         if game.glitches["multiJump"]:
             if key[self.keys["jump"]] and not game.glitches["noJump"]:
                 # Plays the jump sound only with a player descending, to avoid
@@ -437,11 +431,12 @@ class Player(pygame.sprite.Sprite):
         # v------------------------------------------------------v
         if game.glitches['ledgeWalk']:
             if not self.status["resting"]:
-                self.rect.y += self.y_speed * dt   # Move the player vertically
+                self.collisionrect.y += self.y_speed * dt   # Move the player vertically
         else:
-            self.rect.y += self.y_speed * dt    # Move the player vertically
+            self.collisionrect.y += self.y_speed * dt    # Move the player vertically
         # ^------------------------------------------------------^
-        self.RealignCollision(game.gravity)
+        #self.RealignCollision(game.gravity)
+        self.fixCollision(game.gravity)
         # This avoids the ability to jump in air after leaving a platform
         # + ledgejump glitch framework
         # v--------------v
@@ -526,6 +521,8 @@ class Player(pygame.sprite.Sprite):
         # self.collisionrect.midbottom = self.rect.midbottom
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
+        #self.fixCollision(game.gravity)
+        #self.RealignCollision(game.gravity)
         self.status["pushing"] = False
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'blocker'):
@@ -554,7 +551,7 @@ class Player(pygame.sprite.Sprite):
                     else:
                         self.y_speed = 0
                 # ^----------------------------------------------------^
-            elif 'b' in blockers and last.top >= cell.bottom and\
+            if 'b' in blockers and last.top >= cell.bottom and\
                     self.collisionrect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
                 self.status["bounced"] = False
@@ -579,7 +576,7 @@ class Player(pygame.sprite.Sprite):
                     else:
                         self.y_speed = 0
                 # ^----------------------------------------------------^
-            elif 'l' in blockers and last.right <= cell.left and\
+            if 'l' in blockers and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
                 self.status["bounced"] = False
                 self.collisionrect.right = cell.left
@@ -587,7 +584,7 @@ class Player(pygame.sprite.Sprite):
                 self.x_speed = 0
                 if game.glitches["wallClimb"]:
                         self.y_speed = -200 * game.gravity
-            elif 'r' in blockers and last.left >= cell.right and\
+            if 'r' in blockers and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
                 self.status["bounced"] = False
                 self.collisionrect.left = cell.right
