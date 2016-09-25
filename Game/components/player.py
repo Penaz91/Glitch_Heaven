@@ -551,7 +551,7 @@ class Player(pygame.sprite.Sprite):
                     else:
                         self.y_speed = 0
                 # ^----------------------------------------------------^
-            if 'b' in blockers and last.top >= cell.bottom and\
+            elif 'b' in blockers and last.top >= cell.bottom and\
                     self.collisionrect.top < cell.bottom:
                 # Part of the clip-on-command glitch Framework
                 self.status["bounced"] = False
@@ -576,7 +576,7 @@ class Player(pygame.sprite.Sprite):
                     else:
                         self.y_speed = 0
                 # ^----------------------------------------------------^
-            if 'l' in blockers and last.right <= cell.left and\
+            elif 'l' in blockers and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
                 self.status["bounced"] = False
                 self.collisionrect.right = cell.left
@@ -584,7 +584,7 @@ class Player(pygame.sprite.Sprite):
                 self.x_speed = 0
                 if game.glitches["wallClimb"]:
                         self.y_speed = -200 * game.gravity
-            if 'r' in blockers and last.left >= cell.right and\
+            elif 'r' in blockers and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
                 self.status["bounced"] = False
                 self.collisionrect.left = cell.right
