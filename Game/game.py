@@ -605,7 +605,7 @@ class Game(object):
         elif self.gameStatus["mode"] == "singlemap":
             self.RealLoadLevel(cmp, "singlemap", self.screen)
         # ^--------------------------------------------------------------^
-        self.fps = 30
+        self.fps = 60
         self.garble = False
         self.garbletimer = _garbletimer_
         self.deadbodies = pygame.sprite.Group()

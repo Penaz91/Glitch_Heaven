@@ -15,7 +15,7 @@ from libs import emitter
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
     _runpower_ = 2
-    _jump_speed_ = -650
+    _jump_speed_ = -1200
     _initialParticleColor_ = (0, 255, 84)
     _finalParticleColor_ = (0, 103, 34)
     _hovermodifier_ = 0.8
@@ -37,22 +37,22 @@ class Player(pygame.sprite.Sprite):
     def FeatherFallOn(self):
         """Turns on the featherfalling glitch"""
         self.maxFallSpeed = 350
-        self.fallAccel = 35
+        self.fallAccel = 65
 
     def FeatherFallOff(self):
         """Turns off the featherfalling glitch"""
         self.maxFallSpeed = 600
-        self.fallAccel = 60
+        self.fallAccel = 90
 
     def DoubleSpeedOn(self):
         """Turns on the Double Speed Glitch"""
-        self.playermaxspeed = 300
-        self.playeraccel = 100
+        self.playermaxspeed = 400
+        self.playeraccel = 150
 
     def DoubleSpeedOff(self):
         """Turns off the Double Speed Glitch"""
-        self.playermaxspeed = 200
-        self.playeraccel = 50
+        self.playermaxspeed = 250
+        self.playeraccel = 100
 
     def HiJumpOn(self):
         """Turns on the High Jump Glitch"""
@@ -610,14 +610,14 @@ class Player(pygame.sprite.Sprite):
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
-                    self.y_speed = - power
+                    self.y_speed = - power * 2
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.collisionrect.top < cell.bottom:
                 self.collisionrect.top = cell.bottom
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
-                    self.y_speed = power
+                    self.y_speed = power * 2
             if 'l' in bouncy and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
                 self.collisionrect.right = cell.left
@@ -625,7 +625,7 @@ class Player(pygame.sprite.Sprite):
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
                     self.status["bounced"] = True
-                    self.x_speed = -power*dt
+                    self.x_speed = -power*dt*2
                     directioner = -1 if (self.y_speed <= 0) else 1
                     self.y_speed = game.gravity*power*directioner
             if 'r' in bouncy and last.left >= cell.right and\
@@ -635,7 +635,7 @@ class Player(pygame.sprite.Sprite):
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
                     self.status["bounced"] = True
-                    self.x_speed = power*dt
+                    self.x_speed = power*dt*2
                     directioner = -1 if (self.y_speed <= 0) else 1
                     self.y_speed = game.gravity*power*directioner
             self.fixCollision(game.gravity)
@@ -879,26 +879,26 @@ class Player(pygame.sprite.Sprite):
         for block in secondpass:
             if game.glitches["laserresistant"]:
                 if block.vertical:
-                    if self.x_speed > 0 and self.rect.right > block.rect.left:
-                        self.rect.right = block.rect.left
+                    if self.x_speed > 0 and self.collisionrect.right > block.rect.left:
+                        self.collisionrect.right = block.rect.left
                         self.x_speed = 0
                         self.status["pushing"] = True
                     elif self.x_speed < 0 and \
-                            self.rect.left < block.rect.right:
-                        self.rect.left = block.rect.right
+                            self.collisionrect.left < block.rect.right:
+                        self.collisionrect.left = block.rect.right
                         self.x_speed = 0
                         self.status["pushing"] = True
                 else:
                     # FIXME: Screen trembles when on lasers
                     if self.y_speed * game.gravity >= 0:
                         if game.gravity == 1 and\
-                                self.rect.bottom > block.rect.top:
-                            self.rect.bottom = block.rect.top
+                                self.collisionrect.bottom > block.rect.top:
+                            self.collisionrect.bottom = block.rect.top
                             self.y_speed = 0
                             self.status["resting"] = True  # Allows jump
                         elif game.gravity == -1 and\
-                                self.rect.top < block.rect.bottom:
-                            self.rect.top = block.rect.bottom
+                                self.collisionrect.top < block.rect.bottom:
+                            self.collisionrect.top = block.rect.bottom
                             self.y_speed = 0
                             self.status["resting"] = True  # Allows jump
             else:
