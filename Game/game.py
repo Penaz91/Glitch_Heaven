@@ -674,6 +674,9 @@ class Game(object):
                         if event.key == pygame.K_KP_DIVIDE:
                             self.mod_logger.info("Toggled Collision Rectangle View")
                             self.showCollision = not self.showCollision
+                        if event.key == pygame.K_c:
+                            self.mod_logger.info("Forced Checkpoint Save")
+                            self.player.lastcheckpoint = (self.player.rect.x, self.player.rect.y)
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
                 elif event.type == pygame.KEYDOWN and\

@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
     _jump_speed_ = -1200
     _initialParticleColor_ = (0, 255, 84)
     _finalParticleColor_ = (0, 103, 34)
-    _hovermodifier_ = 0.8
+    _hovermodifier_ = 0.4
 
     def RealignCollision(self, gravity):
         """ re-aligns the drawing rect to the collision rect
@@ -36,12 +36,12 @@ class Player(pygame.sprite.Sprite):
 
     def FeatherFallOn(self):
         """Turns on the featherfalling glitch"""
-        self.maxFallSpeed = 350
+        self.maxFallSpeed = 200
         self.fallAccel = 65
 
     def FeatherFallOff(self):
         """Turns off the featherfalling glitch"""
-        self.maxFallSpeed = 600
+        self.maxFallSpeed = 500
         self.fallAccel = 90
 
     def DoubleSpeedOn(self):
@@ -388,7 +388,7 @@ class Player(pygame.sprite.Sprite):
                     # If the high jump glitch is active, jumps twice as high
                     # This happens while the multijump glitch is active
                     # v------------------------------------------------------v
-                    if self.y_speed*game.gravity > -(self._jump_speed_/2) or\
+                    if self.y_speed*game.gravity > -(self._jump_speed_/2.5) or\
                             self.status["resting"]:
                         self.y_speed = self._jump_speed_ * \
                            self.jumpMultiplier * game.gravity
@@ -471,13 +471,16 @@ class Player(pygame.sprite.Sprite):
             if game.gravity == 1:
                 if last.bottom <= block.rect.top and\
                         self.collisionrect.bottom > block.rect.top:
-                    self.rect.bottom = block.rect.top
+                    self.collisionrect.bottom = block.rect.top
+                    self.y_speed = 0
+                    self.status["resting"] = True
             else:
-                if last.top >= block.rect.bottom and\
+                if last.top >= block.collisionrect.bottom and\
                         self.collisionrect.top < block.rect.bottom:
-                    self.rect.top = block.rect.bottom
-            self.status["resting"] = True
-            self.y_speed = 0
+                    self.collisionrect.top = block.rect.bottom
+                self.status["resting"] = True
+                self.y_speed = 0
+        self.fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Moving plats collision check
         # NOTE: This has to stay here to avoid being tped under a platform
@@ -610,14 +613,14 @@ class Player(pygame.sprite.Sprite):
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
-                    self.y_speed = - power * 2
+                    self.y_speed = - power * 1.7
             if 'b' in bouncy and last.top >= cell.bottom and\
                     self.collisionrect.top < cell.bottom:
                 self.collisionrect.top = cell.bottom
                 if not (key[self.keys["action"]] and
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
-                    self.y_speed = power * 2
+                    self.y_speed = power * 1.7
             if 'l' in bouncy and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
                 self.collisionrect.right = cell.left
@@ -625,9 +628,9 @@ class Player(pygame.sprite.Sprite):
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
                     self.status["bounced"] = True
-                    self.x_speed = -power*dt*2
+                    self.x_speed = -power*dt*1.7
                     directioner = -1 if (self.y_speed <= 0) else 1
-                    self.y_speed = game.gravity*power*directioner
+                    self.y_speed = game.gravity*power*directioner*1.7
             if 'r' in bouncy and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
                 self.collisionrect.left = cell.right
@@ -635,9 +638,9 @@ class Player(pygame.sprite.Sprite):
                         game.glitches["stopBounce"]):
                     self.bouncesound.play()
                     self.status["bounced"] = True
-                    self.x_speed = power*dt*2
+                    self.x_speed = power*dt*1.7
                     directioner = -1 if (self.y_speed <= 0) else 1
-                    self.y_speed = game.gravity*power*directioner
+                    self.y_speed = game.gravity*power*directioner*1.7
             self.fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Test for collisions with deadly ground and act accordingly
@@ -648,16 +651,19 @@ class Player(pygame.sprite.Sprite):
             if 't' in deadly and last.bottom <= cell.top and\
                     self.collisionrect.bottom > cell.top:
                 self.rect.bottom = cell.top
+                self.respawn(game)
             if 'b' in deadly and last.top >= cell.bottom and\
                     self.collisionrect.top < cell.bottom:
                 self.rect.top = cell.bottom
+                self.respawn(game)
             if 'l' in deadly and last.right <= cell.left and\
                     self.collisionrect.right > cell.left:
                 self.rect.right = cell.left
+                self.respawn(game)
             if 'r' in deadly and last.left >= cell.right and\
                     self.collisionrect.left < cell.right:
                 self.rect.left = cell.right
-            self.respawn(game)
+                self.respawn(game)
         # ^--------------------------------------------------------------^
         # If help writings are solid, test for collision and act as platforms
         # v--------------------------------------------------------------v
@@ -667,11 +673,11 @@ class Player(pygame.sprite.Sprite):
                 if self.y_speed == 0:
                     self.status["resting"] = True
                 elif self.y_speed > 0 and game.gravity == 1:
-                    self.rect.bottom = block.rect.top
+                    self.collisionrect.bottom = block.rect.top
                     self.status["resting"] = True
                     self.y_speed = 0
                 elif self.y_speed < 0 and game.gravity == -1:
-                    self.rect.top = block.rect.bottom
+                    self.collisionrect.top = block.rect.bottom
                     self.status["resting"] = False
                     self.y_speed = 0
         # ^--------------------------------------------------------------^
