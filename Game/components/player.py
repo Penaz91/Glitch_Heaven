@@ -52,7 +52,7 @@ class Player(pygame.sprite.Sprite):
     def DoubleSpeedOff(self):
         """Turns off the Double Speed Glitch"""
         self.playermaxspeed = 250
-        self.playeraccel = 80
+        self.playeraccel = 60
 
     def HiJumpOn(self):
         """Turns on the High Jump Glitch"""
@@ -64,7 +64,7 @@ class Player(pygame.sprite.Sprite):
 
     def LowAccel(self):
         """Turns on the Low Acceleration Glitch"""
-        self.playeraccel = 70
+        self.playeraccel = 30
 
     def HighAccel(self):
         """Turns on the High Acceleration Glitch"""
@@ -72,7 +72,7 @@ class Player(pygame.sprite.Sprite):
 
     def ResetAccel(self):
         """Resets Acceleation glitches"""
-        self.playeraccel = 80
+        self.playeraccel = 60
 
     def loadSprites(self):
         """Loads sprites and animations, uses a JSON to generate paths quickly
@@ -161,7 +161,7 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__(*groups)
         self.mod_logger = log.getChild("playerEntity")
         self.playermaxspeed = 250
-        self.playeraccel = 90
+        self.playeraccel = 60
         self.playerdecel = 30
         self.runmultiplier = 1
         self.jumpMultiplier = 1
@@ -350,7 +350,8 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier,
                                        self.x_speed-self.playeraccel*dt *
                                        self.runmultiplier)  # Use run/walk speed
-
+            if self.x_speed > -1:
+                self.x_speed = -1
             # ^--------------------------------------------------------^
         elif self.right and not game.glitches["noRight"]:
             self.direction = 1  # Used mainly for bouncy mechanics
@@ -369,6 +370,8 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
                                        self.runmultiplier)  # Use run/walk speed
+            if self.x_speed < 1:
+                self.x_speed = 1
         else:
             # Gives the player some control over the fall if they're not
             # bounced away from a spring
@@ -550,23 +553,7 @@ class Player(pygame.sprite.Sprite):
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'blocker'):
             blockers = cell['blocker']
-            if 'l' in blockers and last.right <= cell.left and\
-                    self.collisionrect.right > cell.left:
-                self.status["bounced"] = False
-                self.collisionrect.right = cell.left
-                self.status["pushing"] = True
-                self.x_speed = 0
-                if game.glitches["wallClimb"]:
-                        self.y_speed = -200 * game.gravity
-            elif 'r' in blockers and last.left >= cell.right and\
-                    self.collisionrect.left < cell.right:
-                self.status["bounced"] = False
-                self.collisionrect.left = cell.right
-                self.status["pushing"] = True
-                self.x_speed = 0
-                if game.glitches["wallClimb"]:
-                        self.y_speed = -200 * game.gravity
-            elif 't' in blockers and last.bottom <= cell.top and\
+            if 't' in blockers and last.bottom <= cell.top and\
                     self.collisionrect.bottom > cell.top:
                 self.status["bounced"] = False
                 # Corrects position only if you're not clipping via glitch
@@ -615,7 +602,22 @@ class Player(pygame.sprite.Sprite):
                     else:
                         self.y_speed = 0
                 # ^----------------------------------------------------^
-
+            elif 'l' in blockers and last.right <= cell.left and\
+                    self.collisionrect.right > cell.left:
+                self.status["bounced"] = False
+                self.collisionrect.right = cell.left
+                self.status["pushing"] = True
+                self.x_speed = 0
+                if game.glitches["wallClimb"]:
+                        self.y_speed = -200 * game.gravity
+            elif 'r' in blockers and last.left >= cell.right and\
+                    self.collisionrect.left < cell.right:
+                self.status["bounced"] = False
+                self.collisionrect.left = cell.right
+                self.status["pushing"] = True
+                self.x_speed = 0
+                if game.glitches["wallClimb"]:
+                        self.y_speed = -200 * game.gravity
             self.fixCollision(game.gravity)
         # ^--------------------------------------------------------------^
         # Test for collision with bouncy platforms and act accordingly
