@@ -42,7 +42,7 @@ class Player(pygame.sprite.Sprite):
     def FeatherFallOff(self):
         """Turns off the featherfalling glitch"""
         self.maxFallSpeed = 500
-        self.fallAccel = 90
+        self.fallAccel = 60
 
     def DoubleSpeedOn(self):
         """Turns on the Double Speed Glitch"""
@@ -350,8 +350,11 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier,
                                        self.x_speed-self.playeraccel*dt *
                                        self.runmultiplier)  # Use run/walk speed
-            if self.x_speed > -1:
+            # Anti-x-jittering Patch
+            # v--------------v
+            if abs(self.x_speed) < 1:
                 self.x_speed = -1
+            # ^--------------^
             # ^--------------------------------------------------------^
         elif self.right and not game.glitches["noRight"]:
             self.direction = 1  # Used mainly for bouncy mechanics
@@ -370,8 +373,11 @@ class Player(pygame.sprite.Sprite):
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
                                        self.runmultiplier)  # Use run/walk speed
-            if self.x_speed < 1:
+            # Anti-x-jittering Patch
+            # v--------------v
+            if abs(self.x_speed) < 1:
                 self.x_speed = 1
+            # ^--------------^
         else:
             # Gives the player some control over the fall if they're not
             # bounced away from a spring
@@ -452,11 +458,17 @@ class Player(pygame.sprite.Sprite):
         # ^------------------------------------------------------^
         # Takes care of player movement and ledgewalk glitch
         # v------------------------------------------------------v
+        # Anti-y-jittering Patch
+        # v--------------v
+        self.y_to_apply = self.y_speed * dt
+        if abs(self.y_to_apply) < 1:
+            self.y_to_apply = 1 * game.gravity
+        # ^--------------^
         if game.glitches['ledgeWalk']:
             if not self.status["resting"]:
-                self.collisionrect.y += self.y_speed * dt   # Move the player vertically
+                self.collisionrect.y += self.y_to_apply   # Move the player vertically
         else:
-            self.collisionrect.y += self.y_speed * dt    # Move the player vertically
+            self.collisionrect.y += self.y_to_apply    # Move the player vertically
         # ^------------------------------------------------------^
         #self.RealignCollision(game.gravity)
         self.fixCollision(game.gravity)
