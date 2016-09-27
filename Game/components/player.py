@@ -15,7 +15,7 @@ from libs import emitter
 class Player(pygame.sprite.Sprite):
     """ Class representing the player """
     _runpower_ = 2
-    _jump_speed_ = -1200
+    _jump_speed_ = -900
     _initialParticleColor_ = (0, 255, 84)
     _finalParticleColor_ = (0, 103, 34)
     _hovermodifier_ = 0.4

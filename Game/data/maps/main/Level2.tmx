@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="69">
- <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117" columns="13">
+ <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
+ </tileset>
+ <tileset firstgid="118" name="New_Spritesheet" tilewidth="32" tileheight="32" tilecount="1024">
+  <image source="resources/tiles/New_Spritesheet.png" width="1024" height="1024"/>
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJzlmU1OAzEMhaMu6I5CgR2CYc8BUK/ADlhw/5MwljpSFDn2i8duMuVJVn8yM8lXJ3biHlJKz412GNBOqV0PhnsidZuug+MjbYvjt/K9xvE02z77/DXb92xvQJ+P52stthPafgwc1H4HjJljQFhravV3BMdaBlJvDg8GUgQHxWZ0XnswkHr7w0tT4/WjcnC6Edq2xCHNNS2fcxxLDllsX94EissvUt6Qfk8LRylLbq/FNelZ3v5oeT4nKTZvhUPLL5Ecef7g9jYoB5IjR/QHjTtft0iORDhezq+fWVskh+VsMwlt9LxaLNPOg0jcrXFaz2g19ZpX/42jXEdcLJH6QfpCOI6zvTOG1jDQvY9n3K3tQ4iFqw8hMepSHGUfNGbrngrtg9MktFnnlSeLx556zfrwYunNQfJgGYGDRCzWOhXZEhO084dUw/Lg8JS1TnktHKOdzyfjfR4c5b7R4+zeqmh/XKouH82xNpahvh1tfUiSfIvWd3eARa8FjUOrb6H/M0b7DeV4Zdp7c9xn7zUOad60/veLzD+raeP8AzjhT3o=
+   eJzdmDtOxDAQhp3ABWgoKKDhFiAhaDkAVJwDLSAuwGsbECzUdDxEQcEloF1AYoEzIPFmRkogm7XHY2ecB7/0a7PJ+vHF9ozXt0qphcjNn46/D+07YGgrd83GHoUCahd87lGubhw7qlkci4b7Z4rmOAaPRX/fe3A9BwydyFjkV63ktz4eIp49a9q2ceB4de1d1jJwWE1yHW8bBz535SjKgKqaQ4IBFYLj22GeSzCgqh4PKT06vo+6cuj0RLBdq+ZwUHPNls91HL3celnxXBO6/ELljWFhjrx8crsprlF1SY+HS/06UbG5KRy2/BKSI5s/dHsbLgcnR9ZxPPbAM445ksMxnnyfzzx7UeE4LsHblrJ5UfkvImLZV1Q87k4SHD7/bUyixmrUg4Nbf5kcIdcHl6Oj+teRLpZQ7aAkOA6g3Q34vMh4EzwN908tZVFbjDZQknHXtA85hHuvatBvjP5x93DS44Hv33dPxW1DJyqW+c4rSRaJPXWR9SHFUjUHSoLlxNIGR1LxyvecCr0OXkquY2aZfGyW4JCU7znlf+Gwne+WzeF6TpJK4rwkv2/M+kowz1AKfe5T1rl8aI5uwVjGHdsmncNRY4v9vCHK4jndFLyHfdXvFng15zWZ7hpl4zgiymJcfoh5puqREJdjQvO8ao6RzDXFgfPmXQ3OkdQfDhxUPUW9DL6P9PM57ecP44ISVw==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -43,7 +46,7 @@
   </object>
   <object id="7" x="256" y="128" width="32" height="1120">
    <properties>
-    <property name="blocker" value="r"/>
+    <property name="blocker" value="tr"/>
    </properties>
   </object>
   <object id="8" x="0" y="0" width="1600" height="32">

@@ -15,12 +15,12 @@
 	"walk":
 	{
 		"is_Animation": true,
-		"frametime": 0.06
+		"frametime": 0.08
 	},
 	"run":
 	{
 		"is_Animation": true,
-		"frametime": 0.04
+		"frametime": 0.06
 	},
 	"bounced":
 	{

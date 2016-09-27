@@ -34,7 +34,7 @@
     "Unlockables": {
         "NHMode": false,
         "CFMode": true,
-        "modifiers": true
+        "modifiers": false
     },
     "General": {
         "autosaving": true
