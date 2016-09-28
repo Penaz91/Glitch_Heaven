@@ -3,9 +3,12 @@
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
+ <tileset firstgid="118" name="New_Spritesheet" tilewidth="32" tileheight="32" tilecount="1024">
+  <image source="resources/tiles/New_Spritesheet.png" width="1024" height="1024"/>
+ </tileset>
  <layer name="Livello tile 1" width="20" height="60">
   <data encoding="base64" compression="zlib">
-   eJztlEsOgCAMRBsPILo38VB6DPX+S+2uMSBV6gccktm+lD4YR0SdUdyWhuxOLXi9EY9nHETGRJ71fXm+WZnlhfnAe4Y3Udz/nf8NvDJ5Z/ol1jc53Be8snma97x/t6FuRZ+m80I+tA7gw5Z39D+kE/jw8670Cx/fPv+4vyd8aPcPH3nxNA7h9/u8VvDYSWUUZq2C0j/a
+   eJyTZmRg+MlAHSwDNOsWA/XAdgaEefJUMu8/0I1OTAj8hJE67qMGgLlPmIU4LMpCf/eNmkcf84SIiP9/NMxvo+YNT/NIKV8IlTdDwb+j5g1v84hJz+jpFlfZOlqeUm4ervggNg5G44O65uHLH8hxMhof2M0jp3wBAWzhORLDjx7xQWz4j8bH0DKPmDgcjd/Bb54gknnWwDiZyUAdbAM0CwC2v4gc
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">

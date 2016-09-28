@@ -3,9 +3,12 @@
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
+ <tileset firstgid="118" name="New_Spritesheet" tilewidth="32" tileheight="32" tilecount="1024">
+  <image source="resources/tiles/New_Spritesheet.png" width="1024" height="1024"/>
+ </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmTtqxEAMhodtUpoNKQMhZQ5g9gBp02xvcoHcv0+2MAyzev3/vLwQgypLI31opNHYS0rpdYAshnxWym2NSxrzrApDC/9ro3Wivo7I8UX4Yjk8X/vaH45cC7uXP3mKhX/nK8px83ESRPK7r+3V6Ltgh+YR4fhWdDV9dl/15tB0/znsmKL1ZMX2A3Jo+jUc2rkUjU3zzdSS9s7qX0zfl2KTeFGO1Xj3nPwZo5ZDY7B6VWmT686oc42h1EP6wWgOy445N2ZxMLnw9lQPDq1H9MxFD44tcXcE5uzrycHYWLlAzkpk1u3BgeZCs0Fm3dYcXi6iHLP3lZULbxZ5dA5kVmNiYmw2IaaRHFp/kPqCxaHFlUu5ZmuO6Mye2yB3Ey1GKYfouVw7t/eqES0ea3Z/JA4vppYcLWp9xv0DrZEI+wwOJice+6zvPlJcFsvoe5R1/4jsA+Reuznvazis+0cNR2RvITO7x6E9Unyt6x2Z2VkOKU/ot0Qrh6PqPPqwfetoHPv6aN86IgeakzyeN8APw9HqP1yek3OhK/2/smQh7RgfmpS6v6B+dVI=
+   eJztmUtOxDAMhjO0e8R6RuIEPPZwBM7GbBghOARs4GwIxIJkUSkUv37n0SIYKZpFndhf/9hx2+0mhPfQfuyin8+jn+NuCOF8LBvHcf3L+N/jdzHSHDX8p7X/OseNw5eXQ/OV1n6J+/NslMd++D7vPo7HxhzJxwMxKL9p7a0hzz+IeaiOCMdtvG/XTF2g7L37qjUHZ/vPwcck5dU8n7jY0tnxbLTV7L0c0vlljY3zjebS68Bfk+oXN09jt9xblGOypa69Bb3HKOGQGKb7a9lTuW3vPJcYcju0HvTmkOZxWqyNw6uFtqdacHA1QqsNJVq04Hhi6vFB4fCcfS05PHMkLaxnpdbvcmdzTQ5UC2qO1u/Oe93aHJIWCMfS+0rSQutFfjsH0qv14kj17QDuq5ocXH2g6oLEwcWV16H5mjU5uL5d6mGpmDQOKkZKQ/RcLu3bW+UIF4/Uu5f07b05tJhqctTI9d4cnhyxsC/xvgTVxMK+BAcXl8TS+zlKev7w9E1WDXs+f5RwaHsLfZ+mcUjs6J5HNJH6dqpn93JQOiHvEjUNe+W59eetW2vjmNZHz8Q1cqCa5PGcAn48HLW+w+WanGS2Vxv6+5U00rcizzzUB8cx951svwDmeiV0
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
