@@ -3,9 +3,12 @@
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
+ <tileset firstgid="118" name="New_Spritesheet" tilewidth="32" tileheight="32" tilecount="1024">
+  <image source="resources/tiles/New_Spritesheet.png" width="1024" height="1024"/>
+ </tileset>
  <layer name="Tile Layer 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmD1rAzEMhsUN7da0NEtDaNMx/6XQoZkzZUwL/f9LT3AG4Uq2TpbvI/gFcUYcsh9bZ8u3AYD9ym3T2yOsXw/QODT6qBibyptj29tXxk6O/QV5czw7xhqjxsGrcZSpcfBaGse1t2+DzXWm3vp6WNU4ytQ4AO4Yn5bDWj++Cv4SDm7MGg6sJTvI15NjrOQeZeXg5u7JOIZUTK0sHGeocwedkiMwrJmDMqyJ4434YobaHGP3Qo4D43XEjvCfoRYHxrXsde8kDs4B7qdj/jlp+rgXxh3XsV7n+Tbi8pL2XM1xIPdPJkYtBpQXR04cA1evWDUFh7QOnrViKcdnxpfKJW+O+M7J5XnYr34Ho/Vbqp36HpawHi9Ceyf4S/rWaCoO7uyci4PmFbYvg6X8qf/OnhwH5Xup9ZDWgPo5eXJoa6Wlc2gV8ormDD4xl/bD8xK9kztv5uKg45Lmeqd4J6hx2BXyKtwXaLsT/Ng+JkyKUdOwzz8NAD/G
+   eJztmM1KxDAQx6dpX0DFk18gXr0vKIiefQffQw++gVeRfQ4RfBHLghf16gMoRU3oho3dSTrNR5tA/jBsGJakv840mclOAfAFadsuZ1hA+nqCzEHRZcC5VfnmuOZ5esHM9lF4XHAp3xznzONkA5Q5cGUON2UOXLFxbFYAWxZ2FBmHrWKLh60yh5syB8A7UidROWzrx32N34UDe2YKxz23s55acqj9OPRRthzYu9uwfAbTnFTZcNyVAKcBetAxOQTDI7eGpcuhMqTEcaD4ugyhOYbuhRjHHvc9wMqOq3WGUBy/hJ4as7lyfoh3IHrzW0a7b7oirnGj6eW7dazLvqtKMMwD3B9Qz9W+70Nwb1fmOUIxCPni6BPGgNUrthqDQxcHn7WiK8dnafaZcsknR8HWe04sz+V+tWCtlcpeYRqbvocY4vHC8HGt8busTZFvjlmJ+7GzcyoONa8aw/iZtdZ0zs3uvbNPjjfi3meKhy6X6hHzilor2XDMkL1M1RQ9usyrb9aazB+RS4fLX+mX/+m7a5uKQ42HLmfUGMQaDwpHnUBenRSrfuG1+N8/YH4xFn2FznRzhDTR8/8BmAD7pQ==
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
