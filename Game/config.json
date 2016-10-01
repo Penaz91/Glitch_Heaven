@@ -34,9 +34,9 @@
         "obstacleparticles": false,
         "deathcounter": true,
         "fullscreen": true,
-        "screenwidth": 800,
+        "screenwidth": 1280,
         "doublebuffer": true,
-        "screenheight": 600,
+        "screenheight": 960,
         "playerparticles": false
     }
 }
