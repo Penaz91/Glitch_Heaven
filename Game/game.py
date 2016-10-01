@@ -249,7 +249,7 @@ class Game(object):
         # Finds the center position of the title
         # v--------------------------------------------------------------v
         center = (self.screensize[0] - int(self.title.get_rect().width))/2
-        self.titleposition = (center, 578)
+        self.titleposition = (center, self.gsize[1] + 2)
         # ^--------------------------------------------------------------^
         self.mod_logger.info("Map Loaded and built Successfully")
         # ^--------------------------------------------------------------^
@@ -509,11 +509,12 @@ class Game(object):
         self.mod_logger = log.getChild("game")
         self.mod_logger.info("Entering main game")
         self.running = True
+        self.showFPS = False
         self.titletxt = None
         self.gravity = 1
         self.sounds = sounds
         self.screensize = screen.get_size()
-        self.gsize = (800, 576)
+        self.gsize = (screen.get_width(), screen.get_height() - 24)
         self.gameviewport = pygame.surface.Surface(self.gsize)
         self.clock = pygame.time.Clock()
         self.titleholder = pygame.image.load(pjoin(
@@ -674,6 +675,8 @@ class Game(object):
                         if event.key == pygame.K_KP_DIVIDE:
                             self.mod_logger.info("Toggled Collision Rectangle View")
                             self.showCollision = not self.showCollision
+                        if event.key == pygame.K_KP_MULTIPLY:
+                            self.showFPS = not self.showFPS
                         if event.key == pygame.K_c:
                             self.mod_logger.info("Forced Checkpoint Save")
                             self.player.lastcheckpoint = (self.player.rect.x, self.player.rect.y)
@@ -727,7 +730,7 @@ class Game(object):
             screen.blit(self.gameviewport, (0, 0))
             if self.gameStatus["mode"] in ["criticalfailure", "cfsingle"]:
                 screen.blit(self.timer, (50, 70))
-            screen.blit(self.titleholder, (0, 576))
+            screen.blit(self.titleholder, (0, self.gsize[1]))
             screen.blit(self.title, self.titleposition)
             # if config.getboolean("Video", "deathcounter"):
             if config["Video"]["deathcounter"]:
@@ -746,4 +749,7 @@ class Game(object):
                 rec = self.player.collisionrect.copy()
                 rec.x, rec.y = self.tilemap.pixel_to_screen(self.player.collisionrect.x, self.player.collisionrect.y)
                 pygame.draw.rect(screen, (255, 0, 0), rec, 1)
+            if self.showFPS:
+                fps = self.font.render(str(1/dt), False, (255, 0, 0))
+                screen.blit(fps, (screen.get_width() - 50, screen.get_height() -50))
             pygame.display.update()

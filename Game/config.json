@@ -33,9 +33,9 @@
     "Video": {
         "obstacleparticles": false,
         "deathcounter": true,
-        "fullscreen": false,
+        "fullscreen": true,
         "screenwidth": 800,
-        "doublebuffer": false,
+        "doublebuffer": true,
         "screenheight": 600,
         "playerparticles": false
     }
