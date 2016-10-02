@@ -3,6 +3,8 @@
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
 from components.UI.menu import menu
 from components.UI.textMenuItem import textMenuItem
+from pygame import FULLSCREEN, HWSURFACE, DOUBLEBUF
+from pygame.display import set_mode
 import json
 
 
@@ -16,6 +18,28 @@ class VideoSettings(menu):
         self.config["Video"][option] = not self.config["Video"][option]
         with open("config.json", "w") as conf:
             conf.write(json.dumps(self.config, indent=4))
+            
+    def fullscreenDirectChange(self):
+        self.toggle("fullscreen")
+        self.modlogger.info("Parsing configuration file")
+        screensize = (int(self.config["Video"]["screenwidth"]),
+                      int(self.config["Video"]["screenheight"]))
+        self.modlogger.debug("Screensize set to: " + str(screensize))
+        fullscreen = self.config["Video"]["fullscreen"]
+        self.modlogger.debug("Fullscreen Flag Set to: "+str(fullscreen))
+        doublebuffer = self.config["Video"]["fullscreen"]
+        self.modlogger.debug("Doublebuffer Flag set to: " +
+                     str(doublebuffer))
+        flags = None
+        self.modlogger.info("Setting screen flags")
+        if fullscreen:
+            if doublebuffer:
+                flags = FULLSCREEN | HWSURFACE | DOUBLEBUF
+            else:
+                flags = FULLSCREEN | HWSURFACE
+        else:
+            flags = 0
+        self.screen = set_mode(screensize, flags)
 
     def makePlayerParticlesItem(self):
         self.partitem = textMenuItem("Player Particles", (50, 180),
@@ -39,6 +63,17 @@ class VideoSettings(menu):
         self.activeItems.append(self.DCitem)
         self.items.append(self.DCitem)
 
+    def makeFullscreenItem(self):
+        self.FSitem = textMenuItem("Full Screen", (50, 300),
+                                   lambda: self.editDesc(
+                                        "Current Status: {0}".format(
+                                         self.config["Video"][
+                                             "fullscreen"])),
+                                   lambda: self.fullscreenDirectChange(),
+                                   self.config, self.sounds, self.font)
+        self.activeItems.append(self.FSitem)
+        self.items.append(self.FSitem)
+        
     def makeMainMenuItem(self):
         self.mainmenu = textMenuItem("Main Menu", (50, 560),
                                      lambda: self.editDesc(
@@ -51,4 +86,5 @@ class VideoSettings(menu):
     def makeMenuItems(self):
         self.makePlayerParticlesItem()
         self.makeDeathCounterItem()
+        self.makeFullscreenItem()
         self.makeMainMenuItem()
