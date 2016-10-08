@@ -1,5 +1,6 @@
 import pygame
 from math import ceil
+from os.path import join as pj
 
 
 class animatedText:
@@ -11,7 +12,7 @@ class animatedText:
         self.index = -1
         self.frametime = 0.02
         self.currtime = 0
-        self.font = pygame.font.Font("TranscendsGames.otf", 18)
+        self.font = pygame.font.Font(pj("resources", "fonts", "TranscendsGames.otf"), 18)
         self.fontsurface = self.font.render("", False, (255, 255, 255))
         self.bgsize = [0, 32]
         fsize = (self.font.size(self.text + "_")[0])
@@ -19,10 +20,10 @@ class animatedText:
         temp = ceil((fsize + 20) / 32)
         self.bgsurface = self.bgGen(temp)
         self.surface = pygame.surface.Surface((self.bgsurface.get_width(), self.bgsurface.get_height()), pygame.SRCALPHA)
-        self.sound = pygame.mixer.Sound("blip.wav")
+        #self.sound = pygame.mixer.Sound("blip.wav")
     
     def bgGen(self, size):
-        graphics = pygame.image.load("TextTile.png").convert_alpha()
+        graphics = pygame.image.load(pj("resources", "tiles", "TextTile.png")).convert_alpha()
         lcorner = (0, 0, 32, 32)
         center = (32, 0, 32, 32)
         rcorner = (64, 0, 32, 32)
@@ -45,9 +46,9 @@ class animatedText:
                 self.renderedText = "".join(list(self.text[0:self.index+1]))
                 self.renderedText += "_"
                 self.index+=1
-                channel = pygame.mixer.find_channel()
-                channel.queue(self.sound)
-                self.sound.play()
+                #channel = pygame.mixer.find_channel()
+                #channel.queue(self.sound)
+                #self.sound.play()
                 self.hoffset = (self.bgsurface.get_width() - self.font.size(self.renderedText)[0])/2
             else:
                 # TODO: Needs optimization (Useless assignments)

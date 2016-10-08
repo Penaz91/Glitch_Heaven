@@ -1,42 +1,42 @@
 {
+    "Video": {
+        "fullscreen": false,
+        "screenheight": 600,
+        "deathcounter": true,
+        "doublebuffer": true,
+        "playerparticles": false,
+        "screenwidth": 800,
+        "obstacleparticles": false
+    },
+    "General": {
+        "autosaving": true
+    },
     "Unlockables": {
         "modifiers": true,
         "CFMode": true,
         "NHMode": false
     },
-    "General": {
-        "autosaving": true
-    },
-    "Video": {
-        "doublebuffer": true,
-        "screenheight": 600,
-        "fullscreen": true,
-        "screenwidth": 800,
-        "deathcounter": true,
-        "obstacleparticles": false,
-        "playerparticles": false
-    },
     "Debug": {
-        "keydebug": false,
         "debugmode": true,
+        "keydebug": false,
         "loggerlevel": "DEBUG"
     },
     "Controls": {
-        "action": 274,
-        "restart": 114,
-        "right": 275,
-        "up": 273,
-        "run": 122,
-        "jump": 273,
         "down": 274,
-        "escape": 27,
+        "run": 122,
+        "left": 276,
+        "right": 275,
         "confirm": 13,
-        "left": 276
+        "escape": 27,
+        "restart": 114,
+        "action": 274,
+        "up": 273,
+        "jump": 273
     },
     "Sound": {
-        "menuvolume": 15.0,
-        "sfxvolume": 6.0,
         "musicvolume": 5.5,
-        "mixer_preinit": true
+        "mixer_preinit": true,
+        "menuvolume": 15.0,
+        "sfxvolume": 6.0
     }
 }

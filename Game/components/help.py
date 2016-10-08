@@ -4,6 +4,7 @@
 from os.path import join as pjoin
 import pygame
 from components.mobileplatform import MobilePlatform
+from libs.textAnimation import animatedText
 
 
 class Help(MobilePlatform):
@@ -25,12 +26,12 @@ class Help(MobilePlatform):
         Returns:
         - Nothing
         """
-        self.font = pygame.font.Font(pjoin("resources",
+        """self.font = pygame.font.Font(pjoin("resources",
                                            "fonts",
                                            "TranscendsGames.otf"),
-                                     24)
-        self.img = self.font.render(Text, True, (255, 0, 0),
-                                    None).convert_alpha()
+                                     24)"""
+        self.surfimg = animatedText(Text)
+        self.img = self.surfimg.surface
         self.size = self.img.get_rect()
         self.x = centerx - (self.size.width/2)
         self.y = lowy - (self.size.height*game.gravity)
@@ -50,6 +51,7 @@ class Help(MobilePlatform):
         Returns:
         - Nothing
         """
+        self.surfimg.update(dt)
         self.age -= 1
         if self.age == 0:
             self.kill()
