@@ -705,10 +705,10 @@ class Game(object):
             self.gameviewport.blit(self.components["middle_back1"],
                                    self.middlebackpos)
             self.tilemap.update(dt, self)
-            self.helptxts.update(dt, self)
             self.gameviewport.blit(self.components["middle_back2"],
                                    self.middlepos)
             self.tilemap.draw(self.gameviewport)
+            self.helptxts.update(dt, self)
             if not self.glitches["timeLapse"] or self.player.x_speed != 0:
                 self.particlesurf.fill((0, 0, 0, 0))
                 self.player.particles.update()

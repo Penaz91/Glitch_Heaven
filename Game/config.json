@@ -23,7 +23,7 @@
         "screenheight": 600,
         "playerparticles": false,
         "obstacleparticles": false,
-        "fullscreen": true,
+        "fullscreen": false,
         "screenwidth": 800,
         "deathcounter": true
     },

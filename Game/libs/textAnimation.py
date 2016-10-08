@@ -36,7 +36,7 @@ class animatedText:
             #i += 1
             plat.blit(graphics, (32*i, 0), center)
         plat.blit(graphics, (32*(size-1), 0), rcorner)
-        return plat
+        return plat.convert_alpha()
 
     def update(self, dt):
         self.currtime += dt
@@ -58,7 +58,7 @@ class animatedText:
                     self.renderedText = self.renderedText[0:len(self.renderedText)-1]
                 else:
                     self.renderedText += "_"
-        self.fontsurface = self.font.render(self.renderedText, False, (255, 255, 255))
+        self.fontsurface = self.font.render(self.renderedText, False, (255, 255, 255)).convert_alpha()
         self.surface.fill((0, 0, 0, 0))
         self.surface.blit(self.bgsurface, (0, 0))
         self.surface.blit(self.fontsurface, (self.hoffset, 7))
