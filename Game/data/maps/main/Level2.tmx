@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="69">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="70">
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Livello tile 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJzdmDtOxDAQhp3ABWgoKKDhFiAhaDkAVJwDLSAuwGsbECzUdDxEQcEloF1AYoEzIPFmRkogm7XHY2ecB7/0a7PJ+vHF9ozXt0qphcjNn46/D+07YGgrd83GHoUCahd87lGubhw7qlkci4b7Z4rmOAaPRX/fe3A9BwydyFjkV63ktz4eIp49a9q2ceB4de1d1jJwWE1yHW8bBz535SjKgKqaQ4IBFYLj22GeSzCgqh4PKT06vo+6cuj0RLBdq+ZwUHPNls91HL3celnxXBO6/ELljWFhjrx8crsprlF1SY+HS/06UbG5KRy2/BKSI5s/dHsbLgcnR9ZxPPbAM445ksMxnnyfzzx7UeE4LsHblrJ5UfkvImLZV1Q87k4SHD7/bUyixmrUg4Nbf5kcIdcHl6Oj+teRLpZQ7aAkOA6g3Q34vMh4EzwN908tZVFbjDZQknHXtA85hHuvatBvjP5x93DS44Hv33dPxW1DJyqW+c4rSRaJPXWR9SHFUjUHSoLlxNIGR1LxyvecCr0OXkquY2aZfGyW4JCU7znlf+Gwne+WzeF6TpJK4rwkv2/M+kowz1AKfe5T1rl8aI5uwVjGHdsmncNRY4v9vCHK4jndFLyHfdXvFng15zWZ7hpl4zgiymJcfoh5puqREJdjQvO8ao6RzDXFgfPmXQ3OkdQfDhxUPUW9DL6P9PM57ecP44ISVw==
+   eJzdmEtOwzAQhp3ABdiwYAEbbgESgi0HgBXHQKiAuACPsgFB4Qo8xIIFl4BtAYkCZ0DizYyUQJra47EzzoNf+tU0qR9fbM+4vlVKLURu/nT8fWjfAcOuctds7FEooPbA5x7l6sbRVs3iWDTcP1M0xzJ4LPr73oPrOWDoRMYiv2olv/XxEPHsWdO2jQPHq2vvspaBw2qS63jbOPC5K0dRBlTVHBIMqBAc3w7zXIIBVfV4SOnR8X3UlUOnJ4LtWjWHg5prtnyu4+jl1suq55rQ5RcqbwwLc+Tlk9tNcY2qS3o8XOrXiYrNTeGw5ZeQHNn8odvbcDk4ObKO47EPnnHMkRyO8eT7fObZiwrHcQnesZTNi8p/ERHLvqLicXeS4PD5b2MSNVajHhzc+svkCLk+uBwd1b+OdLGEagclwXEI7W7C50XGW+BpuH9qKYvaZrSBkoy7pn3IEdx7VYN+Y/SPu4eTHg98/757Km4bOlGxzHdeSbJI7KmLrA8plqo5UBIsJ5Y2OJKKV77nVOgN8FJyHTPL5GOzBIekfM8p/wuH7Xy3bA7Xc5JUEucl+X1j1leCeYZS6HOfss7lQ3N0C8Yy7tg26RyOGlvs5w1RFs/ppuA9HKh+t8BrOa/LdNcoG8cxURbj8kPMM1WPhLgcE5rnVXOMZK4pDpw372pwjqT+cOCg6inqFfB9pJ/PaT9/AIZzEiY=
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">
@@ -23,7 +23,7 @@
     <property name="power" value="800"/>
    </properties>
   </object>
-  <object id="3" x="224" y="128" width="32" height="1056">
+  <object id="3" x="224" y="160" width="32" height="1024">
    <properties>
     <property name="bouncy" value="tl"/>
     <property name="power" value="800"/>
@@ -327,6 +327,11 @@
   <object id="67" x="736" y="1024" width="32" height="32">
    <properties>
     <property name="blocker" value="rt"/>
+   </properties>
+  </object>
+  <object id="69" x="224" y="128" width="32" height="32">
+   <properties>
+    <property name="blocker" value="tl"/>
    </properties>
   </object>
  </objectgroup>

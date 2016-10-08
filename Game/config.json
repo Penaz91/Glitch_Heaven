@@ -1,42 +1,42 @@
 {
-    "Video": {
-        "fullscreen": false,
-        "screenheight": 600,
-        "deathcounter": true,
-        "doublebuffer": true,
-        "playerparticles": false,
-        "screenwidth": 800,
-        "obstacleparticles": false
+    "Unlockables": {
+        "CFMode": true,
+        "NHMode": false,
+        "modifiers": true
     },
     "General": {
         "autosaving": true
     },
-    "Unlockables": {
-        "modifiers": true,
-        "CFMode": true,
-        "NHMode": false
+    "Sound": {
+        "menuvolume": 15.0,
+        "mixer_preinit": true,
+        "musicvolume": 5.5,
+        "sfxvolume": 6.0
     },
     "Debug": {
         "debugmode": true,
-        "keydebug": false,
-        "loggerlevel": "DEBUG"
+        "loggerlevel": "DEBUG",
+        "keydebug": false
+    },
+    "Video": {
+        "doublebuffer": true,
+        "screenheight": 600,
+        "playerparticles": false,
+        "obstacleparticles": false,
+        "fullscreen": true,
+        "screenwidth": 800,
+        "deathcounter": true
     },
     "Controls": {
         "down": 274,
-        "run": 122,
-        "left": 276,
-        "right": 275,
-        "confirm": 13,
-        "escape": 27,
         "restart": 114,
+        "left": 276,
+        "confirm": 13,
+        "right": 275,
+        "escape": 27,
         "action": 274,
+        "run": 122,
         "up": 273,
         "jump": 273
-    },
-    "Sound": {
-        "musicvolume": 5.5,
-        "mixer_preinit": true,
-        "menuvolume": 15.0,
-        "sfxvolume": 6.0
     }
 }
