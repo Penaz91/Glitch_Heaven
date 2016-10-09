@@ -731,15 +731,15 @@ class Player(pygame.sprite.Sprite):
                     passed = True
                 if passed:
                     helptext = cell['Help']
-                    if helptext != game.currenthelp:
-                        game.helpflagActive = False
-                    if not game.helpflagActive:
-                        game.helpflagActive = False
-                        game.currenthelp = helptext
+                    if (cell.px, cell.py) not in game.activeHelpList:
+                        self.mod_logger.debug("HelpSign Enabled at: " + str(cell.px) + ", " + str(cell.py))
+                        game.activeHelpList.append((cell.px, cell.py))
+                        # game.helpflagActive = False
+                        # game.currenthelp = helptext
                         x, y = game.tilemap.pixel_from_screen(
                                 cell.px+cell.width/2,
                                 cell.py-20)
-                        Help(x, y, game.sprites, game=game, Text=helptext)
+                        Help(x, y, game.sprites, game=game, Text=helptext, triggerposition = (cell.px, cell.py))
         # ^--------------------------------------------------------------^
         # Test collision with exit trigger and act accordingly
         # v--------------------------------------------------------------v

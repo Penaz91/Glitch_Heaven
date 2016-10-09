@@ -12,7 +12,7 @@ class Help(MobilePlatform):
     Represents a helping Sign/Terminal,
     inherits properties from MobilePlatform
     """
-    def __init__(self, centerx, lowy, *groups, game, Text):
+    def __init__(self, centerx, lowy, *groups, game, Text, triggerposition):
         """
         Default Constructor
 
@@ -31,6 +31,7 @@ class Help(MobilePlatform):
                                            "TranscendsGames.otf"),
                                      24)"""
         self.surfimg = animatedText(Text)
+        self.triggerposition = triggerposition
         self.img = self.surfimg.surface
         self.size = self.img.get_rect()
         self.x = centerx - (self.size.width/2)
@@ -55,4 +56,4 @@ class Help(MobilePlatform):
         self.age -= 1
         if self.age == 0:
             self.kill()
-            game.helpflagActive = False
+            game.activeHelpList.remove((self.triggerposition))

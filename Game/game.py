@@ -325,7 +325,6 @@ class Game(object):
     def eraseCurrentLevel(self):
         # At first call, does nothing (Player still has to be created)
         # Self-remaps at runtime to the stage deleting function
-        self.currenthelp = ""
         self.eraseCurrentLevel = self.eraseCurrentLevel_Post
 
     def eraseCurrentLevel_Post(self):
@@ -341,8 +340,6 @@ class Game(object):
         self.GlitchTriggers.empty()
         self.sprites.empty()
         self.btns.empty()
-        self.helpflagActive = False
-        self.currenthelp = ""
 
     def loadLevelPart2(self, keys, sounds):
         """
@@ -479,6 +476,7 @@ class Game(object):
         """
         self.SaveFile = None
         self.showCollision = False
+        self.activeHelpList = []
         self.gameStatus = {
                 "campaignFile": None,
                 "campaignName": None,
