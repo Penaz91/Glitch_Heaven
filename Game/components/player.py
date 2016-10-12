@@ -506,7 +506,7 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = 0
                     self.status["resting"] = True
             else:
-                if last.top >= block.collisionrect.bottom and\
+                if last.top >= block.rect.bottom and\
                         self.collisionrect.top < block.rect.bottom:
                     self.collisionrect.top = block.rect.bottom
                 self.status["resting"] = True
