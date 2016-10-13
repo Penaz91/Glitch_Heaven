@@ -283,13 +283,14 @@ class Player(pygame.sprite.Sprite):
             self.leftemitter.move(self.rect.topleft)
         self.rightemitter.emit(1, self.game.gravity)
         self.leftemitter.emit(1, self.game.gravity)
-        
+
     def calc_accel(self, speed, runpower, direction, dt):
         if speed >= self.playermaxspeed*dt*runpower and direction == 1:
             return 0
         if speed <= -self.playermaxspeed*dt*runpower and direction == -1:
             return 0
-        return min(self.playeraccel * 1.5 * dt * runpower * direction, self.playermaxspeed - speed)
+        return min(self.playeraccel * 1.5 * dt * runpower * direction,
+                   self.playermaxspeed - speed)
 
     def update(self, dt, game):
         """
@@ -335,21 +336,23 @@ class Player(pygame.sprite.Sprite):
                 # Do i want this?
                 # v--------------------------------------------------------v"""
             if self.status["bounced"]:
-                accel = self.calc_accel(self.x_speed, self.runmultiplier, self.direction, dt)
+                accel = self.calc_accel(self.x_speed,
+                                        self.runmultiplier,
+                                        self.direction, dt)
                 self.x_speed += accel
             else:
                 if self.x_speed > 0:
-                    #Inertia code
+                    # Inertia code
                     self.x_speed = max(-self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed-self.playerdecel*dt *
-                                       self.runmultiplier)  # Use run/walk speed
+                                       self.runmultiplier)
 
                 else:
                     self.x_speed = max(-self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed-self.playeraccel*dt *
-                                       self.runmultiplier)  # Use run/walk speed
+                                       self.runmultiplier)
             # Anti-x-jittering Patch
             # v--------------v
             if abs(self.x_speed) < 1:
@@ -359,20 +362,23 @@ class Player(pygame.sprite.Sprite):
         elif self.right and not game.glitches["noRight"]:
             self.direction = 1  # Used mainly for bouncy mechanics
             if self.status["bounced"]:
-                accel = self.calc_accel(self.x_speed, self.runmultiplier, self.direction, dt)
+                accel = self.calc_accel(self.x_speed,
+                                        self.runmultiplier,
+                                        self.direction,
+                                        dt)
                 self.x_speed += accel
             else:
                 if self.x_speed < 0:
-                    #inertia code
+                    # Inertia code
                     self.x_speed = min(self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed+self.playerdecel * dt *
-                                       self.runmultiplier)  # Use run/walk speed
+                                       self.runmultiplier)
                 else:
                     self.x_speed = min(self.playermaxspeed * dt *
                                        self.runmultiplier,
                                        self.x_speed+self.playeraccel * dt *
-                                       self.runmultiplier)  # Use run/walk speed
+                                       self.runmultiplier)
             # Anti-x-jittering Patch
             # v--------------v
             if abs(self.x_speed) < 1:
@@ -466,11 +472,11 @@ class Player(pygame.sprite.Sprite):
         # ^--------------^
         if game.glitches['ledgeWalk']:
             if not self.status["resting"]:
-                self.collisionrect.y += self.y_to_apply   # Move the player vertically
+                self.collisionrect.y += self.y_to_apply
         else:
-            self.collisionrect.y += self.y_to_apply    # Move the player vertically
+            self.collisionrect.y += self.y_to_apply
         # ^------------------------------------------------------^
-        #self.RealignCollision(game.gravity)
+        # self.RealignCollision(game.gravity)
         self.fixCollision(game.gravity)
         # This avoids the ability to jump in air after leaving a platform
         # + ledgejump glitch framework
@@ -559,8 +565,8 @@ class Player(pygame.sprite.Sprite):
         # self.collisionrect.midbottom = self.rect.midbottom
         # Test for collision with solid surfaces and act accordingly
         # v--------------------------------------------------------------v
-        #self.fixCollision(game.gravity)
-        #self.RealignCollision(game.gravity)
+        # self.fixCollision(game.gravity)
+        # self.RealignCollision(game.gravity)
         self.status["pushing"] = False
         for cell in game.tilemap.layers['Triggers'].collide(self.collisionrect,
                                                             'blocker'):
@@ -709,7 +715,7 @@ class Player(pygame.sprite.Sprite):
                     self.y_speed = 0
                 elif self.y_speed < 0 and game.gravity == -1:
                     self.collisionrect.top = block.rect.bottom
-                    self.status["resting"] = False
+                    self.status["resting"] = True
                     self.y_speed = 0
         # ^--------------------------------------------------------------^
         # Test collision with help triggers and act accordingly
@@ -732,14 +738,17 @@ class Player(pygame.sprite.Sprite):
                 if passed:
                     helptext = cell['Help']
                     if (cell.px, cell.py) not in game.activeHelpList:
-                        self.mod_logger.debug("HelpSign Enabled at: " + str(cell.px) + ", " + str(cell.py))
+                        self.mod_logger.debug(
+                                "HelpSign active at: {} , {}".format(cell.px,
+                                                                     cell.py))
                         game.activeHelpList.append((cell.px, cell.py))
                         # game.helpflagActive = False
                         # game.currenthelp = helptext
                         x, y = game.tilemap.pixel_from_screen(
                                 cell.px+cell.width/2,
                                 cell.py-20)
-                        Help(x, y, game.sprites, game=game, Text=helptext, triggerposition = (cell.px, cell.py))
+                        Help(x, y, game.sprites, game=game, Text=helptext,
+                             triggerposition=(cell.px, cell.py))
         # ^--------------------------------------------------------------^
         # Test collision with exit trigger and act accordingly
         # v--------------------------------------------------------------v
@@ -772,12 +781,14 @@ class Player(pygame.sprite.Sprite):
         if game.glitches["hWrapping"]:
             # This piece of code should avoid phasing through the floor
             # v-----------------------------v
-            if self.rect.x < 0:
-                self.rect.x = game.tilemap.px_width - self.rect.width
+            if self.rect.x < -16:
+                self.rect.x = game.tilemap.px_width - (self.rect.width / 2)
                 self.rect.y -= 3 * game.gravity
-            elif self.rect.x > game.tilemap.px_width:
-                self.rect.x = 0
+                self.RealignCollision(game.gravity)
+            elif self.rect.x > game.tilemap.px_width - 16:
+                self.rect.x = -15
                 self.rect.y -= 3 * game.gravity
+                self.RealignCollision(game.gravity)
             # ^-----------------------------^
         # Handles the triggering of mobile platforms
         # v--------------------------------------------------------------v
@@ -895,20 +906,22 @@ class Player(pygame.sprite.Sprite):
         for block in secondpass:
             if game.glitches["obsResistant"]:
                 if self.y_speed * game.gravity > 0:
-                    if game.gravity == 1 and self.rect.bottom > block.rect.top:
-                        self.rect.bottom = block.rect.top
+                    if game.gravity == 1 and self.collisionrect.bottom > block.rect.top:
+                        self.collisionrect.bottom = block.rect.top
                         if block.vertical:
                             self.y_speed = block.speed
                         self.status["resting"] = True  # Allows jump
                     elif game.gravity == -1 and\
-                            self.rect.top < block.rect.bottom:
-                        self.rect.top = block.rect.bottom
-                        self.y_speed = - block.yspeed
+                            self.collisionrect.top < block.rect.bottom:
+                        self.collisionrect.top = block.rect.bottom
+                        if block.vertical:
+                            self.y_speed = - block.speed
                         self.status["resting"] = True  # Allows jump
                 if not block.vertical:
                     self.rect.x += block.speed * dt * block.direction
             else:
                 self.respawn(game)
+        self.fixCollision(game.gravity)
         # Handles touching lasers
         # v--------------------------------------------------------------v
         collision = pygame.sprite.spritecollide(self, game.lasers, False)
@@ -916,7 +929,8 @@ class Player(pygame.sprite.Sprite):
         for block in secondpass:
             if game.glitches["laserresistant"]:
                 if block.vertical:
-                    if self.x_speed > 0 and self.collisionrect.right > block.rect.left:
+                    if self.x_speed > 0 and \
+                            self.collisionrect.right > block.rect.left:
                         self.collisionrect.right = block.rect.left
                         self.x_speed = 0
                         self.status["pushing"] = True

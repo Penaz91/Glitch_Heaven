@@ -671,13 +671,16 @@ class Game(object):
                             if level:
                                 self.loadLevelPart2(self.keys, sounds)
                         if event.key == pygame.K_KP_DIVIDE:
-                            self.mod_logger.info("Toggled Collision Rectangle View")
+                            self.mod_logger.info(
+                                    "Toggled Collision Rectangle View")
                             self.showCollision = not self.showCollision
                         if event.key == pygame.K_KP_MULTIPLY:
                             self.showFPS = not self.showFPS
                         if event.key == pygame.K_c:
                             self.mod_logger.info("Forced Checkpoint Save")
-                            self.player.lastcheckpoint = (self.player.rect.x, self.player.rect.y)
+                            self.player.lastcheckpoint = (
+                                    self.player.rect.x,
+                                    self.player.rect.y)
                 # Temporary toggles for pause menu and saveGame
                 # v----------------------------------------------------------v
                 elif event.type == pygame.KEYDOWN and\
@@ -745,9 +748,12 @@ class Game(object):
                     self.garbletimer = _garbletimer_
             if self.showCollision:
                 rec = self.player.collisionrect.copy()
-                rec.x, rec.y = self.tilemap.pixel_to_screen(self.player.collisionrect.x, self.player.collisionrect.y)
+                rec.x, rec.y = self.tilemap.pixel_to_screen(
+                        self.player.collisionrect.x,
+                        self.player.collisionrect.y)
                 pygame.draw.rect(screen, (255, 0, 0), rec, 1)
             if self.showFPS:
                 fps = self.font.render(str(1/dt), False, (255, 0, 0))
-                screen.blit(fps, (screen.get_width() - 50, screen.get_height() -50))
+                screen.blit(fps, (screen.get_width() - 50,
+                                  screen.get_height() - 50))
             pygame.display.update()

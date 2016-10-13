@@ -1,8 +1,8 @@
 # Help sign component
 # Part of the Glitch_Heaven Project
 # Copyright 2015-2016 Penaz <penazarea@altervista.org>
-from os.path import join as pjoin
-import pygame
+# from os.path import join as pjoin
+# import pygame
 from components.mobileplatform import MobilePlatform
 from libs.textAnimation import animatedText
 
