@@ -77,5 +77,6 @@
 	    "highAccel": false,
 	    "lowAccel": false
         }
-    }
+    },
+    "Message": "Unknown Distortion Detected"
 }

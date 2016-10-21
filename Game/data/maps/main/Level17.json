@@ -77,5 +77,6 @@
 	    "lowAccel": false,
 	    "laserresistant": false
         }
-    }
+    },
+    "Message": "Time/Dimensional Distortion Detected"
 }
