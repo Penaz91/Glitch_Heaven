@@ -29,8 +29,12 @@ class Particle (pygame.sprite.Sprite):
         """
         super(Particle, self).__init__(*groups)
         self.age = 30
-        self.color = colorstart
-        self.colorsteps = self.colorfade(self.color, colorend, 30)
+        # self.color = colorstart
+        startcolor = pygame.Color(*colorstart)
+        endcolor = pygame.Color(*colorend)
+        self.color = startcolor
+        # self.colorsteps = self.colorfade(self.color, colorend, 30)
+        self.colorsteps = (startcolor - endcolor) // pygame.Color(30, 30, 30)
         self.image = pygame.surface.Surface((2, 2))
         self.image.fill(self.color)
         self.image.convert_alpha()
@@ -52,9 +56,10 @@ class Particle (pygame.sprite.Sprite):
         # When the particle starts getting old, we start changing
         # color with an upper limitation of 255 and a lower of 0
         if self.age < 100:
-            self.red = min(max((self.color[0])+(self.colorsteps[0]), 0), 255)
-            self.green = min(max((self.color[1])+(self.colorsteps[1]), 0), 255)
-            self.blue = min(max((self.color[2])+(self.colorsteps[2]), 0), 255)
+            # self.red = min(max((self.color[0])+(self.colorsteps[0]), 0), 255)
+            # self.green = min(max((self.color[1])+(self.colorsteps[1]), 0), 255)
+            # self.blue = min(max((self.color[2])+(self.colorsteps[2]), 0), 255)
+            self.color -= self.colorsteps
             """
             if self.red < 0:
                 self.red = 0
@@ -71,7 +76,7 @@ class Particle (pygame.sprite.Sprite):
             """
             # Set the new particle color and paint the surface
             # v----------------------------------------------v
-            self.color = (self.red, self.green, self.blue)
+            # self.color = (self.red, self.green, self.blue)
             self.image.fill(self.color)
             # ^----------------------------------------------^
         if self.age == 0:
@@ -100,8 +105,7 @@ class Particle (pygame.sprite.Sprite):
                 self.rect.top = cell.bottom
                 self.sy *= -1
 
-    def colorfade(self, startcolor, finalcolor, steps):
-        """
+    """def colorfade(self, startcolor, finalcolor, steps):
         Function to calculate the color fading steps
 
         Keyword Arguments:
@@ -112,8 +116,8 @@ class Particle (pygame.sprite.Sprite):
 
         Returns:
         - The color steps to add to the color to complete the fade
-        """
         stepR = (finalcolor[0]-startcolor[0])/steps
         stepG = (finalcolor[1]-startcolor[1])/steps
         stepB = (finalcolor[2]-startcolor[2])/steps
         return (stepR, stepG, stepB)
+        """
