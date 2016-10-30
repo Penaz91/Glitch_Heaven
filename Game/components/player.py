@@ -131,18 +131,18 @@ class Player(pygame.sprite.Sprite):
     def emit_Right(self):
         """ Emits a spray of particles from the right emitter"""
         if self.game.gravity == 1:
-            self.rightemitter.move(self.rect.bottomright)
+            self.rightemitter.move(self.collisionrect.bottomright)
         else:
-            self.rightemitter.move(self.rect.topright)
+            self.rightemitter.move(self.collisionrect.topright)
         self.rightemitter.emit(self.runmultiplier,
                                self.runmultiplier*self.game.gravity)
 
     def emit_Left(self):
         """ Emits a spray of particles from the left emitter"""
         if self.game.gravity == 1:
-            self.leftemitter.move(self.rect.bottomleft)
+            self.leftemitter.move(self.collisionrect.bottomleft)
         else:
-            self.leftemitter.move(self.rect.topleft)
+            self.leftemitter.move(self.collisionrect.topleft)
         self.leftemitter.emit(self.runmultiplier,
                               self.runmultiplier*self.game.gravity)
 
@@ -276,11 +276,11 @@ class Player(pygame.sprite.Sprite):
     def emitJumpParticles(self):
         """ Emits a spray of particles from the both emitters"""
         if self.game.gravity == 1:
-            self.rightemitter.move(self.rect.bottomright)
-            self.leftemitter.move(self.rect.bottomleft)
+            self.rightemitter.move(self.collisionrect.bottomright)
+            self.leftemitter.move(self.collisionrect.bottomleft)
         else:
-            self.rightemitter.move(self.rect.topright)
-            self.leftemitter.move(self.rect.topleft)
+            self.rightemitter.move(self.collisionrect.topright)
+            self.leftemitter.move(self.collisionrect.topleft)
         self.rightemitter.emit(1, self.game.gravity)
         self.leftemitter.emit(1, self.game.gravity)
 
