@@ -41,9 +41,9 @@
             "obsResistant": false,
             "noStop": false,
             "timeLapse": false,
-	    "highAccel": false,
-	    "lowAccel": false,
-	    "laserresistant": false
+            "highAccel": false,
+            "lowAccel": false,
+            "laserresistant": false
 
         },
         "ChaosMode":
@@ -74,9 +74,9 @@
             "obsResistant": false,
             "noStop": false,
             "timeLapse": false,
-	    "highAccel": false,
-	    "lowAccel": false
+            "highAccel": false,
+            "lowAccel": false
         }
     },
-    "Message": "Unknown Distortion Detected"
+    "Message": ""
 }

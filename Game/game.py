@@ -282,6 +282,7 @@ class Game(object):
             if ":CampaignEnd:" in self.gameStatus["intermissions"]:
                 self.startIntermission(
                         self.gameStatus["intermissions"][":CampaignEnd:"])
+            pygame.mouse.set_visible(True)
             self.running = False
         else:
             lvl = self.generatePath(campaignname, level)

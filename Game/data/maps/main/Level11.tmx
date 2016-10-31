@@ -73,7 +73,7 @@
   <object id="12" x="128" y="608" width="640" height="32">
    <properties>
     <property name="bouncy" value="t"/>
-    <property name="power" value="1200"/>
+    <property name="power" value="800"/>
    </properties>
   </object>
   <object id="13" x="128" y="352" width="576" height="32">
@@ -85,7 +85,7 @@
   <object id="14" x="736" y="448" width="32" height="32">
    <properties>
     <property name="bouncy" value="tbl"/>
-    <property name="power" value="1200"/>
+    <property name="power" value="800"/>
    </properties>
   </object>
   <object id="15" x="64" y="320" width="32" height="32">
