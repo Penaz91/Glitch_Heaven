@@ -3,9 +3,12 @@
  <tileset firstgid="1" name="TestTile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
+ <tileset firstgid="118" name="New_Spritesheet" tilewidth="32" tileheight="32" tilecount="1024">
+  <image source="resources/tiles/New_Spritesheet.png" width="1024" height="1024"/>
+ </tileset>
  <layer name="Tile Layer 1" width="50" height="40">
   <data encoding="base64" compression="zlib">
-   eJzVmUtLAzEQx0MRvHV9HQXxWPBa+gF6FaLWY/Fx9vvf7YCRcZhnkmbrwB+2aSY7v53JbnYzpZRuGzQ1+vcQxHCR2uy60b+HLdNxOB4bx4yaxvFy0A7pXOhHOW4OWiBJfj0tkg+pfmg7jDkhtebbYy0cGbXj6085QCtBC6GNE9TE6xE4cDuOmePgJN13OH0ZsZVzfiB9DuCQ4uJ8LYbiNzofGyOeKMNbis3DHhxbI7alsx8YxL9CY0c4MvqN57mHw1sf0fhrOKR2jcNzbUt8Ws1J8Vsc7+nv/Jf6aRxaXFx8Wv+1wnDsfJQ8ZN71d45ibu45Q/uN5LBywcW2EWK0clHLkUk7x2HNCS620Ry0nXJ45kVvDtBH6vs8r6mpOfORgxzWvfM/1JXnnnOKHNH75qly1MxT8Nsy2gc57tAxvJ8+IEG/jP4vx705JNv/MGn+O0b0HedeGL8nB+hZYcE8lInWlbRe1dZXmLdwROsiwkKZenFQf64+oiyrAM96IEc5X4TFm5vRHNGc4Nxo+eE46Pc3S3T+W+uSmpxY+eE4Ws3iqM2JxtLKcca0edaJrTmh47dwlPqj3/g8HK056ckhGceRmX4tOZmLg7O5OMp+gLUP4OVoqS36zhzhuEr6OquYlwPMs/azGMDmrCtscI2s+LXvedZzUNpv0KyGA6zkm5NVA6PycYmOnwJjefcZyz0D7/tIe0deTcyYWNp/tYIxvwFy0W7w
+   eJzVmc1KAzEQx7fbfQGvVvDizfpxV5B6Frx78+4bePAFtIJWRH2HelDxXQQPgtceRRSlZqBh02Eymdlkt3VgoGyT7Pzyn3xs0mll2VdW3X8j66fwJRPDSxZnvTyygQT2nNXDsRfZptY4jjej1W5e+nGLLoc5ro3fOH6bKljGNHr48gc/hzZ/8tJj9ZZYDMeoXT53+x9zbBkd1wraoTz1DPvOJCfePTmRSg83bsxBecczx8G8g8sOTH/dt/nY4J1jU/cyK31QMwcXF64rYbD1mtZjs+Dj0TL0TZltxfoRywFxrRd8bFBXUs7GD+Ppqa2bTyDekdO2O85DHNK+Pcj18WvnxSp6SPvWxnfE5Jwv/hDHRTY9/lcqcHBjgYqvy5TfKPhxV5cebi7tMwxu/3Y96wwu1yRHSAsqtq6nz0NaVOVwxzvFIRnXVGxNc+DnmEMyLlJz1LGeV8mpWeoB+aXhsHOTL5b/kFf9wHwzrxzaeXNeOdxnq4I4LMc64UPTB1eK9WPZ+Q3fp6fGH4yfGV/M5furGA6fDSd7HB/PGH2HWz/Jp79xvhmdUnE8mhjPA+uO5cFMOK98+25f/vUQr+XQ5oWGhdIoBQeuT81XWhaYH6Q8MA80xQEmzS+tNk1zaDTB2nD6UByHxJjn/A6dxYT2JVpNJPpQHLEW4qiiSYglloMKV7JPjNEEHLcfw2HPf/EZn4QjVpOUHD6jOKjv2hhNZsVB2aw47H1A6B5AylE1t6hvZg3HZ8bvs7QcloXb+0kYtBxS03BYgz6iztqtw/k8d55Hcbj3UL77htQcYFZvykM50JQeC87vD+HeD0x6zwgccF/k3v347o6kDmf4uE3XX5n/qjq88w/okwYC
   </data>
  </layer>
  <objectgroup name="Triggers" visible="0">

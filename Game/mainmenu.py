@@ -25,6 +25,15 @@ class mainMenu(menu):
                 "Debug Mode Active, Keydebug Active: {0}".format(
                     config["Debug"]["keydebug"]), self.font)
 
+    def quitFunction(self):
+        IM = comicReader(pjoin("resources",
+                               "intermissions",
+                               "main",
+                               "4"), self.screen,
+                         self.keys["action"], self.mainLogger)
+        IM.look()
+        pygame.event.post(pygame.event.Event(pygame.QUIT))
+
     def onEscape(self):
         pass
 
@@ -69,8 +78,7 @@ class mainMenu(menu):
     def makeQuitMenu(self):
         self.exit = textMenuItem("Quit", (700, 560),
                                  lambda: self.editDesc("Quit the Game"),
-                                 lambda: pygame.event.post(
-                                          pygame.event.Event(pygame.QUIT)),
+                                 lambda: self.quitFunction(),
                                  self.config, self.sounds, self.font)
         self.activeItems.append(self.exit)
         self.items.append(self.exit)
