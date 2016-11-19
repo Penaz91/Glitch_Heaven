@@ -217,7 +217,9 @@ class Game(object):
             password = None
             if "password" in btn:
                 password = btn["password"]
-            button((btn.px, btn.py), ident, password, self.btns)
+            if "message" in btn:
+                msg = btn["message"]
+            button((btn.px, btn.py), ident, password, self.btns, message=msg)
         self.tilemap.layers.append(self.btns)
         # ^--------------------------------------------------------------^
         # Creates all the checkpoints

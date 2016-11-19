@@ -9,6 +9,7 @@ from components.help import Help
 from components.UI.textinput import textInput
 from libs.spritesheetanimation import SpritesheetAnimation as SpriteAni
 from libs import emitter
+from libs.textAnimation import animatedText
 # from libs.vector2 import Vector
 
 
@@ -839,6 +840,10 @@ class Player(pygame.sprite.Sprite):
                             laser.update = laser.update_static
                             laser.image = laser.inactiveimage
                             item.activate()
+                    if item.message != "":
+                        self.game.showMessage = True
+                        self.game.messageSurf = animatedText(item.message)
+                        item.message = ""
                     self.mod_logger.info("Player pressed the button \
                             with ID: {0}".format(item.id))
 
@@ -890,7 +895,8 @@ class Player(pygame.sprite.Sprite):
         for block in collision:
             block.toggle(self.game)
             if block.message != "":
-                #TODO
+                self.game.showMessage = True
+                self.game.messageSurf = animatedText(block.message)
             block.kill()
         # ^--------------------------------------------------------------^
         # Handles the glitchiness in Critical Failure mode
