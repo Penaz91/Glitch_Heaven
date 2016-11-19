@@ -41,9 +41,9 @@
             "obsResistant": false,
             "noStop": false,
             "timeLapse": true,
-	    "highAccel": false,
-	    "lowAccel": false,
-	    "laserresistant": true
+            "highAccel": false,
+            "lowAccel": false,
+            "laserresistant": true
         },
         "ChaosMode":
         {
@@ -73,9 +73,10 @@
             "obsResistant": false,
             "noStop": false,
             "timeLapse": false,
-	    "highAccel": false,
-	    "lowAccel": false,
-	    "laserresistant": true
+            "highAccel": false,
+            "lowAccel": false,
+            "laserresistant": true
         }
-    }
+    },
+    "Message": ""
 }
