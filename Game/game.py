@@ -228,11 +228,15 @@ class Game(object):
         # Creates all the glitch toggles
         # v--------------------------------------------------------------v
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
+            if "message" in trig:
+                msg = trig["message"]
+            else:
+                msg = ""
             self.GlitchTriggers.add(CollectibleTrigger(
                 trig.px, trig.py, self, trig['ToggleGlitch'],
                 preloaded_animation=self.preloaded_sprites[
                     "collectibleitem"
-                    ]))
+                    ], message=msg))
         self.tilemap.layers.append(self.GlitchTriggers)
         # ^--------------------------------------------------------------^
         # In case of critical failure modes, further garbles

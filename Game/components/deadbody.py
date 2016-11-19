@@ -33,7 +33,7 @@ class DeadBody(MobilePlatform):
         if game.config["Video"]["permanentbodies"]:
             self.update = self.dummyUpdate
         else:
-            self.age = 30.
+            self.age = 300.
             self.update = self.realupdate
         MobilePlatform.__init__(self, x, y, *groups, game=game,
                                 surface=self.img)

@@ -889,6 +889,8 @@ class Player(pygame.sprite.Sprite):
                                                 False)
         for block in collision:
             block.toggle(self.game)
+            if block.message != "":
+                #TODO
             block.kill()
         # ^--------------------------------------------------------------^
         # Handles the glitchiness in Critical Failure mode

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="47">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="32" tileheight="32" nextobjectid="48">
  <tileset firstgid="1" name="Tile" tilewidth="32" tileheight="32" tilecount="117">
   <image source="resources/tiles/TestTile.png" width="416" height="288"/>
  </tileset>
@@ -11,7 +11,11 @@
    eJztWFFqAjEQnZVeoL9C8RAVP/z0EPbLa/hlT1GwWOg5tDcpWD8Ez6DY2moCLcRxkk1mk02y9cGDhXV25pmZzCRLAHgo3PghbJYMu1CU8byCO6ZMu1CwjeeGsFv9Pt96jYgHGx0LwQniQfAo1nPQ0nNThI1dhY2Od6Dz8c4xzjWh25dWbp7nWh++7ExYVFiblHRUwVVHeB0ueZayDhdcdQB8wXlvbNfU98ZA92WuDjwn9mvSMax5TqzSD1zRpPqQ894TXNI0+6SogxPPtsSOqsVHhh9bcHXMFTt8Nvn77qF1zpDrJ/3dM+y6cLnv4n0Q6zD93oXUulZZj1jn8xFRtz7yKgWU6Vhr9rKfIi8dOvQaoqMp/WOoqbdYSO1/5UK9T8sZuvmqzjs0H5A6vmMH4QFNqg/T3PMWLzQjqHtz05yUyt76LDhDfFHe55JXO8E94qfyPhcdZYipg8oVnC+2iKmDyhWcL7b4D3nV8eRDvXMIdddQ1j98UD2rh/IlfZwA98DdFw==
   </data>
  </layer>
- <objectgroup name="Triggers" visible="0">
+ <objectgroup name="Triggers">
+  <properties>
+   <property name="ToggleGlitch" value="gravity"/>
+   <property name="message" value="Messaggio di prova"/>
+  </properties>
   <object id="1" x="192" y="1216" width="32" height="32">
    <properties>
     <property name="playerEntrance" value=""/>
@@ -216,6 +220,12 @@
   <object id="46" x="160" y="864" width="32" height="32">
    <properties>
     <property name="button" value="l1"/>
+   </properties>
+  </object>
+  <object id="47" x="320" y="1216" width="32" height="32">
+   <properties>
+    <property name="ToggleGlitch" value="gravity"/>
+    <property name="message" value="Messaggio di Prova"/>
    </properties>
   </object>
  </objectgroup>
