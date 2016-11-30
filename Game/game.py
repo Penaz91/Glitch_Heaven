@@ -258,8 +258,8 @@ class Game(object):
                                   % self.gameStatus)
             with open(self.SaveFile, "w") as savefile:
                 savefile.write(json.dumps(self.gameStatus))
-                self.mod_logger.info("Game autosaved on the file: {0}"
-                                     % (self.SaveFile))
+                """self.mod_logger.info("Game autosaved on the file: {0}"
+                                     % (self.SaveFile))"""
 
     def LoadLevel(self, level, campaignname, mode, screen):
         """
