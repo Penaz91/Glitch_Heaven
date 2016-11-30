@@ -26,7 +26,9 @@ from libs.textglitcher import makeGlitched, makeMoreGlitched
 from libs.debugconstants import _debugkeys_
 from components.button import button
 from components.checkpoint import checkPoint
+from libs.textAnimation import animatedText
 _garbletimer_ = 0.1
+_defaultMessageTime_ = 7.
 
 
 class Game(object):
@@ -215,7 +217,9 @@ class Game(object):
             password = None
             if "password" in btn:
                 password = btn["password"]
-            button((btn.px, btn.py), ident, password, self.btns)
+            if "message" in btn:
+                msg = btn["message"]
+            button((btn.px, btn.py), ident, password, self.btns, message=msg)
         self.tilemap.layers.append(self.btns)
         # ^--------------------------------------------------------------^
         # Creates all the checkpoints
@@ -228,11 +232,15 @@ class Game(object):
         # Creates all the glitch toggles
         # v--------------------------------------------------------------v
         for trig in self.tilemap.layers['Triggers'].find('ToggleGlitch'):
+            if "message" in trig:
+                msg = trig["message"]
+            else:
+                msg = ""
             self.GlitchTriggers.add(CollectibleTrigger(
                 trig.px, trig.py, self, trig['ToggleGlitch'],
                 preloaded_animation=self.preloaded_sprites[
                     "collectibleitem"
-                    ]))
+                    ], message=msg))
         self.tilemap.layers.append(self.GlitchTriggers)
         # ^--------------------------------------------------------------^
         # In case of critical failure modes, further garbles
@@ -260,6 +268,10 @@ class Game(object):
                 savefile.write(json.dumps(self.gameStatus))
                 """self.mod_logger.info("Game autosaved on the file: {0}"
                                      % (self.SaveFile))"""
+        message = levelconfig["Message"]
+        if message != "":
+            self.showMessage = True
+            self.messageSurf = animatedText(message)
 
     def LoadLevel(self, level, campaignname, mode, screen):
         """
@@ -276,6 +288,7 @@ class Game(object):
             if ":CampaignEnd:" in self.gameStatus["intermissions"]:
                 self.startIntermission(
                         self.gameStatus["intermissions"][":CampaignEnd:"])
+            pygame.mouse.set_visible(True)
             self.running = False
         else:
             lvl = self.generatePath(campaignname, level)
@@ -474,6 +487,9 @@ class Game(object):
         - modifiers: Modifiers Dictionary instance
         - log: The main logger, inherited by the bootstrapper
         """
+        self.showMessage = False
+        self.messageTime = _defaultMessageTime_
+        self.messageSurf = None
         self.SaveFile = None
         self.showCollision = False
         self.activeHelpList = []
@@ -756,4 +772,13 @@ class Game(object):
                 fps = self.font.render(str(1/dt), False, (255, 0, 0))
                 screen.blit(fps, (screen.get_width() - 50,
                                   screen.get_height() - 50))
+            if self.showMessage:
+                self.messageSurf.update(dt)
+                self.messageTime -= dt
+                rect = self.messageSurf.surface.get_rect()
+                screen.blit(self.messageSurf.surface, self.tilemap.pixel_to_screen(self.player.rect.x - rect.width/2 + 16, self.player.rect.y - rect.height))
+
+                if self.messageTime <= 0:
+                    self.showMessage = False
+                    self.messageTime = _defaultMessageTime_
             pygame.display.update()

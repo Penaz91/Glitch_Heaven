@@ -75,5 +75,6 @@
             "highAccel": false,
             "lowAccel": false
         }
-    }
+    },
+    "Message": ""
 }

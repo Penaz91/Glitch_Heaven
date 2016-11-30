@@ -9,7 +9,7 @@ from libs.timedspritesheetanimation import TimedSpritesheetAnimation as TAni
 class CollectibleTrigger(pygame.sprite.Sprite):
     """ A simple object with image and position """
 
-    def __init__(self, x, y, game, *trigger, preloaded_animation):
+    def __init__(self, x, y, game, *trigger, preloaded_animation, message=""):
         """
         Default constructor
 
@@ -28,6 +28,7 @@ class CollectibleTrigger(pygame.sprite.Sprite):
         self.image = self.ani.next(0)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, y
+        self.message = message
 
     def update(self, dt, game):
         self.image = self.ani.next(dt)

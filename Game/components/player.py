@@ -9,6 +9,7 @@ from components.help import Help
 from components.UI.textinput import textInput
 from libs.spritesheetanimation import SpritesheetAnimation as SpriteAni
 from libs import emitter
+from libs.textAnimation import animatedText
 # from libs.vector2 import Vector
 
 
@@ -131,18 +132,18 @@ class Player(pygame.sprite.Sprite):
     def emit_Right(self):
         """ Emits a spray of particles from the right emitter"""
         if self.game.gravity == 1:
-            self.rightemitter.move(self.rect.bottomright)
+            self.rightemitter.move(self.collisionrect.bottomright)
         else:
-            self.rightemitter.move(self.rect.topright)
+            self.rightemitter.move(self.collisionrect.topright)
         self.rightemitter.emit(self.runmultiplier,
                                self.runmultiplier*self.game.gravity)
 
     def emit_Left(self):
         """ Emits a spray of particles from the left emitter"""
         if self.game.gravity == 1:
-            self.leftemitter.move(self.rect.bottomleft)
+            self.leftemitter.move(self.collisionrect.bottomleft)
         else:
-            self.leftemitter.move(self.rect.topleft)
+            self.leftemitter.move(self.collisionrect.topleft)
         self.leftemitter.emit(self.runmultiplier,
                               self.runmultiplier*self.game.gravity)
 
@@ -276,11 +277,11 @@ class Player(pygame.sprite.Sprite):
     def emitJumpParticles(self):
         """ Emits a spray of particles from the both emitters"""
         if self.game.gravity == 1:
-            self.rightemitter.move(self.rect.bottomright)
-            self.leftemitter.move(self.rect.bottomleft)
+            self.rightemitter.move(self.collisionrect.bottomright)
+            self.leftemitter.move(self.collisionrect.bottomleft)
         else:
-            self.rightemitter.move(self.rect.topright)
-            self.leftemitter.move(self.rect.topleft)
+            self.rightemitter.move(self.collisionrect.topright)
+            self.leftemitter.move(self.collisionrect.topleft)
         self.rightemitter.emit(1, self.game.gravity)
         self.leftemitter.emit(1, self.game.gravity)
 
@@ -839,6 +840,10 @@ class Player(pygame.sprite.Sprite):
                             laser.update = laser.update_static
                             laser.image = laser.inactiveimage
                             item.activate()
+                    if item.message != "":
+                        self.game.showMessage = True
+                        self.game.messageSurf = animatedText(item.message)
+                        item.message = ""
                     self.mod_logger.info("Player pressed the button \
                             with ID: {0}".format(item.id))
 
@@ -889,6 +894,9 @@ class Player(pygame.sprite.Sprite):
                                                 False)
         for block in collision:
             block.toggle(self.game)
+            if block.message != "":
+                self.game.showMessage = True
+                self.game.messageSurf = animatedText(block.message)
             block.kill()
         # ^--------------------------------------------------------------^
         # Handles the glitchiness in Critical Failure mode

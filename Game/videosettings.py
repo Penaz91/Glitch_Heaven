@@ -74,6 +74,15 @@ class VideoSettings(menu):
         self.activeItems.append(self.FSitem)
         self.items.append(self.FSitem)
         
+    def makePermBodiesItem(self):
+        self.DBitem = textMenuItem("Permanent Deadbobies", (50, 360),
+                                   lambda: self.editDesc("Current Status: {0}".format(
+                                                         self.config["Video"]["permanentbodies"])),
+                                   lambda: self.toggle("permanentbodies"),
+                                   self.config, self.sounds, self.font)
+        self.activeItems.append(self.DBitem)
+        self.items.append(self.DBitem)
+        
     def makeMainMenuItem(self):
         self.mainmenu = textMenuItem("Main Menu", (50, 560),
                                      lambda: self.editDesc(
@@ -87,4 +96,5 @@ class VideoSettings(menu):
         self.makePlayerParticlesItem()
         self.makeDeathCounterItem()
         self.makeFullscreenItem()
+        self.makePermBodiesItem()
         self.makeMainMenuItem()

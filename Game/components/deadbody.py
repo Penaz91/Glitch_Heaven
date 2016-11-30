@@ -30,9 +30,18 @@ class DeadBody(MobilePlatform):
                     pjoin("resources",
                           "sprites",
                           "player.png")).convert_alpha()
+        if game.config["Video"]["permanentbodies"]:
+            self.update = self.dummyUpdate
+        else:
+            self.age = 300.
+            self.update = self.realupdate
         MobilePlatform.__init__(self, x, y, *groups, game=game,
                                 surface=self.img)
 
-    def update(self, dt, game):
-        """ Dummy update method """
+    def dummyUpdate(self, dt, game):
         pass
+
+    def realupdate(self, dt, game):
+        self.age -= dt;
+        if self.age <=0:
+            self.kill()

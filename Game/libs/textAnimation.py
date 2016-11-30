@@ -21,7 +21,7 @@ class animatedText:
         self.bgsurface = self.bgGen(temp)
         self.surface = pygame.surface.Surface((self.bgsurface.get_width(), self.bgsurface.get_height()), pygame.SRCALPHA)
         #self.sound = pygame.mixer.Sound("blip.wav")
-    
+
     def bgGen(self, size):
         graphics = pygame.image.load(pj("resources", "tiles", "TextTile.png")).convert_alpha()
         lcorner = (0, 0, 32, 32)
@@ -62,7 +62,7 @@ class animatedText:
         self.surface.fill((0, 0, 0, 0))
         self.surface.blit(self.bgsurface, (0, 0))
         self.surface.blit(self.fontsurface, (self.hoffset, 7))
-            
+
 if __name__ == "__main__":
     pygame.init()
     pygame.mixer.set_num_channels(64)
