@@ -215,6 +215,7 @@ class Game(object):
         for btn in self.tilemap.layers['Triggers'].find('button'):
             ident = btn['button']
             password = None
+            msg=""
             if "password" in btn:
                 password = btn["password"]
             if "message" in btn:
