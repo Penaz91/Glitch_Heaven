@@ -215,7 +215,7 @@ class Game(object):
         for btn in self.tilemap.layers['Triggers'].find('button'):
             ident = btn['button']
             password = None
-            msg=""
+            msg = ""
             if "password" in btn:
                 password = btn["password"]
             if "message" in btn:
@@ -777,7 +777,10 @@ class Game(object):
                 self.messageSurf.update(dt)
                 self.messageTime -= dt
                 rect = self.messageSurf.surface.get_rect()
-                screen.blit(self.messageSurf.surface, self.tilemap.pixel_to_screen(self.player.rect.x - rect.width/2 + 16, self.player.rect.y - rect.height))
+                screen.blit(self.messageSurf.surface,
+                            self.tilemap.pixel_to_screen(
+                                self.player.rect.x - rect.width/2 + 16,
+                                self.player.rect.y - rect.height))
 
                 if self.messageTime <= 0:
                     self.showMessage = False
