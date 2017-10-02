@@ -1,5 +1,7 @@
 ![](https://cloud.githubusercontent.com/assets/6682630/10658144/52151062-7894-11e5-8eaa-3bfb5f74cdc7.png)
 
+![Status:Halted](https://img.shields.io/badge/Project_Status-Halted-yellow.svg)
+
 Complete rewrite of my Glitch-Based Videogame that you can find in the
 "The_Glitch" repository.
 
